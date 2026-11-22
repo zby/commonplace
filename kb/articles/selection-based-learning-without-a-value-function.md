@@ -15,7 +15,6 @@ source_notes:
   - kb/theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md
   - kb/theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md
   - kb/theory/false-positive-generation-is-filtered-before-retention.md
-  - kb/theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md
   - kb/theory/definitions/operative-change.md
   - kb/theory/definitions/addressable-theory.md
   - kb/theory/definitions/self-improving-system.md
@@ -42,7 +41,10 @@ This article makes a two-level claim. First, **selection-based
 learning**—a system learning by changes that are each proposed, evaluated,
 and can be rejected—does not need a value function. Its selection step
 needs a comparison between the system with a change and the system without
-it. A value function supplies that comparison when one formula captures the
+it. The usual picture is a ranking of every possible change, from which the
+best is taken. But search is costly and reaches only a few candidates, so
+the only question ever asked is whether the candidate at hand is better
+than what the system has now. A value function supplies that comparison when one formula captures the
 work. When none does, many scoring functions are compatible with the purpose
 of the work. Decision analysis calls that set a **preference model**, and
 the comparison is **robust** when every function in the set gives the same
@@ -101,7 +103,7 @@ than without it was a separate question. Third, no
 single scalar metric had to be invented to compare saved misfilings against
 diffuse context load.
 
-## Selection-based learning versus training weights
+## Selection-based learning versus direct gradient training
 
 Our knowledge base defines
 [selection-based learning](../theory/definitions/selection-based-learning.md) by
@@ -115,27 +117,37 @@ across several.
 case. Each newly trained network played the current best one and replaced
 it only if it won more than 55% of the games. Its successor
 [AlphaZero](https://arxiv.org/abs/1712.01815) dropped that step and updated
-a single network continually. Both learned, and only the first learned by
-selection. The second is a direct update: the evidence determines the
-change, and nothing is proposed or rejected. Gradient steps under a fixed
-loss, a tabular reinforcement-learning table, automatic trace logging, and
-triggers that write on a count are direct updates in the same way.
+a single network continually, so it no longer selected among networks.
+
+Selection can sit at more than one level. Both systems are reinforcement
+learners. They try moves, and the moves that lead to wins are the ones the
+network comes to prefer. That is selection among actions, with the game
+result as the single measure. The gradient steps that write the result
+into the weights are direct updates in both systems. AlphaGo Zero added a
+third level: selection of which network became the active player.
+Pre-training by gradient descent has neither kind of selection. It is told the right output
+for each input, the error fixes the update, and nothing is tried or
+rejected. This is a direct update. Automatic trace logging and triggers
+that write on a count are direct updates in the same way.
 
 The definition does not say where the change is held or who does the
 selecting. A deployed checkpoint, a team's working habits, and an
 instruction file all qualify. Naming a system adds two questions. The
-system improves itself when the selecting is done inside it, and it is
-double-loop when it can also revise what it selects by. A model whose
-checkpoint is picked by its engineers learns by selection without improving
-itself. Commonplace today does all three only with people inside the
-system. The bet of this article is that the software alone can.
+system is a
+[self-improving system](../theory/definitions/self-improving-system.md)
+when the selecting is done inside it, and it is double-loop when it can
+also revise what it selects by. A model whose checkpoint is picked by its
+engineers learns by selection without being self-improving. Commonplace,
+our agent-operated knowledge-base framework, does all three today only with
+people inside the system. The bet of this article is that the software
+alone can, given a stated purpose.
 
 This article treats one case: a readable store, edited by selected changes.
 Writing rules down does not change the kind of learning. It gives rules
 that an evaluator can read and a later edit can correct one at a time. The
 table compares that case with gradient training.
 
-| Axis | Training weights | Selection-based learning over a readable store |
+| Axis | Direct gradient training | Selection-based learning over a readable store |
 |---|---|---|
 | **Modifiable substrate** | Opaque numerical parameters | Readable, [addressable](../theory/definitions/addressable-theory.md) store (prose, structured text, code) |
 | **Role of the value / loss function** | Scalar loss, reward, or value function | Rejectable judgment in the loop—from one fixed measure up to a robust comparison across a preference model |
@@ -184,7 +196,10 @@ guarantee conditional on those axioms and that utility, at a steep price:
 the machine must ignore every useful improvement it cannot prove, and a
 valid proof does not establish that the axioms adequately describe the
 real-world domain—under an inadequate formalization, a proved switch need
-not deliver what its user wanted.
+not deliver what its user wanted. The machine is not rigid. It can rewrite
+even its own utility function when it proves the rewrite better under the
+current one. Its limits are which proofs can be found and whether the
+formalization is adequate.
 
 **Fixed formula.** Steven Minton's
 [PRODIGY](../sources/minton-utility-of-ebl-aaai88.ingest.md) built a
@@ -230,6 +245,11 @@ criterion, which leaves most real changes unordered. Each stated preference
 removes functions from the set, so more pairs become ordered. When one
 function is left, the method is ordinary selection by a value function.
 
+The analogy has a limit. In that method the criteria are fixed, so each
+stated preference can only narrow the set. In open-ended work an objection
+can introduce a criterion nobody had listed. That widens the set and can
+overturn an earlier verdict.
+
 A
 [robust comparison](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
 applies this to a change. Once the alternative, the parties whose costs
@@ -251,6 +271,29 @@ recognize when an existing gate, validator, or review criterion is
 misleading and revise it—while the declared objective the criteria serve
 stays fixed
 ([revising an improvement objective](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md)).
+
+The bet is not that the model writes down value functions and computes
+which option wins under all of them, as the decision-analysis method does.
+It is that the model can give reasons that do the same work: which work
+changed, whose costs count, and which weighting or observation would
+reverse the choice. Those reasons can be checked and challenged one at a
+time.
+
+Is the model then a value function after all, held in its weights? It is
+not. A value function gives every state a number, so it orders every pair
+of versions. What the model supplies is a partial function from a proposed
+change to *approve* or *disapprove*: on some changes it returns neither.
+Where it does answer, and answers consistently, it is equivalent to a set
+of value functions that all agree, which is the preference model above.
+The pairs it leaves unanswered are the open cases. Many of them close when
+the alternative is changed. Keeping the routing line for good may be open,
+while trying it with a cheap way back can be better under every compatible
+measure. What still remains is taken as a decision with its reasons, not
+reported as an improvement, and later evidence can reverse it.
+
+Consistency is part of the bet. A model that approves a change and then
+approves its reversal on the same evidence is equivalent to no set of value
+functions, and such cycles are something a test can look for.
 
 ## Compatible with the Bitter Lesson
 
@@ -280,21 +323,25 @@ weight updating. That is a substantive rival hypothesis, not a corollary of
 the Bitter Lesson essay. A 2026 empirical study,
 [Harness Evolution Hits a Ceiling](../sources/harness-evolution-ceiling-weight-training.ingest.md),
 reached a similar conclusion after an automated harness-evolution loop
-stalled and deferred hard failures to weight training—yet its own data
-located the stall in what the proposer was not shown (its scorer saw a
-failure mode in a quarter of runs that never reached the proposer), and its
-strongest gains came from editing a natural-language lessons file.
+stalled and deferred hard failures to weight training. Yet the authors'
+own diagnosis attributed the stall to what the proposer was not shown (its
+scorer saw a failure mode in a quarter of runs that never reached the
+proposer), though their single remedy run stayed within noise. On one model
+line the whole harness gain came from editing a natural-language lessons
+file.
 
 Once a language model supplies the comparison inside an automated
 selection loop, the system sits on the computation side of the Bitter
-Lesson. Additional compute buys more candidate proposals, richer execution
-traces, independent criticism, targeted revisions, and better working
-criteria—all automatically generated, tested, and revised rather than
-hand-authored.
+Lesson. Additional compute can be spent on more candidate proposals,
+richer execution traces, independent criticism, targeted revisions, and
+revised working criteria—all automatically generated and tested rather
+than hand-authored. Whether that spending pays as the store grows is open.
+The hard problem is credit assignment without a chain rule: when entries
+depend on each other, a later failure rarely identifies which entry should
+change.
 
 One strict condition attaches. A system bootstrapped from hand-written
-instructions, types, and review gates—as Commonplace, our agent-operated
-knowledge-base framework, currently is—fits the
+instructions, types, and review gates—as Commonplace currently is—fits the
 Bitter Lesson
 [only if automated learning outgrows that starting point](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
@@ -304,12 +351,13 @@ Because selection-based learning names a process with no success
 condition, the paradigm claim stays honest only if success is judged
 separately. A change to the store improved the system when the present
 system is robustly better at its later work with that one change than with
-that change taken out (leaving unrelated later edits intact): better under
+that change taken out (leaving the rest of the store intact except for
+edits that depend on it): better under
 every compatible measure of the declared work over the declared horizon.
 
 For a recent edit—like our routing line on the day it is added—the verdict
-is normally **open** until later episodes arrive, just as
-[compounding is tested in later improvement rather than by the accepting metric](../theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md).
+is normally **open** until later episodes arrive. Passing the check that
+admitted an edit does not show that later work is better.
 Letting a change stand while its verdict is open is a decision, not a
 demonstrated gain.
 
@@ -323,6 +371,12 @@ tasks outside the episode that prompted the edit:
 2. **Robust improvement.** The changed behavior must score higher under
    every compatible measure of the declared work, not merely pass the
    check that admitted it.
+
+Honest sets of compatible measures leave many trade-offs open. A test
+therefore reports an open comparison as open, and is built around contrasts
+clean enough to resolve.
+[Testing Autonomous Selection-Based Learning](./testing-autonomous-selection-based-learning.md)
+sets those comparisons out.
 
 **Current state of evidence.** Commonplace is an active, human-assisted
 bootstrap developing the store, review machinery, and judgment probes. We
@@ -353,6 +407,9 @@ those domains.
 
 ## Where to go next
 
+- [Testing Autonomous Selection-Based Learning](./testing-autonomous-selection-based-learning.md)
+  — the comparisons that would test the bet, and a proposed first
+  experiment.
 - [The definition](../theory/definitions/selection-based-learning.md) —
   the full definition, including what a claim must name and boundary cases
   such as triggers and direct updates. A companion definition covers
