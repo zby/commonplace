@@ -18,8 +18,8 @@ This term was named "deliberative learning" until 2026-11-22 and
 
 [AlphaGo Zero](https://www.nature.com/articles/nature24270) is a well-known
 case. Each newly trained network played the current best one and replaced
-it only if it won more than 55% of the games. Its successor
-[AlphaZero](https://arxiv.org/abs/1712.01815) dropped that step and updated
+it only if it won by a margin of 55%. Its successor
+[AlphaZero](../../sources/alphazero-chess-shogi-self-play.ingest.md) dropped that step and updated
 a single network continually, so it no longer selected among networks.
 
 A system that learns this way is a **selection-based learner**. The loop
@@ -31,12 +31,20 @@ are learning in
 [Simon's sense](../learning-is-not-only-about-generality.md).
 
 - **The change** is to something the learner retains and its later work
-  uses. Where the change is held does not matter. A handbook, code, a
-  team's working habits and a model checkpoint all qualify, so a store
-  that can be read is not required.
-- **Evaluation is a separate step**, and its result controls whether the
-  change is made or kept. A change written automatically or on a trigger is
-  not selected.
+  uses. A proposal is information that describes a change, and it can be
+  stored, as a patch can. Storing it is already a change to the system's
+  durable state, and a different one from the change it describes. It is
+  usually cheap and made directly, but it is still a decision. The
+  described change is not stored. The system changes, and what it retains
+  afterwards is different. Where that is held
+  does not matter. A handbook,
+  code, a team's working habits and a model checkpoint all qualify, so a
+  store that can be read is not required.
+- **Evaluation is causally distinct from proposing.** It need not be a
+  separate stage or a separate actor. Its result decides whether the change
+  is made, or undone if it was already made, and a rejection is its own
+  event: it does not consist in the next candidate arriving. A change
+  written automatically or on a trigger is not selected.
 - **Evaluation needs a comparison, not a value function.** It can apply one
   fixed measure, such as a validator, a formula, a score or a proof. It can
   also compare the system with and without the change across several
@@ -50,22 +58,15 @@ question, answered by comparing the system with and without it.
 ## Scope
 
 - **Direct updates (outside).** Pre-training by gradient descent is told
-  the right output for each input, and the error fixes the update. Nothing
-  is tried, so nothing can be rejected.
-- **Reinforcement learning (partly inside).** A learner that tries actions
-  and keeps the ones with the higher estimated value, as a bandit or a
-  greedy action-value method does, selects among actions with the reward as
-  the one measure. The update to the weights or the value table is how the
-  result is stored. The level has to be named: each increment to the table
-  is a direct update, and the change in which action is preferred is
-  selected. Reinforcement learning that only predicts returns, or that
-  shifts a policy smoothly along a gradient, drops no alternative and stays
-  outside.
+  the right output for each input, and the error fixes the update. A
+  nightly job that raises an article's rank whenever it is clicked writes
+  directly from its input in the same way. Nothing is tried, so nothing
+  can be rejected.
 - **Triggers and automatic storage (outside).** A bot that adds a review
   rule whenever a class of bug has been reported five times is set off by a
   count. A logger that stores every session trace evaluates none of them.
-  Each is inside only if a separate step evaluates what was drafted and can
-  reject it.
+  Each is inside only if what was drafted is evaluated and can be
+  rejected.
 - **One fixed measure (inside).** Keeping a patch because a validator
   passed, deploying the checkpoint with the best validation score, and
   keeping a mutation in an evolutionary search all evaluate a candidate and
@@ -84,14 +85,14 @@ it retains is selected.
 
 ## The term and the system boundary
 
-Whether learning is selection-based does not depend on where the system's
-boundary is drawn. Drawing a boundary adds two further questions, and each
-moves one more function inside it. Take a model whose deployed checkpoint is
+The system named in a claim has to be the one that changes. Who does the
+selecting does not matter for the term. It matters for two further
+questions, and each moves one more function inside the system. Take a model whose deployed checkpoint is
 picked by a validation score:
 
-1. **Learning.** The system retains the change. The model alone learns by
+1. **Learning.** The system is what changes. The model alone learns by
    selection that others perform on it.
-2. **Self-improvement.** The system also does the selecting. The model
+2. **Self-improvement by selection.** The system also does the selecting. The model
    together with the selection script is a
    [self-improving system](./self-improving-system.md).
 3. **Double-loop.** The system can also revise what it selects by. The
@@ -101,7 +102,7 @@ picked by a validation score:
 A breeder's herd learns by selection and does not improve itself. A team
 that maintains its own handbook does all three. Proposals may come from
 outside the boundary. Selection is the step that has to be inside for
-self-improvement.
+self-improvement by selection.
 
 ## Misuse Cases
 

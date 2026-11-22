@@ -9,13 +9,14 @@ tags: [self-improving-systems, learning-theory, improvement-loop]
 A system that learns by a
 [proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
 decides each proposed change by a criterion: a single measure, a gate, a
-check, a formula, or an open set of considerations. For a named class of
+check, a formula, or a comparison across several measures. For a named class of
 changes, the learner is **single-loop** when it decides those changes under
 a criterion it cannot revise, and **double-loop** when it can revise that
 criterion so that a different criterion governs later decisions of that
 class. Such a system is a
-[selection-based learner](./selection-based-learning.md), and the distinction
-applies whether its criterion is fixed or an open set of considerations.
+[selection-based learner](./selection-based-learning.md) that does its own
+selecting, and the distinction applies whether its criterion is one measure
+or several.
 
 The distinction matters because a single-loop learner cannot recover from a
 misleading criterion. It keeps applying the criterion however often changes
@@ -28,8 +29,8 @@ that passed it turn out badly.
   validator run faster checks the same criterion sooner. Revising what the
   validator accepts, because instructions that passed it kept misrouting
   agents, changes the criterion for later instructions.
-- **Open considerations.** A learner whose criterion is an open set of
-  considerations can count a new one in any single decision. It is
+- **Several measures.** A learner that compares across several measures
+  can count a new one in any single decision. It is
   double-loop only when a change
   in what counts, or how much, is retained and governs later decisions of
   that class. A team deciding that context cost now counts against every
@@ -87,5 +88,5 @@ question, what considers it, and what change to the criterion can follow.
 Relevant Notes:
 
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the loops these two kinds divide
-- [Selection-based learning](./selection-based-learning.md) — defined-in: the learning these two kinds divide, and what a criterion is
+- [Selection-based learning](./selection-based-learning.md) — defined-in: the learning these two kinds divide
 - [Revising an improvement objective is licensed from outside it or is not improvement](../revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why double-loop revision stops at the working criterion
