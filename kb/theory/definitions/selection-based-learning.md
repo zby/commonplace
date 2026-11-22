@@ -28,7 +28,11 @@ that does it is a
 and that note gives its anatomy. The contrast is a direct update, in which
 the evidence determines the change and nothing is proposed or rejected. Both
 are learning in
-[Simon's sense](../learning-is-not-only-about-generality.md).
+[Simon's sense](../learning-is-not-only-about-generality.md): a change to
+the system that changes what it can do on later occasions. The test above
+is applied to changes of that sort. A sequencer that proposes a landing
+schedule, checks it and keeps it is deciding what to do now, which is
+planning. It learns when it retains a revised scheduling rule.
 
 - **The change** is to something the learner retains and its later work
   uses. It is an event that alters what the system retains, not an object
@@ -41,8 +45,10 @@ are learning in
 - **Evaluation is causally distinct from proposing.** It need not be a
   separate stage or a separate actor. Its result decides whether the change
   is made, or undone if it was already made, and a rejection is its own
-  event: it does not consist in the next candidate arriving. A change
-  written automatically or on a trigger is not selected.
+  event: it does not consist in the next candidate arriving. Selection can
+  be automatic. A validator examines a proposed patch, and its verdict can
+  stop the patch from taking effect. A trigger examines nothing that was
+  proposed: the tenth report causes the blocklist entry.
 - **Evaluation needs a comparison, not a value function.** It can apply one
   fixed measure, such as a validator, a formula, a score or a proof. It can
   also compare the system with and without the change across several
@@ -85,11 +91,12 @@ it retains is selected.
 
 The system named in a claim has to be the one that changes. Who does the
 selecting does not matter for the term. It matters for two further
-questions, and each moves one more function inside the system. Take a model whose deployed checkpoint is
+questions, and each moves one more function inside the system. Take a deployed model whose checkpoint is
 picked by a validation score:
 
-1. **Learning.** The system is what changes. The model alone learns by
-   selection that others perform on it.
+1. **Learning.** The system is what changes. No checkpoint changes when
+   one replaces another. The deployed model changes which checkpoint it
+   uses, and it learns by selection that others perform on it.
 2. **Self-improvement by selection.** The system also does the selecting. The model
    together with the selection script is a
    [self-improving system](./self-improving-system.md).
