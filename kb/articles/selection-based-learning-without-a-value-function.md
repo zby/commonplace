@@ -43,8 +43,9 @@ and can be rejected—does not need a value function. Its selection step
 needs a comparison between the system with a change and the system without
 it. The usual picture is a ranking of every possible change, from which the
 best is taken. But search is costly and reaches only a few candidates, so
-the only question ever asked is whether the candidate at hand is better
-than what the system has now. A value function supplies that comparison when one formula captures the
+the only question ever asked is whether a candidate at hand is better
+than what the system has now, or than another candidate that search
+reached. A value function supplies that comparison when one formula captures the
 work. When none does, many scoring functions are compatible with the purpose
 of the work. Decision analysis calls that set a **preference model**, and
 the comparison is **robust** when every function in the set gives the same
@@ -279,10 +280,11 @@ time.
 
 Is the model then a value function after all, held in its weights? It is
 not. A value function gives every state a number, so it orders every pair
-of versions. What the model supplies is a partial function from a proposed
-change to *approve* or *disapprove*: on some changes it returns neither.
-Where it does answer, and answers consistently, it is equivalent to a set
-of value functions that all agree, which is the preference model above.
+of versions. What the model supplies is a partial comparison of two
+versions on the current evidence. It returns *approve*, *disapprove* or
+neither. Where it does answer, and answers consistently, with no cycles
+and transitively, it is equivalent to a set of value functions that all
+agree, which is the preference model above.
 The pairs it leaves unanswered are the open cases. Many of them close when
 the alternative is changed. Keeping the routing line for good may be open,
 while trying it with a cheap way back can be better under every compatible
@@ -406,8 +408,8 @@ intervention, five hazards can defeat it:
 
 If controlled runs show that automated language-model judgment cannot keep
 false-positive acceptance, unfaithful rationales, and accretion below the
-gains it finds, the bet fails—and weights-only continual learning wins
-those domains.
+gains it finds, the bet fails—and those domains stay with weights-only
+continual learning or with engineering governed by people.
 
 ## Where to go next
 

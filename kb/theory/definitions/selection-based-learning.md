@@ -31,15 +31,12 @@ are learning in
 [Simon's sense](../learning-is-not-only-about-generality.md).
 
 - **The change** is to something the learner retains and its later work
-  uses. A proposal is information that describes a change, and it can be
-  stored, as a patch can. Storing it is already a change to the system's
-  durable state, and a different one from the change it describes. It is
-  usually cheap, but it is still a decision, and it is made on the
-  proposal as received, before anything is stored. The
-  described change is not stored. The system changes, and what it retains
-  afterwards is different. Where that is held
-  does not matter. A handbook,
-  code, a team's working habits and a model checkpoint all qualify, so a
+  uses. It is an event that alters what the system retains, not an object
+  stored in it. A proposal is information that describes a change. Storing
+  a proposal, as a patch is stored, is a separate change from making the
+  change it describes, and whether that storing is itself selected depends
+  on the system. Where the retained content is held does not matter. A
+  handbook, code, a team's working habits and a model checkpoint all qualify, so a
   store that can be read is not required.
 - **Evaluation is causally distinct from proposing.** It need not be a
   separate stage or a separate actor. Its result decides whether the change
