@@ -171,6 +171,7 @@ plugins:
         'articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md': 'articles/an-automated-software-house-as-a-second-test-of-a-theory-builder.md'
         'articles/recursive-targetability.md': 'articles/bootstrapping-an-autonomous-theory-builder.md'
         'articles/reflective-self-improvement.md': 'articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md'
+        'articles/testing-autonomous-deliberative-learning.md': 'articles/testing-autonomous-selection-based-learning.md'
         'articles/testing-the-conjectural-learning-program.md': 'articles/testing-whether-a-theory-builder-learns.md'
         'articles/testing-the-theory-refinement-program.md': 'articles/testing-whether-a-theory-builder-learns.md'
         'articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md': 'articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md'
