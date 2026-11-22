@@ -1,5 +1,5 @@
 ---
-description: "Lead article: deliberative learning as a distinct learning paradigm with on-balance judgment in place of a value function; fixed-weight LLM bet, weight-training contrast, Bitter Lesson, and empirical test"
+description: "Lead article: selection-based learning needs a comparison, not a value function; the bet that a fixed-weight LLM can build the preference model and make the robust comparison; weight-training contrast, Bitter Lesson, empirical test"
 type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -38,28 +38,31 @@ pairs opaque numerical weights with a scalar loss or value function. Viewed
 through that frame, an agent that edits its own instructions or code without
 a scalar benchmark looks like prompt engineering rather than learning.
 
-This article makes a two-level claim. First, **deliberative learning**—a
-system learning by changes that are each proposed, judged, and can be
-rejected—is a distinct learning paradigm. The case argued here is the one
-where those changes are edits to the system's own readable, addressable
-store. When no single formula
-captures the work, an **on-balance judgment** works in place of a value
-function inside the loop, deciding edits without selecting one scalar
-weighting from the many value functions compatible with the goal. The
-process itself is not new:
-software teams do it when they maintain handbooks and linters, and symbolic
-learners such as PRODIGY ran a fixed-formula version of it in the 1980s.
-Like reinforcement learning, the term names a process with no built-in
-guarantee of improvement.
+This article makes a two-level claim. First, **selection-based
+learning**—a system learning by changes that are each proposed, evaluated,
+and can be rejected—does not need a value function. Its selection step
+needs a comparison between the system with a change and the system without
+it. A value function supplies that comparison when one formula captures the
+work. When none does, many scoring functions are compatible with the purpose
+of the work. Decision analysis calls that set a **preference model**, and
+the comparison is **robust** when every function in the set gives the same
+answer. A robust comparison can select changes without anyone choosing one
+scalar weighting. The case argued here is the one where the changes are
+edits to the system's own readable, addressable store. The process itself is
+not new: software teams do it when they maintain handbooks and linters, and
+symbolic learners such as PRODIGY ran a fixed-formula version of it in the
+1980s. Like reinforcement learning, the term names a process with no
+built-in guarantee of improvement.
 
-Second, and this is our empirical bet: **putting a fixed-weight language
-model in the judge slot turns deliberative learning into an automated
-machine learning paradigm.** What is new is not the loop, but a machine
-judge that can weigh trade-offs in prose and code without a formal utility
-function, trace later failures back to specific retained edits, and revise
-its own working criteria—learning at deployment time while its weights stay
-fixed, and scaling with computation in a way compatible with the Bitter
-Lesson.
+Second, and this is our empirical bet: **a fixed-weight language model can
+supply what the selection step needs. It can build the preference model
+from a stated purpose and make the robust comparison.** That turns
+selection-based learning into an automated machine learning paradigm. What
+is new is not the loop, but a machine that can derive from a purpose stated
+in prose which trade-offs are acceptable, trace later failures back to
+specific retained edits, and revise its own working criteria—learning at
+deployment time while its weights stay fixed, and scaling with computation
+in a way compatible with the Bitter Lesson.
 
 ## One change followed through
 
@@ -98,20 +101,18 @@ than without it was a separate question. Third, no
 single scalar metric had to be invented to compare saved misfilings against
 diffuse context load.
 
-## Deliberative learning versus training weights
+## Selection-based learning versus training weights
 
 Our knowledge base defines
-[deliberative learning](../theory/definitions/judgment-governed-self-improvement.md) by
+[selection-based learning](../theory/definitions/judgment-governed-self-improvement.md) by
 one condition: a change to what the system retains for its later work is
 proposed, judged in a separate step inside the learning loop, and can be
-rejected. The judgment is a decision on available evidence that later work
-will go better with the change than without it, weighing considerations
-like an on-balance judgment. Treating one fixed criterion (such as a
-validator or utility formula) as settling the matter is the special case.
+rejected. The judgment is a decision, on the evidence available, about
+whether to make or keep the change. It can apply one fixed measure, such as
+a validator or a utility formula, or a comparison across several.
 
-A single validator or utility formula weighs nothing—"deliberative" fits
-the general case of weighing trade-offs better than this limiting case—yet
-it still separates proposing from judging and can reject a change. Four
+A single validator or utility formula weighs nothing, yet it still
+separates proposing from judging and can reject a change. Four
 kinds of update fail the condition because nothing judges a proposed
 change: gradient steps under a fixed loss, other direct input-driven
 updates (such as a nightly click-ranking job or a tabular
@@ -128,10 +129,10 @@ memory, and it gains rules that a judge can read and a later edit can
 correct one at a time. This article is about that case: a readable store,
 edited by judged changes. The table compares it with gradient training.
 
-| Axis | Training weights | Deliberative learning over a readable store |
+| Axis | Training weights | Selection-based learning over a readable store |
 |---|---|---|
 | **Modifiable substrate** | Opaque numerical parameters | Readable, [addressable](../theory/definitions/addressable-theory.md) store (prose, structured text, code) |
-| **Role of the value / loss function** | Scalar loss, reward, or value function | Rejectable judgment in the loop—from a fixed criterion up to an on-balance judgment |
+| **Role of the value / loss function** | Scalar loss, reward, or value function | Rejectable judgment in the loop—from one fixed measure up to a robust comparison across a preference model |
 | **When updates happen** | Training or fine-tuning runs | Deployment time, taking effect on the next task that reads the store |
 | **Credit assignment and correction** | Backpropagation or policy gradients across parameters | Inspecting traces to edit, narrow, or revert specific entries while keeping the rest |
 | **Inspectability** | Requires interpretability probes over weights | Direct reading, diffing, testing, and version control by people or agents |
@@ -160,7 +161,7 @@ at the cost of storing and managing more state.
 
 ## Proof, formula, judgment: where the bet enters
 
-If deliberative learning over readable stores is not new, why did earlier
+If selection-based learning over readable stores is not new, why did earlier
 AI systems not turn it into a general machine learning paradigm? The three
 precedents raise the same question: how does a system decide whether a
 proposed change is worth keeping?
@@ -181,7 +182,7 @@ not deliver what its user wanted.
 
 **Fixed formula.** Steven Minton's
 [PRODIGY](../sources/minton-utility-of-ebl-aaai88.ingest.md) built a
-working symbolic deliberative learner in 1988. It kept search-control rules
+working symbolic selection-based learner in 1988. It kept search-control rules
 only while a fixed utility formula estimated positive time saved, updated
 each rule's estimate from later use, and dropped rules whose estimate
 turned negative. That is genuine **targeted correction**—pinning a loss on
@@ -205,27 +206,44 @@ influencing how credit was awarded, not by helping solve the task. Lenat
 could reject it on that ground without having to specify a better scoring
 formula.
 
-**On-balance judgment.** In real engineering and knowledge work, gains and
+**Robust comparison.** In real engineering and knowledge work, gains and
 losses fall on different tasks, and many different scalar value functions
-can be defended from the same declared goal. An
-[on-balance judgment](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
-works in place of a single value function by leaving that choice open. Once
-the alternative, the parties whose costs count, and the horizon are fixed, a
-change is an improvement on balance when every reasonable measure of the
-declared work—every value function defensible from its purpose—favors it.
-When compatible value functions pull in opposite directions or evidence has
-not yet arrived, the verdict stays open—and the system can still act as a
-bounded decision, using
+can be defended from the same declared goal. The rule for this case is old and
+standard: rank two options only where every admissible value function
+agrees. Stochastic dominance is a familiar instance. One gamble dominates
+another when every increasing utility function prefers it, and restricting
+the set to risk-averse utilities orders more pairs. Multiple-criteria
+decision analysis states the rule in the terms used here
+([Greco, Mousseau and Słowiński](../sources/greco-ordinal-regression-revisited.ingest.md)).
+It keeps every value function compatible with the preferences a person has
+stated, and calls that set the preference model. A preference for one
+option over another is *necessary* when every function in the set gives it,
+and *possible* when at least one does. With no stated preferences, an option
+is necessarily preferred only when it is at least as good on every
+criterion, which leaves most real changes unordered. Each stated preference
+removes functions from the set, so more pairs become ordered. When one
+function is left, the method is ordinary selection by a value function.
+
+A
+[robust comparison](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
+applies this to a change. Once the alternative, the parties whose costs
+count, and the horizon are fixed, the change is an improvement when every
+compatible value function favors it. When compatible value functions pull
+in opposite directions or evidence has not yet arrived, the comparison stays
+open—and the system can still act as a bounded decision, using
 [reversibility to limit future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md),
 as in the routing-line example above.
 
-**We bet that a fixed-weight language model can fill the judge
-slot autonomously, running double-loop deliberative learning with targeted
-correction for work where no fixed criterion is adequate.** That requires
-the model not only to weigh proposed edits and diagnose which retained edit
-caused a later failure, but also to recognize when an existing gate,
-validator, or review criterion is misleading and revise it—while the
-declared objective the criteria serve stays fixed
+In the decision-analysis method, a person states the preferences. **We bet
+that a fixed-weight language model can do that work autonomously: derive
+the preference model from the declared purpose of the work, make the robust
+comparison, and decide the cases it leaves open.** This is double-loop
+selection-based learning with targeted correction, for work where no fixed
+criterion is adequate. It requires the model not only to compare proposed
+edits and diagnose which retained edit caused a later failure, but also to
+recognize when an existing gate, validator, or review criterion is
+misleading and revise it—while the declared objective the criteria serve
+stays fixed
 ([revising an improvement objective](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md)).
 
 ## Compatible with the Bitter Lesson
@@ -261,8 +279,8 @@ located the stall in what the proposer was not shown (its scorer saw a
 failure mode in a quarter of runs that never reached the proposer), and its
 strongest gains came from editing a natural-language lessons file.
 
-Once a language model plays the value-function role inside an automated
-deliberative loop, the system sits on the computation side of the Bitter
+Once a language model supplies the comparison inside an automated
+selection loop, the system sits on the computation side of the Bitter
 Lesson. Additional compute buys more candidate proposals, richer execution
 traces, independent criticism, targeted revisions, and better working
 criteria—all automatically generated, tested, and revised rather than
@@ -276,12 +294,12 @@ Bitter Lesson
 
 ## Whether a change improved the system, current evidence, and limits
 
-Because deliberative learning names a process with no success condition,
-the paradigm claim stays honest only if success is judged separately. A
-change to the store improved the system when the present system is better,
-on balance, at its later work with that one change than with that change
-taken out (leaving unrelated later edits intact), across every reasonable
-measure of the declared work over the declared horizon.
+Because selection-based learning names a process with no success
+condition, the paradigm claim stays honest only if success is judged
+separately. A change to the store improved the system when the present
+system is robustly better at its later work with that one change than with
+that change taken out (leaving unrelated later edits intact): better under
+every compatible measure of the declared work over the declared horizon.
 
 For a recent edit—like our routing line on the day it is added—the verdict
 is normally **open** until later episodes arrive, just as
@@ -296,8 +314,8 @@ tasks outside the episode that prompted the edit:
    must change later behavior
    ([operative change](../theory/definitions/operative-change.md)). Loading
    a memory file on every run proves nothing if the model ignores it.
-2. **On-balance improvement.** The changed behavior must score higher
-   across reasonable measures of the declared work, not merely pass the
+2. **Robust improvement.** The changed behavior must score higher under
+   every compatible measure of the declared work, not merely pass the
    check that admitted it.
 
 **Current state of evidence.** Commonplace is an active, human-assisted
@@ -329,15 +347,16 @@ those domains.
 
 ## Where to go next
 
-- [Deliberative learning](../theory/definitions/judgment-governed-self-improvement.md) —
+- [The definition](../theory/definitions/judgment-governed-self-improvement.md) —
   the full definition, including what a claim must name and boundary cases
   such as triggers and direct updates. A companion definition covers
   [single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md).
-- [On-balance judgments can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
-  — what an on-balance claim asserts, how to decide under open verdicts,
+- [Necessary preference can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
+  — what a claim of improvement asserts, how to decide when the comparison
+  is open,
   and Commonplace's declared objective; paired with
   [reversibility can favor a change by limiting future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md).
-- Companion drafts in this collection—written before deliberative learning
+- Companion drafts in this collection—written before this framing
   was adopted and currently being re-anchored from the narrower *theory
   builder* special case (where the store holds explicit, criticized
   theories):
