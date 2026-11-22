@@ -941,6 +941,7 @@ plugins:
         'reports/types/agentic-system-analysis-set.md': 'agentic-system-analyses/types/agentic-system-analysis-set.md'
         'reports/types/connect-report.md': 'types/connect-report.md'
         'reports/types/full-pass-report.md': 'reference/adr/135-improvement-procedures-are-three-plans-on-one-runner.md'
+        'sources/faster-sorting-algorithms-discovered-using-deep-rl.ingest.md': 'sources/alphadev-faster-sorting-2026-09-08.ingest.md'
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md'
         'sources/past-bench-recursive-self-improvement-personal-agents.ingest.md': 'sources/past-bench-personal-agents-pdf.ingest.md'
         'sources/the-risks-of-invariant-risk-minimization.ingest.md': 'sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md'
