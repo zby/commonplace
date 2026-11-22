@@ -138,4 +138,4 @@ Relevant Notes:
 - [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: Playwright APIs, validators, retrieval decisions, and controller actions configure future behavior.
 - [Codification](../../theory/definitions/codification.md) - exemplifies: SkillWeaver crosses from natural-language/task traces into executable Python procedures.
 - [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) - applies: LLM success checks and exception-free tests are useful but weaker than deterministic replay proofs.
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) - exemplifies: the system mutates deployable, readable APIs rather than fine-tuning model weights.
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) - exemplifies: the system mutates deployable, readable APIs rather than fine-tuning model weights.

@@ -7,7 +7,7 @@ tags: [learning-theory, constraining, deploy-time-learning, self-improving-syste
 
 # Constraining during deployment can produce learning outside weights
 
-[Constraining](./definitions/constraining.md) commits choices about what a rule permits or prefers. When deployment experience leads a system to select and retain a useful constraint, later executions can benefit without changing the model's weights. This is one path within [deployment-time learning through retained artifacts](./retained-artifacts-enable-persistent-deployment-time-adaptation.md).
+[Constraining](./definitions/constraining.md) commits choices about what a rule permits or prefers. When deployment experience leads a system to select and retain a useful constraint, later executions can benefit without changing the model's weights. This is one path within [deployment-time learning through retained artifacts](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md).
 
 Retention makes the change available for later use. To establish an improvement, the system must also check what the constraint changes and whether those effects serve the task. Saving an instruction or committing a validator does not by itself establish a gain in adaptive capacity.
 
@@ -43,7 +43,7 @@ Constraining is one possible mechanism of learning outside weights. This note do
 
 Relevant Notes:
 
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — grounds: distinguishes evidence-responsive adaptation from arbitrary durable maintenance
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — grounds: distinguishes evidence-responsive adaptation from arbitrary durable maintenance
 - [Constraining](./definitions/constraining.md) — defined-in: the commitment operation whose evaluated use this note examines
 - [Constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — grounds: benefits depend on the committed reading fitting the task
 - [Learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: capacity change can concern reliability, speed or cost

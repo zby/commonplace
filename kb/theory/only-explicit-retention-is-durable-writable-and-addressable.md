@@ -105,5 +105,5 @@ Relevant Notes:
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: supplies the direct-target advantage and its comparative scope
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: evaluates available operations rather than inferring control from component membership
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — contrasts: explicit decision content and human-free execution are separate properties
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — extends: connects retained artifacts to later behaviour
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: connects retained artifacts to later behaviour
 - [Retained artifact](./definitions/retained-artifact.md) — defined-in: the durable state whose later consumption matters

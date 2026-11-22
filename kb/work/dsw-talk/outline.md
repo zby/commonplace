@@ -142,4 +142,4 @@ The audience takeaway: "I can apply these patterns to my own LLM knowledge syste
 - [Scheduler–LLM separation exploits an error-correction asymmetry](../../theory/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — see-also: underlying rationale retained for Q&A
 - [A functioning KB needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — draws-on: candidate-versus-promoted distinction used without the taxonomy
 - [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) — see-also: cut from the talk, kept for Q&A
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — see-also: deeper interpretation not named on stage
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — see-also: deeper interpretation not named on stage

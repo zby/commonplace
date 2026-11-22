@@ -11,7 +11,7 @@ source_notes:
   - kb/theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/theory/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
-  - kb/theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md
+  - kb/theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md
   - kb/theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md
   - kb/theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md
   - kb/theory/false-positive-generation-is-filtered-before-retention.md
@@ -160,7 +160,7 @@ table compares that case with gradient training.
 The last three rows are payoffs of a readable store, and two carry limits.
 "Deployment time" places a change in the lifecycle, not its speed:
 proposing, evaluating, and safely installing it still take time
-([persistent deployment-time adaptation](../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md)).
+([persistent deployment-time adaptation](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md)).
 Direct reading—by people or by other agents at volumes people could not
 read—works only while each rule stays readable at an affordable cost; large
 or obscure artifacts can block it

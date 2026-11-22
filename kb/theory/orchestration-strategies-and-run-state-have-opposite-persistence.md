@@ -24,7 +24,7 @@ Splitting the lifecycles turns the scheduler into an **orchestrator cache with a
 2. **Hit** → reuse the verified code: cheap, deterministic, no re-derivation.
 3. **Miss** → generate the orchestration fresh (RLM-style); if it clears the promotion gate below and passes tests, write it back to the library.
 
-Two distinct gates run here. *Fit* asks whether the stored strategy applies to the task. *Trust* asks what evidence supports its behavior. Retaining tests with a fragment preserves evidence for the tested cases and a way to rerun those checks after changes; it does not certify every future use. The [verifiability comparison](./verifiability-gradient.md) asks which requirements those checks establish and at what cost. Moving already-symbolic REPL code into a library changes its retention and checking arrangements; that move alone is not [codification](./definitions/codification.md). Evidence-guided promotion can participate in [deployment-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md).
+Two distinct gates run here. *Fit* asks whether the stored strategy applies to the task. *Trust* asks what evidence supports its behavior. Retaining tests with a fragment preserves evidence for the tested cases and a way to rerun those checks after changes; it does not certify every future use. The [verifiability comparison](./verifiability-gradient.md) asks which requirements those checks establish and at what cost. Moving already-symbolic REPL code into a library changes its retention and checking arrangements; that move alone is not [codification](./definitions/codification.md). Evidence-guided promotion can participate in [deployment-time learning](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md).
 
 ## What this costs, and why promotion must be selective
 
@@ -46,7 +46,7 @@ Relevant Notes:
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds: the `select`/`K` decomposition whose two halves this note assigns opposite persistence economics
 - [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — contrasts: the system that discards both halves, losing the valuable `select`-strategies along with the task-specific state
 - [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — mechanism: the accumulation cost RLM avoids and that selective promotion deliberately takes back on the promoted half
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — mechanism: the repo-mediated learning loop that test-gated promotion closes
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — mechanism: the repo-mediated learning loop that test-gated promotion closes
 - [codification](./definitions/codification.md) — contrasts: retaining already-symbolic code is distinct from committing a natural-language rule to symbolic execution
 - [the verifiability gradient](./verifiability-gradient.md) — grounds: promotion needs named checks and costs, not a ranking of REPL and library code
 - [codification and relaxing navigate the bitter-lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — caveat: governs which strategies are worth promoting versus left for the model to rederive

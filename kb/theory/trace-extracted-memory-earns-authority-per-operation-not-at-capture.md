@@ -53,7 +53,7 @@ The ladder describes maturation, not an automation target. Where the oracle is s
 
 This is the epistemic axis. The related-but-distinct axis is structural: the [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md)'s text→note→structured-claim ladder lowers *capture friction* and adds structure in place. The two are orthogonal. The wikiwiki ladder asks "how much structure has this artifact grown?"; this one asks "how much has its claim been earned?" A structurally complete `structured-claim` can sit at the fail rung — well-formatted, unverified — and a rung-3 verified fact can still be a bare `text` capture. Confusing the two lets formatting pass for authority.
 
-Within [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md), this maturation is the across-session timescale: the path of a durable artifact from raw trace toward a consulted rule.
+Within [deploy-time learning](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md), this maturation is the across-session timescale: the path of a durable artifact from raw trace toward a consulted rule.
 
 ## Open Questions
 
@@ -69,5 +69,5 @@ Relevant Notes:
 - [Use trace extraction as meta-learning](./agent-memory-requirements/use-trace-extraction-as-meta-learning.md) — grounds: the fail rung's signal-quality distinctions and candidate-status fields keep early-rung artifacts from being read as mature rules
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — grounds: the verify and abstract rungs are where oracles get hard, so full automation of the climb is out of reach for judgment-heavy claims
 - [abstract an experience into a lesson only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — mechanism: the abstract rung generalizes a verified case into a bounded lesson
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — extends: this maturation is the across-session path of deployment-time learning, from raw trace toward a consulted rule
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: this maturation is the across-session path of deployment-time learning, from raw trace toward a consulted rule
 - [the wikiwiki principle: lowest-friction capture, then progressive refinement](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — contrasts: structural-refinement ladder (capture friction, structure-in-place) is the orthogonal axis to this epistemic-maturity ladder

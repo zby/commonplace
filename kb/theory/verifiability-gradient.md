@@ -12,7 +12,7 @@ tags: [learning-theory, constraining, evaluation]
 
 Karpathy identifies three properties that make a task verifiable: **resettable** (you can retry), **efficient** (retries are cheap), and **rewardable** (you can evaluate results automatically). The more verifiable a task is, the more you can hill-climb on it — through RL at training time, or through iteration at runtime.
 
-For [deployment-time learning through retained artifacts](./retained-artifacts-enable-persistent-deployment-time-adaptation.md), assess those properties for a particular task and checking procedure. A prompt, schema, test suite or code module does not have a fixed grade of verifiability. The same artifact can admit an exact check for one requirement and a difficult judgment for another.
+For [deployment-time learning through retained artifacts](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md), assess those properties for a particular task and checking procedure. A prompt, schema, test suite or code module does not have a fixed grade of verifiability. The same artifact can admit an exact check for one requirement and a difficult judgment for another.
 
 ## Examples of checking different requirements
 
@@ -61,7 +61,7 @@ A stable natural-language instruction can remain an appropriate implementation w
 
 Relevant Notes:
 
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — grounds: supplies the adaptation setting in which repeated checking matters
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — grounds: supplies the adaptation setting in which repeated checking matters
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: develops evidence-guided changes in how requirements are implemented
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — contrasts: explores the quality of correctness signals; reset conditions and retry costs also need separate assessment
 - [Symbolic form holds consumers to a semantic reference](./symbolic-form-holds-consumers-to-a-semantic-reference.md) — grounds: reference adoption is separate from inspection cost and from adequacy to the task

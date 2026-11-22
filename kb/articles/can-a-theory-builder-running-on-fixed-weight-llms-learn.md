@@ -12,7 +12,7 @@ source_notes:
   - kb/theory/a-complete-theory-path-does-not-establish-improved-capacity.md
   - kb/theory/retained-theories-may-improve-sample-efficiency.md
   - kb/theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md
-  - kb/theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md
+  - kb/theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md
   - kb/theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
   - kb/theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md
   - kb/theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md
@@ -194,7 +194,7 @@ where its learning happens: in explicit, criticizable theories, and not only
 in changes to model weights. Three payoffs follow from that difference.
 
 **Learning without retraining.** New knowledge
-[becomes usable as soon as it is retained](../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md),
+[becomes usable as soon as it is retained](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md),
 so the builder adapts at deployment time instead of waiting for the next
 training run.
 
