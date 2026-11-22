@@ -11,7 +11,7 @@ tags: [kb-maintenance, observability, curation, evaluation]
 
 Brainstorming: what signals — structural, semantic, or hybrid — could serve as soft oracles for KB quality? No single signal is reliable, but many weak signals combined might provide enough guidance to drive a learning loop without waiting for usage data.
 
-The analogy: AlphaGo works because the game has a perfect verifier. KBs don't. But we don't need a perfect verifier to learn — we need a signal that's better than random. Can we manufacture one from a basket of imperfect signals? Framed on the [oracle-strength spectrum](./oracle-strength-spectrum.md), the question is whether combining many no-oracle or weak-oracle signals can manufacture a usable soft oracle — hardening the guidance available to the [learning loop](./automating-kb-learning-is-an-open-problem.md) without requiring the usage data it currently lacks.
+The analogy: AlphaZero learns by self-play against a perfect verifier. It "is provided with perfect knowledge of the game rules" ([AlphaZero preprint](../sources/alphazero-chess-shogi-self-play.ingest.md), verbatim), and the rules score every finished game to give the outcome its network is trained to predict. KBs don't have such a verifier. But we don't need a perfect verifier to learn — we need a signal that's better than random. Can we manufacture one from a basket of imperfect signals? Framed on the [oracle-strength spectrum](./oracle-strength-spectrum.md), the question is whether combining many no-oracle or weak-oracle signals can manufacture a usable soft oracle — hardening the guidance available to the [learning loop](./automating-kb-learning-is-an-open-problem.md) without requiring the usage data it currently lacks.
 
 ## Static signals (measurable at any point)
 
