@@ -20,7 +20,7 @@ Two neighbors are close. [Improvement-loop](./improvement-loop-README.md) covers
 ## The judgment that decides a change
 
 - [Necessary preference can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md) — what a claim of improvement asserts when gains and losses fall on different tasks, and when the comparison stays open
-- [An objection can show where to split an on-balance judgment](../theory/an-objection-can-show-where-to-split-an-on-balance-judgment.md) — how to examine a disputed judgment
+- [An objection can show where to split an on-balance judgment](../theory/an-objection-can-show-where-to-split-a-comparison.md) — how to examine a disputed judgment
 - [Reversibility can favor a change by limiting future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md) — why a change that can be corrected may be kept on weaker evidence
 - [Revising an improvement objective is licensed from outside it](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md) — the limit on double-loop revision: a learner can revise its criterion, and the objective the criterion serves stays fixed
 
