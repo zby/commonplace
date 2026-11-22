@@ -30,7 +30,8 @@ Several models can reproduce the same examples and disagree on the very choice t
 
 ## Quotes
 
-No source quotes have been retained yet.
+> The preference model built via ordinal regression is the set of all additive value functions compatible with the preference information. Using this model, one can deﬁne two relations in the set A: the necessary weak preference relation which holds for any two alternatives a, b from set A if and only if for all compatible value functions a is preferred to b, and the possible weak preference relation which holds for this pair if and only if for at least one compatible value function a is preferred to b. These relations establish a necessary and a possible ranking of alternatives from A, being, respectively, a partial preorder and a strongly complete relation. The UTAGMS method is intended to be used interactively, with an increasing subset AR and a progressive statement of pairwise comparisons. When no preference information is provided, the necessary weak preference relation is a weak dominance relation, and the possible weak preference relation is a complete relation. Every new pairwise comparison of reference alternatives, for which the dominance relation does not hold, is enriching the necessary relation and it is impoverishing the possible relation, so that they converge with the growth of the preference information.
+> --- `kb/sources/.snapshots/greco-ordinal-regression-revisited.md` @ `sha256:51c5ee8d3204e0eccfd73137916e2fbcb10eadfe0ffd6dfcaeecc828c3908b84` — abstract
 
 ## Connections Found
 
