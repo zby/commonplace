@@ -1,13 +1,13 @@
 ---
 description: "Definition — selection-based learning is learning in which each change to what a system retains is proposed, evaluated and can be rejected; it contrasts with updates that evidence determines directly"
 type: types/definition.md
-tags: [self-improving-systems, learning-theory, judgment-governed-self-improvement]
+tags: [self-improving-systems, learning-theory, improvement-loop]
 ---
 
 # Selection-based learning
 
 <!-- Maintenance: when changing this definition, please apply the checks in
-[judgment-governed-self-improvement-checks.md](./selection-based-learning-checks.md).
+[selection-based-learning-checks.md](./selection-based-learning-checks.md).
 This term was named "deliberative learning" until 2026-11-22 and
 "judgment-governed self-improvement" on that day. -->
 
@@ -20,10 +20,7 @@ This term was named "deliberative learning" until 2026-11-22 and
 case. Each newly trained network played the current best one and replaced
 it only if it won more than 55% of the games. Its successor
 [AlphaZero](https://arxiv.org/abs/1712.01815) dropped that step and updated
-a single network continually, so it learned by direct update alone. An
-agent learns the way AlphaGo Zero did when it drafts a new line for its
-instruction file, reruns the tasks the line is meant to fix, and keeps the
-line only if they go better.
+a single network continually, so it no longer selected among networks.
 
 A system that learns this way is a **selection-based learner**. The loop
 that does it is a
@@ -52,10 +49,18 @@ question, answered by comparing the system with and without it.
 
 ## Scope
 
-- **Direct updates (outside).** A gradient step under a fixed loss, a value
-  table updated by tabular reinforcement learning, and a nightly job that
-  raises an article's rank whenever it is clicked all write directly from
-  their input.
+- **Direct updates (outside).** Pre-training by gradient descent is told
+  the right output for each input, and the error fixes the update. Nothing
+  is tried, so nothing can be rejected.
+- **Reinforcement learning (partly inside).** A learner that tries actions
+  and keeps the ones with the higher estimated value, as a bandit or a
+  greedy action-value method does, selects among actions with the reward as
+  the one measure. The update to the weights or the value table is how the
+  result is stored. The level has to be named: each increment to the table
+  is a direct update, and the change in which action is preferred is
+  selected. Reinforcement learning that only predicts returns, or that
+  shifts a policy smoothly along a gradient, drops no alternative and stays
+  outside.
 - **Triggers and automatic storage (outside).** A bot that adds a review
   rule whenever a class of bug has been reported five times is set off by a
   count. A logger that stores every session trace evaluates none of them.
