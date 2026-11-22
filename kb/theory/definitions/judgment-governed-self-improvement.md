@@ -1,186 +1,117 @@
 ---
-description: "Definition — judgment-governed self-improvement is learning in which each proposed change to what a system retains is judged and can be rejected; a fixed criterion is the degenerate case of the on-balance judgment"
+description: "Definition — selection-based learning is learning in which each change to what a system retains is proposed, evaluated and can be rejected; it contrasts with updates that evidence determines directly"
 type: types/definition.md
 tags: [self-improving-systems, learning-theory, judgment-governed-self-improvement]
 ---
 
-# Judgment-governed self-improvement
+# Selection-based learning
 
 <!-- Maintenance: when changing this definition, please apply the checks in
 [judgment-governed-self-improvement-checks.md](./judgment-governed-self-improvement-checks.md).
-This term was named "deliberative learning" until 2026-11-22. -->
+This term was named "deliberative learning" until 2026-11-22 and
+"judgment-governed self-improvement" on that day. -->
 
-A team weighing whether to add a routing rule to its handbook, a team
-agreeing without writing anything down to change how it hands work over, and
-an agent deciding whether to revise a validator in its own codebase are all
-doing **judgment-governed self-improvement**. It is learning in which each
-change is decided by a judgment:
+**Selection-based learning** is learning in which each change is selected:
 
-> A change to what the system retains for its later work is proposed, judged
-> in the learning loop, and can be rejected.
+> A change to what the system retains for its later work is proposed,
+> evaluated, and can be rejected.
 
-- **The change** is to the system's own
-  [behavior-determining organization](./behavior-determining-organization.md),
-  and its later work consumes it: the change is
-  [operative](./operative-change.md). It may add, revise or delete, or
-  change what later work loads or selects. The definition does not restrict
-  where the change is held: a handbook, code, a team's working habits and a
-  model checkpoint all qualify.
-- **Proposing and judging are separate steps.** Something evaluates the
-  proposed change itself, and that judgment controls whether the change is
-  made. A change written automatically or on a trigger is not judged.
-- **The judgment is a decision**, made on the evidence the system has, that
-  later work is expected to go better with the change than without it. Its
-  general form is the
-  [on-balance judgment](../necessary-preference-can-guide-improvement-without-a-global-measure.md):
-  the change is favored when every reasonable measure of the work favors
-  it, and the decision stays open when the measures disagree. What the
-  judgment applies to decide is its **criterion**.
-- **A fixed criterion is the degenerate judgment.** A validator, a gate, a
-  formula or a proof admits exactly one measure. With one measure nothing is
-  weighed and no decision stays open: passing settles the matter. Whoever
-  fixed the criterion chose that one measure in advance. Elsewhere in this
-  note, "on-balance judgment" means the case with more than one reasonable
-  measure.
+[AlphaGo Zero](https://www.nature.com/articles/nature24270) is a well-known
+case. Each newly trained network played the current best one and replaced
+it only if it won more than 55% of the games. Its successor
+[AlphaZero](https://arxiv.org/abs/1712.01815) dropped that step and updated
+a single network continually, so it learned by direct update alone. An
+agent learns the way AlphaGo Zero did when it drafts a new line for its
+instruction file, reruns the tasks the line is meant to fix, and keeps the
+line only if they go better.
 
-The team that agrees a practice without writing it down already meets the
-definition. When it starts writing its rules down, it stops relying on its
-members' fallible memory: the rule that later work follows is
-the rule that was agreed, a judge can read what a proposed change says, and
-a later change can point at one rule and correct it. A store that can be
-read and pointed at makes the learning more reliable. It is not required.
+A system that learns this way is a **selection-based learner**. The loop
+that does it is a
+[proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md),
+and that note gives its anatomy. The contrast is a direct update, in which
+the evidence determines the change and nothing is proposed or rejected. Both
+are learning in
+[Simon's sense](../learning-is-not-only-about-generality.md).
 
-A system that learns this way is a **judgment-governed self-improving
-system**. Two splits place it in the KB's existing vocabulary:
-
-- **How a change is made.** A
-  [self-improving system](./self-improving-system.md) is the general case.
-  It makes a change either by an update that the evidence determines
-  directly, or by a
-  [proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md).
-  Judgment-governed self-improvement is the second. The two terms cover the
-  same systems: proposal-selection names the architecture, and
-  judgment-governed names what decides a change, in the same way a
-  [Gödel machine is proof-governed](../goedel-machines-are-a-proof-governed-case-of-self-modification.md).
-- **What the judgment admits.** The judgment is a fixed criterion or an
-  on-balance judgment. Proof-governed and formula-governed systems are the
-  fixed-criterion case.
-
-Machine learning usually works with one given performance measure, on both
-sides of the first split. Gradient training updates directly. Evolutionary
-search, checkpoint selection and hyperparameter search propose and reject
-candidates, so they are judgment-governed self-improvement with a fixed
-criterion. The second split is the one that leaves that setting: an on-balance judgment
-decides changes where no single measure is adequate.
+- **The change** is to something the learner retains and its later work
+  uses. Where the change is held does not matter. A handbook, code, a
+  team's working habits and a model checkpoint all qualify, so a store
+  that can be read is not required.
+- **Evaluation is a separate step**, and its result controls whether the
+  change is made or kept. A change written automatically or on a trigger is
+  not selected.
+- **Evaluation needs a comparison, not a value function.** It can apply one
+  fixed measure, such as a validator, a formula, a score or a proof. It can
+  also compare the system with and without the change across several
+  measures, as in a
+  [robust comparison](../necessary-preference-can-guide-improvement-without-a-global-measure.md).
 
 Like reinforcement learning, the term names a process and not a successful
-outcome. "Self-improvement" here means change directed at improvement, as in
-the self-improving system definition: a system whose changes fail to improve
-its later work still meets this definition. Whether one particular change
-made the system better is a separate question, answered by an
-[on-balance comparison](../necessary-preference-can-guide-improvement-without-a-global-measure.md)
-of the system with and without that change.
+outcome. Whether a selected change improved the system is a separate
+question, answered by comparing the system with and without it.
 
 ## Scope
 
-The definition separates rejectable decisions from updates that skip judging
-the proposed change:
+- **Direct updates (outside).** A gradient step under a fixed loss, a value
+  table updated by tabular reinforcement learning, and a nightly job that
+  raises an article's rank whenever it is clicked all write directly from
+  their input.
+- **Triggers and automatic storage (outside).** A bot that adds a review
+  rule whenever a class of bug has been reported five times is set off by a
+  count. A logger that stores every session trace evaluates none of them.
+  Each is inside only if a separate step evaluates what was drafted and can
+  reject it.
+- **One fixed measure (inside).** Keeping a patch because a validator
+  passed, deploying the checkpoint with the best validation score, and
+  keeping a mutation in an evolutionary search all evaluate a candidate and
+  can reject it. The gradient steps that produced each checkpoint stay
+  outside.
+- **Several measures (inside).** A team that looks at a test score and can
+  still reject the change for a reason the score does not capture.
 
-- **Direct updates (outside).** A nightly job that raises an article's rank
-  whenever it is clicked, a value table updated by tabular reinforcement
-  learning, and a gradient step under a fixed loss all write directly from
-  their input. No change is proposed and none can be rejected. All three are
-  learning, and none is judgment-governed.
-- **Triggers (outside).** A rule that says *when* to write is not a judgment
-  of *what* is written. A bot that adds a review rule whenever a class of
-  bug has been reported five times is set off by a count. It is inside only
-  if a separate step then evaluates the drafted rule and can reject it.
-- **Automatic storage (outside).** Logging every session trace is automatic:
-  nothing judges an individual trace. Appending an observation to
-  Commonplace's `kb/log.md` is inside, because an agent judges that
-  the observation is worth recording. Deciding to introduce automatic trace
-  logging is itself a judged change, while the traces the logger later
-  writes are outside the term.
-- **Fixed criterion (inside, degenerate case).** Keeping a patch because a
-  validator passed, keeping a rule because a utility formula scored it above
-  zero, deploying the checkpoint with the best validation score, and
-  switching to a rewrite because a target theorem was proved all evaluate a
-  change another step produced and can reject it.
-- **A score as one consideration (inside).** A team that looks at a test
-  score and can still reject the change for a reason the score does not
-  capture is making an on-balance judgment.
-- **Contents nobody can read (inside).** The checkpoint choice above, and a
-  team weighing whether to release a trained checkpoint, are inside for the
-  class *checkpoint choices*, although nobody can read the weights. The
-  gradient steps that produced the checkpoints stay outside.
+A claim of selection-based learning names the system and the class of
+changes it covers. A wiki that imports pages automatically and lets editors
+delete wrong ones is outside for imports and inside for deletions. Natural
+selection shows why the system must be named. A population learns by
+selection: variants arise, some are eliminated, and the rest are what the
+population retains. An individual organism in it does not, because nothing
+it retains is selected.
 
-Whoever judges—people, language models, programs or a mix—the judgment
-counts only where it controls the change. The definition also does not ask
-how well the judge weighs: a judge that weighs badly is still weighing.
+## The term and the system boundary
 
-## What a claim names
+Whether learning is selection-based does not depend on where the system's
+boundary is drawn. Drawing a boundary adds two further questions, and each
+moves one more function inside it. Take a model whose deployed checkpoint is
+picked by a validation score:
 
-A claim of judgment-governed self-improvement names three things:
+1. **Learning.** The system retains the change. The model alone learns by
+   selection that others perform on it.
+2. **Self-improvement.** The system also does the selecting. The model
+   together with the selection script is a
+   [self-improving system](./self-improving-system.md).
+3. **Double-loop.** The system can also revise what it selects by. The
+   model, the script and the engineers who can change the score are
+   [double-loop](./single-loop-and-double-loop-learning.md).
 
-- **The system**, including which people and programs are inside it.
-- **The class of changes** covered, with the definition checked on the loop
-  that makes changes of that class. A wiki that imports pages automatically
-  and lets editors delete wrong ones is outside for imports and inside for
-  deletions. Loops also nest, such as gradient training inside a research
-  team's workflow, and each loop is assessed on its own named system and
-  class.
-- **The horizon** over which later work is counted, following
-  [operative change](./operative-change.md). Commonplace's claims span
-  tasks, so a library note, instruction or validator counts while a
-  workshop draft or single-task plan does not.
-
-By default a claim states a standing capacity: how changes are proposed and
-judged, and how later work consumes them. Claiming an episode requires
-showing the proposal, the judgment, and what the system did differently on
-later work. Loading alone does not show consumption: an agent can load a
-memory file on every run and ignore every lesson in it.
-
-## Exclusions
-
-Judgment-governed self-improvement is one kind of learning in
-[Simon's sense](../learning-is-not-only-about-generality.md), alongside
-learning by directly determined updates. Membership excludes edits to
-external work products that the system's own later work does not consume.
-
-Membership does not imply any of these:
-
-- **Improvement.** A judged change can make later work worse.
-- **Correction.** Membership does not require that later evidence can count
-  against an earlier change. A learner that judges every change and never
-  revisits one is still a judgment-governed self-improving system.
-- **Weighing.** A learner with a fixed criterion weighs nothing. A claim
-  about weighing must say the judgment is on balance.
-- **Criterion revision.** Whether the learner can revise its own criterion
-  is the distinction between
-  [single-loop and double-loop learning](./single-loop-and-double-loop-learning.md).
+A breeder's herd learns by selection and does not improve itself. A team
+that maintains its own handbook does all three. Proposals may come from
+outside the boundary. Selection is the step that has to be inside for
+self-improvement.
 
 ## Misuse Cases
 
-- Using *judgment-governed self-improvement* for the system (the system is a
-  *judgment-governed self-improving system*).
-- Citing the name as evidence that the system improved or corrects itself.
-- Reading the name as a claim that the system weighs considerations,
-  without saying the judgment is on balance.
+- Citing the term as evidence that the system improved or corrects itself.
+- Restricting the term to readable stores or to prose.
 - Using the term for a system because it reasons carefully about its work.
   The term applies to how changes to what the system retains are decided.
-- Restricting the term to prose theories, or to readable stores.
-- Crediting an automated loop with judgments its designers make outside the
-  named system.
-- Omitting the class of changes or the horizon.
+- Omitting the class of changes.
 
 ---
 
 Relevant Notes:
 
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the architecture the definition requires, and its contrast with a directly determined update
-- [On-balance judgments can guide improvement without a global measure](../necessary-preference-can-guide-improvement-without-a-global-measure.md) — grounds: the general form of the judgment, of which a fixed criterion admits one measure, and the comparison that says whether a change made the system better
-- [Self-improving system](./self-improving-system.md) — defined-in: the wider class, with its declared boundary, horizon and objective
-- [Behavior-determining organization](./behavior-determining-organization.md) — defined-in: why the change must be to the system's own retained structure and a work product is excluded
-- [Operative change](./operative-change.md) — defined-in: the declared horizon and the consumption path a change needs
-- [Single-loop and double-loop learning](./single-loop-and-double-loop-learning.md) — defined-in: whether a proposal-selection learner can revise the criterion that decides its changes
-- [Theory builder](./theory-builder.md) — contrasts: requires criticism of what a stated theory says, which judgment-governed self-improvement does not
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the anatomy of the loop and its boundary cases
+- [Necessary preference can guide improvement without a global measure](../necessary-preference-can-guide-improvement-without-a-global-measure.md) — grounds: the comparison across compatible measures, and what a claim of improvement asserts
+- [Learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: the sense of learning the term uses
+- [Self-improving system](./self-improving-system.md) — defined-in: the second step of the ladder, where selection lies inside the declared boundary
+- [Single-loop and double-loop learning](./single-loop-and-double-loop-learning.md) — defined-in: the third step, where the learner can revise the criterion that decides its changes
