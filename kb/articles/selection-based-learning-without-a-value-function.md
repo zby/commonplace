@@ -108,29 +108,26 @@ diffuse context load.
 Our knowledge base defines
 [selection-based learning](../theory/definitions/selection-based-learning.md) by
 one condition: a change to what the system retains for its later work is
-proposed, evaluated, and can be rejected. Evaluation is a separate step, and
-its result controls whether the change is made or kept. It can apply one
+proposed, evaluated, and can be rejected. Evaluation need not be a
+separate stage or actor, but its result decides whether the change is made
+or undone, and a rejection is its own event. It can apply one
 fixed measure, such as a validator or a utility formula, or a comparison
 across several.
 
 [AlphaGo Zero](https://www.nature.com/articles/nature24270) is a well-known
 case. Each newly trained network played the current best one and replaced
-it only if it won more than 55% of the games. Its successor
-[AlphaZero](https://arxiv.org/abs/1712.01815) dropped that step and updated
+it only if it won by a margin of 55%. Its successor
+[AlphaZero](../sources/alphazero-chess-shogi-self-play.ingest.md) dropped that step and updated
 a single network continually, so it no longer selected among networks.
 
-Selection can sit at more than one level. Both systems are reinforcement
-learners. They try moves, and the moves that lead to wins are the ones the
-network comes to prefer. That is selection among actions, with the game
-result as the single measure. The gradient steps that write the result
-into the weights are direct updates in both systems. AlphaGo Zero added a
-third level: selection of which network became the active player.
-Pre-training by gradient descent has neither kind of selection. It is told the right output
-for each input, the error fixes the update, and nothing is tried or
-rejected. This is a direct update. Automatic trace logging and triggers
-that write on a count are direct updates in the same way.
+The gradient steps that trained each network were not selected in either
+system. They are direct updates: the evidence determines the change, and
+nothing is proposed or rejected. Pre-training by gradient descent works the
+same way. It is told the right output for each input, and the error fixes
+the update. Automatic trace logging and triggers that write on a count are
+direct updates too.
 
-The definition does not say where the change is held or who does the
+The definition does not say where the retained information is held or who does the
 selecting. A deployed checkpoint, a team's working habits, and an
 instruction file all qualify. Naming a system adds two questions. The
 system is a
@@ -254,7 +251,8 @@ A
 [robust comparison](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
 applies this to a change. Once the alternative, the parties whose costs
 count, and the horizon are fixed, the change is an improvement when every
-compatible value function favors it. When compatible value functions pull
+compatible value function favors it. This is stricter than the method's
+own relation, which asks only that an option be at least as good. When compatible value functions pull
 in opposite directions or evidence has not yet arrived, the comparison stays
 open—and the system can still act as a bounded decision, using
 [reversibility to limit future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md),
@@ -349,11 +347,13 @@ Bitter Lesson
 
 Because selection-based learning names a process with no success
 condition, the paradigm claim stays honest only if success is judged
-separately. A change to the store improved the system when the present
-system is robustly better at its later work with that one change than with
-that change taken out (leaving the rest of the store intact except for
-edits that depend on it): better under
-every compatible measure of the declared work over the declared horizon.
+separately. A change is an event, and what the store keeps is
+content. So the comparison is between two states of the system that differ
+only in what the change did, whether it added, revised or removed content,
+with entries that depend on it adjusted to match. The change improved the
+system when the state that has its effect is robustly better at its later
+work: better under every compatible measure of the declared work over the
+declared horizon.
 
 For a recent edit—like our routing line on the day it is added—the verdict
 is normally **open** until later episodes arrive. Passing the check that
@@ -384,7 +384,7 @@ report **no completed end-to-end automated run** demonstrating sustained
 autonomous double-loop learning yet.
 
 **Material limits and failure modes.** Even if the loop runs without human
-intervention, four hazards can defeat it:
+intervention, five hazards can defeat it:
 
 - *Judgment reliability.* Language-model judges can miss diffuse costs,
   hallucinate causal links in traces, or approve plausible-sounding edits
@@ -399,6 +399,10 @@ intervention, four hazards can defeat it:
   load and rule interactions are diffuse, so a chain of locally plausible
   edits can degrade aggregate performance unless whole-store comparisons
   and pruning counteract it.
+- *Weak proposals.* A comparison selects only among the candidates that
+  search reaches. A sound judge over poor proposals still learns little,
+  and the bet stated here is about the comparison, not about how good the
+  proposals are.
 
 If controlled runs show that automated language-model judgment cannot keep
 false-positive acceptance, unfaithful rationales, and accretion below the

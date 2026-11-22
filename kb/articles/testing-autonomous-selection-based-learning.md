@@ -92,6 +92,15 @@ that configuration, not all fixed-weight models.
 | **Targeted correction** | One harmful edit and one independently useful edit enter in the same batch; later use supplies failure evidence without naming the culprit. | Compare the learner's repair against keeping the batch and rolling the whole batch back. Without a useful edit to preserve, tying full rollback cannot separate diagnosis from indiscriminate removal. |
 | **Criterion revision** | Unseen proposals are judged under both the old criterion and a retained revision to it. | Different pass/fail decisions show the criterion changed in practice. Better decisions require a separate check, since rejecting every proposal prevents every bad admission. |
 
+**Consistency comes before all three.** A judge supplies a comparison only
+if its answers do not contradict each other. The check is cheap: give the
+model the same change and its reversal on the same evidence, and the same
+pair of versions in both orders and in different wordings. Approving a
+change and its reversal, or a chain of changes that returns to where it
+started, is a contradiction, and so is an answer that flips with order or
+wording. The consistency need not cover every possible change. It has to
+hold for the changes the loop actually compares.
+
 **Net gain is a separate test of the whole loop.** All three capabilities
 can succeed locally while accumulated edits degrade the system overall. The
 whole-loop test compares the evolving store against an otherwise matched

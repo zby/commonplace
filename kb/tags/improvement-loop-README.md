@@ -27,8 +27,6 @@ Learning by this loop is [selection-based learning](../theory/definitions/select
 - [Single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md) — can the learner revise its criterion
 - [Revising an improvement objective is licensed from outside it](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md) — its limit
 - [Gödel machines are a proof-governed case of reflective self-modification](../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md) — a proof decides each rewrite
-- [The Bitter Lesson selects production methods, not representational forms](../theory/the-bitter-lesson-selects-production-methods-not-representational.md) — prose and code fit the lesson
-- [A bootstrap fits the Bitter Lesson only if learning outgrows it](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — when a hand-written start fits
 
 ## Search and search control
 
