@@ -5,7 +5,7 @@ traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [evaluation, self-improving-systems, judgment-governed-self-improvement]
 ---
 
-# On-balance judgments can guide improvement without a global measure
+# Necessary preference can guide improvement without a global measure
 
 Is Python better than it was twenty years ago? “On balance, yes” is a defensible answer even from someone who can name programs made worse by the transition. Consider text handling. In Python 2, adding a byte string to a Unicode string could pass a test on an ASCII name, then fail on a name containing an accented letter: the implicit conversion assumed ASCII. Python 3 rejects the mixed addition even on the ASCII name. For the author of a new program, that early failure exposes a decoding decision the test would otherwise miss. For someone running a working Python 2 script unchanged on the same old files, the incompatibility is a loss.
 
