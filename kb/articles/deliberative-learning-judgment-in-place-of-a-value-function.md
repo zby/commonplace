@@ -32,7 +32,7 @@ source_notes:
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 Every machine learning loop needs two things: a modifiable substrate that
-carries what the system retains, and a selection signal—a loss, reward, or
+carries what the system retains, and a signal—a loss, reward, or
 value function—that decides which updates stay. Standard machine learning
 pairs opaque numerical weights with a scalar loss or value function. Viewed
 through that frame, an agent that edits its own instructions or code without
@@ -106,28 +106,34 @@ diffuse context load.
 Our knowledge base defines
 [selection-based learning](../theory/definitions/selection-based-learning.md) by
 one condition: a change to what the system retains for its later work is
-proposed, judged in a separate step inside the learning loop, and can be
-rejected. The judgment is a decision, on the evidence available, about
-whether to make or keep the change. It can apply one fixed measure, such as
-a validator or a utility formula, or a comparison across several.
+proposed, evaluated, and can be rejected. Evaluation is a separate step, and
+its result controls whether the change is made or kept. It can apply one
+fixed measure, such as a validator or a utility formula, or a comparison
+across several.
 
-A single validator or utility formula weighs nothing, yet it still
-separates proposing from judging and can reject a change. Four
-kinds of update fail the condition because nothing judges a proposed
-change: gradient steps under a fixed loss, other direct input-driven
-updates (such as a nightly click-ranking job or a tabular
-reinforcement-learning table), automatic trace logging, and pure triggers
-that write on a count without judging what was written.
+[AlphaGo Zero](https://www.nature.com/articles/nature24270) is a well-known
+case. Each newly trained network played the current best one and replaced
+it only if it won more than 55% of the games. Its successor
+[AlphaZero](https://arxiv.org/abs/1712.01815) dropped that step and updated
+a single network continually. Both learned, and only the first learned by
+selection. The second is a direct update: the evidence determines the
+change, and nothing is proposed or rejected. Gradient steps under a fixed
+loss, a tabular reinforcement-learning table, automatic trace logging, and
+triggers that write on a count are direct updates in the same way.
 
-The definition does not say where the change is held. A team that agrees a
-new practice and keeps it only in memory meets the condition. So does a
-search that trains several model checkpoints and deploys the one that
-scores best on a validation set, although the gradient steps inside each
-training run do not. A team that starts writing its rules down is not
-changing what kind of learning it does. It stops relying on fallible
-memory, and it gains rules that a judge can read and a later edit can
-correct one at a time. This article is about that case: a readable store,
-edited by judged changes. The table compares it with gradient training.
+The definition does not say where the change is held or who does the
+selecting. A deployed checkpoint, a team's working habits, and an
+instruction file all qualify. Naming a system adds two questions. The
+system improves itself when the selecting is done inside it, and it is
+double-loop when it can also revise what it selects by. A model whose
+checkpoint is picked by its engineers learns by selection without improving
+itself. Commonplace today does all three only with people inside the
+system. The bet of this article is that the software alone can.
+
+This article treats one case: a readable store, edited by selected changes.
+Writing rules down does not change the kind of learning. It gives rules
+that an evaluator can read and a later edit can correct one at a time. The
+table compares that case with gradient training.
 
 | Axis | Training weights | Selection-based learning over a readable store |
 |---|---|---|
