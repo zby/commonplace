@@ -21,14 +21,14 @@ source_notes:
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-In [deliberative learning](../theory/definitions/selection-based-learning.md),
+In [selection-based learning](../theory/definitions/selection-based-learning.md),
 a system learns by changes that are each proposed, judged inside the loop,
 and can be rejected. In Commonplace those changes are edits to a readable,
 addressable store—prose, structured text, and code consumed by its later
 work. The
 [lead article](./deliberative-learning-judgment-in-place-of-a-value-function.md)
 argues that a fixed-weight language model could serve as that judge where
-no fixed test is adequate, using on-balance judgment in place of a single
+no fixed test is adequate, using a robust comparison in place of a single
 value function.
 
 This article sets out the research program behind that bet. Its question is
@@ -65,9 +65,9 @@ comparing fresh work with the edit against fresh work without it while
 leaving the rest of the store intact except for edits that depend on it.
 Once those dependencies, the parties whose gains and losses count, and the
 horizon across tasks are declared, the edit improved the system only if the
-system is better **on balance**—meaning every reasonable measure of the declared
+system is **robustly better**—meaning every compatible measure of the declared
 work favors keeping it
-([on-balance judgments](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)).
+([necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)).
 Changed behavior alone proves only that the edit mattered
 ([operative change](../theory/definitions/operative-change.md)), not that
 it helped.
@@ -100,7 +100,7 @@ It counts upkeep and human supervision alongside task outcomes, watching
 for costs local approvals miss: judgment errors,
 [false-positive acceptance](../theory/false-positive-generation-is-filtered-before-retention.md),
 [unfaithful rationales](../theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md),
-and store accretion. When reasonable measures pull apart, the verdict is
+and store accretion. When compatible measures pull apart, the verdict is
 reported as open. Neither withholding the entire store nor showing one
 successful repair establishes the net benefit of continued revision.
 
@@ -198,7 +198,7 @@ is separated from the evidence visible only to the scorer.
 - [Deliberative Learning: Judgment in Place of a Value Function](./deliberative-learning-judgment-in-place-of-a-value-function.md)
   — the lead article stating the paradigm, the weight-training contrast,
   and the Bitter Lesson argument.
-- [Deliberative learning](../theory/definitions/selection-based-learning.md)
+- [Selection-based learning](../theory/definitions/selection-based-learning.md)
   and its
   [definition checks](../theory/definitions/selection-based-learning-checks.md)
   — the full definition and the boundary cases it is tested against.

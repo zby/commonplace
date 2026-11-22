@@ -6,7 +6,7 @@ complete: true
 
 # theory-builder
 
-This definition and its companions were written before [judgment-governed self-improvement](../theory/definitions/selection-based-learning.md) was defined, and they are due for rewriting. Start at the [judgment-governed-self-improvement](./judgment-governed-self-improvement-README.md) head for the current program.
+This definition and its companions were written before [selection-based learning](../theory/definitions/selection-based-learning.md) was defined, and they are due for rewriting. Start at the [judgment-governed-self-improvement](./judgment-governed-self-improvement-README.md) head for the current program.
 
 Systems that apply Popper's conjecture and refutation to theories they state: the theories sit in localized units of natural or formal language, guide what the system does through what they say, meet criticism aimed at what they say, and the result of criticism shapes the next round. The defining note is [theory builder](../theory/definitions/theory-builder.md); whether such a builder learns is the hypothesis under test, not part of the definition. Notes here cover its theories, their criticism, and program theory; the search, evaluation, and retention loop belongs to [improvement-loop](./improvement-loop-README.md). A child of [self-improving-systems](./self-improving-systems-README.md).
 

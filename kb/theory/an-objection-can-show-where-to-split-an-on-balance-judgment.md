@@ -7,7 +7,7 @@ tags: [evaluation, judgment-governed-self-improvement]
 
 # An objection can show where to split an on-balance judgment
 
-An [on-balance judgment](./necessary-preference-can-guide-improvement-without-a-global-measure.md) need not begin with a list of effects or measures. Start with the whole comparison. An objection identifies a part worth splitting when a plausible answer could change the verdict. Stating the disputed assumption separately makes the reasoning [addressable](./definitions/addressable-theory.md): a critic can challenge that assumption without rejecting the whole comparison. The split helps only if it exposes evidence or a constraint that was missing from the whole judgment.
+A [comparison across compatible measures](./necessary-preference-can-guide-improvement-without-a-global-measure.md) need not begin with a list of effects or measures. Start with the whole comparison. An objection identifies a part worth splitting when a plausible answer could change the verdict. Stating the disputed assumption separately makes the reasoning [addressable](./definitions/addressable-theory.md): a critic can challenge that assumption without rejecting the whole comparison. The split helps only if it exposes evidence or a constraint that was missing from the whole judgment.
 
 Consider the [choice of Python 3.11 over 3.10](./necessary-preference-can-guide-improvement-without-a-global-measure.md#a-release-judgment-python-311-over-310) as the default for continuing application development. Existing programs can run faster, maintained projects gain library facilities, and a project blocked by a removed interface can stay on 3.10. Why not prefer 3.11?
 

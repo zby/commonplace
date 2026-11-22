@@ -65,10 +65,10 @@ formalization and few under another. No general size estimate follows from
 proof-gated admission alone. Likewise, being allowed to emit arbitrary code
 does not make a useful empirical successor likely.
 
-## The machine as a judgment-governed self-improving system
+## The machine as a selection-based learner
 
 The construction meets the definition of
-[judgment-governed self-improvement](./definitions/selection-based-learning.md). Its later
+[selection-based learning](./definitions/selection-based-learning.md). Its later
 operation runs its own code, and that code can be read and pointed at. A
 rewrite is proposed by the proof searcher and judged by a separate
 check, which rejects every rewrite that lacks a proof of the target theorem.
@@ -155,18 +155,18 @@ The useful comparison has at least two dimensions: the rigor of inference from
 stated premises, and how well those premises and observations cover the
 objective. A strong answer on one dimension does not supply the other.
 
-## Grounds for change: proof against on-balance judgment
+## Grounds for change: proof against robust comparison
 
-The Gödel machine is one judgment-governed self-improving system. Commonplace aims at another:
-a learner whose judgment is an
-[on-balance judgment](./necessary-preference-can-guide-improvement-without-a-global-measure.md)
+The Gödel machine is one selection-based learner. Commonplace aims at another:
+a learner whose judgment is a
+[robust comparison](./necessary-preference-can-guide-improvement-without-a-global-measure.md)
 made by a language model. The two share the readable store and the
 rejectable decision. They differ in the grounds required for a change, not
 in whether the system observes the world or can rewrite its own evaluators.
 Natural language, fixed model weights, and the mere presence of
 self-modification do not define the difference.
 
-| Question | Proof-governed route | On-balance judgment by a language model |
+| Question | Proof-governed route | Robust comparison by a language model |
 |---|---|---|
 | What justifies a change? | A proof of the switching claim under the formalization | A judgment, on the evidence available, that later work is expected to go better with the change; no single measure is selected |
 | How does evidence enter? | Observations enter through formalized operations and can support proofs | Cases, traces and operating consequences are read directly and weighed |
@@ -207,9 +207,9 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: separates the functions instantiated by the proof route
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: keeps admission evidence relative to what its premises and checks cover
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection does not require proof-gated admission
-- [Judgment-governed self-improvement](./definitions/selection-based-learning.md) — defined-in: the definition the machine meets
+- [Selection-based learning](./definitions/selection-based-learning.md) — defined-in: the definition the machine meets
 - [Single-loop and double-loop learning](./definitions/single-loop-and-double-loop-learning.md) — defined-in: the double-loop kind the machine is capable of
-- [On-balance judgments can guide improvement without a global measure](./necessary-preference-can-guide-improvement-without-a-global-measure.md) — contrasts: the judgment Commonplace puts in the place of the proof
+- [Necessary preference can guide improvement without a global measure](./necessary-preference-can-guide-improvement-without-a-global-measure.md) — contrasts: the comparison Commonplace puts in the place of the proof
 - [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why a proved change of utility function replaces a stand-in and leaves the objective fixed
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: explains how a current policy can govern its own revision
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — mechanism: identifies the risk of admitting a harmful retained change

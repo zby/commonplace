@@ -14,7 +14,7 @@ changes, the learner is **single-loop** when it decides those changes under
 a criterion it cannot revise, and **double-loop** when it can revise that
 criterion so that a different criterion governs later decisions of that
 class. Such a system is a
-[judgment-governed self-improving system](./selection-based-learning.md), and the distinction
+[selection-based learner](./selection-based-learning.md), and the distinction
 applies whether its criterion is fixed or an open set of considerations.
 
 The distinction matters because a single-loop learner cannot recover from a
@@ -87,5 +87,5 @@ question, what considers it, and what change to the criterion can follow.
 Relevant Notes:
 
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the loops these two kinds divide
-- [Judgment-governed self-improvement](./selection-based-learning.md) — defined-in: the learning these two kinds divide, and what a criterion is
+- [Selection-based learning](./selection-based-learning.md) — defined-in: the learning these two kinds divide, and what a criterion is
 - [Revising an improvement objective is licensed from outside it or is not improvement](../revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why double-loop revision stops at the working criterion

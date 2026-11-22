@@ -12,13 +12,13 @@ The child areas are [judgment-governed-self-improvement](./judgment-governed-sel
 
 ## Child areas
 
-- [judgment-governed-self-improvement](./judgment-governed-self-improvement-README.md) — self-improvement by proposed, judged, rejectable changes to what a system retains: the definition, the on-balance judgment that decides a change, the proof-governed precedent, and the Bitter Lesson argument; the thesis Commonplace tests
+- [judgment-governed-self-improvement](./judgment-governed-self-improvement-README.md) — self-improvement by proposed, judged, rejectable changes to what a system retains: the definition, the comparison that decides a change, the proof-governed precedent, and the Bitter Lesson argument; the thesis Commonplace tests
 - [software-factory](./software-factory-README.md) — factories and houses: family-specific production machinery, factory development and learning, universality, task versus product families
 - [improvement-loop](./improvement-loop-README.md) — the proposal-selection architecture: search control, what to learn, oracle accumulation, diagnostic richness, false-positive filtering, omitted versus frozen loop functions
 - [reflection](./reflection-README.md) — reflective systems: addressability, second-order lessons, graded coverage, retrieval misses, Gödel machines, and the Commonplace reflective-trace evidence
 - [warranted-autonomy](./warranted-autonomy-README.md) — which decisions a computational actor is warranted to take over from humans, the oracle domain that bounds it, closure, and measuring autonomy
 - [continual-learning](./continual-learning-README.md) — how a deployed system keeps learning outside model weights: the readable-artifact loop, form coevolution, governing writes, and the Bitter Lesson defense of that bet
-- [theory-builder](./theory-builder-README.md) — an earlier definition and its companions, stated before judgment-governed self-improvement was defined and due for rewriting
+- [theory-builder](./theory-builder-README.md) — an earlier definition and its companions, stated before selection-based learning was defined and due for rewriting
 
 ## Definition and objective
 

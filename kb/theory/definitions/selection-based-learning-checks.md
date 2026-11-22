@@ -1,6 +1,6 @@
-# Checks for the judgment-governed-self-improvement definition
+# Checks for the selection-based-learning definition
 
-Maintenance material for [judgment-governed self-improvement](./selection-based-learning.md).
+Maintenance material for [selection-based learning](./selection-based-learning.md).
 Apply the checks when changing that definition, including cross-references
 that change its meaning. Report affected cases before revising their expected
 placements. Keep case numbers stable and make changes to assumptions
@@ -85,8 +85,8 @@ specifies the comparison.
 | 24 | A team discusses a proposal to change how it hands work over, agrees, and works that way from then on. Nothing is written down. | Inside on R and J. The agreed practice is retained in the members' habits and their later work follows it. Correction and kind undetermined. Showing an episode is harder without a record, which is a matter of evidence, not membership. |
 | 25 | A search trains several candidate checkpoints and deploys the one with the highest score on a fixed validation set. The system's later work runs on the deployed checkpoint. | Inside on R and J for checkpoint choices, single-loop. Correction: none. Displacement: yes. The gradient steps inside each training run are outside on J. |
 
-Case 6 shows a judgment-governed self-improving system that is not a theory builder. No case
-here shows a theory builder that is not a judgment-governed self-improving system. The cases do
+Case 6 shows a selection-based learner that is not a theory builder. No case
+here shows a theory builder that is not a selection-based learner. The cases do
 not decide how the two definitions relate.
 
 ## Case 12: keeping a current decision
@@ -164,7 +164,7 @@ say so and move it to the table above.
 One wording point is also open:
 
 - The definition no longer defines a verdict "learned". It points to the
-  on-balance comparison of the system with and without one change. That
+  comparison of the system with and without one change across compatible measures. That
   comparison does not say what "the system as it now is" means while changes
   keep arriving, how a change that was already reverted is assessed, or what
   evidence can stand in for a version of the system that is never run.

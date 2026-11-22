@@ -7,7 +7,7 @@ tags: [evaluation, judgment-governed-self-improvement]
 
 # Reversibility can favor a change by limiting future loss
 
-Suppose a team can try an interface internally or publish it for other projects to use. The same expected gain may justify the internal change but not publication. Internally, a failing check could reveal a mistake and let the team revert before the next use. After publication, reverting could break programs written against the new interface. Trying the change with a way back is a different alternative from committing to keep it. An [on-balance judgment](./necessary-preference-can-guide-improvement-without-a-global-measure.md) can favor the trial without counting harm during the trial any less.
+Suppose a team can try an interface internally or publish it for other projects to use. The same expected gain may justify the internal change but not publication. Internally, a failing check could reveal a mistake and let the team revert before the next use. After publication, reverting could break programs written against the new interface. Trying the change with a way back is a different alternative from committing to keep it. A [comparison across compatible measures](./necessary-preference-can-guide-improvement-without-a-global-measure.md) can favor the trial without counting harm during the trial any less.
 
 To bound the downside of a trial without listing every possible failure, ask three questions:
 

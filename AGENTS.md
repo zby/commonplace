@@ -71,10 +71,10 @@ First-mention glossing and linking in authored artifacts is governed by
 | Discovery lifecycle | [Discovery lifecycle](./kb/theory/definitions/discovery-lifecycle.md) |
 | Explanatory-reach | [Explanatory-reach](./kb/theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) |
 | Frontloading | [Frontloading](./kb/theory/frontloading-spares-execution-context.md) |
-| Judgment-governed self-improvement, judgment-governed self-improving system | [Judgment-governed self-improvement](./kb/theory/definitions/selection-based-learning.md); a fixed criterion is its degenerate case. "Learned" is ordinary English. |
 | Mark | [Tag-readme marks](./kb/types/tag-readme.md) |
 | Program refinement | [Program refinement](./kb/theory/definitions/program-refinement.md); bare "refinement" is ordinary English for iterative improvement. |
 | Representational form | [Representational form](./kb/theory/definitions/representational-form.md); prompt is a consumption path, not a fourth form. |
+| Selection-based learning, selection-based learner | [Selection-based learning](./kb/theory/definitions/selection-based-learning.md). "Learned" is ordinary English. |
 | Single-loop, double-loop | [Single-loop and double-loop learning](./kb/theory/definitions/single-loop-and-double-loop-learning.md) |
 | System-definition artifact | [System-definition artifact](./kb/theory/definitions/system-definition-artifact.md) |
 | Tentative theory | [Tentative theory](./kb/theory/definitions/tentative-theory.md) |

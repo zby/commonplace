@@ -7,7 +7,7 @@ tags: [learning-theory, self-improving-systems, theory-builder, reflection]
 
 # Commonplace builds a theory builder and tests whether it learns
 
-> **Due for rewriting.** This note was written before [judgment-governed self-improvement](./definitions/selection-based-learning.md) was defined. Commonplace's research program is now stated in terms of judgment-governed self-improvement. How the theory builder relates to it has not been worked out.
+> **Due for rewriting.** This note was written before [selection-based learning](./definitions/selection-based-learning.md) was defined. Commonplace's research program is now stated in terms of selection-based learning. How the theory builder relates to it has not been worked out.
 
 Commonplace builds a [theory builder](./definitions/theory-builder.md): a
 continuing system whose theories are stated in localized units, guide what it
