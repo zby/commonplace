@@ -231,8 +231,8 @@ is separated from the evidence visible only to the scorer.
   and its
   [definition checks](../theory/definitions/selection-based-learning-checks.md)
   — the full definition and the boundary cases it is tested against.
+- [Bootstrapping Autonomous Selection-Based Learning with Commonplace](./bootstrapping-autonomous-selection-based-learning.md)
+  — how update decisions move from the operator to computation one kind at
+  a time, and the removal test that shows a decision has moved.
 - [Testing Whether a Theory Builder Learns](./testing-whether-a-theory-builder-learns.md)
-  and
-  [Bootstrapping an Autonomous Theory Builder with Commonplace](./bootstrapping-autonomous-selection-based-learning.md)
-  — earlier companion drafts covering additional experimental designs and
-  the incremental automation path.
+  — an earlier companion draft covering additional experimental designs.
