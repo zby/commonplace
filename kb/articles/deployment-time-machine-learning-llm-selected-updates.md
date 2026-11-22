@@ -5,6 +5,7 @@ status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/theory/definitions/self-improving-system.md
+  - kb/theory/definitions/reflective-system.md
   - kb/theory/definitions/selection-based-learning.md
   - kb/theory/selection-based-learning-needs-only-a-local-comparison.md
   - kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md
@@ -136,8 +137,11 @@ evaluated on whether it makes that work better, and can be rejected. Unlike
 a direct gradient update—where a scalar loss determines the next weights
 without proposing or rejecting a candidate—selection admits or rejects
 discrete updates to the system's retained store of instructions, policies,
-notes, or scripts. Because the deployed system does the selecting itself
-and the retained update changes its own later work, it is a
+notes, or scripts. Because the deployed system does the selecting itself, routes each update
+through inspectable instructions or scripts that govern its later work
+([reflection](../theory/definitions/reflective-system.md)), and can reject
+weak proposals, the process is **reflective self-improvement by
+selection**—making the system a
 [self-improving system](../theory/definitions/self-improving-system.md) for
 this class of updates.
 
@@ -274,9 +278,11 @@ behavior, making its explanations unfaithful even where learning occurred.
 
 Commonplace, the agent-operated knowledge-base framework behind this
 article, is a live human-assisted setting for developing these ideas on
-knowledge work: people still diagnose failures and accept updates. No
-end-to-end autonomous loop has been demonstrated. The bet and both
-arguments remain untested.
+knowledge work: human maintainers still sit inside the boundary for both
+search and selection—noticing recurring problems, diagnosing failures,
+shaping candidate revisions, and accepting updates. No end-to-end
+autonomous loop has been demonstrated. The bet and both arguments remain
+untested.
 
 ## Where to go next
 
