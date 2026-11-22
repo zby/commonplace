@@ -5,6 +5,9 @@ status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/theory/definitions/selection-based-learning.md
+  - kb/theory/definitions/single-loop-and-double-loop-learning.md
+  - kb/theory/defining-improvement-for-open-ended-work.md
+  - kb/theory/selection-based-learning-needs-only-a-local-comparison.md
   - kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md
   - kb/theory/reversibility-can-favor-a-change-by-limiting-future-loss.md
   - kb/theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
@@ -21,27 +24,23 @@ source_notes:
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-In [selection-based learning](../theory/definitions/selection-based-learning.md),
-a system learns by changes that are each proposed, judged inside the loop,
-and can be rejected. In Commonplace those changes are edits to a readable,
-addressable store—prose, structured text, and code consumed by its later
-work. The
-[lead article](./deployment-time-machine-learning-llm-selected-updates.md)
-argues that a fixed-weight language model could serve as that judge where
-no fixed test is adequate, using a robust comparison in place of a single
-value function.
+An agent finds a draft filed as a finished proposal and moves it. That fixes
+one document. Suppose it also compares ways to prevent the mistake, changes
+its own routing instruction, and uses the new instruction on later drafts.
+Now there are two questions to test: did the system change how it does its
+next job, and did those jobs go better than they would have otherwise?
 
-This article sets out the research program behind that bet. Its question is
-narrow: **which comparisons would distinguish autonomous model judgment
-from what Commonplace already does with a human operator?** For each
-comparison, it states what a positive result would establish and what it
-would leave open.
+The [lead article](./deployment-time-machine-learning-llm-selected-updates.md)
+bets that a large language model (LLM) can help find candidate changes and
+discriminating checks, and can select updates without a person choosing
+each one. Commonplace, an agent-operated knowledge base, gives us a place
+to test that bet. A comparison on fresh work tests the value of the whole
+loop. More focused comparisons distinguish finding a repair from judging
+one, and changing a procedure from changing how future repairs are judged.
 
 ## Three claims, not one verdict
 
-Commonplace, our agent-operated knowledge-base framework, serves as the
-testbed. Evaluating it requires separating three claims rather than
-collapsing them into a single verdict.
+Three claims need different evidence.
 
 **Membership today.** Under
 [Commonplace's declared frame](../reference/commonplace-declared-frame.md)—which
@@ -63,20 +62,25 @@ be a sound decision while its payoff remains unknown
 Whether the edit actually improved the system is a separate question, decided by
 comparing fresh work with the edit against fresh work without it while
 leaving the rest of the store intact except for edits that depend on it.
-Once those dependencies, the parties whose gains and losses count, and the
-horizon across tasks are declared, the edit improved the system only if the
-system is **robustly better**—meaning every compatible measure of the declared
-work favors keeping it
-([necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)).
+Fix the standard before the test. [Defining improvement for open-ended
+work](../theory/defining-improvement-for-open-ended-work.md) starts with the
+tasks the system will serve. Here we use [strict necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md):
+name the alternative, whose work counts, and the horizon; call the change
+an improvement if every way of weighing the consequences compatible with
+those commitments favors it. The judge can have grounds to expect a gain
+at admission; whether a gain occurred calls for evidence from later work.
+
 Changed behavior alone proves only that the edit mattered
 ([operative change](../theory/definitions/operative-change.md)), not that
 it helped.
 
-**Autonomous judgment.** The conjecture under test is that a fixed-weight
-language model can make the admission, correction, and criterion-revision
-decisions without a person making them. Any episode in which the operator
-selects among candidate edits is evidence about the human–machine system,
-not a test the autonomous model passed or failed.
+**Autonomous selection.** A retained procedure can change later work even
+when the criterion for adopting it stays fixed. If the system can also
+revise that criterion for future procedure changes, it has the further
+capacity for [double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md).
+For either claim, attribute each decision to whoever made it: if an
+operator chooses the repair, the episode tests the human–machine system,
+not autonomous selection.
 
 ## Three capabilities and one test of the whole loop
 
@@ -92,26 +96,38 @@ that configuration, not all fixed-weight models.
 | **Targeted correction** | One harmful edit and one independently useful edit enter in the same batch; later use supplies failure evidence without naming the culprit. | Compare the learner's repair against keeping the batch and rolling the whole batch back. Without a useful edit to preserve, tying full rollback cannot separate diagnosis from indiscriminate removal. |
 | **Criterion revision** | Unseen proposals are judged under both the old criterion and a retained revision to it. | Different pass/fail decisions show the criterion changed in practice. Better decisions require a separate check, since rejecting every proposal prevents every bad admission. |
 
-**Consistency comes before all three.** A judge supplies a comparison only
-if its answers do not contradict each other. The check is cheap: give the
-model the same change and its reversal on the same evidence, and the same
-pair of versions in both orders and in different wordings. Approving a
-change and its reversal, or a chain of changes that returns to where it
-started, is a contradiction, and so is an answer that flips with order or
-wording. The consistency need not cover every possible change. It has to
-hold for the changes the loop actually compares.
+Giving both judges the same candidates isolates selection. It says nothing
+about whether either judge could have found the useful candidate in the
+first place. [A local comparison](../theory/selection-based-learning-needs-only-a-local-comparison.md)
+can select only among alternatives reached. Evidence has a similar boundary:
+[the judgment companion](./can-an-llm-judge-which-changes-are-worth-making.md#testing-the-bet-without-asking-the-judge-to-grade-itself)
+compares a decisive fact supplied directly, discoverable with tools, or
+unavailable. Record who chose the traces, queries and checks as well as who
+chose the edit.
+
+**Check consistency of preferences, not just actions.** Present the same
+two alternatives in both orders with unchanged evidence, commitments and
+horizon. Strictly preferring A to B and then B to A is inconsistent.
+Adopting a routing rule for a trial and removing it at review need not be:
+the trial installed a rule *and* a review commitment, and the review may
+have evidence that was unavailable at admission. Count the work done
+under the rule even if it is later removed.
 
 **Net gain is a separate test of the whole loop.** All three capabilities
 can succeed locally while accumulated edits degrade the system overall. The
 whole-loop test compares the evolving store against an otherwise matched
 system running on the starting store over the same fresh work and horizon.
-It counts upkeep and human supervision alongside task outcomes, watching
+It counts search and evaluation compute, upkeep, human supervision, and losses incurred before rollback alongside task outcomes, watching
 for costs local approvals miss: judgment errors,
 [false-positive acceptance](../theory/false-positive-generation-is-filtered-before-retention.md),
 [unfaithful rationales](../theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md),
 and store accretion. When compatible measures pull apart, the verdict is
 reported as open. Neither withholding the entire store nor showing one
 successful repair establishes the net benefit of continued revision.
+
+Even a whole-loop gain does not establish that more computation buys more
+gain. That requires varying the compute budget. Nor does it establish that
+[retained hypotheses save observations](../theory/retained-theories-may-improve-sample-efficiency.md): compare how many new cases each system needs after a task shift, with the same model and history but without the retained hypothesis in the comparison system. To test an explanation of a decision, intervene on the rule it names and check whether behavior changes as predicted.
 
 ## A first experiment: repairing a misleading routing check
 
@@ -122,8 +138,10 @@ a run already commissioned or completed.
 
 In the test, the model receives the current review check along with
 execution traces in which overbroad routing lines passed that check and
-later misdirected work. It receives only the evidence—no diagnosis and no
-replacement rule—and decides whether and how to revise the check. To rule
+later misdirected work. The experimenter has located the check and selected the traces. The model
+must diagnose the failure, find a candidate repair, and decide whether to
+install it. Success would not show that it could have found the relevant
+traces unaided. To rule
 out a model that rewrites every check it sees, the trial pairs misleading
 checks with at least one sound check whose accompanying failure traces stem
 from another cause, counting leaving the sound check unchanged as the
@@ -178,11 +196,11 @@ The current evidence record is small and should not be overstated:
 
 - **No end-to-end automated run.** Commonplace reports no completed
   demonstration of sustained autonomous double-loop learning.
-- **The Python change-judgment probes.** An original six-session design
-  tested one model across two Python change cases and was never run. A
+- **The Python change-judgment probes.** An original six-session study
+  was designed to test one model across two Python change cases but was never run. A
   follow-on design compares one model against human practitioners on a
   single CPython build-default case; three fresh model answers have been
-  collected, while human replies, the independent mixed reading, and a
+  collected ([comparison record](../reports/retained/python-change-judgment-probe-2026-11-20/comparison/README.md)), while human replies, the independent mixed reading, and a
   second-round case variant remain pending. Even completed, that comparison
   probes stated reasons for one decision, not the downstream effect of an
   admitted edit.
@@ -205,8 +223,10 @@ is separated from the evidence visible only to the scorer.
 ## Where to go next
 
 - [Deployment-Time Machine Learning: LLM-Selected Updates Without a Single Score](./deployment-time-machine-learning-llm-selected-updates.md)
-  — the lead article stating the paradigm, the weight-training contrast,
-  and the Bitter Lesson argument.
+  — why a change to the system’s own method can close a learning loop, and
+  which further gains require separate evidence.
+- [Can an LLM Judge Which Changes Are Worth Making?](./can-an-llm-judge-which-changes-are-worth-making.md)
+  — how to separate judging the available facts from finding them.
 - [Selection-based learning](../theory/definitions/selection-based-learning.md)
   and its
   [definition checks](../theory/definitions/selection-based-learning-checks.md)
