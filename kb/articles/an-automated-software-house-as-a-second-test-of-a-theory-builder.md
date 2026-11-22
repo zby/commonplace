@@ -169,7 +169,7 @@ A house must perform every production role of a working development
 organization, so its seed must already be a working house. The knowledge-base
 arrangement can start from an existing builder staffed by people and agents
 and [move its roles to computation one class at a
-time](./bootstrapping-an-autonomous-theory-builder.md). That is why the
+time](./bootstrapping-autonomous-selection-based-learning.md). That is why the
 knowledge base comes first. The software house is kept beside it because its
 evidence would be stronger if it could be obtained.
 

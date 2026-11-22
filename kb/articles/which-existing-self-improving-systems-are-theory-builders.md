@@ -123,7 +123,7 @@ roles run computationally with fixed model weights? Does the learned revision
 transfer to new cases? Does retaining the assembled theory save work compared
 with reconstructing it from the same evidence? A human-assisted system may
 provide evidence of learning before it provides evidence of autonomy, as the
-[bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
+[bootstrap supplement](./bootstrapping-autonomous-selection-based-learning.md)
 proposes for Commonplace.
 
 ## Where the reviewed systems stand

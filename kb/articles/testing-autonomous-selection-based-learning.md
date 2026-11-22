@@ -179,7 +179,7 @@ model-drafted repairs *is* inside it, making the run human-assisted.
 Commonplace moves decisions out of the operator's hands one kind at a time,
 reporting separately which operations still complete and which resulting
 edits improve later work
-([bootstrapping with Commonplace](./bootstrapping-an-autonomous-theory-builder.md)).
+([bootstrapping with Commonplace](./bootstrapping-autonomous-selection-based-learning.md)).
 The practical payoff under test is whether a misleading check gets repaired
 without waiting for a person to notice the pattern and redesign it—and
 whether that saves human judgment overall once supervision and cleanup are
@@ -233,6 +233,6 @@ is separated from the evidence visible only to the scorer.
   — the full definition and the boundary cases it is tested against.
 - [Testing Whether a Theory Builder Learns](./testing-whether-a-theory-builder-learns.md)
   and
-  [Bootstrapping an Autonomous Theory Builder with Commonplace](./bootstrapping-an-autonomous-theory-builder.md)
+  [Bootstrapping an Autonomous Theory Builder with Commonplace](./bootstrapping-autonomous-selection-based-learning.md)
   — earlier companion drafts covering additional experimental designs and
   the incremental automation path.

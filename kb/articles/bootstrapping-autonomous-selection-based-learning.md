@@ -3,7 +3,7 @@ description: "Bootstrap supplement: Commonplace builds a reflective self-improve
 type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
-brief: bootstrapping-an-autonomous-theory-builder.brief.md
+brief: bootstrapping-autonomous-selection-based-learning.brief.md
 source_notes:
   - kb/theory/definitions/selection-based-learning.md
   - kb/theory/definitions/self-improving-system.md

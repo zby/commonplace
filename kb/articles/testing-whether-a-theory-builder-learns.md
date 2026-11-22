@@ -212,7 +212,7 @@ interventions during the run. An intervention is a change installed from
 outside the builder's own criticism and revision; what it produces is
 credited to the outside source, and an intervention that replaces the
 machinery entirely starts a new seed. The
-[bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md) uses
+[bootstrap supplement](./bootstrapping-autonomous-selection-based-learning.md) uses
 this record in two ways. It compares the count of human decisions within one
 kind of change, before and after a function moves to computation. And it
 uses the record to say which decisions to withhold when it tests whether a
