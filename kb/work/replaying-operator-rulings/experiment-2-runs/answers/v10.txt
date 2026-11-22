@@ -1,0 +1,25 @@
+# Three proposed changes to the deliberative-learning draft, most important first
+
+## 1. Make the stated purpose agree with what the draft excludes, and settle which writes "each change" covers
+
+**Change:**
+- **Draft, "Judgment in the loop" notes:** Replace "Storing session traces is learning but not deliberative" with the reading case 2 already uses. The deliberated, revisable rule to store traces is the change. Each stored trace is an application of that rule.
+- **Draft, condition 2:** Say that "each change" is checked per rule or class of change, not per write.
+- **Checks:** Add a case for Commonplace as a whole, with judged writes and rule-governed automatic writes in the same store. This answers the open question "Which writes count as changes?"
+
+**Reason:** The draft says the term exists "to put all the learning that happens in Commonplace under one name." Yet it gives Commonplace's own trace storage as learning that is not deliberative. Read literally, "each change to the store is made by … judgment" would then put Commonplace as a whole outside its own term.
+
+## 2. Make condition 2 a decision about making the change, not a verdict that the change improves later work
+
+**Change:**
+- **Draft, condition 2:** Reword it to something like "each change is made by a decision that weighs reasons about how the change will affect later work. Such a decision is an on-balance judgment, and its comparison may still be open."
+- **On-balance note:** Add a short passage that separates the decision to take a step from the verdict on the comparison. The note already illustrates this with ADR 085 ("commit to deletion without claiming it won that comparison").
+
+**Reason:** As linked, condition 2 asks for a judgment that the system "will do its later work better." The on-balance note defines that as every reasonable measure favouring the change. Yet the draft says "Open" is the usual verdict for a recent change, and that reversibility can tip the judgment without being evidence of improvement. Taken literally, condition 2 would therefore exclude most real changes, including ADR 085's deletion rule.
+
+## 3. Fix the "outermost loop" clause so it agrees with the treatment of nested loops
+
+**Change:**
+- **Draft:** Replace "They are checked on the outermost loop that the system runs itself" with "They are checked on the loop that the named system runs itself. A claim about the whole system, including the autonomous claim, concerns its outermost loop."
+
+**Reason:** As written, the clause contradicts other parts of the draft. The draft says inner and outer loops can each be deliberative learning, and that which loop a claim concerns "depends on the named system." It also classifies the training run separately from the research loop around it. The checks do the same with "repairer alone" in case 4 and with case 10's inner search, and the clause would make those placements ill-formed.

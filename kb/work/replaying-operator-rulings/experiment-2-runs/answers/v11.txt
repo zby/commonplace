@@ -1,0 +1,23 @@
+## 1. Count changes made by a deliberated standing rule, and make judgment granularity a reported property
+
+**Change.** Rewrite condition 2 so that a change also qualifies when a standing rule makes it, provided the system itself deliberated that rule and can revisit it. Then:
+- Report "judged individually" versus "made under a standing rule" as a property of the change.
+- In the draft, delete "Storing session traces is learning but not deliberative" and the appending-log example under "What the term does not cover."
+- In the checks, rewrite case 2 so the logged entries are inside when the named system introduced the logging rule and can revise it. Keep case 11 outside, because nothing in that system can revise its rule.
+- Answer the open "each change" question in "What the checks expose": the quantifier covers every write to the named store, through its rule.
+
+**Reason.** The draft says the term must cover all learning in Commonplace, yet it explicitly calls Commonplace's session-trace storage "learning but not deliberative." That means the definition fails its stated job on the project's own system. It also breaks the operator's continuity principle: a rule that "adds if the formula scores above zero" is inside, while "add everything," which is the same rule with a lower threshold, is outside.
+
+## 2. Align condition 2 with the on-balance note
+
+**Change.** Reword condition 2 as "a decision, informed by an on-balance comparison, that the change is worth making for later work; the comparison may still be Open." In the note, add two statements:
+- Acting on an Open comparison is a decision, not an on-balance improvement.
+- A system that admits only one measure is the limit case where the set of reasonable measures has a single member.
+
+**Reason.** The note defines an on-balance judgment as one where *every* reasonable measure favors the successor, with no measure selected. Read literally, condition 2 therefore demands a "Learned" verdict before each change. That contradicts the draft's own statements that "Open" is the usual verdict and that letting a change stand is a decision. It also leaves the "fixed measure is the special case" ruling without support in the note it cites.
+
+## 3. Apply the conditions to the named loop and reserve "outermost" for the autonomy claim
+
+**Change.** Replace "They are checked on the outermost loop that the system runs itself" with "They are checked on the loop the claim names. The autonomous claim concerns the outermost loop the system runs itself." Add the same sentence to the preamble of the checks.
+
+**Reason.** As written, the sentence contradicts the draft's own statement that nested loops are "both deliberative learning if each meets the three conditions." It also contradicts the separate placements in the checks: "repairer alone" versus "team plus repairer" (case 4), and training versus research (case 5). A reader applying it literally could never classify an inner loop, which is the very distinction the single-loop/double-loop and fixed-measure cases depend on.

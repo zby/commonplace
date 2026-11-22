@@ -1,0 +1,29 @@
+# Three proposed changes, most important first
+
+## 1. Let a deliberated rule cover the changes it produces automatically
+
+**Change.** Reword condition 2 so that each change is made either by a judgment or by a standing rule that was itself adopted by a judgment, and that later evidence can revise.
+
+Make these edits to match:
+- **Draft, notes on condition 2:** delete "Storing session traces is learning but not deliberative."
+- **Draft, "What the term does not cover":** recast "Change without a judgment" so it covers only defaults that no judgment in the system adopted or can revisit.
+- **Checks, case 2:** promote the existing sentence, "inside with respect to the logging rule, not the entries", to the expected placement.
+- **Checks, KSI open question ("Which writes count as changes?"):** answer it this way: writes count through the rule that produces them.
+
+**Reason.** The draft says its job is to put all the learning in Commonplace under one name. Yet it names session-trace storage as Commonplace learning that falls outside the term, so it fails that job by its own account. The draft already concedes that introducing automatic storage is a deliberable change, so moving the judgment to the rule closes the gap without adding a new condition.
+
+## 2. Make condition 3 a named kind or reported property, not a membership condition
+
+**Change.** Drop "open to criticism" from the three conditions. Instead, report it as a property of the learner, perhaps under a name like *corrigible*, alongside single-loop and double-loop.
+
+In the checks, re-place cases 3, 4 (repairer), 7a, 9 and 13 as members that lack this property. Then add the reversal to "What the ruling changed."
+
+**Reason.** The operator's reason for absorbing fixed measures into J applies here too: a small change in how a system judges should not move it out of the term. Under C, it does exactly that. DGM (case 13) and HGM (case 14) differ only in whether descendant results feed back into the parent's selection weight. The checks themselves say C "now does the excluding that J used to do," which is the separating work the brief says should be done by a kind or property rather than by membership.
+
+## 3. Require a decision in condition 2, not a forecast of improvement, and separate the two in the on-balance note
+
+**Change.** Reword condition 2 from "a judgment that the system will do its later work better with the change" to "a judgment, weighed on balance, to make the change." State explicitly that this judgment may rest on an Open verdict, on the value of a trial, or on reversibility.
+
+In the on-balance note, distinguish the *decision* to take a step from the *verdict* of improvement, where every reasonable measure favors the successor. The link from condition 2 should point to the decision, not the verdict.
+
+**Reason.** The current link imports the strict "every reasonable measure" standard into the act of making a change. Commonplace's own examples do not meet that standard. ADR 085 deletes withdrawn proposals "without claiming it won that comparison," and the reversibility note keeps an instruction on a prospect it says "is not evidence that the instruction has improved later work." The draft's "When a change was learned" section and the note already separate decisions from verdicts, so condition 2 should follow them.

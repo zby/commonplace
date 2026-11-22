@@ -1,0 +1,31 @@
+## 1. Make condition 2 a decision to change the store, and keep "on balance" for the verdict
+
+**Change.** Reword condition 2 so it reads roughly: "Each change is made by a judgment, taken as a step of the loop, that making it serves the system's later work. The judgment may rest on an open comparison or on a single criterion the system applies." Keep "on balance" for the *learned* verdict only. In the note, add a short passage saying that acting on an open or single-criterion comparison is a decision, not an on-balance claim.
+
+**Reason.**
+- The note defines an on-balance judgment as one where *every* reasonable measure favours the successor, and says explicitly that "it is not enough that some reasonable measure favors the step." That contradicts the draft's claim that a fixed measure is "the special case" of such a judgment.
+- The draft also says "Open" is the usual verdict for a recent change, and its reversibility bullet lets a change be kept without evidence of improvement. Read strictly, condition 2 would then exclude most of Commonplace's actual changes, which defeats a definition meant to cover them all.
+
+## 2. Settle what "each change" covers, so automatic storage under a deliberated rule is included
+
+**Change.** State that a change made automatically by a rule counts as deliberative when the system itself deliberated the rule and can revisit it. In that case, the judgment and the criticism attach to the rule.
+
+This requires several edits together:
+- Delete "Storing session traces is learning but not deliberative."
+- Adjust the "change without a judgment" exclusion and case 2's placement so that the entries are covered through their rule.
+- Leave cases where the rule is fixed by designers outside the system (case 11) outside.
+- This also answers the checks' open question about which writes count as changes.
+
+**Reason.**
+- The draft says the term should "put all the learning that happens in Commonplace under one name," yet it names Commonplace's session-trace storage as learning that falls outside the term.
+- The bullet headed "A rule can be deliberated and then act automatically" already supplies the mechanism, but then refuses to apply it.
+- If "each" is left unqualified, any automatic write would make the whole Commonplace store fail condition 2.
+
+## 3. Replace "checked on the outermost loop" with "checked on the loop the claim names"
+
+**Change.** Reword the sentence so the conditions are checked on whichever loop the claim names. Keep the outermost self-run loop as the subject of the autonomy claim only, as the later bullet already does.
+
+**Reason.**
+- The draft itself says "Both are deliberative learning if each meets the three conditions" for nested loops, and it places the inner training loop separately.
+- The checks also place "repairer alone" separately from "team plus repairer" (case 4).
+- All of these require per-loop evaluation, which the outermost-loop rule forbids. As written, inner loops inside Commonplace would have no placement at all.

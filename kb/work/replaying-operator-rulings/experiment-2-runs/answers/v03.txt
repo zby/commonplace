@@ -1,0 +1,45 @@
+# Three proposed changes to the deliberative learning draft
+
+## 1. Make the conditions classify changes, and count automatic writes through the deliberated rule that produces them
+
+**What to change.** Condition 2 currently says "Each change to the store is made by an on-balance judgment." I would rewrite it so that a change counts when it is made either:
+
+- by a judgment, or
+- by a standing rule that was itself adopted by such a judgment and remains open to criticism under condition 3.
+
+The conditions would then sort changes, and a system is a deliberative learner with respect to the changes that pass.
+
+Several passages need to change with it:
+
+- Delete "Storing session traces is learning but not deliberative."
+- Recast "Change without a judgment" in *What the term does not cover*.
+- Answer the checks' open question "Which writes count as changes?" in the definition.
+- Rewrite case 2 so that the logged entries count as deliberative changes through the logging rule, when the system itself can revisit that rule. Case 11 stays outside, because its store-everything rule is fixed by designers elsewhere.
+
+**Reason.** The draft's stated purpose is to put *all* the learning in Commonplace under one name. Yet it calls Commonplace's own trace storage "learning but not deliberative." Read literally, "each change" also means one automatic write takes the whole store out of the term. The draft already says a rule "can be deliberated and then act automatically" and that criticism can target "the rule that produced it," so this change makes condition 2 agree with the draft's own notes.
+
+## 2. Separate the judgment in condition 2 from the strict "learned" verdict, and fix the note to match
+
+**What to change.** I would reword condition 2 as a judgment that the change is worth making for later work, given the reasons available. That covers three kinds of decision:
+
+- a forecast of improvement;
+- a decision taken while the comparison is still open, including one tipped by reversibility;
+- application of a fixed measure.
+
+Keep "every reasonable measure favors it" only for **learned**.
+
+In the on-balance note, add a short paragraph on the case where a judge admits a single measure. It should say this is a decision procedure, not an improvement verdict. That reconciles the note with the draft's line "reduces to that measure." As written, that line contradicts the note's warning that narrowing the set of measures "smuggles a weighting back in."
+
+**Reason.** The linked note defines an on-balance improvement as one where every reasonable measure agrees. So condition 2 currently demands a forecast that the change will be learned. That excludes the decisions the draft and the note explicitly endorse, such as ADR 085's deletion "without claiming it won that comparison," and the reversibility bullet. The draft insists that "letting a change stand is not the same as having learned it," so the admission condition cannot be the learned verdict made in advance.
+
+## 3. Define double-loop as criterion changes that themselves meet S, J and C, then re-examine case 15
+
+**What to change.** Replace the fragmentary test ("Name the class of changes: the test is whether a different standard can govern later decisions of that kind") with an explicit one. A learner is double-loop for a class of changes when:
+
+1. the criterion governing that class is held in its store;
+2. the system itself changes the criterion by judgment; and
+3. later evidence can count against a criterion change, as condition 3 requires.
+
+Then recheck the Gödel-machine bullet and case 15 against this test. They currently credit C for observations that end a *trial*, but credit double-loop for proof-licensed rewrites of `u`. Nothing shown lets later evidence reopen those rewrites. Case 15 should either show C for the criterion rewrites or drop to "criterion-revising but not open to criticism at that level." Cases 14 and 17 already illustrate the intended test.
+
+**Reason.** The project's central conjecture is that a model can "recognize and revise misleading criteria." That conjecture is about criterion changes that are open to correction, not just possible. At present, case 15 assesses membership and kind on different changes, so it can label a proof-final switch double-loop. That undercuts the draft's own condition that "the judgment is held as a conjecture."

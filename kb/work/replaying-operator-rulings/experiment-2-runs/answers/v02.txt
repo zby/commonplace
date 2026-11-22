@@ -1,0 +1,34 @@
+# Three proposed changes to the deliberative learning draft
+
+## 1. Admit changes made by a standing rule that the system adopted and can revisit (definition and checks)
+
+**Change.** Reword condition 2 so that a change counts if a judgment in the loop makes it **or** a standing rule makes it, provided that:
+- a judgment in the loop adopted the rule, and
+- the system can still revise or remove the rule.
+
+Make these edits to match:
+- Replace "storing session traces is learning but not deliberative" with the rule-level reading.
+- Narrow "Change without a judgment" to rules that nothing in the system can revisit.
+- Change case 2 so that the entries are inside whenever the logging rule is inside.
+- Keep case 11 outside: its storage rule was set by its designers, and it removes nothing.
+- Close the checks' open question "which writes count as changes" by stating this quantifier.
+
+**Reason.** The draft says the term must cover all learning in Commonplace, yet it explicitly calls Commonplace's automatic storage "learning but not deliberative." That breaks the term's stated purpose. The draft's own continuity argument for fixed measures also applies here: "keep everything" is a threshold rule with the threshold at its limit, so a small change of threshold should not move a system out of the term. The draft already locates the deliberation at the rule ("introducing such automatic storage is itself a change that can be deliberated"), so membership should follow it there.
+
+## 2. Separate the judgment from the verdict in the on-balance note (note, then definition)
+
+**Change.** Add a section to the note that distinguishes two things:
+- **The judgment.** This is the system's conjecture that a change improves later work. It may weigh whatever measures the judge takes as relevant, including just one.
+- **The verdict.** This is what is true of the change: whether every reasonable measure favors it.
+
+Then rephrase condition 2 as "a judgment of improvement" that links to the note's account of the judgment. Keep "on balance" for the "learned" verdict.
+
+**Reason.** Condition 2 cites the note and calls a single fixed measure a special case of on-balance judgment. The note, however, defines "on balance" by every reasonable measure and warns that narrowing that set "smuggles a weighting back in." The fixed-measure ruling therefore has no support in the note it relies on. With the split, a fixed measure is simply a judgment that may be wrong. That is exactly what condition 3 and the double-loop capacity are there to catch, so the distinctive claim stays a claim about a kind.
+
+## 3. Let the consumption test decide whether workshop drafts count (definition, checks case 12 ruling)
+
+**Change.** Delete "A workshop draft or a task plan does not [count]." Instead:
+- Require each claim to declare its horizon.
+- Let the "used by later work" test decide which edits count, so a draft consumed by later sessions counts and a discarded plan does not.
+
+**Reason.** The fixed exclusion removes a real part of Commonplace's learning. This very draft and its checks were revised across sessions by several agents, each of whom used the earlier state. The exclusion also contradicts the draft's own criterion that store contents count when later operation consumes them. Fixing the horizon in advance turns a project habit into a membership condition, which is what the general term should avoid.

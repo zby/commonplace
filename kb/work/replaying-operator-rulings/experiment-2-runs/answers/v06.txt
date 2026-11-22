@@ -1,0 +1,32 @@
+## 1. Let a judged rule count as the judgment, so the definition covers what its purpose names
+
+**Change.**
+- **Definition, condition 2.** Reword it to: "Each change is made by an on-balance judgment, or by a standing rule that such a judgment adopted and that later evidence can revise."
+- **Definition, other sections.**
+  - Delete "Storing session traces is learning but not deliberative".
+  - Delete the "Change without a judgment" exclusion.
+  - Retitle that note "A rule can be deliberated and then act automatically", which its current content contradicts.
+- **Checks.**
+  - Case 2 becomes inside with respect to its logging rule if that rule is the system's own revisable decision. It is outside on C otherwise.
+  - Case 11 becomes outside on C rather than on J.
+
+**Reason.** The draft says the term should put *all* the learning in Commonplace under one name, yet it calls trace storage learning and then excludes it. The judgment already exists at the level of the rule, so this generalizes rather than adds. Condition C still excludes systems that add everything and can revise nothing, so no boundary case is lost.
+
+## 2. Move single-loop and double-loop out of the definition into a separate note
+
+**Change.**
+- **Moves to a new note on kinds of deliberative learner:**
+  - The single/double-loop paragraph.
+  - The five double-loop bullets: criterion vs implementation, Argyris, authorization, Gödel machine, nested loops.
+  - The two double-loop Misuse lines.
+  - The "What Commonplace adds" exclusion.
+- **Stays in the definition:** one sentence pointing to that note.
+- **Checks.** The kind verdicts, case 15's reasoning and the paired checks move to that note's own checks.
+
+**Reason.** Membership never depends on the kind; the checks themselves say "ask separately." This is the most contested and fastest-growing part of the draft, and every ruling on it currently churns the definition. Separating it lets the definition stay short while the subtype argument continues.
+
+## 3. Replace "When a change was learned" with a pointer to the on-balance note
+
+**Change.** Cut the five-verdict list and its three governing points. Replace them with one sentence: whether a change was learned is the on-balance comparison of the system with and without it, reported with the verdicts in the note. The existing Misuse line about open verdicts stays.
+
+**Reason.** The term "has no success condition," so a success taxonomy does not belong in its definition. The copy has already drifted from the note: it drops the note's point that "better on some, tied on the rest" can justify a step. Both files are editable, so one authoritative statement costs nothing and prevents further divergence.

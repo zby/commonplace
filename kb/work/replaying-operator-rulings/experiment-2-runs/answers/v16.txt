@@ -1,0 +1,14 @@
+**Adopt Version 1.**
+
+1. The operator's reason for counting a fixed measure as a judgment applies equally to correction: a small change in how a system judges should not move it out of the term. Version 2's condition C breaks that rule, because membership flips on fine details. Compare cases 9 and 10 in the checks file, or cases 13 and 14, where DGM and HGM differ only in whether an agent's sampling weight falls with its child count or with its descendants' scores.
+2. Version 1 matches the term's name. Deliberation is the weighing, and keeping the result in a store is what "learning" adds. Version 2 has to stretch "learning" to include revision, which Simon's sense, cited in the same draft, does not require.
+3. Version 1's test that the judgment "could have gone against the change" already excludes the append-everything log and the rule-per-subgoal solver without C. Its *none / bundle / targeted* grades for correction also say more than a pass/fail condition.
+4. Version 2 is also inconsistent with itself in two places:
+   - Condition 3 says the system "then changes the store again," which demands an episode, while the draft elsewhere calls this a capacity.
+   - Its attribution note credits targeted blame to "an addressable store … (condition 1)," but its condition 1 asks only for legibility.
+5. Version 1 still needs cleanup before adoption:
+   - The loop bullet still says "the three conditions."
+   - "The reason:" has lost its attribution to the operator.
+   - The checks file must be rewritten from S/J/C membership to two conditions plus correction and displacement reports. Version 1's Background links to that file's Case 17.
+
+**The one thing to keep from Version 2:** the sentence "Later evidence indicts an operating state, not one line in isolation." Version 1 dropped it. It belongs in Version 1's "Correction: targeted" bullet or its note on addressability. It warns that blaming one change is an inference from evidence about the whole store, which addressability makes possible but does not supply. That guards against reporting *targeted* correction when the evidence only supports *bundle*.

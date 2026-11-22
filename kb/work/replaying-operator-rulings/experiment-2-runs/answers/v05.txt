@@ -1,0 +1,23 @@
+**Adopt Version 1.**
+
+1. The operator made a fixed measure a special case so that "a small change to how a system judges does not move it out of the term." Version 2's condition 3 brings back exactly that discontinuity. In the checks, cases 9 and 10 differ only in whether kept variants are rescored on later tasks, yet one is outside and the other inside.
+2. Version 2 also undercuts the stated purpose of naming all the learning in Commonplace. A `kb/log.md` entry that an agent deliberately records and never revisits would fall outside the term. Yet the drafts already treat a comparably evaluative question, whether the system learns *well*, as a separate claim and not a condition.
+3. Version 1 puts the excluding work in the right condition. "Could have gone against the change" is part of condition 2 itself. Version 2 leaves that phrase to the notes, and then its "What the term does not cover" merges it with condition 3 ("no judgment that later evidence could count against"). That leaves unclear which condition the log example fails.
+4. Reporting correction as *none / bundle / targeted*, with displacement as a separate property, carries more information than a pass/fail condition. The checks file itself concedes that the line between displacement and evidence "carries the weight" and that no reader outside the workshop has checked it, which argues against making that line a test of membership.
+5. Version 1 also states addressability explicitly and shows, with the first-instruction-wins example, that addressability does not guarantee correction. Version 2 makes the point only in passing.
+
+**Keep from Version 2:** the sentence "Later evidence indicts an operating state, not one line in isolation." Put it in Version 1's addressability note or its *targeted* grade. It warns that blaming a single change is an inference even when the store is addressable.
+
+**Before adopting Version 1, fix these leftovers from Version 2:**
+- The nested-loop bullet still says "the three conditions."
+- Single-loop is defined as "makes and reverses changes," which assumes correction. A learner whose correction is *none* then fits neither kind. Say "makes changes" instead.
+- Delete the stray sentence "Being open to criticism is not a condition."
+- "A claim is made for a named class of changes" is misplaced in the scope paragraph, so the following "They" now refers to the claim and not to the conditions.
+- "The reason:" has lost its attribution to the operator.
+
+**The checks file then needs these changes:**
+- Recast C as a reported property, not a condition.
+- Move cases 3, 4 (the repairer alone), 7a, 9 and 13 from outside to inside, with correction reported as *none*.
+- Rewrite "C now does the excluding."
+
+The on-balance note needs no change.

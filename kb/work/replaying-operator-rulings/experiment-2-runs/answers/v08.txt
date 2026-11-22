@@ -1,0 +1,38 @@
+# Three proposed changes to the deliberative-learning draft
+
+## 1. Let a judgment reach a change through the rule that made it, so automatic storage in Commonplace is covered
+
+**Change.** Reword condition 2 in the definition: "Each change is made either by a judgment, or by a standing rule that the system adopted by such a judgment and can revise on later evidence." The definition already says that introducing automatic storage "is itself a change that can be deliberated and later revisited." Follow from that in three places:
+
+- Drop the claim that storing session traces is "learning but not deliberative."
+- Rewrite "Change without a judgment" so that it excludes only rules nobody inside the named system adopted or can revisit.
+- Make case 2 in the checks inside with respect to the entries, provided its system adopted the logging rule and can revisit it.
+
+Case 11 stays outside at its own boundary. Clarify the "each change" quantifier the checks raise for KSI in the same rule-level terms.
+
+**Reason.** The draft says the term must cover all the learning in Commonplace, then excludes Commonplace's own session-trace storage, which it calls learning. As written, the term fails its stated purpose. The rule-level reading is already implicit in the draft and in case 2's discriminator, so this change mostly makes it official.
+
+## 2. Make "legible store" a kind within the term, not a condition of membership, and let the decision test exclude gradient training
+
+**Change.**
+- In the definition, keep the store and the definition of a change, but drop legibility from condition 1.
+- Move the legibility and addressability material into a stated kind: a legible, addressable store lets a learner blame one change and reverse it. That becomes part of Commonplace's distinguishing claim, alongside the double-loop conjecture.
+- Keep gradient training out with the draft's own test: "a decision is a judgment that could have gone against the change." An SGD step is always applied, so it fails condition 2.
+
+Then fix the checks:
+- Case 5's note that "the fixed loss would pass J" contradicts that test, and the training run becomes outside on J.
+- Case 16 (Schmidhuber's incremental self-improvement) becomes inside and single-loop, with coarse attribution.
+- Update the "team that trains models" bullet in the definition to match.
+
+**Reason.** The draft already treats attribution as graded, and it cites incremental self-improvement as the minimum of condition 3. Excluding that same system on legibility makes legibility a matter of degree that the draft treats as a membership condition. That is exactly the error of building the project's distinguishing feature into the definition. The draft's existing "could have gone against it" test does the excluding that legibility was being used for, so this costs nothing.
+
+## 3. Align condition 2 with the note: a decision taken while the verdict is open counts as the judgment
+
+**Change.** Condition 2 currently requires a judgment "that the system will do its later work better with the change". Through the linked note, "on balance" means that every reasonable measure favours the change. Reword it so that the judgment is that the change is worth making for later work. Say explicitly that this includes:
+- decisions taken while the expected verdict is "Open,"
+- trials justified by reversibility,
+- commitments that accept a known loss, such as deleting withdrawn proposals under ADR 085.
+
+In the note, add one line to "An open verdict does not forbid the step": such a decision is the judgment that deliberative learning requires, not an improvement claim.
+
+**Reason.** The note says explicitly that ADR 085 commits to deletion "without claiming it won that comparison." It also says reversibility can favour a change that has not been shown to improve later work. Under the strict on-balance reading, both kinds of change fail condition 2, which would exclude much of Commonplace's ordinary learning. The draft's own separation of "decision" from "learned" only stays consistent if condition 2 asks for the decision, not the improvement verdict.

@@ -1,0 +1,26 @@
+## 1. Make condition 2 require a decision, not a forecast that the change is an improvement
+
+**Change.** In the definition, reword condition 2 as follows: "Each change to the store is made by a decision, taken for the sake of the system's later work, that could have gone against the change. A decision rule that applies one fixed measure is a special case."
+
+In the note, add a paragraph that separates two things:
+- the **on-balance verdict**: every reasonable measure favors the successor;
+- the **judgment or decision** that weighs reasons and may act while the verdict is Open.
+
+Also state that adopting a single fixed measure is one decision rule a judgment can install. It is not an instance of "no measure is selected."
+
+**Reason.** As written, condition 2 demands the claim that the system will do better with the change. That is a forecast of the "learned" verdict, which both files say is usually Open for recent changes. So the condition excludes Commonplace's own decisions taken as decisions, such as ADR 085's deletion, which explicitly accepts a loss, and keeps tipped by reversibility. Calling one fixed measure a "special case" of the on-balance judgment also contradicts the note, which says no measure is selected and warns that narrowing the measures smuggles in a weighting.
+
+## 2. Delete "They are checked on the outermost loop that the system runs itself"
+
+**Change.** Replace that sentence with: "They are checked on the loop of the named system." Leave "outermost loop" only in the bullet on the autonomous claim, as part of a claim about a kind (an outermost loop run by a language model). Re-read the checks' preamble and case 4 against the new sentence.
+
+**Reason.** The sentence turns Commonplace's autonomy claim into a condition of membership. It also contradicts the draft's own placements of inner loops: "Both are deliberative learning if each meets the three conditions," the training run inside the research team, PRODIGY alone versus PRODIGY with Minton, and case 4's "repairer alone." The named-system rule already does the work. The outermost-loop restriction only adds inconsistency.
+
+## 3. Bring automatic storage under the term through the rule that installs it
+
+**Change.**
+- Replace "Storing session traces is learning but not deliberative" with: "Each stored trace is not separately judged. The learning is the deliberated storage rule, and the traces are what that rule adds."
+- Under "What the term does not cover," limit the logging example to storage whose rule no judgment in the named system made or can revisit.
+- Rephrase case 2 to match. Its placement stays as it is.
+
+**Reason.** The draft says the term must put "all the learning that happens in Commonplace under one name." It then names a kind of Commonplace learning that it excludes. The draft already has the means to cover it ("a rule can be deliberated and then act automatically," and case 2's "inside with respect to the logging rule"), so the exclusion is a wording error, not a needed boundary.

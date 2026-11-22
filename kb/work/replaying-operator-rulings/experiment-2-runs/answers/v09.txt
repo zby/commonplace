@@ -1,0 +1,44 @@
+# Review of the deliberative-learning draft
+
+## Condition by condition: what each one alone excludes
+
+**S, the legible store.**
+- **What it alone excludes:** learners whose store is numeric. These are gradient training (case 5) and Schmidhuber's incremental self-improvement (case 16). Case 16 passes J and C, so S is the only thing excluding it.
+- **Where the line is unclear:** The draft's stated reason for S is targeted criticism. But C already accepts coarse rollback as the minimum, so nothing depends on that reason. The draft also counts a lowered selection weight as a store edit ("an archive can lower how often an entry is selected"). Case 14 relies on that numeric weight to pass C. So the boundary between a numeric field that counts and a probability table that does not is never drawn.
+- **Within Commonplace,** S excludes nothing.
+
+**J, judgment in the loop.**
+- **The change-without-judgment exclusion is redundant.** J excludes the add-everything stores (cases 2 and 11), but C excludes those too ("a system that adds everything and removes nothing"). So that exclusion adds nothing of its own.
+- **What J alone excludes is unintended.** It comes from two features of the wording.
+  - **The word "each."** One automatic write, such as stored session traces, puts a store that includes it outside.
+  - **The phrase "on-balance judgment that the system will do its later work better."** The on-balance note defines that phrase strictly: every reasonable measure favours the change. The note also says most consequential changes finish **Open** and are taken "as a decision." Decisions of that kind fail J as written.
+- Both exclusions hit Commonplace's own learning.
+
+**C, open to criticism.**
+- **What it alone excludes:** displacement by a higher score with no new evidence (cases 9, 7a and 13), and the repairer taken alone (case 4).
+- **These exclusions are principled.** Fable, Astra and Neon drew the line in the same place, and the case 13/14 pair tests it well. I would keep C largely as it is.
+
+## Proposed changes, most important first
+
+**1. Change J from a verdict of improvement to a decision that weighs later work.**
+- **Definition:** Reword condition 2 as follows: "Each change is made by a decision that weighs the change's expected effects on later work and could have gone against it."
+- **Note:** Add that an on-balance judgment may conclude *Improvement* or may be a decision taken under an *Open* verdict.
+- **Checks:** Add two cases, both expected inside:
+  - the ADR 085 deletion, which was committed "without claiming it won that comparison";
+  - a routing line kept because reversibility limits future loss.
+
+*Reason:* As worded, J requires a forecast that every reasonable measure favours the change. The note says that is not what happens in Commonplace's usual decisions: ADR 085 and the reversibility case are explicitly *not* claims of improvement. So J excludes most of the learning the term exists to name. The draft's own sentence "letting a change stand ... is a decision" already presupposes this reading.
+
+**2. Let J be met at the level of the rule that produced a change, and remove the session-trace exception.**
+- **Definition:** Reword J to say that each change is made by such a decision *or under a rule adopted by one*, within the system's boundary.
+- **Delete** "Storing session traces is learning but not deliberative."
+- **Checks:** Promote case 2's last sentence to the expected placement, and resolve the "which writes count?" item in the checks file the same way.
+
+*Reason:* The draft says the term covers all learning in Commonplace, yet it names session-trace storage as Commonplace learning that falls outside. Under "each change," any store containing such writes fails J as a whole. C already speaks of "the change, *or the rule that produced it*," so making J rule-level aligns the two conditions. Cases 2 and 11 stay outside wherever no in-system decision chose the rule or C fails.
+
+**3. Ground S in addressability, not medium, and settle the numeric-field cases.**
+- **Definition:** Reword condition 1 as a store whose entries can be individually identified, read by whatever makes the judgment, and traced to the change that put them there. State explicitly whether numeric fields attached to such entries, such as selection weights, count.
+- **Checks:** Then re-place case 16 explicitly. Either it is inside at coarse attribution, or it is outside for a stated reason that also explains why case 14's weights pass.
+- **Wording:** Replace "what is learned is held in" with "what the system changes is held in." Under the draft's own success definition, "learned" means only changes with a winning verdict.
+
+*Reason:* S's stated rationale, targeted criticism, is not required by C. Without a principled line, the inclusion of case 14 and the exclusion of case 16 look arbitrary, since both turn on numbers in an archive or policy. Tying S to addressability gives the condition a job the other two do not do, and keeps it consistent with the misuse warning against restricting the term to language.

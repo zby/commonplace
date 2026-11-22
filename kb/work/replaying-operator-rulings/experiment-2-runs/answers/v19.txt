@@ -1,0 +1,12 @@
+**Adopt Version 2.**
+
+1. Making correction a membership condition, as Version 1 does, conflicts with the term's stated job of putting all of Commonplace's learning under one name. A coding agent that judges each lesson and later relies on it, but has no established path for later evidence to come back, would fall outside the term, and so would the team in check case 3 that weighs every entry.
+2. Version 1 also cuts against the operator's continuity reasoning: cases 9 and 10, and the Darwin and Huxley Gödel machines in cases 13 and 14, differ by one small change in what the score takes in, yet they land on opposite sides of membership.
+3. Version 2 matches each part of the name to one requirement: "deliberative" is the decision that could have gone against the change, and "learning" is the change kept in a store that later work consumes. Revision from later evidence then becomes a graded property (none, bundle or targeted), reported separately from displacement, which gives more information than an in/out verdict. This also fits the on-balance note, which treats correction as conditional ("If we can recognize and correct a mistake").
+4. Adopting it means revising the checks file. Cases 3, 4, 7a, 9 and 13 move from "outside on C" to "inside, correction none or displacement only", and the file asks for each such flip to be explained.
+5. Version 2 needs three small fixes before adoption:
+   - It still says "if each meets the three conditions" in the section on nested loops.
+   - Its single-loop definition says a learner "makes and reverses changes", which assumes the correction it no longer requires.
+   - Its new paragraph linking the term to the KB's self-improving-system definition adds a provision about evidence bearing on the objective that is not among the two conditions. Either state it as a third condition or drop it.
+
+**What to keep from Version 1:** its first condition as legibility alone, without addressability. In Version 2, addressability's only stated role is to make targeted correction possible, and correction is no longer required. So addressability belongs in the correction grading (bundle versus targeted), not in the membership test.
