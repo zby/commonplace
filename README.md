@@ -36,7 +36,7 @@ See [INSTALL.md](./INSTALL.md) for the full setup flow, [Getting started](./kb/r
 
 ### Consult the research with your agent
 
-To draw on this KB's methodology without installing anything, point your agent at the [rendered site](https://zby.github.io/commonplace/) or this repository when designing agentic systems, context engineering, memory, or deploy-time learning (starting at [`kb/tags/README.md`](./kb/tags/README.md)).
+To draw on this KB's methodology without installing anything, point your agent at the [rendered site](https://zby.github.io/commonplace/) or this repository when designing agentic systems, context engineering, memory, or deployment-time learning (starting at [`kb/tags/README.md`](./kb/tags/README.md)).
 
 ### Develop Commonplace
 
@@ -101,9 +101,9 @@ Standard machine learning updates opaque weights against a scalar loss or value 
 
 The [rendered site](https://zby.github.io/commonplace/) is the primary reading surface for the research. Key entry points:
 
-- **Central thesis:** [Selection-Based Learning Without a Value Function](./kb/articles/deployment-time-machine-learning-llm-selected-updates.md) (draft), the [selection-based learning definition](./kb/theory/definitions/selection-based-learning.md), and [necessary preference](./kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md).
+- **Central thesis:** [Deployment-Time Machine Learning: LLM-Selected Updates Without a Single Score](./kb/articles/deployment-time-machine-learning-llm-selected-updates.md) (draft), the [selection-based learning definition](./kb/theory/definitions/selection-based-learning.md), and [necessary preference](./kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md).
 - **Test program:** [Testing Autonomous Selection-Based Learning](./kb/articles/testing-autonomous-selection-based-learning.md) (draft) — discriminating comparisons for admission, targeted correction, criterion revision, and whole-loop net gain, plus a proposed first experiment.
-- **Deployment-time adaptation:** [Deploy-time learning](./kb/theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md), the [learning theory index](./kb/tags/learning-theory-README.md), and the published ECSA 2026 paper and ASISAS 2026 slides in [Articles](./kb/articles/README.md).
+- **Deployment-time learning:** [Deployed systems can learn from feedback with fixed model weights](./kb/theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md), the [deployment-time learning index](./kb/tags/deploy-time-learning-README.md), the [learning theory index](./kb/tags/learning-theory-README.md), and the published ECSA 2026 paper and ASISAS 2026 slides in [Articles](./kb/articles/README.md).
 - **Self-improving and reflective systems:** the [self-improving systems index](./kb/tags/self-improving-systems-README.md), the [improvement loop index](./kb/tags/improvement-loop-README.md), the [robust comparison index](./kb/tags/robust-comparison-README.md), [Commonplace as a reflective system](./kb/theory/evidence/commonplace-as-a-reflective-system.md), and [What an Automated Reviewer Should Measure](./kb/articles/what-an-automated-reviewer-should-measure.md) (draft).
 
 ## Repository layout
