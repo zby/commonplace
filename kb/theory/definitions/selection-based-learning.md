@@ -49,11 +49,6 @@ planning. It learns when it retains a revised scheduling rule.
   be automatic. A validator examines a proposed patch, and its verdict can
   stop the patch from taking effect. A trigger examines nothing that was
   proposed: the tenth report causes the blocklist entry.
-- **Evaluation needs a comparison, not a value function.** It can apply one
-  fixed measure, such as a validator, a formula, a score or a proof. It can
-  also compare the system with and without the change across several
-  measures, as in a
-  [robust comparison](../necessary-preference-can-guide-improvement-without-a-global-measure.md).
 
 Like reinforcement learning, the term names a process and not a successful
 outcome. Whether a selected change improved the system is a separate
@@ -122,6 +117,7 @@ self-improvement by selection.
 Relevant Notes:
 
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the anatomy of the loop and its boundary cases
+- [Selection-based learning needs only a local comparison](../selection-based-learning-needs-only-a-local-comparison.md) — extends: why evaluation needs only a local comparison among reached candidates, with or without a global value function
 - [Necessary preference can guide improvement without a global measure](../necessary-preference-can-guide-improvement-without-a-global-measure.md) — grounds: the comparison across compatible measures, and what a claim of improvement asserts
 - [Learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: the sense of learning the term uses
 - [Self-improving system](./self-improving-system.md) — defined-in: the second step of the ladder, where selection lies inside the declared boundary

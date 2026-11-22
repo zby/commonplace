@@ -24,6 +24,7 @@ The distinction from [continual-learning](./continual-learning-README.md) is **h
 
 Learning by this loop is [selection-based learning](../theory/definitions/selection-based-learning.md). Commonplace bets that a fixed-weight language model can do the selecting unaided; the [lead article](../articles/deployment-time-machine-learning-llm-selected-updates.md) argues it, untested so far.
 
+- [Selection-based learning needs only a local comparison](../theory/selection-based-learning-needs-only-a-local-comparison.md) — costly search limits candidates to a few at a time, so a local comparison suffices even without a global value function
 - [Single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md) — can the learner revise its criterion
 - [Revising an improvement objective is licensed from outside it](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md) — its limit
 - [Gödel machines are a proof-governed case of reflective self-modification](../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md) — a proof decides each rewrite
