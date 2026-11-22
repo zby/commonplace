@@ -26,7 +26,7 @@ a system learns by changes that are each proposed, judged inside the loop,
 and can be rejected. In Commonplace those changes are edits to a readable,
 addressable store—prose, structured text, and code consumed by its later
 work. The
-[lead article](./selection-based-learning-without-a-value-function.md)
+[lead article](./deployment-time-machine-learning-llm-selected-updates.md)
 argues that a fixed-weight language model could serve as that judge where
 no fixed test is adequate, using a robust comparison in place of a single
 value function.
@@ -204,7 +204,7 @@ is separated from the evidence visible only to the scorer.
 
 ## Where to go next
 
-- [Selection-Based Learning Without a Value Function](./selection-based-learning-without-a-value-function.md)
+- [Selection-Based Learning Without a Value Function](./deployment-time-machine-learning-llm-selected-updates.md)
   — the lead article stating the paradigm, the weight-training contrast,
   and the Bitter Lesson argument.
 - [Selection-based learning](../theory/definitions/selection-based-learning.md)

@@ -22,7 +22,7 @@ The distinction from [continual-learning](./continual-learning-README.md) is **h
 
 ## Selection-based learning
 
-Learning by this loop is [selection-based learning](../theory/definitions/selection-based-learning.md). Commonplace bets that a fixed-weight language model can do the selecting unaided; the [lead article](../articles/selection-based-learning-without-a-value-function.md) argues it, untested so far.
+Learning by this loop is [selection-based learning](../theory/definitions/selection-based-learning.md). Commonplace bets that a fixed-weight language model can do the selecting unaided; the [lead article](../articles/deployment-time-machine-learning-llm-selected-updates.md) argues it, untested so far.
 
 - [Single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md) — can the learner revise its criterion
 - [Revising an improvement objective is licensed from outside it](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md) — its limit
