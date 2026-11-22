@@ -8,7 +8,7 @@ tags: []
 
 Commonplace's immediate application is an agent-operated knowledge base. The KB is not the boundary of the program. It is the first worked case in which the design's theories — about retrieval, representation, review, validation, and self-modification — meet real operating constraints *together*, rather than being invented in the abstract and checked one at a time.
 
-The KB is where we test changes against [what Commonplace chooses to count as progress](../../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md#what-commonplace-chooses-to-count). Automating a task is not, by itself, a gain.
+The KB is where we test changes against [what Commonplace chooses to count as progress](../commonplace-declared-frame.md#what-commonplace-chooses-to-count). Automating a task is not, by itself, a gain.
 
 Two things follow from treating the KB as an instrument rather than as the product.
 

@@ -1,5 +1,5 @@
 ---
-description: "The declared boundary under which Commonplace's self-improvement, reflectivity, and allocation attributions are assessed — what is inside, what is outside, and how to cite or depart from it"
+description: "The declared boundary and program objective under which Commonplace's self-improvement, reflectivity, and allocation attributions are assessed — what is inside, what is outside, what counts as progress, and how to cite or depart from it"
 type: types/note.md
 tags: [computational-model, self-improving-systems, learning-theory]
 ---
@@ -20,9 +20,15 @@ If an outside adviser supplies the diagnosis a repair depends on, the adviser re
 
 Within the frame, the repository, commands, validators, review store, and agents are the computational components; designated maintainers are the human components. The partition reports actor allocation and nothing else — it changes neither membership nor reflectivity.
 
+## What Commonplace chooses to count
+
+**Commonplace's objective is more useful and better-warranted knowledge work for the human judgment spent.** This is a practical commitment about the work we value, not a claim that every project should adopt it. Automating a task is not, by itself, a gain.
+
+Its terms can pull apart: stricter checks can raise warrant while consuming more human judgment. The objective therefore bounds which measures are compatible rather than collapsing them into one score. A validator that finds a note the old search missed shows a gain. Whether that gain is worth its upkeep is a weighing for the people who rely on the index and those who maintain it. The objective tells us what to weigh; it does not calculate the answer.
+
 ## Using the frame
 
-- Any membership, reflectivity, closure, or allocation claim about Commonplace is read against this frame unless the claim declares a different one. The frame fixes who and what. Each assessment names its horizon and the objective relevant to that claim; a local acceptance criterion need not be [the program objective](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md#what-commonplace-chooses-to-count).
+- Any membership, reflectivity, closure, or allocation claim about Commonplace is read against this frame unless the claim declares a different one. The frame fixes who and what. Each assessment names its horizon and the objective relevant to that claim; a local acceptance criterion need not be [the program objective](#what-commonplace-chooses-to-count).
 - Provider models and weights sit outside, so Commonplace has no reflective coverage of their distributed-parametric form under this frame. Requested model bindings are localized configuration inside the boundary: the repository makes the request explicit and revisable, providing a possible selection-control surface over an external dependency when the harness honors it. The [six-path audit](../reports/retained/six-commonplace-paths-establish-broad-addressability-not-completeness.md#requested-model-bindings-are-not-realized-bindings) shows that requested-to-realized binding is not currently trustworthy.
 - Computational-closure readings under this frame count human dependencies only. How a hosted model's dependence on outside inference infrastructure should read is addressed separately in [the closure note](../theory/methodological-and-computational-closure-track-different-changes.md).
 

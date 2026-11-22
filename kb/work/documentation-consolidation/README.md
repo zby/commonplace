@@ -40,7 +40,7 @@ Recent decisions provide three controls: routine navigation went back to agent i
 
 First case: [Where change candidates come from in Commonplace](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md). The [connect-report mining proposal](../../reference/proposals/periodic-connect-report-mining.md) uses its distinction between noticing a problem and turning it into a candidate.
 
-Keep [the declared frame](../../reference/commonplace-declared-frame.md) as the reference for who and what counts as part of Commonplace. For what counts as progress, cite [the program objective](../../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md#what-commonplace-chooses-to-count).
+Keep [the declared frame](../../reference/commonplace-declared-frame.md) as the reference for who and what counts as part of Commonplace, and [the program objective](../../reference/commonplace-declared-frame.md#what-commonplace-chooses-to-count) for what counts as progress.
 
 Keep [Commonplace as an instrument](../../reference/case-studies/commonplace-as-an-instrument.md) in `case-studies/`, not among the declarations. Its reader is a maintainer deciding what operating this KB has shown and what still needs testing. The [ablation proposal](../../reference/proposals/ablation-baselines-for-the-declared-objective.md) uses it to distinguish two questions: do the parts work together here, and does using them beat doing the same work without them?
 
