@@ -20,6 +20,16 @@ The distinction from [continual-learning](./continual-learning-README.md) is **h
 - [False-positive generation is filtered; false-positive acceptance becomes operative](../theory/false-positive-generation-is-filtered-before-retention.md) — why errors at acceptance cost more than errors at generation
 - [Distinct residue classes require distinct functions in a self-improving architecture](../theory/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md) — different reasons a decision stays untransferred point to different missing functions
 
+## Selection-based learning
+
+Learning by this loop is [selection-based learning](../theory/definitions/selection-based-learning.md). Commonplace bets that a fixed-weight language model can do the selecting unaided; the [lead article](../articles/selection-based-learning-without-a-value-function.md) argues it, untested so far.
+
+- [Single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md) — can the learner revise its criterion
+- [Revising an improvement objective is licensed from outside it](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md) — its limit
+- [Gödel machines are a proof-governed case of reflective self-modification](../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md) — a proof decides each rewrite
+- [The Bitter Lesson selects production methods, not representational forms](../theory/the-bitter-lesson-selects-production-methods-not-representational.md) — prose and code fit the lesson
+- [A bootstrap fits the Bitter Lesson only if learning outgrows it](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — when a hand-written start fits
+
 ## Search and search control
 
 - [Open-ended improvement must allocate search before decisive evaluation is available](../theory/open-ended-improvement-allocates-search-before-evaluation.md) — even a proof-gated loop must first choose what to develop
@@ -46,4 +56,5 @@ The distinction from [continual-learning](./continual-learning-README.md) is **h
 - [software-factory](./software-factory-README.md) — factory revision is one target a loop can retain changes into
 - [reflection](./reflection-README.md) — loops whose retained changes pass through a self-representation
 - [warranted-autonomy](./warranted-autonomy-README.md) — which evaluation and acceptance decisions a computational actor is warranted to take
+- [robust-comparison](./robust-comparison-README.md) — one way to evaluate a candidate
 - [continual-learning](./continual-learning-README.md) — learning through persistent non-weight changes; it can use proposal selection or direct updates

@@ -11,7 +11,7 @@ ingested: "2026-08-31"
 occasion: "Determine what this source establishes about learning persistent search-control or operator knowledge from goal-directed experience, how that knowledge changes later problem solving, and which parts of the underlying learning architecture remain fixed. Assess the source on its own terms rather than treating every learned rule as a revisable explanatory theory."
 type: types/ingest-report.md
 domains: [machine-learning, cognitive-architecture, search-control]
-tags: [judgment-governed-self-improvement]
+tags: [improvement-loop]
 ---
 
 # Ingest: Chunking in Soar: The Anatomy of a General Learning Mechanism

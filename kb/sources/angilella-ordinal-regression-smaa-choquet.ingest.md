@@ -10,6 +10,7 @@ ingested: "2026-11-21"
 occasion: "What can Commonplace conclude when a comparison leaves trade-off weights open?"
 type: types/ingest-report.md
 domains: [robust ordinal regression, stochastic multiobjective acceptability analysis, Choquet integral]
+tags: [robust-comparison]
 learning_claims: true
 ---
 

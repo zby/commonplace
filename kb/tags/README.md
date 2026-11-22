@@ -7,7 +7,6 @@ For current-state documentation about the live Commonplace system rather than tr
 ## Tag Indexes
 
 - [Self-improving systems](./self-improving-systems-README.md) — evidence-responsive operative change to a system's own organization; reflective versus non-reflective self-improvement is the central distinction, and the stake is a conjectured sample-efficiency payoff: reflection may cut target data under structured shifts
-  - [Judgment-governed self-improvement](./judgment-governed-self-improvement-README.md) — self-improvement by proposed, judged, rejectable changes to what a system retains; the thesis Commonplace tests
   - [Software factory](./software-factory-README.md) — factories and houses: family-specific production machinery and factory learning
   - [Improvement loop](./improvement-loop-README.md) — the proposal-selection architecture: search control, evaluation, retention
   - [Reflection](./reflection-README.md) — reflective systems: addressability, second-order lessons, graded coverage
@@ -17,6 +16,7 @@ For current-state documentation about the live Commonplace system rather than tr
 - [Architecture](./architecture-README.md) — responsibility boundaries, state, control planes, and interfaces in agent-operated KBs and runtimes
   - [Commonplace architecture](./commonplace-architecture-README.md) — Commonplace-specific structure, installation, storage choices, subsystem boundaries, and design proposals
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
+  - [Robust comparison](./robust-comparison-README.md) — comparing two versions across every measure compatible with the purpose of the work
 - [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by six child tags (enforced), so its README routes rather than enumerates:
   - [Deploy-time learning](./deploy-time-learning-README.md) — what deployed use reveals and how people and systems respond
   - [Constraining](./constraining-README.md) — narrowing interpretation space, codification, relaxing

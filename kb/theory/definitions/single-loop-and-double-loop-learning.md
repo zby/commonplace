@@ -1,7 +1,7 @@
 ---
 description: "Definition — for a named class of changes, a system that learns by a proposal-selection loop is single-loop when it cannot revise the criterion that decides them and double-loop when it can; narrower than Argyris's sense"
 type: types/definition.md
-tags: [self-improving-systems, learning-theory, judgment-governed-self-improvement]
+tags: [self-improving-systems, learning-theory, improvement-loop]
 ---
 
 # Single-loop and double-loop learning

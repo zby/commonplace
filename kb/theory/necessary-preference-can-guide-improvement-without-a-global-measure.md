@@ -2,7 +2,7 @@
 description: "How to decide whether to keep a change when gains and losses fall on different tasks, and which uncertainties justify further investigation before acting"
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [evaluation, self-improving-systems, judgment-governed-self-improvement]
+tags: [evaluation, self-improving-systems, robust-comparison]
 ---
 
 # Necessary preference can guide improvement without a global measure

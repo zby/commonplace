@@ -11,7 +11,7 @@ occasion: "Background for kb/work/learning-method-name (deliberative learning), 
 learning_claims: true
 type: types/ingest-report.md
 domains: [truth-maintenance, belief-revision, dialectical-argumentation, non-monotonic-reasoning]
-tags: [learning-theory, reflection, judgment-governed-self-improvement]
+tags: [learning-theory, reflection]
 ---
 
 # Ingest: A Truth Maintenance System (Doyle, MIT AI Memo 521, 1979)

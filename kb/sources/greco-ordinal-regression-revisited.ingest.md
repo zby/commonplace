@@ -11,6 +11,7 @@ genre: scientific-paper
 snapshot_sha256: 51c5ee8d3204e0eccfd73137916e2fbcb10eadfe0ffd6dfcaeecc828c3908b84
 occasion: "What can Commonplace conclude when a comparison leaves trade-off weights open?"
 domains: [ordinal regression, multiple criteria decision analysis, preference elicitation]
+tags: [robust-comparison]
 learning_claims: true
 ---
 

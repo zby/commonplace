@@ -1,5 +1,5 @@
 ---
-description: "Curated head for the self-improving-systems tag — systems that make operative, evidence-responsive changes to their own organization; definition, objective, accumulation, and seven child areas"
+description: "Curated head for the self-improving-systems tag — systems that make operative, evidence-responsive changes to their own organization; definition, objective, accumulation, and six child areas"
 type: types/tag-readme.md
 complete: true
 ---
@@ -8,13 +8,12 @@ complete: true
 
 A [self-improving system](../theory/definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own [behavior-determining organization](../theory/definitions/behavior-determining-organization.md), read against a declared frame of boundary, horizon, and improvement objective. Assign this tag to work on whether or how systems make such changes: their definition and classification, mechanisms, limits, or evidence of improvement. It also includes work that meets a child area's inclusion condition, as specified below. Ordinary task execution or automation alone is insufficient. Tagging an analysis does not certify that the analyzed system improves. [Deploy-time-learning](./deploy-time-learning-README.md) covers the post-release demand for change and responses to it, including human maintenance; work on self-improvement as a response may carry both tags. [Learning-theory](./learning-theory-README.md) covers learning more broadly, whether or not the learner changes its own organization.
 
-The child areas are [judgment-governed-self-improvement](./judgment-governed-self-improvement-README.md), [software-factory](./software-factory-README.md), [improvement-loop](./improvement-loop-README.md), [reflection](./reflection-README.md), [warranted-autonomy](./warranted-autonomy-README.md), [continual-learning](./continual-learning-README.md), and [theory-builder](./theory-builder-README.md). Substantive fit to any of these heads also qualifies for this parent tag. This includes their definitions, boundary cases, and evaluation questions without requiring a separate claim that a system changes itself. The hierarchy groups areas of inquiry; it does not assert that every factory, theory, or autonomous actor is a self-improving system.
+The child areas are [software-factory](./software-factory-README.md), [improvement-loop](./improvement-loop-README.md), [reflection](./reflection-README.md), [warranted-autonomy](./warranted-autonomy-README.md), [continual-learning](./continual-learning-README.md), and [theory-builder](./theory-builder-README.md). Substantive fit to any of these heads also qualifies for this parent tag. This includes their definitions, boundary cases, and evaluation questions without requiring a separate claim that a system changes itself. The hierarchy groups areas of inquiry; it does not assert that every factory, theory, or autonomous actor is a self-improving system.
 
 ## Child areas
 
-- [judgment-governed-self-improvement](./judgment-governed-self-improvement-README.md) — self-improvement by proposed, judged, rejectable changes to what a system retains: the definition, the comparison that decides a change, the proof-governed precedent, and the Bitter Lesson argument; the thesis Commonplace tests
 - [software-factory](./software-factory-README.md) — factories and houses: family-specific production machinery, factory development and learning, universality, task versus product families
-- [improvement-loop](./improvement-loop-README.md) — the proposal-selection architecture: search control, what to learn, oracle accumulation, diagnostic richness, false-positive filtering, omitted versus frozen loop functions
+- [improvement-loop](./improvement-loop-README.md) — the proposal-selection architecture and selection-based learning, with the bet Commonplace tests: search control, what to learn, oracle accumulation, diagnostic richness, false-positive filtering, omitted versus frozen loop functions
 - [reflection](./reflection-README.md) — reflective systems: addressability, second-order lessons, graded coverage, retrieval misses, Gödel machines, and the Commonplace reflective-trace evidence
 - [warranted-autonomy](./warranted-autonomy-README.md) — which decisions a computational actor is warranted to take over from humans, the oracle domain that bounds it, closure, and measuring autonomy
 - [continual-learning](./continual-learning-README.md) — how a deployed system keeps learning outside model weights: the readable-artifact loop, form coevolution, governing writes, and the Bitter Lesson defense of that bet
@@ -47,5 +46,6 @@ The child areas are [judgment-governed-self-improvement](./judgment-governed-sel
 ## Related Tags
 
 - [deploy-time-learning](./deploy-time-learning-README.md) — what deployment reveals and the responses, from human maintenance to self-improvement
-- [learning-theory](./learning-theory-README.md) — the parent area for how systems learn; the seven children above are also its routes into self-revision
+- [learning-theory](./learning-theory-README.md) — the parent area for how systems learn; the six children above are also its routes into self-revision
+- [robust-comparison](./robust-comparison-README.md) — the comparison that says whether a change improved the system
 - [computational-model](./computational-model-README.md) — the execution substrate these systems run on

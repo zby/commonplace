@@ -2,7 +2,7 @@
 description: "A hand-crafted starting state fits the Bitter Lesson only if scalable learning displaces the task- and family-specific production knowledge it supplies as claimed reach widens"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, self-improving-systems, continual-learning, judgment-governed-self-improvement]
+tags: [learning-theory, self-improving-systems, continual-learning, improvement-loop]
 ---
 
 # A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it

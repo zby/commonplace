@@ -2,7 +2,7 @@
 description: "Use a Python release comparison to distinguish a split that reveals a new constraint from one that merely names an unmeasured loss."
 type: types/note.md
 traits: [title-as-claim]
-tags: [evaluation, judgment-governed-self-improvement]
+tags: [evaluation, robust-comparison]
 ---
 
 # An objection can show where to split a comparison
