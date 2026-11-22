@@ -51,7 +51,7 @@ Coevolution is the right conceptual frame, but a three-way joint optimizer isn't
 Relevant Notes:
 
 - [Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) — foundation: continual learning requires governing behaviour-changing writes across whichever of the parametric, natural-language, and symbolic forms an update touches — the premise that lets the readable pair count as a learning target at all
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — foundation: retained readable artifacts already give a persistent deployment-time adaptation path
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — foundation: retained readable artifacts already give a persistent deployment-time learning path
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the natural-language/symbolic/distributed-parametric split used throughout this note
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — extends: readable natural-language artifacts and readable scripts or validators are the tractable first slice where changes have bounded validation costs
 - [In-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: the context-engineering buildout is itself part of the joint loop

@@ -7,7 +7,7 @@ tags: [learning-theory, constraining, deploy-time-learning, self-improving-syste
 
 # Constraining during deployment can produce learning outside weights
 
-[Constraining](./definitions/constraining.md) commits choices about what a rule permits or prefers. When deployment experience leads a system to select and retain a useful constraint, later executions can benefit without changing the model's weights. This is one path within [deployment-time adaptation through retained artifacts](./retained-artifacts-enable-persistent-deployment-time-adaptation.md).
+[Constraining](./definitions/constraining.md) commits choices about what a rule permits or prefers. When deployment experience leads a system to select and retain a useful constraint, later executions can benefit without changing the model's weights. This is one path within [deployment-time learning through retained artifacts](./retained-artifacts-enable-persistent-deployment-time-adaptation.md).
 
 Retention makes the change available for later use. To establish an improvement, the system must also check what the constraint changes and whether those effects serve the task. Saving an instruction or committing a validator does not by itself establish a gain in adaptive capacity.
 

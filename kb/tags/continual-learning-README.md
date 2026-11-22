@@ -44,7 +44,7 @@ The distinction from [improvement-loop](./improvement-loop-README.md) is **how l
 
 ## Related Tags
 
-- [self-improving-systems](./self-improving-systems-README.md) — the parent; continual learning is the deployed-system case of self-improvement
+- [self-improving-systems](./self-improving-systems-README.md) — the parent; continual learning is a deployed system learning outside its weights, whether people or the system's own loop select the changes
 - [deploy-time-learning](./deploy-time-learning-README.md) — what deployed use reveals and how systems respond; retained learning is one response, so several members carry both tags
 - [learning-theory](./learning-theory-README.md) — the general account of learning these notes apply
 - [reflection](./reflection-README.md) — whether the retained changes are represented and selectively revisable

@@ -12,7 +12,7 @@ tags: [learning-theory, constraining, evaluation]
 
 Karpathy identifies three properties that make a task verifiable: **resettable** (you can retry), **efficient** (retries are cheap), and **rewardable** (you can evaluate results automatically). The more verifiable a task is, the more you can hill-climb on it — through RL at training time, or through iteration at runtime.
 
-For [deployment-time adaptation through retained artifacts](./retained-artifacts-enable-persistent-deployment-time-adaptation.md), assess those properties for a particular task and checking procedure. A prompt, schema, test suite or code module does not have a fixed grade of verifiability. The same artifact can admit an exact check for one requirement and a difficult judgment for another.
+For [deployment-time learning through retained artifacts](./retained-artifacts-enable-persistent-deployment-time-adaptation.md), assess those properties for a particular task and checking procedure. A prompt, schema, test suite or code module does not have a fixed grade of verifiability. The same artifact can admit an exact check for one requirement and a difficult judgment for another.
 
 ## Examples of checking different requirements
 
