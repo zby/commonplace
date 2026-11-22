@@ -34,7 +34,8 @@ are learning in
   uses. A proposal is information that describes a change, and it can be
   stored, as a patch can. Storing it is already a change to the system's
   durable state, and a different one from the change it describes. It is
-  usually cheap and made directly, but it is still a decision. The
+  usually cheap, but it is still a decision, and it is made on the
+  proposal as received, before anything is stored. The
   described change is not stored. The system changes, and what it retains
   afterwards is different. Where that is held
   does not matter. A handbook,
