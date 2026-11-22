@@ -80,7 +80,7 @@ question, answered by comparing the system with and without it.
   still reject the change for a reason the score does not capture.
 
 A claim of selection-based learning names the system and the class of
-changes it covers. A wiki that imports pages automatically and lets editors
+changes it covers. Name the change actually selected: [adopting a rule on trial](../reversibility-can-favor-a-change-by-limiting-future-loss.md) can differ from adopting it as proposed. A wiki that imports pages automatically and lets editors
 delete wrong ones is outside for imports and inside for deletions. Natural
 selection shows why the system must be named. A population learns by
 selection: variants arise, some are eliminated, and the rest are what the

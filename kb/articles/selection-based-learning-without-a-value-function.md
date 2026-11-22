@@ -81,15 +81,19 @@ the proposed edit before it enters the
 store. It weighs the expected routing fix against a diffuse cost—every
 unrelated task also loads that extra line, and on a task already near the
 model's effective context limit, extra prompt text can tip a correct answer
-into rework. Because the edit is one identifiable line and cheap to revert
-if trouble appears, the judge approves it.
+into rework. The judge compares leaving the file alone, adding the line as proposed,
+and adding it on trial. It selects the trial: it installs the line and
+schedules a review of the next maintenance run. The reviewer will inspect
+where the line sent each task and decide whether to keep, narrow, or remove
+it. The line takes effect now under either form of adoption; only the trial
+also changes what the reviewer will do.
 
 On later tasks, the new line directs proposal writes accurately—until a
 longer maintenance run fails because the rule matched a migration plan that
 belonged instead in a
 [workshop](../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md),
-the system's temporary area for unfinished work. Inspecting the trace points
-directly to that routing line. A second judgment narrows its scope to
+the system's temporary area for unfinished work. At the scheduled review, the reviewer traces the misfiling to the new line
+and narrows its scope to
 finished design proposals while leaving the rest of the instruction file
 intact. Later still, after three similar over-broad rules pass the system's
 existing brevity check, a third change revises the review check itself so
@@ -98,8 +102,8 @@ every new routing rule must declare what it excludes before acceptance.
 That sequence establishes three things. First, the system adapted across
 tasks at deployment time without changing a single model weight: the unit
 of learning is [the deployed system, not the model alone](../theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
-Second, the judge admitted the routing line because its expected benefit
-justified a reversible trial. Whether later work was better with the line
+Second, the judge selected the line with a review commitment, not the line
+as originally proposed. Whether later work was better with the line
 than without it was a separate question. Third, no
 single scalar metric had to be invented to compare saved misfilings against
 diffuse context load.
