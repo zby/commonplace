@@ -1,5 +1,5 @@
 ---
-description: "Definition — selection-based learning is learning in which each change to what a system retains is proposed, evaluated and can be rejected; it contrasts with updates that evidence determines directly"
+description: "Definition — selection-based learning is learning in which each change to what a system retains is proposed, evaluated on whether it makes that work better, and can be rejected; it contrasts with direct updates"
 type: types/definition.md
 tags: [self-improving-systems, learning-theory, improvement-loop]
 ---
@@ -14,103 +14,42 @@ This term was named "deliberative learning" until 2026-11-22 and
 **Selection-based learning** is learning in which each change is selected:
 
 > A change to what the system retains for its later work is proposed,
-> evaluated, and can be rejected.
+> evaluated on whether it makes that work better, and can be rejected.
 
-[AlphaGo Zero](https://www.nature.com/articles/nature24270) is a well-known
-case. Each newly trained network played the current best one and replaced
-it only if it won by a margin of 55%. Its successor
-[AlphaZero](../../sources/alphazero-chess-shogi-self-play.ingest.md) dropped that step and updated
-a single network continually, so it no longer selected among networks.
+[AlphaGo Zero](https://www.nature.com/articles/nature24270) illustrates the boundary. Each newly trained network played the current best one and replaced it only if it won by a margin of 55%. Its successor, [AlphaZero](../../sources/alphazero-chess-shogi-self-play.ingest.md), dropped that evaluation gate and updated a single network continually by gradient descent—moving from network-level selection to direct updates alone.
 
-A system that learns this way is a **selection-based learner**. The loop
-that does it is a
-[proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md),
-and that note gives its anatomy. The contrast is a direct update, in which
-the evidence determines the change and nothing is proposed or rejected. Both
-are learning in
-[Simon's sense](../learning-is-not-only-about-generality.md): a change to
-the system that changes what it can do on later occasions. The test above
-is applied to changes of that sort. A sequencer that proposes a landing
-schedule, checks it and keeps it is deciding what to do now, which is
-planning. It learns when it retains a revised scheduling rule.
+That contrast divides learning in [Simon's sense](../learning-is-not-only-about-generality.md)—changes that alter what a system can do on later occasions, rather than one-off plans for the current task—into two modes. In a **direct update**, evidence determines the change directly and nothing is proposed or rejected. In **selection-based learning**, a **selection-based learner** operates through a [proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) with two requirements:
 
-- **The change** is to something the learner retains and its later work
-  uses. It is an event that alters what the system retains, not an object
-  stored in it. A proposal is information that describes a change. Storing
-  a proposal, as a patch is stored, is a separate change from making the
-  change it describes, and whether that storing is itself selected depends
-  on the system. Where the retained content is held does not matter. A
-  handbook, code, a team's working habits and a model checkpoint all qualify, so a
-  store that can be read is not required.
-- **Evaluation is causally distinct from proposing.** It need not be a
-  separate stage or a separate actor. Its result decides whether the change
-  is made, or undone if it was already made, and a rejection is its own
-  event: it does not consist in the next candidate arriving. Selection can
-  be automatic. A validator examines a proposed patch, and its verdict can
-  stop the patch from taking effect. A trigger examines nothing that was
-  proposed: the tenth report causes the blocklist entry.
+- **Retained change.** The change alters something the learner keeps and draws on in later work. Where that retained content lives does not matter: a handbook, code, a team's working habits, and a model checkpoint all qualify, so a readable store is not required.
+- **Reject-capable evaluation.** Evaluation is causally distinct from proposing, though it need not be a separate stage or actor and may be automatic. Its verdict decides whether the change is made—or undone if already made—and rejection is its own event rather than the arrival of the next candidate.
 
-Like reinforcement learning, the term names a process and not a successful
-outcome. Whether a selected change improved the system is a separate
-question, answered by comparing the system with and without it.
+Like reinforcement learning, the term names a process rather than a successful outcome. Whether a selected change actually improved the system is a separate question, answered by comparing the system with and without it.
 
 ## Scope
 
-- **Direct updates (outside).** Pre-training by gradient descent is told
-  the right output for each input, and the error fixes the update. A
-  nightly job that raises an article's rank whenever it is clicked writes
-  directly from its input in the same way. Nothing is tried, so nothing
-  can be rejected.
-- **Triggers and automatic storage (outside).** A bot that adds a review
-  rule whenever a class of bug has been reported five times is set off by a
-  count. A logger that stores every session trace evaluates none of them.
-  Each is inside only if what was drafted is evaluated and can be
-  rejected.
-- **One fixed measure (inside).** Keeping a patch because a validator
-  passed, deploying the checkpoint with the best validation score, and
-  keeping a mutation in an evolutionary search all evaluate a candidate and
-  can reject it. The gradient steps that produced each checkpoint stay
-  outside.
-- **Several measures (inside).** A team that looks at a test score and can
-  still reject the change for a reason the score does not capture.
+- **Direct updates (outside).** Gradient steps under a fixed loss and rules that write directly from inputs (such as raising an article's rank on each click) try no candidate and reject nothing.
+- **Triggers and automatic storage (outside).** A rule written automatically on a count trigger and a logger that saves every trace evaluate nothing. Either enters scope only when an evaluation step checks the candidate and can reject it.
+- **One fixed measure (inside).** Keeping a patch that passes a validator, deploying the checkpoint with the best validation score, or keeping a mutation in evolutionary search all evaluate a candidate and can reject it. The gradient steps that produced each checkpoint stay outside.
+- **Several measures (inside).** A team or judge that weighs a score alongside other considerations and can reject a change even when the score rises.
 
-A claim of selection-based learning names the system and the class of
-changes it covers. Name the change actually selected: [adopting a rule on trial](../reversibility-can-favor-a-change-by-limiting-future-loss.md) can differ from adopting it as proposed. A wiki that imports pages automatically and lets editors
-delete wrong ones is outside for imports and inside for deletions. Natural
-selection shows why the system must be named. A population learns by
-selection: variants arise, some are eliminated, and the rest are what the
-population retains. An individual organism in it does not, because nothing
-it retains is selected.
+## System boundary and class of changes
 
-## The term and the system boundary
+Every claim of selection-based learning names the **system** that changes and the **class of changes** it covers. A wiki that imports pages automatically and lets editors delete wrong ones is outside for imports and inside for deletions.
 
-The system named in a claim has to be the one that changes. Who does the
-selecting does not matter for the term. It matters for two further
-questions, and each moves one more function inside the system. Take a deployed model whose checkpoint is
-picked by a validation score:
+Who performs the selection does not affect membership, but it separates three levels. Take a deployed model whose checkpoint is picked by a validation score:
 
-1. **Learning.** The system is what changes. No checkpoint changes when
-   one replaces another. The deployed model changes which checkpoint it
-   uses, and it learns by selection that others perform on it.
-2. **Self-improvement by selection.** The system also does the selecting. The model
-   together with the selection script is a
-   [self-improving system](./self-improving-system.md).
-3. **Double-loop.** The system can also revise what it selects by. The
-   model, the script and the engineers who can change the score are
-   [double-loop](./single-loop-and-double-loop-learning.md).
+1. **Learning.** Only the deployed model sits inside the boundary; it changes which checkpoint it uses, learning by selection that others perform on it.
+2. **Self-improvement by selection.** The selection script sits inside the boundary too; the model and script together form a [self-improving system](./self-improving-system.md).
+3. **Double-loop.** The engineers who can revise the validation score also sit inside; the combined system can change what it selects by and is [double-loop](./single-loop-and-double-loop-learning.md).
 
-A breeder's herd learns by selection and does not improve itself. A team
-that maintains its own handbook does all three. Proposals may come from
-outside the boundary. Selection is the step that has to be inside for
-self-improvement by selection.
+Proposals may come from outside the boundary; selection is the step that must sit inside for self-improvement by selection.
 
 ## Misuse Cases
 
 - Citing the term as evidence that the system improved or corrects itself.
 - Restricting the term to readable stores or to prose.
-- Using the term for a system because it reasons carefully about its work.
-  The term applies to how changes to what the system retains are decided.
-- Omitting the class of changes.
+- Applying the term to a system because it reasons carefully about its work; it applies only to how retained changes are decided.
+- Omitting the system or the class of changes.
 
 ---
 
