@@ -957,6 +957,7 @@ plugins:
         'theory/definitions/deliberative-learning.md': 'theory/definitions/judgment-governed-self-improvement.md'
         'theory/evaluation-that-controls-adoption-helps-determine-the-change.md': 'theory/removing-approval-waits-can-leave-required-human-evaluation-in-place.md'
         'theory/frontloading-is-partial-evaluation-not-divide-and-conquer.md': 'theory/frontloading-can-specialize-instructions-around-known-inputs.md'
+        'theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md': 'theory/necessary-preference-can-guide-improvement-without-a-global-measure.md'
         'theory/opacity-is-a-scale-threshold.md': 'theory/opacity-depends-on-the-inspection-question-and-budget.md'
         'theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md': 'theory/near-decomposability-may-make-local-inspection-affordable.md'
         'theory/reversibility-can-favour-a-change-by-limiting-future-loss.md': 'theory/reversibility-can-favor-a-change-by-limiting-future-loss.md'

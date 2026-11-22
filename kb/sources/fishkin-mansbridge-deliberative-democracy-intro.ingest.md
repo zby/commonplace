@@ -58,7 +58,7 @@ No source quotes have been retained yet.
 For the occasion, the source serves as the **definitional anchor** for the
 group sense of deliberation: weighing competing arguments in discussion under
 stated conditions. In the KB, it lands mainly against
-[On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md).
+[On-balance judgments can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md).
 Both treat a good judgment as reasons weighed rather than a single score. This
 source adds the group-level conditions under which the weighing is
 trusted: good information, balanced materials, diverse participants and

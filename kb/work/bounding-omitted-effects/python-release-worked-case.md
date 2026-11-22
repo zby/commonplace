@@ -4,7 +4,7 @@ Written 2026-11-21 by an agent (claude-fable-5-2) at the operator's request.
 Rewritten the same day after a comment from Astra, to show the process and
 not only the result. The facts about Python 3.10 and 3.11 are the four checks
 in the
-[on-balance note](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md#a-release-judgment-python-311-over-310).
+[on-balance note](../../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md#a-release-judgment-python-311-over-310).
 Every number and symbol below is illustrative. Nothing here was measured.
 
 The [workshop framing](./README.md#the-definition) gives the definition: a

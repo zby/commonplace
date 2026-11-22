@@ -32,7 +32,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper gives a formal test for the worked trade-off in [On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md). In that note, a revision helps on 90 tasks and hurts on 10. Under the note’s additive assumptions, a defensible upper bound below nine on the loss per harmed task relative to the gain per helped task establishes a strict preference for the revision. If the feasible ratios include nine, a tie is possible. If they extend to both sides of nine, the preferred option depends on the ratio. The judgment about which ratios deserve consideration still belongs to those deciding.
+The paper gives a formal test for the worked trade-off in [On-balance judgments can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md). In that note, a revision helps on 90 tasks and hurts on 10. Under the note’s additive assumptions, a defensible upper bound below nine on the loss per harmed task relative to the gain per helped task establishes a strict preference for the revision. If the feasible ratios include nine, a tie is possible. If they extend to both sides of nine, the preferred option depends on the ratio. The judgment about which ratios deserve consideration still belongs to those deciding.
 
 ## Extractable Value
 

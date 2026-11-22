@@ -33,7 +33,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper gives a formal counterpart to the break-even example in [On-balance judgments](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md). The proportion of tasks helped enters the example as evidence about use. The proportion of compatible models that favor a revision answers a different question and depends on how models are sampled. Compared with the additive model in [Ordinal Regression Revisited](./greco-ordinal-regression-revisited.ingest.md), the Choquet model also lets the value of a gain depend on what the alternative achieves on other criteria.
+The paper gives a formal counterpart to the break-even example in [On-balance judgments](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md). The proportion of tasks helped enters the example as evidence about use. The proportion of compatible models that favor a revision answers a different question and depends on how models are sampled. Compared with the additive model in [Ordinal Regression Revisited](./greco-ordinal-regression-revisited.ingest.md), the Choquet model also lets the value of a gain depend on what the alternative achieves on other criteria.
 
 ## Learning Claims (our opinion)
 
@@ -51,4 +51,4 @@ A guarantee applies only within the chosen family, criteria, evaluation scales a
 
 ## Recommended Next Action
 
-Add a distinction to the break-even example in [On-balance judgments](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md) between a conclusion holding across all plausible trade-offs and one holding for a specified share under an explicit distribution over those trade-offs.
+Add a distinction to the break-even example in [On-balance judgments](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md) between a conclusion holding across all plausible trade-offs and one holding for a specified share under an explicit distribution over those trade-offs.

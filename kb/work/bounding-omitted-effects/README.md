@@ -6,7 +6,7 @@ goal below.
 
 ## Goal
 
-Give the [on-balance account of improvement](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+Give the [on-balance account of improvement](../../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
 the support it needs to serve as a definition of improvement, and so as the
 success condition for learning. The definition of [deliberative learning](../../theory/definitions/judgment-governed-self-improvement.md)
 depends on the result.

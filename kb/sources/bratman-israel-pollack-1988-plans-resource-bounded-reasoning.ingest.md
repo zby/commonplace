@@ -81,7 +81,7 @@ anchor for the claim that a retained commitment limits reconsideration
 because reconsideration costs deliberation, together with a counterpoint
 showing where such an architecture stops short of learning. In the KB it
 lands mainly on decision-under-cost notes. It compares with
-[On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+[On-balance judgments can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
 on when further deliberation is worth its cost: the paper's Situation 2
 (deliberation that leaves the plan unchanged does not pay) parallels the
 note's rule that investigation is warranted only when a plausible answer

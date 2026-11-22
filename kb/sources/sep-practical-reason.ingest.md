@@ -61,7 +61,7 @@ No source quotes have been retained yet.
 For the occasion, the source is the **definitional anchor** for the ordinary
 philosophical sense of "deliberation". For the KB generally, it is the
 **philosophical background** for
-[On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md),
+[On-balance judgments can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md),
 which currently cites only formal decision-analysis tools. §5's objections to
 maximization and §6's plural and incommensurable values situate the note's
 claim that a choice needs no global measure (is-evidence-for). The note's

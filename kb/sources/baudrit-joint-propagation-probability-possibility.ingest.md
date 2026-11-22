@@ -32,7 +32,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The routing-line example in [On-balance judgments](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md) asks how often a new instruction might cause costly rework. The paper supplies a calculation for one part of that judgment. Given a task distribution and credible ranges for rework, an evaluator can bound the probability that the cost exceeds a specified threshold. Whether one uncertain cost applies to every task or the range depends on the task changes which outcomes can contribute to the bound. Choosing what cost is tolerable remains an operator judgment.
+The routing-line example in [On-balance judgments](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md) asks how often a new instruction might cause costly rework. The paper supplies a calculation for one part of that judgment. Given a task distribution and credible ranges for rework, an evaluator can bound the probability that the cost exceeds a specified threshold. Whether one uncertain cost applies to every task or the range depends on the task changes which outcomes can contribute to the bound. Choosing what cost is tolerable remains an operator judgment.
 
 ## Extractable Value
 
@@ -45,4 +45,4 @@ The proofs establish consequences of specified input descriptions. The worked ga
 
 ## Recommended Next Action
 
-Work through one hypothetical rework threshold in the routing-line example in [On-balance judgments](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md), comparing the bounds for a shared unknown cost with those for a cost that can vary by task.
+Work through one hypothetical rework threshold in the routing-line example in [On-balance judgments](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md), comparing the bounds for a shared unknown cost with those for a cost that can vary by task.

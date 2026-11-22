@@ -159,7 +159,7 @@ objective. A strong answer on one dimension does not supply the other.
 
 The Gödel machine is one judgment-governed self-improving system. Commonplace aims at another:
 a learner whose judgment is an
-[on-balance judgment](./on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+[on-balance judgment](./necessary-preference-can-guide-improvement-without-a-global-measure.md)
 made by a language model. The two share the readable store and the
 rejectable decision. They differ in the grounds required for a change, not
 in whether the system observes the world or can rewrite its own evaluators.
@@ -209,7 +209,7 @@ Relevant Notes:
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection does not require proof-gated admission
 - [Judgment-governed self-improvement](./definitions/judgment-governed-self-improvement.md) — defined-in: the definition the machine meets
 - [Single-loop and double-loop learning](./definitions/single-loop-and-double-loop-learning.md) — defined-in: the double-loop kind the machine is capable of
-- [On-balance judgments can guide improvement without a global measure](./on-balance-judgments-can-guide-improvement-without-a-global-measure.md) — contrasts: the judgment Commonplace puts in the place of the proof
+- [On-balance judgments can guide improvement without a global measure](./necessary-preference-can-guide-improvement-without-a-global-measure.md) — contrasts: the judgment Commonplace puts in the place of the proof
 - [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why a proved change of utility function replaces a stand-in and leaves the objective fixed
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: explains how a current policy can govern its own revision
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — mechanism: identifies the risk of admitting a harmful retained change

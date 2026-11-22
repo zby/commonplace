@@ -33,7 +33,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper supplies a quantitative case for the reversal question in [On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md). When a change has a measurable advantage and uncertain effects add in the same units, a reviewer can ask how much simultaneous adverse movement would erase it. The paper supplies the calculation. Evidence about the work must establish which joint movements are plausible.
+The paper supplies a quantitative case for the reversal question in [On-balance judgments can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md). When a change has a measurable advantage and uncertain effects add in the same units, a reviewer can ask how much simultaneous adverse movement would erase it. The paper supplies the calculation. Evidence about the work must establish which joint movements are plausible.
 
 ## Extractable Value
 
@@ -46,4 +46,4 @@ The protection covers effects represented in the constraint and deviations admit
 
 ## Recommended Next Action
 
-Add a worked budget calculation to the instruction-revision example in [On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md), showing when several individually tolerable losses together erase the measured gain.
+Add a worked budget calculation to the instruction-revision example in [On-balance judgments can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md), showing when several individually tolerable losses together erase the measured gain.

@@ -34,7 +34,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-Proposition 5 supplies a precise special case for the note on [on-balance judgments](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md). Fix the arguments among sentences, the initial commitments and the component scores. If several weight settings select exactly the same set of global optima, every weighted average of those settings selects that same set. The score of each competing state varies linearly in the weights, so a rival that loses at all the endpoints also loses between them. The note's practical question remains: which weights deserve consideration?
+Proposition 5 supplies a precise special case for the note on [on-balance judgments](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md). Fix the arguments among sentences, the initial commitments and the component scores. If several weight settings select exactly the same set of global optima, every weighted average of those settings selects that same set. The score of each competing state varies linearly in the weights, so a rival that loses at all the endpoints also loses between them. The note's practical question remains: which weights deserve consideration?
 
 ## Learning Claims (our opinion)
 

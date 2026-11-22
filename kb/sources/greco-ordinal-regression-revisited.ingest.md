@@ -35,7 +35,7 @@ Several models can reproduce the same examples and disagree on the very choice t
 
 ## Connections Found
 
-The paper gives a formal reading of the nine-to-one break-even example in [On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md). If the admissible loss-to-gain ratios are all below nine, every admitted weighting favors the revision. If the range includes values on both sides, each strict ordering has a witness. The source adds a way to narrow such a range by eliciting preferences between reference cases, even when the shapes of the individual criterion functions are also open.
+The paper gives a formal reading of the nine-to-one break-even example in [On-balance judgments can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md). If the admissible loss-to-gain ratios are all below nine, every admitted weighting favors the revision. If the range includes values on both sides, each strict ordering has a witness. The source adds a way to narrow such a range by eliciting preferences between reference cases, even when the shapes of the individual criterion functions are also open.
 
 ## Learning Claims (our opinion)
 

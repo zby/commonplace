@@ -6,7 +6,7 @@ byline: Zbigniew Lukasiak
 source_notes:
   - kb/theory/definitions/judgment-governed-self-improvement.md
   - kb/theory/definitions/single-loop-and-double-loop-learning.md
-  - kb/theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md
+  - kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md
   - kb/theory/reversibility-can-favor-a-change-by-limiting-future-loss.md
   - kb/theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/theory/the-bitter-lesson-selects-production-methods-not-representational.md
@@ -208,7 +208,7 @@ formula.
 **On-balance judgment.** In real engineering and knowledge work, gains and
 losses fall on different tasks, and many different scalar value functions
 can be defended from the same declared goal. An
-[on-balance judgment](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+[on-balance judgment](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
 works in place of a single value function by leaving that choice open. Once
 the alternative, the parties whose costs count, and the horizon are fixed, a
 change is an improvement on balance when every reasonable measure of the
@@ -333,7 +333,7 @@ those domains.
   the full definition, including what a claim must name and boundary cases
   such as triggers and direct updates. A companion definition covers
   [single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md).
-- [On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+- [On-balance judgments can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
   — what an on-balance claim asserts, how to decide under open verdicts,
   and Commonplace's declared objective; paired with
   [reversibility can favor a change by limiting future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md).

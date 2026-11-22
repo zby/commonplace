@@ -5,7 +5,7 @@ status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/theory/definitions/judgment-governed-self-improvement.md
-  - kb/theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md
+  - kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md
   - kb/theory/reversibility-can-favor-a-change-by-limiting-future-loss.md
   - kb/theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
   - kb/theory/false-positive-generation-is-filtered-before-retention.md
@@ -67,7 +67,7 @@ Once those dependencies, the parties whose gains and losses count, and the
 horizon across tasks are declared, the edit improved the system only if the
 system is better **on balance**—meaning every reasonable measure of the declared
 work favors keeping it
-([on-balance judgments](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)).
+([on-balance judgments](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)).
 Changed behavior alone proves only that the edit mattered
 ([operative change](../theory/definitions/operative-change.md)), not that
 it helped.

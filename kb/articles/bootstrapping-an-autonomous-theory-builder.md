@@ -19,7 +19,7 @@ source_notes:
   - kb/theory/revising-an-improvement-objective-is-licensed-from-outside-it.md
   - kb/theory/increasing-computational-autonomy-relocates-human-effort.md
   - kb/theory/computationally-directed-self-improvement-is-a-reallocation.md
-  - kb/theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md
+  - kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md
 ---
 
 # Bootstrapping an Autonomous Theory Builder with Commonplace
@@ -209,7 +209,7 @@ Seeing that growth takes no overall score: a kind that failed now passes, and
 none that passed now fails. A transfer can also let one kind pass while
 another stops passing. Then we ask whether the change is better on balance,
 which
-[takes a judgment about who gains and who loses, not a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md).
+[takes a judgment about who gains and who loses, not a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md).
 
 Human decisions are counted, but only within one kind of change. Operator
 decisions per note revision, before and after a transfer, can be compared. A

@@ -32,7 +32,7 @@ change is decided by a judgment:
 - **The judgment is a decision**, made on the evidence the system has, that
   later work is expected to go better with the change than without it. Its
   general form is the
-  [on-balance judgment](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md):
+  [on-balance judgment](../necessary-preference-can-guide-improvement-without-a-global-measure.md):
   the change is favored when every reasonable measure of the work favors
   it, and the decision stays open when the measures disagree. What the
   judgment applies to decide is its **criterion**.
@@ -78,7 +78,7 @@ outcome. "Self-improvement" here means change directed at improvement, as in
 the self-improving system definition: a system whose changes fail to improve
 its later work still meets this definition. Whether one particular change
 made the system better is a separate question, answered by an
-[on-balance comparison](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+[on-balance comparison](../necessary-preference-can-guide-improvement-without-a-global-measure.md)
 of the system with and without that change.
 
 ## Scope
@@ -178,7 +178,7 @@ Membership does not imply any of these:
 Relevant Notes:
 
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the architecture the definition requires, and its contrast with a directly determined update
-- [On-balance judgments can guide improvement without a global measure](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md) — grounds: the general form of the judgment, of which a fixed criterion admits one measure, and the comparison that says whether a change made the system better
+- [On-balance judgments can guide improvement without a global measure](../necessary-preference-can-guide-improvement-without-a-global-measure.md) — grounds: the general form of the judgment, of which a fixed criterion admits one measure, and the comparison that says whether a change made the system better
 - [Self-improving system](./self-improving-system.md) — defined-in: the wider class, with its declared boundary, horizon and objective
 - [Behavior-determining organization](./behavior-determining-organization.md) — defined-in: why the change must be to the system's own retained structure and a work product is excluded
 - [Operative change](./operative-change.md) — defined-in: the declared horizon and the consumption path a change needs
