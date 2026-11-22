@@ -1,5 +1,5 @@
 ---
-description: "Lead article: selection-based learning needs a comparison, not a value function; the bet that a fixed-weight LLM can build the preference model and make the robust comparison; weight-training contrast, Bitter Lesson, empirical test"
+description: "Lead article: how a deployed agent can select edits to its instructions without a single score; the bet that a fixed-weight LLM can build the preference model and make the robust comparison; weight-training contrast, Bitter Lesson, empirical test"
 type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -24,48 +24,46 @@ source_notes:
   - kb/theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
 ---
 
-# Selection-Based Learning Without a Value Function
+# Deployment-Time Machine Learning: LLM-Selected Updates Without a Single Score
 
 > **Draft.** The claims and structure of this article may change. Comments
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-Every machine learning loop needs two things: a modifiable substrate that
-carries what the system retains, and a signal—a loss, reward, or
-value function—that decides which updates stay. Standard machine learning
-pairs opaque numerical weights with a scalar loss or value function. Viewed
-through that frame, an agent that edits its own instructions or code without
-a scalar benchmark looks like prompt engineering rather than learning.
+A deployed agent can learn by changing what it retains between tasks: an
+instruction its next run will read, or a criterion it uses to judge its own
+edits, while the model's weights stay as they are. The question is which
+revisions to keep. If a new instruction prevents routing errors but adds
+reading time to every task, can a large language model (LLM) select an
+update without reducing both effects to one score?
 
-This article makes a two-level claim. First, **selection-based
-learning**—a system learning by changes that are each proposed, evaluated,
-and can be rejected—does not need a value function. Its selection step
-needs a comparison between the system with a change and the system without
-it. The usual picture is a ranking of every possible change, from which the
-best is taken. But search is costly and reaches only a few candidates, so
-the only question ever asked is whether a candidate at hand is better
-than what the system has now, or than another candidate that search
-reached. A value function supplies that comparison when one formula captures the
-work. When none does, many scoring functions are compatible with the purpose
-of the work. Decision analysis calls that set a **preference model**, and
-the comparison is **robust** when every function in the set gives the same
-answer. A robust comparison can select changes without anyone choosing one
-scalar weighting. The case argued here is the one where the changes are
-edits to the system's own readable, addressable store. The process itself is
-not new: software teams do it when they maintain handbooks and linters, and
-symbolic learners such as PRODIGY ran a fixed-formula version of it in the
-1980s. Like reinforcement learning, the term names a process with no
-built-in guarantee of improvement.
+First, **selection-based learning**—learning through proposed changes
+that are evaluated and can be rejected—needs a comparison, not a single
+score. The alternative denied here is that selecting an update first
+requires collapsing every gain and loss into one number. The judge that
+evaluates a proposed change need only compare the candidates at hand,
+including leaving the system unchanged. One scoring function can supply the
+comparison when it captures what matters. Often the stated purpose
+permits several ways to weigh the gains and losses. Decision analysis calls
+the set of those weightings a **preference model**, and the comparison is
+**robust** when every weighting in the set gives the same answer. A robust
+comparison can select changes without anyone choosing one scalar weighting.
+The case argued here is the one where the changes are edits to the system's
+own retained instructions and criteria, kept as a readable,
+[addressable](../theory/definitions/addressable-theory.md) **store**: text
+whose parts can be inspected and revised one at a time. The process itself
+is not new: software teams do it when they maintain handbooks and linters,
+and symbolic learners such as PRODIGY ran a fixed-formula version of it in
+the 1980s. Like reinforcement learning, selection-based learning names a
+process with no built-in guarantee of improvement.
 
 Second, and this is our empirical bet: **a fixed-weight language model can
 supply what the selection step needs. It can build the preference model
-from a stated purpose and make the robust comparison.** That turns
-selection-based learning into an automated machine learning paradigm. What
-is new is not the loop, but a machine that can derive from a purpose stated
-in prose which trade-offs are acceptable, trace later failures back to
-specific retained edits, and revise its own working criteria—learning at
-deployment time while its weights stay fixed, and scaling with computation
-in a way compatible with the Bitter Lesson.
+from a stated purpose and make the robust comparison.** The bet is that the
+model can identify which trade-offs the purpose permits, trace later
+failures to specific edits, and revise the criteria it uses to judge future
+edits. Whether spending more computation on that work yields better
+decisions is a further test.
 
 ## One change followed through
 
@@ -77,34 +75,36 @@ Suppose agents repeatedly misfile design proposals in the wrong directory.
 A change is proposed: add one routing line to the main instruction file
 loaded on every task, directing design proposals to the right folder and to
 the spec that says how a design proposal must be written. A judge evaluates
-the proposed edit before it enters the
-store. It weighs the expected routing fix against a diffuse cost—every
-unrelated task also loads that extra line, and on a task already near the
-model's effective context limit, extra prompt text can tip a correct answer
-into rework. The judge compares leaving the file alone, adding the line as proposed,
-and adding it on trial. It selects the trial: it installs the line and
-schedules a review of the next maintenance run. The reviewer will inspect
-where the line sent each task and decide whether to keep, narrow, or remove
-it. The line takes effect now under either form of adoption; only the trial
-also changes what the reviewer will do.
+the proposed edit before it enters the store. It weighs the expected routing
+fix against a diffuse cost. Every unrelated task also loads that extra line.
+On a task already near the model's effective context limit, extra prompt
+text can tip a correct answer into rework. The judge compares leaving the
+file alone, adding the line as proposed, and adding it on trial. It selects
+the trial: it installs the line and schedules a review of the next
+maintenance run. The reviewer will inspect where the line sent each task and
+decide whether to keep, narrow, or remove it. The line takes effect now
+under either form of adoption; only the trial also changes what the reviewer
+will do.
 
-On later tasks, the new line directs proposal writes accurately—until a
-longer maintenance run fails because the rule matched a migration plan that
+On later tasks, the new line directs proposal writes accurately. Then a
+longer maintenance run fails: the rule matched a migration plan that
 belonged instead in a
 [workshop](../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md),
-the system's temporary area for unfinished work. At the scheduled review, the reviewer traces the misfiling to the new line
-and narrows its scope to
+the system's temporary area for unfinished work. At the scheduled review,
+the reviewer traces the misfiling to the new line and narrows its scope to
 finished design proposals while leaving the rest of the instruction file
-intact. Later still, after three similar over-broad rules pass the system's
-existing brevity check, a third change revises the review check itself so
+intact. Later still, three similar over-broad rules pass the system's
+existing brevity check. A third change then revises the review check itself:
 every new routing rule must declare what it excludes before acceptance.
 
-That sequence establishes three things. First, the system adapted across
-tasks at deployment time without changing a single model weight: the unit
-of learning is [the deployed system, not the model alone](../theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
+This constructed illustration shows three things. First, a system can adapt
+across tasks at deployment time without changing a single model weight: the
+unit of learning is [the deployed system, not the model alone](../theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
 Second, the judge selected the line with a review commitment, not the line
-as originally proposed. Whether later work was better with the line
-than without it was a separate question. Third, no
+as originally proposed. The review costs time but gives the system a chance
+to catch misrouting. That makes the trial a different proposal, not one that
+every compatible measure must favor. Selecting it does not show that later
+work was better than if the file had stayed unchanged. Third, no
 single scalar metric had to be invented to compare saved misfilings against
 diffuse context load.
 
@@ -113,11 +113,10 @@ diffuse context load.
 Our knowledge base defines
 [selection-based learning](../theory/definitions/selection-based-learning.md) by
 one condition: a change to what the system retains for its later work is
-proposed, evaluated, and can be rejected. Evaluation need not be a
-separate stage or actor, but its result decides whether the change is made
-or undone, and a rejection is its own event. It can apply one
-fixed measure, such as a validator or a utility formula, or a comparison
-across several.
+proposed, evaluated, and can be rejected. Evaluation need not be a separate
+stage or actor. Its result decides whether the change is made or undone,
+and a rejection is its own event. It can apply one fixed measure, such as a
+validator or a utility formula, or a comparison across several.
 
 [AlphaGo Zero](https://www.nature.com/articles/nature24270) is a well-known
 case. Each newly trained network played the current best one and replaced
@@ -127,10 +126,11 @@ a single network continually, so it no longer selected among networks.
 
 The gradient steps that trained each network were not selected in either
 system. They are direct updates: the evidence determines the change, and
-nothing is proposed or rejected. Pre-training by gradient descent works the
-same way. It is told the right output for each input, and the error fixes
-the update. Automatic trace logging and triggers that write on a count are
-direct updates too.
+nothing is proposed or rejected. A plain gradient step in pre-training
+works the same way. It is told the right output for each input, and the
+error fixes the update. A training run that also keeps or discards
+checkpoints adds selection on top of those steps. Automatic trace logging
+and triggers that write on a count are direct updates too.
 
 The definition does not say where the retained information is held or who does the
 selecting. A deployed checkpoint, a team's working habits, and an
@@ -162,13 +162,13 @@ The last three rows are payoffs of a readable store, and two carry limits.
 proposing, evaluating, and safely installing it still take time
 ([persistent deployment-time adaptation](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md)).
 Direct reading—by people or by other agents at volumes people could not
-read—works only while each rule stays readable at an affordable cost; large
+read—works only while each rule stays readable at an affordable cost. Large
 or obscure artifacts can block it
 ([inspection needs an affordable route, not just readable form](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md)).
 
 Those payoffs carry real costs that belong on the ledger of any comparison
 with weight training. Explicit artifacts need retrieval, applicability
-checks, validation, and ongoing upkeep; a false abstraction in a shared
+checks, validation, and ongoing upkeep. A false abstraction in a shared
 instruction can misdirect many tasks, while a right rule that retrieval
 misses does nothing. Worse, legibility does not guarantee faithfulness:
 a plausible written rule need not be what actually drove the model's
@@ -183,25 +183,23 @@ at the cost of storing and managing more state.
 
 If selection-based learning over readable stores is not new, why did earlier
 AI systems not turn it into a general machine learning paradigm? The three
-precedents raise the same question: how does a system decide whether a
-proposed change is worth keeping?
+precedents below raise the same question: how does a system decide whether
+a proposed change is worth keeping?
 
 **Formal proof.** Jürgen Schmidhuber's
 [Gödel machine](../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-represents the hard-oracle extreme. Its entire software—including its proof
-searcher and utility representation—is readable, modifiable code, and live
-observations enter proofs on the fly. Yet its admission route lets a
-self-rewrite take effect only through a formal proof that switching has
-higher expected utility than continuing the current search, under axioms
-describing the hardware, environment, and utility. That buys an optimality
-guarantee conditional on those axioms and that utility, at a steep price:
-the machine must ignore every useful improvement it cannot prove, and a
-valid proof does not establish that the axioms adequately describe the
-real-world domain—under an inadequate formalization, a proved switch need
-not deliver what its user wanted. The machine is not rigid. It can rewrite
-even its own utility function when it proves the rewrite better under the
-current one. Its limits are which proofs can be found and whether the
-formalization is adequate.
+is the strictest case, where a change is admitted only by formal proof. Its entire software, including its proof
+searcher and utility representation, is readable, modifiable code, and live
+observations enter proofs on the fly. Yet a self-rewrite takes effect only
+through a formal proof that switching has higher expected utility than
+continuing the current search, under axioms describing the hardware,
+environment, and utility. That buys an optimality guarantee conditional on
+those axioms and that utility, at a steep price. The machine must ignore
+every useful improvement it cannot prove. A valid proof also does not
+establish that the axioms adequately describe the real-world domain. Under
+an inadequate formalization, a proved switch need not deliver what its user
+wanted. Within these limits the machine can rewrite even its own utility
+function, when it proves the rewrite better under the current one.
 
 **Fixed formula.** Steven Minton's
 [PRODIGY](../sources/minton-utility-of-ebl-aaai88.ingest.md) built a
@@ -243,9 +241,8 @@ stated, and calls that set the preference model. A preference for one
 option over another is *necessary* when every function in the set gives it,
 and *possible* when at least one does. With no stated preferences, an option
 is necessarily preferred only when it is at least as good on every
-criterion, which leaves most real changes unordered. Each stated preference
-removes functions from the set, so more pairs become ordered. When one
-function is left, the method is ordinary selection by a value function.
+criterion, which leaves most real changes unordered. When stated preferences
+leave one function, the method is ordinary selection by a value function.
 
 The analogy has a limit. In that method the criteria are fixed, so each
 stated preference can only narrow the set. In open-ended work an objection
@@ -257,9 +254,10 @@ A
 applies this to a change. Once the alternative, the parties whose costs
 count, and the horizon are fixed, the change is an improvement when every
 compatible value function favors it. This is stricter than the method's
-own relation, which asks only that an option be at least as good. When compatible value functions pull
-in opposite directions or evidence has not yet arrived, the comparison stays
-open—and the system can still act as a bounded decision, using
+own relation, which asks only that an option be at least as good. When
+compatible value functions pull in opposite directions or evidence has not
+yet arrived, the comparison stays open. The system can still act on it as a
+bounded decision, using
 [reversibility to limit future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md),
 as in the routing-line example above.
 
@@ -268,36 +266,32 @@ that a fixed-weight language model can do that work autonomously: derive
 the preference model from the declared purpose of the work, make the robust
 comparison, and decide the cases it leaves open.** This is double-loop
 selection-based learning with targeted correction, for work where no fixed
-criterion is adequate. It requires the model not only to compare proposed
-edits and diagnose which retained edit caused a later failure, but also to
-recognize when an existing gate, validator, or review criterion is
-misleading and revise it—while the declared objective the criteria serve
+criterion is adequate. It requires the model to compare proposed edits and
+to diagnose which retained edit caused a later failure. It also requires the
+model to recognize when an existing gate, validator, or review criterion is
+misleading and to revise it, while the declared objective the criteria serve
 stays fixed
 ([revising an improvement objective](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md)).
 
 The bet is not that the model writes down value functions and computes
 which option wins under all of them, as the decision-analysis method does.
-It is that the model can give reasons that do the same work: which work
-changed, whose costs count, and which weighting or observation would
-reverse the choice. Those reasons can be checked and challenged one at a
-time.
+Nor need the procedure assign every version a number: for the pair at hand,
+the judge can favor either version or leave the comparison open. The bet is
+that the model can give reasons that do the same work: which work changed,
+whose costs count, and which weighting or observation would reverse the
+choice. This says what the judge must do, not how its weights produce an
+answer. The factual parts of those reasons, such as which work changed, can
+be checked one at a time. The weighing of whose costs count cannot be
+checked independently. It can only be challenged. Some open comparisons
+close when the alternative is changed. Keeping the routing line for good may
+be open, while trying it with a cheap way back can be better under every
+compatible measure. What still remains is taken as a decision with its
+reasons, not reported as an improvement, and later evidence can reverse it.
 
-Is the model then a value function after all, held in its weights? It is
-not. A value function gives every state a number, so it orders every pair
-of versions. What the model supplies is a partial comparison of two
-versions on the current evidence. It returns *approve*, *disapprove* or
-neither. Where it does answer, and answers consistently, with no cycles
-and transitively, it is equivalent to a set of value functions that all
-agree, which is the preference model above.
-The pairs it leaves unanswered are the open cases. Many of them close when
-the alternative is changed. Keeping the routing line for good may be open,
-while trying it with a cheap way back can be better under every compatible
-measure. What still remains is taken as a decision with its reasons, not
-reported as an improvement, and later evidence can reverse it.
-
-Consistency is part of the bet. A model that approves a change and then
-approves its reversal on the same evidence is equivalent to no set of value
-functions, and such cycles are something a test can look for.
+Consistency is part of the bet. A model that strictly prefers a change and
+then, on the same evidence, strictly prefers its reversal matches no fixed
+set of value functions. A test can look for such cycles. Even consistent
+answers can neglect a cost the stated purpose requires the judge to count.
 
 ## Compatible with the Bitter Lesson
 
@@ -314,11 +308,10 @@ That folk reading confuses **production method** with **representational
 form**
 ([the Bitter Lesson selects production methods, not representational forms](../theory/the-bitter-lesson-selects-production-methods-not-representational.md)).
 The Bitter Lesson contrasts human-supplied knowledge with knowledge
-produced by computation through search and learning; it says nothing about
+produced by computation through search and learning. It says nothing about
 whether the retained result must live in floating-point weights. Scale
-displaced hand-tuned weights as well as hand-written features—what lost
-spanned both forms because what decided the outcome was how the content was
-made.
+displaced hand-tuned weights as well as hand-written features. The losers
+spanned both forms, because how the content was made decided the outcome.
 
 Sutton himself leans toward the weights-only view: in a 2026
 [interview](https://sequoiacap.com/podcast/rich-sutton-and-khurram-javed-why-ai-models-stop-learning-and-how-to-start-it-again),
@@ -336,7 +329,8 @@ file.
 
 Once a language model supplies the comparison inside an automated
 selection loop, the system sits on the computation side of the Bitter
-Lesson. Additional compute can be spent on more candidate proposals,
+Lesson if its results improve as more computation is spent. Additional
+compute can be spent on more candidate proposals,
 richer execution traces, independent criticism, targeted revisions, and
 revised working criteria—all automatically generated and tested rather
 than hand-authored. Whether that spending pays as the store grows is open.
@@ -351,15 +345,13 @@ Bitter Lesson
 
 ## Whether a change improved the system, current evidence, and limits
 
-Because selection-based learning names a process with no success
-condition, the paradigm claim stays honest only if success is judged
-separately. A change is an event, and what the store keeps is
+A change is an event, and what the store keeps is
 content. So the comparison is between two states of the system that differ
-only in what the change did, whether it added, revised or removed content,
-with entries that depend on it adjusted to match. The change improved the
-system when the state that has its effect is robustly better at its later
-work: better under every compatible measure of the declared work over the
-declared horizon.
+only in what the change did: added, revised or removed content. Entries
+that depend on the changed content are adjusted to match. The change
+improved the system when the state that has its effect is robustly better at
+its later work: better under every compatible measure of the declared work
+over the declared horizon.
 
 For a recent edit—like our routing line on the day it is added—the verdict
 is normally **open** until later episodes arrive. Passing the check that
@@ -374,11 +366,13 @@ tasks outside the episode that prompted the edit:
    must change later behavior
    ([operative change](../theory/definitions/operative-change.md)). Loading
    a memory file on every run proves nothing if the model ignores it.
+   For a change that removed content, no retained entry is left to
+   withhold; the counterpart test is restoring the removed entry.
 2. **Robust improvement.** The changed behavior must score higher under
    every compatible measure of the declared work, not merely pass the
    check that admitted it.
 
-Honest sets of compatible measures leave many trade-offs open. A test
+Realistic sets of compatible measures leave many trade-offs open. A test
 therefore reports an open comparison as open, and is built around contrasts
 clean enough to resolve.
 [Testing Autonomous Selection-Based Learning](./testing-autonomous-selection-based-learning.md)
@@ -395,8 +389,10 @@ intervention, five hazards can defeat it:
 - *Judgment reliability.* Language-model judges can miss diffuse costs,
   hallucinate causal links in traces, or approve plausible-sounding edits
   that fail in practice.
-- *False-positive retention.* Unlike proof-gated switches, empirical
-  admission admits harmful changes, and
+- *False-positive retention.* A proof gate admits a switch only when it is
+  proved better under stated axioms; empirical admission certifies only
+  that a change passed the checks it faced. A harmful change that passes
+  those checks is admitted, and
   [false-positive acceptance becomes operative](../theory/false-positive-generation-is-filtered-before-retention.md)
   until later evidence catches it.
 - *Unfaithful rationales.* Legible prose can diverge from what actually
@@ -426,9 +422,9 @@ continual learning or with engineering governed by people.
   [single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md).
 - [Necessary preference can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
   — what a claim of improvement asserts, how to decide when the comparison
-  is open,
-  and Commonplace's declared objective; paired with
-  [reversibility can favor a change by limiting future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md).
+  is open, and Commonplace's declared objective.
+- [Reversibility can favor a change by limiting future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md)
+  — the companion to the previous note.
 - Companion drafts in this collection—written before this framing
   was adopted and currently being re-anchored from the narrower *theory
   builder* special case (where the store holds explicit, criticized

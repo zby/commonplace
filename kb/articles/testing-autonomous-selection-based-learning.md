@@ -204,7 +204,7 @@ is separated from the evidence visible only to the scorer.
 
 ## Where to go next
 
-- [Selection-Based Learning Without a Value Function](./deployment-time-machine-learning-llm-selected-updates.md)
+- [Deployment-Time Machine Learning: LLM-Selected Updates Without a Single Score](./deployment-time-machine-learning-llm-selected-updates.md)
   — the lead article stating the paradigm, the weight-training contrast,
   and the Bitter Lesson argument.
 - [Selection-based learning](../theory/definitions/selection-based-learning.md)
