@@ -8,6 +8,8 @@ complete: true
 
 Deployment brings software into contact with users, changing needs, and operating conditions that design and testing did not fully anticipate. Assign this tag to work on what that use reveals or how people and systems respond: diagnosing failed requirements, modifying software or instructions, evaluating and retaining lessons, or preserving the knowledge needed for later change. Mechanisms and limits of learning from use qualify even when the argument generalizes beyond a particular deployment. Generic improvement or a passing mention of deployment is insufficient; adaptation to experience, new demands, or failures encountered in use must be substantive.
 
+The cluster's main claim is that the ordinary evolution of a deployed system is learning. When people fix bugs and add features in response to use, the system changes what it can do later. Each fix is proposed, reviewed and can be rejected, so this is [selection-based learning](../theory/definitions/selection-based-learning.md) with human judgment doing the selecting. Automating that selection is a further step, not what makes it learning.
+
 Responses may be human maintenance, automated adaptation, or a combination. [Self-improving-systems](./self-improving-systems-README.md) covers systems that change their own organization; [continual-learning](./continual-learning-README.md) covers continued learning through retained changes outside model weights. Work on those mechanisms as responses to deployed experience may carry both tags. This tag does not require autonomous change, weight updates, or a particular retention mechanism. A child of [learning-theory](./learning-theory-README.md).
 
 ## What deployment reveals
@@ -30,4 +32,6 @@ Responses may be human maintenance, automated adaptation, or a combination. [Sel
 ## Related Tags
 
 - [self-improving-systems](./self-improving-systems-README.md) — systems that make the post-deployment changes themselves: update architectures, reflection, and the actor allocation between humans and computation
+- [improvement-loop](./improvement-loop-README.md) — how a change made in response to deployed use is selected: the proposal-selection loop and [selection-based learning](../theory/definitions/selection-based-learning.md)
+- [continual-learning](./continual-learning-README.md) — learning through retained changes outside model weights, whatever prompted it
 - [constraining](./constraining-README.md) — the mechanism by which a deployed system's interpretation space is narrowed as use reveals what it should have been
