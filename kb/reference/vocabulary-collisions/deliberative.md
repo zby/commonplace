@@ -9,7 +9,7 @@ Do not use "deliberative" as a technical term. Write "judgment-governed self-imp
 
 ## Senses
 
-Retired technical sense: "deliberative learning" named what is now [judgment-governed self-improvement](../../theory/definitions/judgment-governed-self-improvement.md), learning in which each change to what a system retains for its later work is proposed, judged and can be rejected. Agent architectures: a deliberative agent holds an explicit symbolic model of the world and decides by reasoning over it ([Wooldridge and Jennings](../../sources/wooldridge-jennings-intelligent-agents.ingest.md)). Political theory: deliberation by a group that weighs competing arguments ([Fishkin and Mansbridge](../../sources/fishkin-mansbridge-deliberative-democracy-intro.ingest.md)). Everyday: careful or slow.
+Retired technical sense: "deliberative learning" named what is now [judgment-governed self-improvement](../../theory/definitions/selection-based-learning.md), learning in which each change to what a system retains for its later work is proposed, judged and can be rejected. Agent architectures: a deliberative agent holds an explicit symbolic model of the world and decides by reasoning over it ([Wooldridge and Jennings](../../sources/wooldridge-jennings-intelligent-agents.ingest.md)). Political theory: deliberation by a group that weighs competing arguments ([Fishkin and Mansbridge](../../sources/fishkin-mansbridge-deliberative-democracy-intro.ingest.md)). Everyday: careful or slow.
 
 ## Why the technical sense was retired
 

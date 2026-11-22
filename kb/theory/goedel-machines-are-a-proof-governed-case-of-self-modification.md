@@ -68,7 +68,7 @@ does not make a useful empirical successor likely.
 ## The machine as a judgment-governed self-improving system
 
 The construction meets the definition of
-[judgment-governed self-improvement](./definitions/judgment-governed-self-improvement.md). Its later
+[judgment-governed self-improvement](./definitions/selection-based-learning.md). Its later
 operation runs its own code, and that code can be read and pointed at. A
 rewrite is proposed by the proof searcher and judged by a separate
 check, which rejects every rewrite that lacks a proof of the target theorem.
@@ -207,7 +207,7 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: separates the functions instantiated by the proof route
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: keeps admission evidence relative to what its premises and checks cover
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection does not require proof-gated admission
-- [Judgment-governed self-improvement](./definitions/judgment-governed-self-improvement.md) — defined-in: the definition the machine meets
+- [Judgment-governed self-improvement](./definitions/selection-based-learning.md) — defined-in: the definition the machine meets
 - [Single-loop and double-loop learning](./definitions/single-loop-and-double-loop-learning.md) — defined-in: the double-loop kind the machine is capable of
 - [On-balance judgments can guide improvement without a global measure](./necessary-preference-can-guide-improvement-without-a-global-measure.md) — contrasts: the judgment Commonplace puts in the place of the proof
 - [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why a proved change of utility function replaces a stand-in and leaves the objective fixed

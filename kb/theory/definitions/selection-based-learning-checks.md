@@ -1,6 +1,6 @@
 # Checks for the judgment-governed-self-improvement definition
 
-Maintenance material for [judgment-governed self-improvement](./judgment-governed-self-improvement.md).
+Maintenance material for [judgment-governed self-improvement](./selection-based-learning.md).
 Apply the checks when changing that definition, including cross-references
 that change its meaning. Report affected cases before revising their expected
 placements. Keep case numbers stable and make changes to assumptions

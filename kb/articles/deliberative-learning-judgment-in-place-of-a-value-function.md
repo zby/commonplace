@@ -4,7 +4,7 @@ type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/theory/definitions/judgment-governed-self-improvement.md
+  - kb/theory/definitions/selection-based-learning.md
   - kb/theory/definitions/single-loop-and-double-loop-learning.md
   - kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md
   - kb/theory/reversibility-can-favor-a-change-by-limiting-future-loss.md
@@ -104,7 +104,7 @@ diffuse context load.
 ## Selection-based learning versus training weights
 
 Our knowledge base defines
-[selection-based learning](../theory/definitions/judgment-governed-self-improvement.md) by
+[selection-based learning](../theory/definitions/selection-based-learning.md) by
 one condition: a change to what the system retains for its later work is
 proposed, judged in a separate step inside the learning loop, and can be
 rejected. The judgment is a decision, on the evidence available, about
@@ -347,7 +347,7 @@ those domains.
 
 ## Where to go next
 
-- [The definition](../theory/definitions/judgment-governed-self-improvement.md) —
+- [The definition](../theory/definitions/selection-based-learning.md) —
   the full definition, including what a claim must name and boundary cases
   such as triggers and direct updates. A companion definition covers
   [single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md).

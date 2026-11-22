@@ -7,7 +7,7 @@ tags: [self-improving-systems, learning-theory, judgment-governed-self-improveme
 # Selection-based learning
 
 <!-- Maintenance: when changing this definition, please apply the checks in
-[judgment-governed-self-improvement-checks.md](./judgment-governed-self-improvement-checks.md).
+[judgment-governed-self-improvement-checks.md](./selection-based-learning-checks.md).
 This term was named "deliberative learning" until 2026-11-22 and
 "judgment-governed self-improvement" on that day. -->
 

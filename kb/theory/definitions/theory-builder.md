@@ -9,7 +9,7 @@ tags: [self-improving-systems, learning-theory, theory-builder]
 <!-- Maintenance: when changing this definition, please apply the checks in
 [theory-builder-checks.md](./theory-builder-checks.md). -->
 
-> **Due for rewriting.** This definition was written before [judgment-governed self-improvement](./judgment-governed-self-improvement.md) was defined. Commonplace's research program is now stated in terms of judgment-governed self-improvement. How the theory builder relates to it has not been worked out.
+> **Due for rewriting.** This definition was written before [judgment-governed self-improvement](./selection-based-learning.md) was defined. Commonplace's research program is now stated in terms of judgment-governed self-improvement. How the theory builder relates to it has not been worked out.
 
 A **theory builder** is a system that applies Popper's method of conjecture
 and refutation to theories it keeps as objective knowledge. It works

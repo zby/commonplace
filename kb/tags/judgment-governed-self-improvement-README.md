@@ -6,7 +6,7 @@ complete: true
 
 # Judgment-governed self-improvement
 
-[Judgment-governed self-improvement](../theory/definitions/judgment-governed-self-improvement.md) is learning in which each change to what a system retains for its later work is proposed, judged and can be rejected. Assign this tag to work on that process: the decision that defines it, the judgment that decides a change when no single criterion settles it, the single-loop and double-loop kinds, correction from later evidence, whether one change made the system better, or the claim that a fully automated judgment-governed self-improving system is a machine learning paradigm. Work on a system that only retains readable artifacts is insufficient. The subject must be how a change is decided, how that decision is judged later, or whether an automated deliberative loop scales as a learning paradigm. Tagging an analysis does not certify that the analyzed system learns.
+[Judgment-governed self-improvement](../theory/definitions/selection-based-learning.md) is learning in which each change to what a system retains for its later work is proposed, judged and can be rejected. Assign this tag to work on that process: the decision that defines it, the judgment that decides a change when no single criterion settles it, the single-loop and double-loop kinds, correction from later evidence, whether one change made the system better, or the claim that a fully automated judgment-governed self-improving system is a machine learning paradigm. Work on a system that only retains readable artifacts is insufficient. The subject must be how a change is decided, how that decision is judged later, or whether an automated deliberative loop scales as a learning paradigm. Tagging an analysis does not certify that the analyzed system learns.
 
 The draft article [Deliberative Learning: Judgment in Place of a Value Function](../articles/deliberative-learning-judgment-in-place-of-a-value-function.md) argues the thesis for outside readers, and the companion draft [Testing Autonomous Deliberative Learning](../articles/testing-autonomous-deliberative-learning.md) states the research program and comparisons that test it. Commonplace's bet is that a language model with fixed weights can make the judgment with no person judging. No end-to-end test of the bet has been run.
 
@@ -14,7 +14,7 @@ Two neighbors are close. [Improvement-loop](./improvement-loop-README.md) covers
 
 ## Definition
 
-- [Judgment-governed self-improvement](../theory/definitions/judgment-governed-self-improvement.md) — the decision that defines it, the cases it includes and excludes, and what a claim names
+- [Judgment-governed self-improvement](../theory/definitions/selection-based-learning.md) — the decision that defines it, the cases it includes and excludes, and what a claim names
 - [Single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md) — the two kinds, separated by whether the learner can revise the criterion that decides a class of changes
 
 ## The judgment that decides a change
