@@ -93,7 +93,7 @@ def configure_tag_readme_repo(tmp_path: Path) -> Path:
     )
     write(
         tmp_path / "kb" / "tags" / "COLLECTION.md",
-        "---\nparticipating: [notes]\n---\n\n# Tags\n",
+        "# Tags\n",
     )
     return notes
 

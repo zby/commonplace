@@ -307,12 +307,9 @@ class ValidationRun:
         return limit if isinstance(limit, int) and not isinstance(limit, bool) else None
 
     def tag_catalog(self) -> TagCatalog:
-        """Read participation and head filenames once; validation does not need member lists."""
+        """Read collection roots and head filenames once; validation does not need member lists."""
         if self._tag_catalog is None:
-            self._tag_catalog = collect_tag_catalog(
-                self.repo_root,
-                load_document=lambda path: self.load_document(path).document,
-            )
+            self._tag_catalog = collect_tag_catalog(self.repo_root)
         return self._tag_catalog
 
     def verbatim_quotes(self, parsed: ParsedNote) -> list[QuoteResult]:
@@ -1431,20 +1428,14 @@ def validate_tag_heads(
 ) -> None:
     """Every tag in use within the tag space has a head (ADR 089).
 
-    Applies to artifacts in participating collections that carry a `tags:`
-    list. Tags outside the tag space are not read, so nothing is reported for
-    them. A missing or malformed tag-space declaration is a warning, because
-    the artifact cannot fix it.
+    Check eligible artifacts without walking any member collection.
     """
     fm = parsed.document.frontmatter or {}
     tags = fm.get("tags")
     if not isinstance(tags, list) or not tags:
         return
     catalog = run.tag_catalog()
-    if catalog.declaration_error and not catalog.participating:
-        results.warns.append(f"tags unchecked: {catalog.declaration_error}")
-        return
-    if not catalog.is_participating(parsed.path):
+    if fm.get("type") == "types/snapshot.md" or not catalog.is_member_candidate(parsed.path):
         return
     headless = [
         tag for tag in tags if isinstance(tag, str) and tag not in catalog.heads

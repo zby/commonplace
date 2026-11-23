@@ -11,7 +11,7 @@ schema: ./tag-readme.schema.yaml
 
 A tag-README is the tag's curated head: a short orientation paragraph plus selective editorial picks with context phrases. It lives at `kb/tags/<tag>-README.md`, and the filename is its identity: the file names the tag, and nothing else does ([ADR 089](../reference/adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md)). It mirrors the directory convention — a directory's curated head is `README.md`, a tag's is `<tag>-README.md`.
 
-Every tag in use has a head. The validator reports a tag on an artifact in a participating collection whose head does not exist; the remedy is to write the head or drop the tag. A head may be minimal: what qualifies for the tag, and a few picks.
+Every tag in use has a head. The validator reports a tag on an eligible artifact whose head does not exist; the remedy is to write the head or drop the tag. A head may be minimal: what qualifies for the tag, and a few picks.
 
 A tag-README is understood standalone — the field names are self-describing and the body is ordinary curated prose. This spec is **maintenance-path only**: load it when writing a head, fixing a validator warning, or executing a lifecycle exit.
 
@@ -24,11 +24,11 @@ Assignment fit is judged during authoring and semantic review. The deterministic
 
 ## Scope
 
-Membership ranges over the collections that `kb/tags/COLLECTION.md` declares in its `participating:` list, and over nothing else. The generated tail on the published site, and the head requirement read that one declaration. Artifacts outside it may carry `tags:` lines; membership consumers do not read them. Explicit source-scoped searches may read tags on tracked source analyses under the source collection contract. These search results are outside the member listing, even when they reuse its topic vocabulary.
+Use the [membership boundaries](../tags/COLLECTION.md#membership-by-collection) for both the collector and the published listing. The list is grouped by collection, so readers can distinguish source material from theory without changing the topic vocabulary.
 
 ### Checking exact membership
 
-On the published site, the curated links and generated listing together cover the members. In a Commonplace checkout, run this from the repository root, replacing `evaluation` with the tag name:
+On the published site, the generated listing includes every member, even one recommended above. In a Commonplace checkout, run this from the repository root, replacing `evaluation` with the tag name:
 
 ```bash
 uv run python - evaluation <<'PY'
@@ -38,14 +38,12 @@ from commonplace.lib.index_generated import collect_tag_space
 
 root = Path.cwd()
 space = collect_tag_space(root)
-if space.declaration_error:
-    sys.exit(space.declaration_error)
 for path, _, description in space.notes_by_tag.get(sys.argv[1], []):
     print(f"{path.relative_to(root)}: {description}")
 PY
 ```
 
-The site build uses this collector. To check a tag assignment, validation reads the participation declaration and head filenames, not the member listing. A text search finds candidates, not exact membership: it can match ignored captures or miss multiline YAML tags.
+The site build uses this collector. To check a tag assignment, validation checks the collection root and head filenames, not the member listing. A text search finds candidates, not exact membership: it can match ignored captures or miss multiline YAML tags.
 
 ## The weight contract
 

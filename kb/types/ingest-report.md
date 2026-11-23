@@ -53,8 +53,7 @@ their differences in meaning made explicit.
 - The installed source collection contract may allow optional inline `tags`
   using existing KB topic heads. Read each head and apply its substantive
   inclusion condition; do not infer endorsement from topical relevance.
-  Source search tags do not confer membership when the collection is outside
-  `kb/tags/COLLECTION.md`'s participating set. They do not replace `domains`.
+  Tagged analyses appear in the sources group of the tag listing. Tags do not replace `domains`.
 - Copy capture-adapter metadata such as `status_id`, `conversation_id`,
   `post_count`, and `api_url` under its existing flat field name. Do not copy a
   snapshot's `type`, `description`, `genre`, or `tags`; set ingest `genre` from

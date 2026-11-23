@@ -1,67 +1,43 @@
-"""The tag space (ADR 089): declaration, heads, membership scope, drift guard."""
+"""Exact membership and traversal boundaries for collection-grouped tag lists."""
 
-from __future__ import annotations
-
-import re
+import os
 from pathlib import Path
 
-from commonplace.lib import index_generated
-from commonplace.lib.project_paths import (
-    is_proposal_archive,
-    is_replaced_archive,
-    iter_validation_markdown_files,
+import pytest
+
+from commonplace.lib.index_generated import (
+    collect_tag_space,
+    generated_section_for_head,
 )
-from tests.commonplace.validation_helpers import REPO_ROOT, write
+from tests.commonplace.validation_helpers import write
 
 
-def test_participating_declaration_is_read_and_checked(tmp_path: Path) -> None:
-    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes\n")
-    write(
-        tmp_path / "kb" / "tags" / "COLLECTION.md",
-        "---\nparticipating: [notes, missing, tags]\n---\n\n# Tags\n",
-    )
+def test_collector_never_enters_workflow_state_or_source_snapshots(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    kb = tmp_path / "kb"
+    for collection in ("sources", "workflow-state", "new-collection", "tags"):
+        write(kb / collection / "COLLECTION.md", "# Collection\n")
+    tagged = "---\ntags: [topic, topic]\n---\n\n# Example\n"
+    member = write(kb / "sources/source.ingest.md", tagged)
+    other = write(kb / "new-collection/example.md", tagged)
+    head = write(kb / "tags/topic-README.md", "# Topic\n")
+    private = {kb / "workflow-state", kb / "sources/.snapshots"}
+    for directory in private:
+        write(directory / "nested/private.md", tagged)
+    scandir = os.scandir
 
-    participating, error = index_generated.read_participating(tmp_path)
+    def guarded(path):
+        assert Path(path) not in private, f"entered private tree: {path}"
+        return scandir(path)
 
-    assert participating == ((tmp_path / "kb" / "notes").resolve(),)
-    assert error is not None
-    assert "`missing` is not a collection" in error
-    assert "`tags` holds the heads" in error
-
-
-# ---------------------------------------------------------------------------
-# Drift guard over this checkout: every collection that tags anything is either
-# declared participating or deliberately outside the tag space. A new
-# collection that starts tagging without a declaration fails here rather than
-# silently omitting its tagged artifacts from the published member lists.
-
-OUTSIDE_TAG_SPACE = frozenset({"work", "sources", "reports", "types", "articles", "tags"})
-TAGS_LINE = re.compile(r"^tags: \[[^\]]+\]", re.MULTILINE)
-
-
-def _collections_that_tag(kb: Path) -> set[str]:
-    found: set[str] = set()
-    for collection in sorted(kb.iterdir()):
-        if not (collection / "COLLECTION.md").is_file():
-            continue
-        for path in iter_validation_markdown_files(collection):
-            if is_replaced_archive(path) or is_proposal_archive(path):
-                continue
-            if "types" in path.relative_to(collection).parts:
-                continue
-            if TAGS_LINE.search(path.read_text(encoding="utf-8", errors="ignore")):
-                found.add(collection.name)
-                break
-    return found
-
-
-def test_checkout_declares_every_tagging_collection() -> None:
-    participating, error = index_generated.read_participating(REPO_ROOT)
-    assert error is None, error
-    declared = {path.name for path in participating}
-
-    undeclared = _collections_that_tag(REPO_ROOT / "kb") - declared - OUTSIDE_TAG_SPACE
-
-    assert undeclared == set(), (
-        f"collections tagging artifacts with no participation decision: {sorted(undeclared)}"
-    )
+    monkeypatch.setattr(os, "scandir", guarded)
+    space = collect_tag_space(tmp_path)
+    assert [p for p, _, _ in space.notes_by_tag["topic"]] == [other, member]
+    assert all(not space.is_member_candidate(p / "nested/private.md") for p in private)
+    listing = generated_section_for_head(head, tag_space=space)
+    assert "### sources" in listing and "### new-collection" in listing
+    assert "private" not in listing
+    site = generated_section_for_head(head, tag_space=space, published=lambda p: p == member)
+    assert "[Example](../sources/source.ingest.md)" in site
+    assert "Example (`new-collection/example.md`)" in site

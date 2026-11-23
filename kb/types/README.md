@@ -14,7 +14,7 @@ Global structural contracts used across Commonplace collections. A type-spec doc
 - [Edit result](./edit-result.md) — one run of an edit operation: changed, unchanged, proposed or problem, with retained execution evidence
 - [Answers](./answers.md) — the operator's decision on each item of one question file, bound to the question by hash
 - [Tag README](./tag-readme.md) — a tag's curated landing page at `kb/tags/<tag>-README.md`, with optional validated marks
-- [Collection contract](./collection-contract.md) — a collection's `COLLECTION.md`, with optional control fields such as the tag collection's `participating` list
+- [Collection contract](./collection-contract.md) — a collection's `COLLECTION.md`, with its goals, linking rules and optional controls
 
 ## Type-system contracts
 

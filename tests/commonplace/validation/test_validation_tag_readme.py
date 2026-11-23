@@ -52,8 +52,8 @@ Orientation paragraph.
     )
 
 
-def setup_repo(tmp_path: Path, *, participating: str = "[notes]") -> Path:
-    """A repo with a notes collection and a declared tag space; returns kb/tags."""
+def setup_repo(tmp_path: Path) -> Path:
+    """A repo with a notes collection and a tag collection; returns kb/tags."""
     copy_repo_files(
         tmp_path,
         "kb/types/tag-readme.md",
@@ -63,7 +63,7 @@ def setup_repo(tmp_path: Path, *, participating: str = "[notes]") -> Path:
     write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
     write(
         tmp_path / "kb" / "tags" / "COLLECTION.md",
-        f"---\nparticipating: {participating}\n---\n\n# Tags\n",
+        "# Tags\n",
     )
     return tmp_path / "kb" / "tags"
 
@@ -75,10 +75,10 @@ def test_head_rejects_retired_complete_field(tmp_path: Path, value: str) -> None
     assert any("complete" in f for f in validate_note(readme, repo_root=tmp_path).fails)
 
 
-def test_membership_ignores_undeclared_collections_and_the_proposal_archive(
+def test_membership_includes_new_collections_but_not_archives(
     tmp_path: Path,
 ) -> None:
-    tags = setup_repo(tmp_path, participating="[notes, reference]")
+    tags = setup_repo(tmp_path)
     write(tmp_path / "kb" / "reference" / "COLLECTION.md", "# Reference collection\n")
     write(tmp_path / "kb" / "work" / "COLLECTION.md", "# Work collection\n")
     note(tmp_path / "kb" / "work" / "draft.md", ["kb-design"])
@@ -91,7 +91,7 @@ def test_membership_ignores_undeclared_collections_and_the_proposal_archive(
     readme = tag_readme(tags / "kb-design-README.md", "kb-design")
     assert not validate_note(readme, repo_root=tmp_path).fails
     members = collect_tag_space(tmp_path).notes_by_tag["kb-design"]
-    assert [path for path, _, _ in members] == [tmp_path / "kb/notes/member.md"]
+    assert [path for path, _, _ in members] == [tmp_path / "kb/notes/member.md", tmp_path / "kb/work/draft.md"]
 
 
 def test_head_outside_the_tag_collection_fails(tmp_path: Path) -> None:
@@ -113,10 +113,10 @@ def test_validating_tagged_note_does_not_walk_member_collections(
     tagged = note(tmp_path / "kb/notes/tagged.md", ["topic"])
     note(tmp_path / "kb/notes/unrelated.md", ["topic"])
 
-    def reject_walk(collection: Path) -> None:
+    def reject_walk(collection: Path, **kwargs) -> None:
         pytest.fail(f"checking a head must not enumerate members of {collection}")
 
-    monkeypatch.setattr(index_generated, "iter_validation_markdown_files", reject_walk)
+    monkeypatch.setattr(index_generated, "walk_visible", reject_walk)
     results = validate_note(tagged, repo_root=tmp_path)
     assert not results.fails
     assert any("all 1 have heads" in p for p in results.passes)
@@ -135,20 +135,20 @@ def test_tagged_note_fails_without_a_head(tmp_path: Path) -> None:
     assert not any("kb-design" in f for f in results.fails)
 
 
-def test_tagged_note_outside_the_tag_space_is_not_checked(tmp_path: Path) -> None:
+def test_tagged_workflow_state_is_not_checked(tmp_path: Path) -> None:
     setup_repo(tmp_path)
-    write(tmp_path / "kb" / "work" / "COLLECTION.md", "# Work collection\n")
-    draft = note(tmp_path / "kb" / "work" / "draft.md", ["orphan"])
+    write(tmp_path / "kb/workflow-state/COLLECTION.md", "# Workflow state\n")
+    draft = note(tmp_path / "kb/workflow-state/data/result.md", ["orphan"])
 
     results = validate_note(draft, repo_root=tmp_path)
 
     assert not any("no head" in f for f in results.fails)
 
 
-def test_archived_proposal_in_a_participating_collection_is_not_checked(
+def test_archived_proposal_is_not_checked(
     tmp_path: Path,
 ) -> None:
-    setup_repo(tmp_path, participating="[notes, reference]")
+    setup_repo(tmp_path)
     write(tmp_path / "kb" / "reference" / "COLLECTION.md", "# Reference collection\n")
     archived = note(
         tmp_path / "kb" / "reference" / "proposals" / "archive" / "old.md", ["orphan"]
@@ -159,15 +159,14 @@ def test_archived_proposal_in_a_participating_collection_is_not_checked(
     assert not any("no head" in f for f in results.fails)
 
 
-def test_undeclared_tag_space_warns_instead_of_failing(tmp_path: Path) -> None:
+def test_missing_head_fails_without_a_tag_collection(tmp_path: Path) -> None:
     copy_repo_files(tmp_path, *NOTE_TYPE_SPECS)
     write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
     tagged = note(tmp_path / "kb" / "notes" / "tagged.md", ["kb-design"])
 
     results = validate_note(tagged, repo_root=tmp_path)
 
-    assert not any("no head" in f for f in results.fails)
-    assert any("tags unchecked" in w and "commonplace-init" in w for w in results.warns)
+    assert any("no head" in f for f in results.fails)
 
 
 def test_weight_gates_warn_and_fail(tmp_path: Path) -> None:

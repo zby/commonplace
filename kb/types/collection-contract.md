@@ -56,9 +56,6 @@ Unlisted destinations are unauthorized. The wildcard `any` authorizes every dest
 - `type`: `types/collection-contract.md`.
 - `description` (optional): what the collection holds, for agents choosing
   where to read or write.
-- `participating` (optional, tag collection only): the collections whose
-  `tags:` lines count as tag membership, named relative to the KB root. The
-  tag collection's contract explains it.
 - `unquoted-source-limit` (optional): the most distinct tracked sources an
   artifact in the collection may cite without a verified verbatim quotation
   paired to each. Set it where the collection holds its artifacts to a

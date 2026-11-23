@@ -90,7 +90,7 @@ Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses w
 | `cp-skill-ground` | Retain the minimum verbatim quotations needed to ground a source claim |
 | `cp-skill-review` | Review KB notes against criteria without editing them |
 | `cp-skill-revise` | Edit, improve, triage findings on, or rewrite a KB note |
-| `cp-skill-add-collection` | Add a new collection with its contract, landing, tag participation, and routing |
+| `cp-skill-add-collection` | Add a new collection with its contract, landing, tag assignment policy, and routing |
 | `cp-skill-health-check` | Diagnose a broken Commonplace installation |
 | `cp-skill-library` | Find and follow a Commonplace library procedure, instruction, or type by name |
 

@@ -1,6 +1,5 @@
 ---
 type: types/collection-contract.md
-participating: [notes, reference, instructions]
 ---
 
 # Tag heads for kb/tags/
@@ -16,8 +15,7 @@ filename names the tag. A head introduces what the tag gathers, in the words
 a reader would search for, and picks a few entries with a phrase saying why
 each matters. It is the page a tag link leads to on the published site.
 
-Every tag in use has a head. Validation reports a tag on an artifact in a
-participating collection whose head does not exist; write the head or drop
+Every tag in use has a head. Validation reports a tag on an eligible artifact whose head does not exist; write the head or drop
 the tag. A tag not worth a head is not worth assigning.
 
 Heads are the only artifacts here. `README.md` is the collection's landing
@@ -35,13 +33,9 @@ A head states that inclusion condition in its opening and distinguishes
 neighboring tags where they could be confused. Assignment fit is judged during
 authoring and semantic review; deterministic validation does not establish it.
 
-## Participating collections
+## Membership by collection
 
-The `participating:` list in this file's frontmatter names the collections
-whose `tags:` lines count as membership. Each generated tag listing on the site ranges over exactly
-those collections. Tags on artifacts elsewhere are not read. Add a collection
-here to bring its tags into the tag space; nothing is inferred from the
-directory tree.
+The generated list is grouped by collection. No registration is needed. Collection contracts govern assignment. Workflow state and source snapshots are excluded before traversal.
 
 A head is selective. Use it for orientation and the membership collector or published listing for enumeration.
 

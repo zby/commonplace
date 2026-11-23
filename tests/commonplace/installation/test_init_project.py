@@ -87,7 +87,8 @@ def test_theory_library_keeps_project_notes_on_init_and_refresh(tmp_path: Path) 
     assert contract.read_text(encoding="utf-8") == custom
     assert not (tmp_path / "kb/theory").exists()
     tags = (tmp_path / "kb/tags/COLLECTION.md").read_text(encoding="utf-8")
-    assert "participating: [notes, reference, instructions]" in tags
+    assert "participating:" not in tags
+    assert "grouped by collection" in tags
     template = (tmp_path / "AGENTS.md.template").read_text(encoding="utf-8")
     assert "`<library>/theory/`" in template
     assert "`<library>/notes/`" not in template

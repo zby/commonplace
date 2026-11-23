@@ -52,7 +52,7 @@ A Second Brain usually needs more. Interview the operator about what else they w
 For each agreed collection:
 
 1. Decide whether it is a library collection (value accumulates) or workshop material (value is consumed). In-flight project work belongs in `kb/work/<project-name>/`, not in a long-lived collection. See `<library>/theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
-2. For each library collection, run `/cp-skill-add-collection` with its name and the agreed purpose. It writes the `COLLECTION.md` and landing, adds tag participation and the routing row, and validates the result. For outbound linking conventions beyond the labels the project already uses, see `<library>/reference/link-vocabulary.md` for the catalogue and ADRs 019 and 059 for the architecture.
+2. For each library collection, run `/cp-skill-add-collection` with its name and the agreed purpose. It writes the `COLLECTION.md` and landing, records the tag assignment policy and adds the routing row, and validates the result. For outbound linking conventions beyond the labels the project already uses, see `<library>/reference/link-vocabulary.md` for the catalogue and ADRs 019 and 059 for the architecture.
 
 The write and connect skills read each new `COLLECTION.md` directly — there is no compile step to run after editing.
 

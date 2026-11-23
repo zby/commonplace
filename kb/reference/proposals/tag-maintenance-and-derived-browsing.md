@@ -15,7 +15,7 @@ records an option space and an evaluation target; it adopts no new behavior.
 
 ## Current state (as of 2026-09-26)
 
-[ADR 089](../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) defines the namespace, heads and participating collections. Heads are selective ([ADR 140](../adr/140-tag-heads-are-selective.md)); use the published listing or [membership query](../../types/tag-readme.md#checking-exact-membership) for enumeration. Splitting a tag keeps the parent tag on child members.
+[ADR 089](../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) defines the namespace and heads; [ADR 141](../adr/141-list-tag-members-by-collection.md) replaces the participation declaration with generated groups. Heads are selective ([ADR 140](../adr/140-tag-heads-are-selective.md)); use the published listing or [membership query](../../types/tag-readme.md#checking-exact-membership) for enumeration. Splitting a tag keeps the parent tag on child members.
 
 The operator set aside the browsing trial this proposal motivated (2026-09-25): their finding failures were vocabulary misses on notes that were present and tagged, which grouping does not address, and child tags already give durable, addressable groups. The Phase 2 trial in the tag workshop was therefore not run, and the workshop closed on 2026-09-26. This proposal stays live for one narrowed question: whether a generated grouping of a large tag is worth producing as a split-candidate generator, the use Gwern's "Sort By Magic" also serves. Five tags here have over a hundred members.
 

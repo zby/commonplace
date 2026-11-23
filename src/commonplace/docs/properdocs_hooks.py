@@ -4,7 +4,7 @@ Complete generated listings (per-collection dir-index pages and per-tag
 generated tails) are materialized here at build time for the published site;
 they are never committed (ADR 025). Agents use curated heads plus scoped rg.
 Tag pages are the heads in kb/tags/ (ADR 089); a tail lists every member
-across the participating collections.
+grouped by collection.
 """
 
 import os
@@ -257,7 +257,7 @@ def _is_head(page_path: Path, meta: dict, root: Path) -> bool:
     )
 
 
-def _append_generated_tail(markdown: str, page, config) -> str:
+def _append_generated_tail(markdown: str, page, config, files) -> str:
     """Append the generated member listing to a tag head at build time."""
     meta = page.meta or {}
     root = _root_for(config)
@@ -267,12 +267,14 @@ def _append_generated_tail(markdown: str, page, config) -> str:
     if not _is_head(page_path, meta, root):
         return markdown
 
+    def published(path: Path) -> bool:
+        file = files.get_file_from_path(path.relative_to(root / "kb").as_posix())
+        return file is not None and file.inclusion.is_included()
+
     section = index_generated.generated_section_for_head(
-        page_path, curated_text=markdown, tag_space=_tag_space(root)
+        page_path, tag_space=_tag_space(root), published=published if files is not None else None
     )
-    # A selective head may already link every member, leaving the generated
-    # section as a bare heading — skip it rather than render an empty shell.
-    if not section or "\n- " not in section:
+    if not section:
         return markdown
     return markdown.rstrip("\n") + "\n\n" + section
 
@@ -305,7 +307,7 @@ def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
     meta = page.meta or {}
 
     if meta:
-        markdown = _append_generated_tail(markdown, page, config)
+        markdown = _append_generated_tail(markdown, page, config, kwargs.get("files"))
     markdown = _append_full_listing_link(markdown, page)
     if page.file.abs_src_path is not None:
         path = Path(page.file.abs_src_path)

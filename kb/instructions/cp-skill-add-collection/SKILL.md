@@ -1,6 +1,6 @@
 ---
 name: cp-skill-add-collection
-description: Add one new collection under kb/ with its binding COLLECTION.md, landing README, tag participation and routing, then validate it. Use when a project needs a new kind of long-lived content that no existing collection's contract fits.
+description: Add one new collection under kb/ with its binding COLLECTION.md, landing README, tag assignment policy and routing, then validate it. Use when a project needs a new kind of long-lived content that no existing collection's contract fits.
 type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Edit, Bash
@@ -87,10 +87,7 @@ added yet." Do not create `index.md`; a collection may have only one landing.
 
 ## 4. Connect it to the rest of the KB
 
-1. **Tags.** If its artifacts will carry `tags:`, add `<name>` to the
-   `participating:` list in `kb/tags/COLLECTION.md`'s frontmatter. Change
-   nothing else in that file. Skip this when the collection will not be
-   tagged.
+1. **Tags.** State in the new contract which artifacts may carry tags. Eligible tagged artifacts appear in generated lists automatically; do not register the collection elsewhere.
 2. **Routing.** Add a row for `kb/<name>/` to the collection table in
    `AGENTS.md`, stating its contribution in the same style as the other rows.
    If the project has a content-routing document, add the collection there
@@ -105,7 +102,6 @@ added yet." Do not create `index.md`; a collection may have only one landing.
 ```bash
 commonplace-validate <name>
 commonplace-validate landings
-commonplace-validate tags        # only if participating changed
 ```
 
 Fix failures in the files you wrote. Report any failure in files you did not
@@ -115,6 +111,6 @@ Do not stage or commit unless asked.
 
 ## Report
 
-State the new path, the contract you modelled on, whether it participates in
-tags, the routing rows you added, the validation results, and any proposed
+State the new path, the contract you modelled on, whether its contract permits
+tag assignments, the routing rows you added, the validation results, and any proposed
 edits to neighbouring contracts.

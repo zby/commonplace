@@ -19,7 +19,7 @@ For the head size limits and split rules, see the [tag-readme type spec](../type
 
 ### 1. Inventory tags and sizes
 
-In the Commonplace checkout, run this from the repository root. It reads the participating collections from `kb/tags/COLLECTION.md` and includes heads that currently have no members:
+In the Commonplace checkout, run this from the repository root. It discovers member artifacts by collection and includes heads that currently have no members:
 
 ```bash
 uv run python - <<'PY'
@@ -27,18 +27,16 @@ from pathlib import Path
 from commonplace.lib.index_generated import collect_tag_space
 
 space = collect_tag_space(Path.cwd())
-if space.declaration_error:
-    raise SystemExit(space.declaration_error)
 for tag in sorted(space.heads.keys() | space.notes_by_tag.keys()):
     print(len({path for path, _, _ in space.notes_by_tag.get(tag, [])}), tag)
 PY
 ```
 
-A tag on a participating artifact needs a head. If validation reports a missing head, write the head or drop the tag. Indexes that haven't been updated after significant tag growth may need revision.
+A tag on an eligible artifact needs a head. If validation reports a missing head, write the head or drop the tag. Indexes that haven't been updated after significant tag growth may need revision.
 
 ### 2. For each curated index, evaluate editorial quality
 
-Load the head. Run the [exact-membership recipe](../types/tag-readme.md#checking-exact-membership) with its tag name. This listing, not a text match on a `tags:` line, is the comparison set for the curated links. To find related source evidence instead, search `kb/sources/` separately: a tagged ingest is not a missing member of the head.
+Load the head. Run the [exact-membership recipe](../types/tag-readme.md#checking-exact-membership) with its tag name. This listing, not a text match on a `tags:` line, is the comparison set for the curated links. For source evidence beyond already tagged ingests, search `kb/sources/` directly.
 
 Ask:
 
@@ -56,15 +54,13 @@ Choose the artifact class before treating an absent tag as a gap. This example c
 uv run python - <<'PY'
 from pathlib import Path
 from commonplace.lib import frontmatter
-from commonplace.lib.index_generated import collect_tag_space
+from commonplace.lib.index_generated import collect_tag_catalog
 from commonplace.lib.project_paths import list_collection_validation_paths
 
 root = Path.cwd()
-space = collect_tag_space(root)
-if space.declaration_error:
-    raise SystemExit(space.declaration_error)
+catalog = collect_tag_catalog(root)
 for path in list_collection_validation_paths(root / 'kb/theory'):
-    if path.suffix != '.md' or not space.is_participating(path):
+    if path.suffix != '.md' or not catalog.is_member_candidate(path):
         continue
     doc = frontmatter.parse(path.read_text(encoding='utf-8'))
     if doc.ok and doc.data.get('type') == 'types/note.md' and doc.data.get('tags', []) == []:

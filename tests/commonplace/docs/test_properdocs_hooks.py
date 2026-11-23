@@ -18,9 +18,9 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def tag_space(root: Path, participating: str = "[notes]") -> Path:
+def tag_space(root: Path) -> Path:
     tags = root / "kb" / "tags"
-    write(tags / "COLLECTION.md", f"---\nparticipating: {participating}\n---\n\n# Tags\n")
+    write(tags / "COLLECTION.md", "# Tags\n")
     return tags
 
 
@@ -54,12 +54,12 @@ def test_on_page_markdown_renders_user_verification_and_specialized_status(tmp_p
     assert "**User verified:** yes" in result
 
 
-def test_on_page_markdown_appends_tail_across_participating_collections(tmp_path: Path) -> None:
+def test_on_page_markdown_appends_exact_tail_grouped_by_collection(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
     reference = tmp_path / "kb" / "reference"
     write(notes / "COLLECTION.md", "# Notes collection\n")
     write(reference / "COLLECTION.md", "# Reference collection\n")
-    tags = tag_space(tmp_path, "[notes, reference]")
+    tags = tag_space(tmp_path)
     readme = head(tags, "kb-design")
     write(
         notes / "tagged.md",
@@ -107,11 +107,15 @@ tags: [kb-design]
         config={"docs_dir": str(tmp_path / "kb")},
     )
 
-    assert "## Other tagged notes <!-- generated -->" in result
+    assert "## Tagged artifacts by collection <!-- generated -->" in result
     assert "- [Tagged note](../notes/tagged.md) - Tagged note" in result
     assert "- [Reference doc](../reference/doc.md) - Reference doc" in result
-    # Curated links are excluded from the generated tail
-    assert result.count("curated.md") == 1
+    notes_group, reference_group = result.split("### notes\n")[1].split("### reference\n")
+    assert "curated.md" in notes_group and "tagged.md" in notes_group
+    assert "doc.md" in reference_group
+    assert result.count("curated.md") == 2
+
+
 def test_on_page_markdown_ignores_a_head_left_outside_the_tag_collection(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
     write(notes / "COLLECTION.md", "# Notes collection\n")
@@ -149,7 +153,9 @@ tags: [kb-design]
         config={"docs_dir": str(tmp_path / "kb")},
     )
 
-    assert "Other tagged notes" not in result
+    assert "Tagged artifacts by collection" not in result
+
+
 def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Path) -> None:
     class Config(dict):
         def __init__(self, docs_dir: Path, site_dir: Path) -> None:

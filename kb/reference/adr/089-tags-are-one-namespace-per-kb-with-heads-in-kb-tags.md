@@ -11,7 +11,7 @@ status: accepted
 **Date:** 2026-09-25
 **Refines:** [ADR 026](./026-tag-readme-type-with-completeness-and-coverage-marks.md) (keeps the `tag-readme` type, weight gates, and marks; retires its hub binding and fixes the scope its marks range over)
 
-**Amended by:** [ADR 140](./140-tag-heads-are-selective.md) retires completeness marks and the search shortcut. The namespace, heads and declared membership scope remain.
+**Amended by:** [ADR 140](./140-tag-heads-are-selective.md) retires completeness marks and the search shortcut. [ADR 141](./141-list-tag-members-by-collection.md) subsequently retires the participation declaration and includes tagged sources. The namespace and heads remain.
 
 ## Context
 

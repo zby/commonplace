@@ -14,7 +14,7 @@ ADR 089's source-search amendment permits optional tags on tracked source analys
 
 **Historical state (2026-09-25).**
 
-[ADR 089](../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) decides that every tag in use within the KB's tag space has a head, that membership ranges over one fixed set of participating collections, and that no consumer reads tags outside that set. It records this proposal's idea under its considered alternatives and rejects it for now on YAGNI grounds: the headless tags that prompted it were mistakes under the existing rules, and were given heads or retagged in the same change rather than legalized by a new mechanism. `kb/work/` and `kb/sources/` artifacts may carry `tags:` lines; nothing reads them, so they are neither keywords nor memberships but inert text.
+[ADR 089](../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) decides that every tag in use within the KB's tag space has a head, and rejects headless keywords for lack of a use case. [ADR 141](../adr/141-list-tag-members-by-collection.md) later retired the participation declaration, not the head requirement.
 
 ## Problem
 

@@ -30,9 +30,7 @@ declares no roles.
 
 The tag collection is required in every KB, even with no heads or members.
 Init seeds its contract and landing; an empty one needs no starter
-vocabulary. Each KB has one tag namespace, and member collections do not
-select their own. Validation reports a missing tag-space declaration when a
-tag consumer needs it; it does not run a global required-collection check.
+vocabulary. Each KB has one tag namespace. Validation reports a missing head on an eligible tagged artifact; it does not need a membership declaration or scan other members.
 
 Some path rules belong to ordinary collections and are not special roles: the
 proposal archive boundary, installed framework addresses and this site's

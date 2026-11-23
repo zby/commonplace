@@ -19,7 +19,7 @@ name grants it no privilege.
 
 | Collection | Role the commands rely on |
 |---|---|
-| [`tags`](../../tags/COLLECTION.md) | The KB's single tag namespace: tag heads, and the `participating:` list that says which collections' `tags:` lines count. Required in every KB, even when empty. |
+| [`tags`](../../tags/COLLECTION.md) | The KB's single tag namespace: selective tag heads with generated listings grouped by collection. Required in every KB, even when empty. |
 | [`sources`](../../sources/COLLECTION.md) | Tracked source ingests and their local snapshots; source recognition, snapshot handling and grounding checks read this location. |
 | [`reports`](../../reports/COLLECTION.md) | Installed projects receive a `retained/` area for citable reports. |
 | [`workflow-state`](../../workflow-state/COLLECTION.md) | Commands write to `data/current/`; the parent repository and the published site exclude the payload tree. |

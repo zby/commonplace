@@ -14,10 +14,8 @@ properties:
         type: string
         minLength: 1
       participating:
-        type: array
-        items:
-          type: string
-          minLength: 1
+        not: {}
+        description: "Remove the retired list; tag membership is grouped by collection automatically."
       unquoted-source-limit:
         type: integer
         minimum: 0

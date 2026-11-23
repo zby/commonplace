@@ -1,6 +1,5 @@
 ---
 type: types/collection-contract.md
-participating: [theory, reference, instructions, agent-memory-systems, agentic-systems, reports]
 ---
 
 # Tag heads for kb/tags/
@@ -16,8 +15,7 @@ phrase saying why each matters. It is the page a tag link leads to on the
 published site, where the build appends the full member listing
 ([ADR 025](../reference/adr/025-complete-generated-indexes-are-build-time-only.md)).
 
-Every tag in use has a head. Validation reports a tag on an artifact in a
-participating collection whose head does not exist; write the head or drop the
+Every tag in use has a head. Validation reports a tag on an eligible artifact whose head does not exist; write the head or drop the
 tag. A tag not worth a head is not worth assigning. A head is not a note: it
 makes no claim and is judged on whether a reader can tell from it what the tag
 means and where to go next.
@@ -25,23 +23,13 @@ means and where to go next.
 Heads are the only artifacts here. `README.md` is the collection's landing
 and carries no type.
 
-## Participating collections
+## Membership by collection
 
-The `participating:` list in this file's frontmatter names the collections
-whose `tags:` lines are membership claims. The generated listing on the site, and the head requirement range over
-exactly those collections, through one collector. Tags on artifacts elsewhere
-(`work`, `sources`, `types`, and the proposal archive under
-`reference/proposals/archive/`) are not read by membership consumers, nor are tags inside a
-validation-ignored subtree, such as exact captures under `reports/retained/`. Nothing is inferred from the
-directory tree: a collection joins the tag space by being listed here.
+The collector discovers top-level KB collections by their `COLLECTION.md`. It groups tagged Markdown artifacts by collection, including tracked source analyses and entries already recommended in the head. A collection contract governs what authors may tag; listing an assignment does not authorize it.
 
-Within the participating collections, tags are carried by notes, by the
-system analyses in `agent-memory-systems` and `agentic-systems`, by
-reference proposals, and by evidence notes in `reports/retained/`. Instructions, ADRs, and the other reference pages route
-through their own indexes and carry no tags; that is a rule, not a gap
-(operator decision, 2026-09-26).
+The collector skips `kb/workflow-state/` and `kb/sources/.snapshots/` before traversal. Tag heads, type definitions, collection contracts, hidden or validation-ignored subtrees, nested repositories, snapshots, replaced artifacts and archived proposals are not members.
 
-Tracked source analyses may reuse existing tags for explicit source-scoped search without joining the participating set. Their assignments follow the heads' inclusion conditions but do not affect generated member listings. A head is not a source index. Membership validation does not check source tag heads or assignment fit; authors must check them.
+Instructions, ADRs and other reference pages that route through their own indexes remain intentionally untagged. A source tag asserts topical relevance, not an adopted KB claim.
 
 ## Tag assignment
 
