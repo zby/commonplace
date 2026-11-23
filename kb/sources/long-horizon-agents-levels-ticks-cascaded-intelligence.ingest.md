@@ -30,7 +30,7 @@ No source quotes have been retained yet.
 
 The source exemplifies [active work state](../theory/active-work-state-is-not-retrospective-memory-or-chat-history.md): the driver reconstructs unfinished work from a checkpoint, standing decisions, a plan, open unknowns and active experiment cards. A newer append-only journal overrides an older checkpoint. This adds a concrete recovery rule to the note's distinction between current state and retrospective history. The reported campaign supports feasibility of this combined arrangement; it does not show that bounded summaries never lose relevant information, and it leaves closure and removal of completed work less explicit than the note requires.
 
-The source also compares with [governing behaviour-changing writes](../theory/fixed-review-rules-must-identify-when-incident-lessons-apply.md). Its strongest example is a recurring worker failure first addressed by instructions in every brief and then by an executable guard. That is a concrete change in how a retained rule determines behavior, rather than mere storage. The campaign does not establish systematic regression checking for such changes or compare alternative ways to install them.
+The campaign reports a recurring worker failure first addressed by instructions in every brief and then by an executable guard. That is a concrete change in how a retained rule determines behavior, rather than mere storage. The campaign does not establish systematic regression checking for such changes or compare alternative ways to install them.
 
 ## Learning Claims (our opinion)
 

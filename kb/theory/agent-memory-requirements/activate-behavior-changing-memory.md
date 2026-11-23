@@ -9,7 +9,7 @@ tags: [agent-memory, context-engineering, learning-theory, evaluation]
 
 The system must not merely answer "what do we know?" It must sometimes answer an unasked question: "what past lesson applies to the action I am about to take?"
 
-[Continual learning requires governing behaviour-changing writes, not just storing content](../fixed-review-rules-must-identify-when-incident-lessons-apply.md): adding retrievable facts is easier than changing future action. A stored correction only matters operationally if it fires before the agent repeats the corrected behavior.
+[Storing past incidents does not ensure their lessons guide later reviews](../fixed-review-rules-must-identify-when-incident-lessons-apply.md). A stored correction only matters operationally if it fires before the agent repeats the corrected behavior.
 
 ## Methods
 
@@ -44,6 +44,5 @@ A cue that fires and enters context has not succeeded unless it changes downstre
 
 Relevant Notes:
 
-- [Continual learning requires governing behaviour-changing writes, not just storing content](../fixed-review-rules-must-identify-when-incident-lessons-apply.md) - grounds the behavior-change test
 - [Knowledge storage does not imply contextual activation](../knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes storage from effective activation
 - [Large Language Model Agents are not Always Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v3) - evidence: causal-intervention warning that visible memory can fail to drive behavior

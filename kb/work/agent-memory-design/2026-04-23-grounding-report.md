@@ -66,7 +66,7 @@ The note's knowledge-role versus system-definition-role split is one of its stro
 
 The note uses the role axis correctly: the same bytes can answer a question in one context and steer behavior in another. That distinction is stronger than the usual "RAG vs memory" framing because it explains why ordinary retrieval solves only the knowledge half.
 
-[Continual learning requires governing behaviour-changing writes, not just storing content](../../theory/fixed-review-rules-must-identify-when-incident-lessons-apply.md) is the most important companion. It says persistence alone is insufficient: continual learning must govern behaviour-changing writes, not just store content. The design study's typed cue index is exactly a readable system-definition mechanism: a durable prose or symbolic artifact that changes future action.
+[Continual learning requires governing behaviour-changing writes, not just storing content](https://github.com/zby/commonplace/blob/9eaac81a243a255e6bbd5dc43b5c737e02a54c8f/kb/theory/continual-learning-requires-governing-behaviour-changing-writes.md) is the most important companion. It says persistence alone is insufficient: continual learning must govern behaviour-changing writes, not just store content. The design study's typed cue index is exactly a readable system-definition mechanism: a durable prose or symbolic artifact that changes future action.
 
 [The readable-artifact loop is the tractable unit for continual learning](../../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) strengthens this further. It frames prose and symbolic artifacts as the practical near-term learning substrate, because both are inspectable, versionable, and compete for the same context budget.
 

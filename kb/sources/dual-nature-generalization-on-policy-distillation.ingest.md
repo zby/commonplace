@@ -28,7 +28,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper supplies a concrete parametric example for [governing behaviour-changing writes](../theory/fixed-review-rules-must-identify-when-incident-lessons-apply.md): in the tested shared-weight OPD setup, validating only the routed prompt domain would miss consequential regressions elsewhere. This supports that note's regression-validation requirement, while post-training experiments do not test its deployment-time governance loop. The reversal of teacher assignments is useful because a teacher still transfers capabilities outside its nominal teaching role.
+In the tested shared-weight OPD setup, validating only the routed prompt domain would miss regressions elsewhere. These are post-training experiments, not tests of a deployment-time governance loop. The reversal of teacher assignments is useful because a teacher still transfers capabilities outside its nominal teaching role.
 
 The evidence also illustrates [the boundary of an experimental contrast](../theory/an-experiment-identifies-only-the-contrast-it-actually-runs.md). Mixture experiments challenge strict confinement of teacher influence, whereas comparisons among existing model lineages do not isolate origin from capacity, initialization and post-training history. In terms of [representational form](../theory/definitions/representational-form.md), the retained changes are distributed-parametric. A domain label chooses the supervision source; it does not create a separately editable record of that domain's knowledge.
 
@@ -58,4 +58,4 @@ The effective update space permits changing a shared token policy conditioned on
 
 ## Recommended Next Action
 
-Update [Continual learning requires governing behaviour-changing writes](../theory/fixed-review-rules-must-identify-when-incident-lessons-apply.md) with this bounded post-training example showing why regression validation must extend beyond an update's nominal domain.
+Use the teacher-assignment reversal as a bounded example when assessing regressions beyond an update's nominal domain.
