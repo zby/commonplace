@@ -5,7 +5,7 @@ type: types/instruction.md
 
 # Maintain curated indexes
 
-Audit curated tag READMEs (`kb/tags/<tag>-README.md`, type `tag-readme`) for editorial quality, completeness, and coherence. A tag README is the tag's curated head: a hand-written editorial body with groupings and context phrases, small by type contract (weight gates). The complete per-tag listing is not committed — it is generated at ProperDocs build time for the published site (ADR 025); agents reconstruct it on demand with the scoped `rg` recipe below.
+Audit curated tag READMEs (`kb/tags/<tag>-README.md`, type `tag-readme`) for editorial quality, completeness, and coherence. A tag README is the tag's curated head: a hand-written editorial body with groupings and context phrases, small by type contract (weight gates). The complete per-tag listing is not committed — it is generated at ProperDocs build time for the published site (ADR 025); agents reconstruct it with the same membership collector the validator and site use.
 
 This instruction is also the route for fixing validator warnings on tag-READMEs (weight gate, `complete` one-hop reach). The mark's maintenance rules — when to declare or drop `complete`, the lifecycle exits, the smells — live in the [tag-readme type spec](../types/tag-readme.md); read it before changing a mark.
 
@@ -19,22 +19,26 @@ This instruction is also the route for fixing validator warnings on tag-READMEs 
 
 ### 1. Inventory tags and sizes
 
+In the Commonplace checkout, run this from the repository root. It reads the participating collections from `kb/tags/COLLECTION.md` and includes heads that currently have no members:
+
 ```bash
-rg -N --no-heading '^tags:' kb/theory/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
-  | grep -o '\[.*\]' | tr -d '[]' | tr ',' '\n' | sed 's/^ *//' \
-  | sort | uniq -c | sort -rn
+uv run python - <<'PY'
+from pathlib import Path
+from commonplace.lib.index_generated import collect_tag_space
+
+space = collect_tag_space(Path.cwd())
+if space.declaration_error:
+    raise SystemExit(space.declaration_error)
+for tag in sorted(space.heads.keys() | space.notes_by_tag.keys()):
+    print(len({path for path, _, _ in space.notes_by_tag.get(tag, [])}), tag)
+PY
 ```
 
-This shows how many artifacts each tag has across the participating collections listed in `kb/tags/COLLECTION.md`. Every tag in use needs a head; validation reports a tag with no head at `kb/tags/<tag>-README.md`, and the fix is to write the head or drop the tag. Indexes that haven't been updated after significant tag growth may need revision.
+A tag on a participating artifact needs a head. If validation reports a missing head, write the head or drop the tag. Indexes that haven't been updated after significant tag growth may need revision.
 
 ### 2. For each curated index, evaluate editorial quality
 
-Load the index and list the tag's full membership:
-
-```bash
-rg -l '^tags:.*\bTAG\b' kb/theory/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
-  | xargs -r rg -N --no-heading '^description:\s*' -r ''
-```
+Load the head. Run the [exact-membership recipe](../types/tag-readme.md#checking-exact-membership) with its tag name. This listing, not a text match on a `tags:` line, is the comparison set for the curated links. To find related source evidence instead, search `kb/sources/` separately: a tagged ingest is not a missing member of the head.
 
 Ask:
 
@@ -42,16 +46,33 @@ Ask:
 - **Do the groupings still make sense?** Sections should reflect natural clusters. If a section has grown to 15+ entries, it may need sub-grouping or splitting into its own index.
 - **Are the context phrases still accurate?** A note's role in the topic may have shifted since the phrase was written.
 - **Are important notes missing?** Compare the curated entries against the tag's full membership from the listing above. Tagged notes absent from the index are either: (a) not important enough to curate, which is fine, or (b) missing editorial placement, which should be fixed.
-- **Are there entries that no longer belong?** A curated entry whose note has drifted away from the topic should be removed (the note stays reachable through the build-time listing and the scoped query).
+- **Are there entries that no longer belong?** A curated entry whose note has drifted away from the topic should be removed (the note stays reachable through the build-time listing and the membership collector).
 
-### 3. Check for orphaned notes
+### 3. Find eligible notes with no tags
+
+Choose the artifact class before treating an absent tag as a gap. This example covers `types/note.md` in `kb/theory/`, including subdirectories. It checks parsed frontmatter, so an absent field and an empty list both qualify. Other types are not implicitly candidates. Before extending the search, read the tag and destination contracts; instructions and ADRs, for example, are intentionally untagged in Commonplace.
 
 ```bash
-# Notes with no tags field at all
-rg -L "^tags:" kb/theory/*.md
+uv run python - <<'PY'
+from pathlib import Path
+from commonplace.lib import frontmatter
+from commonplace.lib.index_generated import collect_tag_space
+from commonplace.lib.project_paths import list_collection_validation_paths
+
+root = Path.cwd()
+space = collect_tag_space(root)
+if space.declaration_error:
+    raise SystemExit(space.declaration_error)
+for path in list_collection_validation_paths(root / 'kb/theory'):
+    if path.suffix != '.md' or not space.is_participating(path):
+        continue
+    doc = frontmatter.parse(path.read_text(encoding='utf-8'))
+    if doc.ok and doc.data.get('type') == 'types/note.md' and doc.data.get('tags', []) == []:
+        print(path.relative_to(root))
+PY
 ```
 
-For each orphan, consider whether adding tags would help future readers find it. Read each candidate head and assign the tag only when the note meets its inclusion condition. Clarify an ambiguous condition before assigning.
+Treat the output as a reading list, not a tagging backlog. Assign a tag only if the note meets its head’s inclusion condition and the assignment would help a reader find it. Clarify an ambiguous condition before assigning.
 
 ### 4. Split or promote
 
@@ -77,5 +98,5 @@ Run `commonplace-validate kb/tags`. Marks range over every participating collect
 ## Principles
 
 - The curated index is editorial, not exhaustive — it's a "best of" selection with context, not a complete listing.
-- Completeness is handled elsewhere — the build-time site listing for humans, the scoped `rg` query for agents. Don't chase complete coverage in the curated body unless a note is genuinely important for the topic's story.
+- Completeness is handled elsewhere — the build-time site listing for humans, the membership collector for agents. Don't chase complete coverage in the curated body unless a note is genuinely important for the topic's story.
 - Groupings serve readers, not taxonomy — optimize for "does this help someone understand the topic?" not "is this logically clean?"

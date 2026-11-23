@@ -60,7 +60,7 @@ The reserved `external` destination is authorization for already-known targets, 
 In order of cost:
 
 - **A brief is part of its document.** A match in a write brief `x.brief.md` ([write-brief type](../../types/write-brief.md)) counts as a match on `x.md`. Link the document, never the brief.
-- **Curated heads.** Read the destination's `README.md` and, when the source carries `tags:`, the matching tag heads at `kb/tags/<tag>-README.md` — their editorial groupings and context phrases capture routing signal a flat listing misses. If a tag-README declares `complete: true`, it links every artifact carrying that tag in the participating collections — **skip the by-tag rg for that tag** and record the skip in the discovery trace.
+- **Curated heads.** Read the destination's `README.md` and, when the source carries `tags:`, the matching tag heads at `kb/tags/<tag>-README.md` — their editorial groupings and context phrases capture routing signal a flat listing misses. A `complete: true` head reaches each participating member directly or through a linked child head. For a participating destination, follow those links before skipping its by-tag search; record the scope of the skip. For a search-only destination such as `kb/sources/`, search the authorized destination even when the head is complete.
 - **Full titles listing.** Generate the complete claim-title surface for the destination collection once, fresh (nothing is stored, so nothing can go stale) — titles are claims in this KB, so this is the cheapest complete recall surface for candidate discovery, roughly a quarter of the description listing's size:
 
   ```bash
@@ -78,12 +78,12 @@ In order of cost:
   ```bash
   # whole destination
   rg '^description:' kb/<destination>/ --glob '*.md'
-  # by tag
-  rg -l '^tags:.*\bTAG\b' kb/<destination>/ --glob '*.md' \
-    | xargs -r rg -N --no-heading '^description:\s*' -r ''
+  # by tag: replace TAG with the literal kebab-case tag name
+  rg -l0 '^tags:\s*\[\s*([^]]*,\s*)?TAG\s*(,|\])' kb/<destination>/ --glob '*.md' \
+    | xargs -0 -r rg -N --with-filename --no-heading '^description:\s*' -r ''
   ```
 
-  The `xargs -r` guard matters: a tag matching zero files would otherwise make `rg` search the whole repo.
+  This matches whole names in the usual inline list, not every valid YAML spelling. Use it to find candidates, not to prove membership or absence. For tracked ingests use `kb/sources/ --glob '*.ingest.md'`; keep descriptions and body search available for untagged material. The `xargs -r` guard prevents an empty candidate list from starting another search.
 - **`rg` body search.** Run focused queries for terms and adjacent concepts the source's claim foregrounds and the destination's outbound guidance suggests. Multiple queries; capture the actual query strings.
 
   ```bash
