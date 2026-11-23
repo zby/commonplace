@@ -74,6 +74,7 @@ The conceptual core is inherited; Commonplace's operational extensions are ident
 
 Relevant Notes:
 
+- [Actionable methodology](./actionable-methodology.md) — grounds: an internal process may act through a methodology, but actionability alone does not establish reflection
 - [Behavioral authority](./behavioral-authority.md) — enables: names the consumer, channel, and force that make a self-representation operative
 - [A retrieval miss is a local reflective-path failure](../a-retrieval-miss-is-a-local-reflective-path-failure.md) — extends: develops the path-relative failure mode of a retrieval-mediated causal connection
 - [Reach-assessment](./reach-assessment.md) — contrasts: a semantic-judgment capability not entailed by reflection's structural requirements

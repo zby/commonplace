@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The primary connection is [Actionable methodology (historical definition)](https://github.com/zby/commonplace/blob/6cf7eaaa0298816ca864db6a2b8bc52e263f7951/kb/theory/definitions/actionable-methodology.md): Gregor grounds the prescriptive theory subtype while showing that operator availability is a later relational addition rather than an inherited Type V criterion. A secondary connection is [Artifact classification separates content kind, lineage, and authority](../theory/artifact-classification-separates-content-kind-lineage-and-authority.md): Gregor's taxonomy treats prescription as a possible primary goal of theory, so Commonplace's separate notes and instructions collection contracts should not be mistaken for mutually exclusive kinds of knowledge.
+The primary connection is [Actionable methodology](../theory/definitions/actionable-methodology.md): Gregor grounds the prescriptive theory subtype while showing that operator availability is a later relational addition rather than an inherited Type V criterion. A secondary connection is [Artifact classification separates content kind, lineage, and authority](../theory/artifact-classification-separates-content-kind-lineage-and-authority.md): Gregor's taxonomy treats prescription as a possible primary goal of theory, so Commonplace's separate notes and instructions collection contracts should not be mistaken for mutually exclusive kinds of knowledge.
 
 ## Extractable Value
 
@@ -80,4 +80,4 @@ Editorial opinion. This is a short conceptual article, not an empirical test of 
 
 ## Recommended Next Action
 
-Use [Actionable methodology (historical definition)](https://github.com/zby/commonplace/blob/6cf7eaaa0298816ca864db6a2b8bc52e263f7951/kb/theory/definitions/actionable-methodology.md) for the distinction drawn at ingest: preserve Gregor's Type V subtype while treating actionability as the separate relation between a theory and an operator capable of applying it.
+Use [Actionable methodology](../theory/definitions/actionable-methodology.md) as the canonical local refinement: preserve Gregor's Type V subtype while treating actionability as the separate relation between a theory and an operator capable of applying it.
