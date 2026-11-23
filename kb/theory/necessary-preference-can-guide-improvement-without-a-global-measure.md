@@ -17,7 +17,7 @@ Nobody has to know that exact ratio. The question is which ratios the purpose of
 
 The same counts give three different answers. What changes is the set of weightings the work admits, not the evidence about tasks. That is the general method: rank two versions only where every admissible weighting agrees, and state precisely where they do not.
 
-## What a claim of improvement asserts
+## What this rule establishes
 
 First fix four choices: the **alternative** (what we would have instead), the **work** being judged, the **affected parties** whose gains and losses count, and the **horizon**. Then:
 
@@ -44,19 +44,7 @@ This is a working definition, not the only meaning of "better". State it—along
 
 ## Open for missing evidence, open for trade-offs
 
-The two ways a comparison stays open call for different work:
-
-**Missing outcome evidence.** We may not know how often harmed tasks occur or how much a loss costs. Evidence can settle this. Investigate an unknown only if a plausible answer could reverse the verdict: if a day-losing failure is plausible, learn how often it happens, because a sharper estimate of the small gains will not change the answer.
-
-**Disagreement over trade-offs.** Even with outcomes known, the purpose may admit measures that weigh them differently—tolerance for rare severe failures, the horizon over which savings count, or author effort against maintainer effort. More outcome evidence cannot settle this; only a further commitment, argued from purpose, narrows the set. Narrowing it merely to force agreement defeats the verdict.
-
-**An open comparison is not an injunction against acting.** We can still take the step as a decision—reported as a decision rather than a demonstrated improvement, naming the evidence or commitment that would reopen it. When a mistake can be found and undone, [reversibility can favor a change by limiting future loss](./reversibility-can-favor-a-change-by-limiting-future-loss.md).
-
-## A release judgment: Python 3.11 over 3.10
-
-Should maintained application projects take CPython 3.11 as their default over 3.10? The alternative is the whole release: we cannot take the new interpreter while keeping every old interface. Python 3.11 runs some existing workloads faster without source edits, adds library facilities such as `asyncio.TaskGroup` and `tomllib`, and removes `inspect.getargspec`, which a 3.10 program could still call.
-
-Here the purpose shapes the compatible set. Because this is an opt-in default, a project with an unrepairable dependency can stay on 3.10. A measure counting only the worst-off project is therefore not compatible; it would be compatible only where harmed projects could not avoid the loss. If blockers are rare and caught by testing before moving, every compatible measure favors 3.11. Without evidence bounding how widespread blockers are, the comparison stays open for missing evidence, and adopting 3.11 is a decision under that assumption. [An objection can show where to split a comparison](./an-objection-can-show-where-to-split-a-comparison.md) examines what a challenge to this judgment can settle.
+If the frequency or severity of rework is unknown, better outcome evidence can settle whether the loss-to-gain ratio reaches nine. If outcomes are known but compatible valuations still fall on both sides of nine, more observations of those same outcomes cannot settle the comparison. A narrower range needs a further commitment justified by the purpose of the work.
 
 ## Scope
 
@@ -67,6 +55,7 @@ Here the purpose shapes the compatible set. Because this is an opt-in default, a
 
 Relevant Notes:
 
+- [On-balance judgment with an LLM](./on-balance-judgment-with-an-llm.md) — exemplifies: agreement across compatible measures is one way to judge a proposed change when the exact trade-off is unknown
 - [Defining improvement for open-ended work](./defining-improvement-for-open-ended-work.md) — extends: this note proposes one working definition answering that note's question (indexing to the alternative, fixing the definition for a test, and clear wins without forced closure)
 - [Selection-based learning needs only a local comparison](./selection-based-learning-needs-only-a-local-comparison.md) — extends: why selection needs only a comparison among candidates at hand; this note supplies one such comparison
 - [Self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — grounds: why the objective must be identifiable independently of the change it judges

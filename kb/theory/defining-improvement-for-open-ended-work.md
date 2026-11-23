@@ -59,3 +59,5 @@ Taken together, these cases set the requirements for any working definition of i
 ## Evaluating a selector over a stream of work
 
 Those requirements govern a single change. A usable definition also has to support testing a selector itself—human or LLM—without demanding that it find the best conceivable change or be right about every proposal. Compare the system that uses the selector's choices against a specified alternative over the same stream of work, counting what happened during trials—including review cost and losses incurred before reversal. The question is whether the resulting work was better over that period, not how many individual changes were kept.
+
+[On-balance judgment with an LLM](./on-balance-judgment-with-an-llm.md) takes up the practical question: given these requirements, how could a model compare the proposed change with a real alternative and expose the reason for its judgment?
