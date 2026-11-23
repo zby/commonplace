@@ -2,6 +2,8 @@
 
 Posed by the operator on 2026-11-23. Make tag maintenance usable again, run it against the existing KB, and make tracked sources routinely findable by topic. Decide whether other collections should use tags. A long interval since the last audit is a reason to inspect the structure, not evidence that a particular tag needs changing.
 
+The [search-command ledger](./search-command-ledger.md) records which instructions search by topic, which require exact membership, and which must keep a wider scope to find dependencies.
+
 ## Where the work starts
 
 - The [maintenance instruction](../../instructions/maintain-curated-indexes.md) says its inventory covers the participating collections, but its command omits `reports`, which the [tag contract](../../tags/COLLECTION.md) includes. Check the procedure against actual membership and exclusions before relying on its results. Then use it to assess heads, assignments and eligible but untagged material. A passing validator cannot tell whether a head helps a writer distinguish two neighboring topics.
