@@ -1,0 +1,13 @@
+**Adopt Version 1.**
+
+1. The operator made a fixed measure a special case of judgment so that a small change in how a system judges would not move it out of the term, but Version 2's condition 3 brings back that discontinuity: in the checks, cases 9 and 10 change membership only on whether a benchmark score is recomputed on later tasks.
+2. Condition 3 also conflicts with Version 2's own claim that the term names a way of learning with no success condition. Whether later evidence can correct a judgment concerns how well a system learns, and the condition excludes a team that deliberates over every lesson but never revisits one (case 3).
+3. Version 2 makes "held as a conjecture" a defining condition, yet that is the sense for which the name "conjectural learning" was dropped; the adopted name, deliberation plus a kept outcome, matches Version 1's two conditions.
+4. Version 1 loses nothing by demoting correction, since it still reports correction as none, bundle or targeted, and displacement separately, and it adds two distinctions Version 2 lacks: addressability does not guarantee correction, and a trial and its review are separate judgments.
+5. Before adopting it, fix four things:
+   * Change "if each meets the three conditions" in the nested-loop bullet.
+   * Place or delete the orphaned sentence "A claim is made for a named class of changes."
+   * Restore "The operator's reason:" where Version 1 now has only "The reason:".
+   * Rewrite the checks with C as a reported property instead of a membership condition.
+
+**What I would keep from Version 2:** its first condition, a plain *legible store*, without addressability. In Version 1, every job argued for addressability is correction: pointing at an earlier change, tracing its use, and undoing it without disturbing unrelated changes. Version 1 itself demoted correction to a reported property, so keeping addressability as a membership condition retains part of the condition it removed. Addressability belongs in the notes on correction, as what makes *targeted* correction possible.

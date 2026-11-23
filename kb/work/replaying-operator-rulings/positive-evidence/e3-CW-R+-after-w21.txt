@@ -1,0 +1,17 @@
+**Adopt Version 1.**
+
+1. Version 2's third condition makes membership depend on separating "displaced by a higher score" from "found wrong by later evidence." The checks file admits that this line "carries the weight" and that no reader outside the workshop has checked it. Version 1 bases membership on two conditions that are easier to check, and reports correction separately.
+2. Version 1's grading of correction as *none*, *bundle* and *targeted* fits evidence the checks file already holds. That evidence includes graded attribution and case 16's stack rollback, and it pairs cases 13 and 14. Version 2 has to sort these cases by a binary verdict instead.
+3. Version 2 keeps the project's own examples, such as a lesson recorded in `kb/log.md` and never revisited, out of the term. That works against its stated purpose of putting "all the learning that happens in Commonplace under one name." Version 1 keeps them in and reports that their correction is *none*.
+4. Version 1's condition 2 makes "could have gone against the change" the test. This matches the on-balance note, which treats the judgment as a decision among alternatives and does not require it to be revisited. Version 2 merges deciding with revisiting, as in "no judgment that later evidence could count against."
+5. Version 1 also fixes an overclaim in Version 2. Version 2 says addressability lets a system reverse a change. Version 1 shows that a store can be addressable without allowing correction: if whatever reads the store always uses the first instruction stored under a key, a later entry can point at that instruction and still not override it.
+
+**From Version 2, keep "The operator's reason:"** in the fixed-measure note. Version 1 shortened it to "The reason:", which presents an operator's ruling as if it were a derived argument. The other draft files, including the checks, keep their rulings attributed.
+
+**Fix in Version 1 before adoption.** These are leftovers from the earlier three-condition draft:
+- In the bullet on a loop inside a loop, "each meets the three conditions" should read "both conditions."
+- The single-loop definition says such a learner "makes and reverses changes." That is wrong for a learner whose correction is *none*. Use "makes changes."
+- "A claim is made for a named class of changes" is in the wrong place. It belongs with the double-loop test.
+- "These were a third condition until 2026-11-21" is change history. Move it to the operator notes.
+
+**Rewrite the checks file for Version 1.** It assumes Version 2's three conditions. Cases 3, 4 (the repairer alone), 7a, 9, 11 and 13 are now inside the term, each with correction reported as *none*. Case 11 may still fall outside on condition 2. Record these changes in the "What the ruling changed" table.

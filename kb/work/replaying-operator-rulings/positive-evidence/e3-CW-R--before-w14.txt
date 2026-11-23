@@ -1,0 +1,12 @@
+**Adopt Version 2.**
+
+1. The stated purpose is to put all of Commonplace's learning under one name, and Version 1's condition C undercuts that from within: it calls a judged `kb/log.md` entry deliberative, yet an entry that later evidence never revisits fails "open to criticism," as does a coding agent's lesson file that nobody corrects.
+2. Version 1 also strains C internally. The condition says the system "undoes the change where that is possible," but its note says the condition "is about the judgment, not about undoing." It also puts graded attribution (stack rollback versus localized blame) inside what should be a yes-or-no membership test.
+3. Version 2 keeps every distinction the checks file relies on (cases 9 and 10, 13 and 14, 3 and 1). It reports them as a correction grade (*none*, *bundle*, *targeted*) and a separate displacement property, so a placement now says how well a system learns instead of whether it learns at all.
+4. Version 2's checkability rules are sharper. "Could have gone against the change" moves into condition 2, a capacity claim needs an account while an episode claim needs the episode, and the first-instruction-wins example shows why an editable store is not a self-correcting one.
+5. Before adoption it needs cleanup:
+   - The horizon section still says "the three conditions."
+   - The single-loop definition says "makes and reverses changes," which presupposes correction.
+   - The bullet "These were a third condition until 2026-11-21" is workshop history and belongs in the checks file, which needs re-running anyway because cases 3, 4, 7a, 9, 11 and 13 move from outside to inside.
+
+**Keep from Version 1: its condition 1 as "Legible store," without "addressable."** In Version 2, addressability's only stated job is to let a later change point at an earlier one and correct it without undoing unrelated changes. Version 2 has made correction optional, so requiring addressability for membership demands the means while waiving the end. Legibility alone already excludes gradient-trained weights. Addressability belongs in the correction property, as the thing that distinguishes *targeted* from *bundle*.

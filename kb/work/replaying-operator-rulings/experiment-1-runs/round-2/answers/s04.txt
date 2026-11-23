@@ -1,8 +1,0 @@
-**1. In condition 2, delete "that the change improves the system's future work."**
-The draft says "Open" is the usual verdict for a recent change, and that keeping such a change is a decision rather than a learned improvement. It also describes reversibility tipping a judgment toward keeping a change without evidence that the change helps. Requiring the judgment to be *that the change improves future work* therefore excludes most of Commonplace's actual retentions, including choices like ADR 085 that accept a known loss, while the linked on-balance judgment already supplies the comparison.
-
-**2. Delete "They are checked on the outermost loop that the system runs itself."**
-This conflicts with the preceding sentence and with the checks file, which apply the conditions to whatever system and store a claim names. The draft's own team example and cases 4–5 classify inner loops (the training run, the repairer alone), which this sentence would forbid. It would also leave unclassified the judged revisions that agents make inside a larger Commonplace loop, so not all of the project's learning would fall under the term.
-
-**3. In condition 3, delete "The system then corrects: it undoes the change where that is possible, and otherwise makes a further change."**
-The sentence makes undoing mandatory whenever undoing is possible. That contradicts the note that the condition concerns the judgment rather than the change, and it excludes stipulated case 1, where the team *revises* a reversible rule rather than undoing it. How to respond to a mistaken judgment is itself a judged change under condition 2, and the condition's first two sentences already say what must stay open.

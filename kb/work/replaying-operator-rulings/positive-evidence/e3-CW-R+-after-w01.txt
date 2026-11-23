@@ -1,0 +1,13 @@
+**Adopt Version 1.**
+
+1. The term is meant to put all of Commonplace's learning under one name with no success condition. Version 2's third condition works against that: by its own account, a memory file nobody revises or a gate that admits once is outside the term, although each is deliberated, and its notes even hold up the log entry as deliberative.
+2. Version 1 also follows from the operator's continuity argument for fixed measures. In Version 2, adding a single rescoring step moves a system such as case 13 versus case 14 from outside to inside, which is the kind of discontinuity that argument rejects.
+3. Treating correction (*none*, *bundle*, *targeted*) and displacement as reported properties keeps distinctions that Version 2's yes-or-no condition loses. It also fixes Version 2's tensions: Version 2 ties targeted correction to an addressability that its condition 1 never requires, and it defines "change without a judgment" in terms of correction (C) rather than judgment (J).
+4. The name points the same way. "Deliberative", as the background traces it, is about weighing at the moment of decision, and the "conjectural" sense now has a reported property of its own instead of an unflagged condition.
+5. Before adoption, Version 1 needs these repairs:
+   - The loops section still says "each meets the three conditions."
+   - "makes and reverses changes" in the single-loop definition presupposes correction.
+   - "The reason:" has lost its attribution to the operator.
+   - The checks file must be restated for two conditions, with cases 3, 4, 7a, 9 and 13 re-placed as inside with correction *none* or displacement only.
+
+**Keep from Version 2:** the sentence "Later evidence indicts an operating state, not one line in isolation." Version 1's *targeted* grade says the system can "identify the responsible change" without noting that this is an inference from evidence about a whole state. That sentence belongs in Version 1's account of correction, so that "targeted" is not read as given by addressability alone.

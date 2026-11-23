@@ -1,0 +1,14 @@
+**Adopt Version 2.**
+
+1. The draft says the term exists to put all the learning in Commonplace under one name, but Version 1's third condition excludes much of that learning. Examples are a lesson recorded once and never revisited, or a `kb/log.md` entry, which Version 1 itself calls deliberative.
+2. The operator kept fixed measures inside the term so that a small change in how a system judges would not move it out. Version 1 brings that discontinuity back on another axis, and its own note admits attribution is graded. For example, a benchmark search moves in or out depending on whether kept variants are rescored on later tasks.
+3. Version 2 reports correction (*none*, *bundle*, *targeted*) and displacement as separate properties, which says more than an in/out verdict. The checks file's sharpest contrasts (cases 9 and 10, 13 and 14, 7a and 7b) carry over as differences in those grades instead of being lost.
+4. Version 2 also separates legibility from addressability, and its first-instruction-wins example shows that an editable store does not guarantee correction. Version 1 blurs this by naming only legibility in condition 1 while relying on addressability in the notes.
+5. Before adoption, fix three leftovers in Version 2:
+   - The nested-loop bullet still says "meets the three conditions."
+   - The proviso "provided its judgment responds to evidence that bears on its objective" quietly brings back a third condition.
+   - The dated history line "These were a third condition until 2026-11-21" should go.
+
+   The checks file's C column should also be recast as the correction property.
+
+**Keep from Version 1:** "Later evidence indicts an operating state, not one line in isolation." In Version 2, *targeted* correction reads as something addressability simply provides. Version 1's sentence makes clear that blaming one change is an inference from evidence about the whole state, so a claim of *targeted* correction needs that inference shown.

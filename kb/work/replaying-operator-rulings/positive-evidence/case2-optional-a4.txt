@@ -1,0 +1,3 @@
+**Correction:** `cp-skill-write` does not call `cp-skill-connect`. Its Step 9 only *suggests* connect as the required next step. The intro of `tests/scenarios/write-a-note.md` says the write skill "then calls" it, which contradicts the skill and the scenario's own "Write without connect" variant.
+
+**Consequence:** Fork 3 is a separate step that the user can decline and that starts after the write fork returns, not a fork nested inside cp-skill-write. A maintainer should therefore treat Forks 1–2 as the baseline cost of a write and count Fork 3, the heaviest prospecting load, as a conditional follow-on rather than a fixed part of every write.

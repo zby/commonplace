@@ -1,60 +1,22 @@
 # Replaying operator rulings
 
-Posed 2026-11-21 by the operator. Written by an agent (claude-fable-5-2).
+Posed by the operator on 2026-11-21: can a fresh worker reach an operator's ruling from the earlier materials and general instructions, without being told the answer? The [definition replay index](../../reports/retained/definition-rulings-replay-index-2026-11-21.md) identifies the original rulings. The [session cases](./session-replay-candidates.md) are a separate series.
 
-## Question
+**What to repeat:** workers occasionally *proposed* the historical change. They more often *chose* one particular revised definition when shown both versions. These are different abilities. No general hint has earned adoption. The strongest new lead is a different task: six independent reviewers noticed that a cost estimate counted files from the wrong installation. That was an accepted correction, but not the one the experiment predicted.
 
-**What is the most general instruction that leads a fresh worker to notice
-what the operator noticed?**
+| Replay | Result and positive case |
+|---|---|
+| 1. [Fixed measure](./experiment-1-fixed-measure.md) | [1/64 proposals](./experiment-1-results.md) admitted fixed-measure learners. The worker had both a purpose hint and permission to revise the checks. |
+| 2. [Two conditions](./experiment-2-two-conditions.md) | [1/15 proposed, 3/4 chose](./experiment-2-results.md) moving the third condition out of membership. |
+| 3. [Remove a recorded reason](./experiment-3-retained-reason.md) | [5/6 chose the committed revision in each arm](./experiment-3-results.md). The reason changed the arguments workers gave, not the choice rate. |
+| 4. [Enumerate changes](./experiment-4-enumerated-demotions.md) | [0/21 verdicts](./experiment-4-results.md) adopted a one-sentence proposal, even when it named the operator's change. |
+| 5. [Write out each change](./experiment-5-elaborated-demotions.md) | [22/24 chose the first version](./experiment-5-results.md). Neither target rewrite won when shown second. |
+| Session case 2. [Cost of optional link discovery](./case-2-optional-connect/design.md) | [Round 1](./case-2-optional-connect/results.md): 0/6 proposed the target; 6/6 proposed the other accepted correction. [Round 2](./case-2-optional-connect/round-2/results.md): after the path correction, 2/6 proposed the target, one per arm. |
 
-While the definition of deliberative learning was drafted, the operator made
-several rulings that reversed what three agents held. The
-[replay index](../../reports/retained/definition-rulings-replay-index-2026-11-21.md)
-lists five, each with the commit that holds the state before it.
+## How to build on a positive
 
-For each ruling, a worker can be given that state together with a hint. The
-hints are general advice about definitions, of several kinds. The result of
-interest is which general hints, if any, lead workers to the ruling.
+For the installed-path finding, freeze a fresh case where the documented cost depends on which files an installed user actually reads. Specify the accepted correction and a full-hit test **before** seeing answers. For definition choices, compare a candidate in both positions against the same original; a win only when shown first is not a success to amplify. Neither test has been run.
 
-Telling a worker what the operator said would work and would show nothing
-useful. The aim is to find other ways to induce the observation: advice
-general enough to write into a type or an instruction.
+For each authorized replay, follow the [coordination and retention procedure](./COORDINATION.md). Keep the pinned design, all outcome counts (including misses, disagreements and presentation order), and [individual answers for positive cases](./positive-evidence/). The answers illustrate *how* successes happened; use the result tables, not the selected files, to judge *how often*. Keep unexpected but independently confirmed successes separate from target hits.
 
-## Why it matters
-
-- **For what is written into types and instructions.** A general hint that
-  works is a candidate sentence for the type or instruction that governs the
-  task. The definition type gained a section on a revision bias on
-  2026-11-21 from one session's evidence. This is a way to test such text
-  before relying on it.
-- **For what agents could do without the operator.** If a general hint is
-  enough, the operator's contribution at that point could be replaced by an
-  instruction. If no general hint works, it could not, at least for these
-  workers.
-
-## Plan
-
-1. Run [experiment 1](./experiment-1-fixed-measure.md) on the first ruling to
-   test the format: the materials, the hints, the limit on answers and the
-   scoring.
-2. Fix what the format test exposes.
-3. Decide with the operator which other rulings to replay. Rows 2 to 4 of
-   the index are candidates. Row 5, stopping, has no single state that poses
-   its question.
-
-The workers are cheaper models than the agents that did the original work.
-The first experiment uses Claude Opus.
-
-## What closes the workshop
-
-- Experiment 1 has been run and its format judged usable or not.
-- The operator has decided whether to replay other rulings, and those chosen
-  have been run.
-- Any hint that the results support has been proposed as text for a type or
-  an instruction, or the reason for not proposing it is recorded.
-
-Results that should outlast the workshop go to `kb/reports/retained/`.
-
-## Bookkeeping
-
-Commits carry `Workshop: kb/work/replaying-operator-rulings`.
+The workshop stays open for operator-selected repeats. Close when the chosen cases are complete and any supported instruction has been proposed, or the reason not to propose one is recorded. An earlier candidate, a gate for category mistakes, has not been tested: it needs both pre-correction examples and unrelated definitions to check false flags. Durable results belong in `kb/reports/retained/`. Commits carry `Workshop: kb/work/replaying-operator-rulings`.

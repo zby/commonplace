@@ -1,0 +1,32 @@
+## 1. Let a judged rule license the automatic changes it produces
+
+**Change.** Condition 2 should be met when a change is made either by a judgment or by a rule that was itself judged in the loop and remains open to revision. "Change without a judgment" should no longer exclude rule-produced changes. Update the notes and checks to match:
+- The session-traces bullet should say that storing traces is deliberative through the storage rule.
+- Case 2 should place the log entries inside, by way of the logging rule.
+- Case 11 should place the problem solver outside only because nothing in its own loop judged the add-everything rule.
+
+**Reason.** The draft says the term exists "to put all the learning that happens in Commonplace under one name." Yet it also says, "Storing session traces is learning but not deliberative." That is a direct contradiction of the term's stated job. The draft already concedes that "a rule can be deliberated and then act automatically," and Condition 3's notes already speak of "the rule that produced it," so the membership condition should follow that reasoning.
+
+## 2. Stop requiring an on-balance forecast of improvement in Condition 2
+
+**Change.** Condition 2 should require a decision made for reasons about later work that could have gone against the change. Such a decision can take three forms:
+- a forecast of improvement,
+- a fixed measure, or
+- a decision taken while the verdict is open.
+
+"On balance" should be kept only for the "learned" verdict. A sentence should be added to the on-balance note's paragraph on open verdicts saying that such decisions are the judgments a learning loop makes.
+
+**Reason.** The note defines "on balance" as "every reasonable measure" agreeing. Commonplace makes many changes without that claim:
+- ADR 085 commits to deletion "without claiming it won that comparison."
+- The draft's reversibility example keeps an instruction on grounds that are "not evidence that the instruction has improved later work."
+
+Under the current wording, Condition 2 excludes these changes. It also makes "a fixed measure is the special case" contradict the note's warning against narrowing the set of reasonable measures to force agreement.
+
+## 3. Demote Condition 3 from a membership condition to a reported property
+
+**Change.** Condition 3 should become a named property, for example *corrigible* versus *displacement-only*, reported alongside single-loop and double-loop. The definition would then rest on Conditions 1 and 2. Three further edits follow:
+- Reword single-loop as "judges changes under a criterion it cannot revise," because the current wording builds in reversal.
+- Re-place cases 4 (the repairer alone), 7a, 9 and 13 as displacement-only members.
+- State the property in one consistent form. The definition currently says the system "undoes the change … or makes a further change," while the notes say it can "record the error and change what it does next."
+
+**Reason.** Commonplace meets Condition 3, so the condition contributes nothing to covering Commonplace's learning. Its only effect is to sort other systems, which is the role you asked to give to kinds and properties. The checks themselves report that "C now does the excluding" and that its line "carries the weight." That is a reason to report it as a property, where its own wording can also be made consistent.

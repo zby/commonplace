@@ -1,0 +1,3 @@
+**Correction:** `tests/scenarios/write-a-note.md` says the write skill "then calls `cp-skill-connect`", but `cp-skill-write` only *suggests* connect at Step 9. The scenario's own Fork 3 note and its "Write without connect" variant agree with the skill, so connect is a separate fork that the main session starts after the user accepts, not a call made inside Fork 2.
+
+**Consequence:** A maintainer running the scenario check (`kb/instructions/evaluate-scenarios/`) would otherwise look for the connect call inside the write fork and count Fork 3 as always incurred. Instead, they should attribute the connect call to the main session and report write-only cost separately from write-plus-connect cost.

@@ -1,0 +1,19 @@
+**Adopt Version 2.**
+
+1. Version 1 decides membership by its least checkable condition. Condition C asks whether later evidence *can* count against a change, and its own checks file cannot apply that test: Recuris is undetermined on C, and case 7 turns on Fable's reading of C, which nobody else has checked.
+2. Version 1 defends C as "what 'learning' adds" to deliberation, but the Simon sense it cites says learning is a lasting change in capacity. The on-balance note also treats a step taken on an open verdict as a legitimate decision. There, the chance of correcting it later is a reason inside the judgment (reversibility), not a precondition. Version 2 follows both.
+3. Version 1 admits that attribution is graded but still treats C as all-or-nothing. Version 2 reports correction as *none*, *bundle* or *targeted*, and reports displacement as a separate property. That says more about each system, and the Darwin/Huxley Gödel machine contrast (cases 13 and 14) becomes a reported difference rather than a change in membership.
+4. Version 2 adds three distinctions that Version 1 lacks:
+   - Addressability does not guarantee correction, as the example of a reader that always uses the first entry shows.
+   - Loading a store is not the same as using it, as the ignored memory file shows.
+   - A claim about capacity needs an account, while a claim about an episode needs the episode.
+5. The cost is that fixed-benchmark replacers become single-loop deliberative learners with correction "none" (cases 3, 4 repairer, 7a, 9, 13). This is consistent with the operator's ruling that a fixed measure passes the judgment condition, and with the term having no success condition, but the checks file must re-place those cases.
+
+**What I would keep from Version 1:** the sentence "Later evidence indicts an operating state, not one line in isolation." Version 2 says addressability lets a later change point at an earlier one "without undoing unrelated changes." That sentence is needed to temper the claim: pointing is easy, but attributing a loss to one entry is the hard part, and it is what separates *bundle* from *targeted*.
+
+**Fix before adopting Version 2:**
+- The phrase "if each meets the three conditions" is left over from Version 1.
+- "A single-loop learner makes and reverses changes" assumes correction. Change it to "makes changes."
+- After the inserted sentence, "They are checked" has no clear referent.
+- "These were a third condition until 2026-11-21" is history, and odd in a draft dated that same day. Move it to the operator notes.
+- "Provided its judgment responds to evidence that bears on its objective" could bring C back in. State that it means evidence available when the decision is made.

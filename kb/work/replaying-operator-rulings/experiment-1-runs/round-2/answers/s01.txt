@@ -1,3 +1,0 @@
-**Remove the exclusion "Retention without a judgment."**
-
-Condition 2 already requires every retained change to be kept by an on-balance judgment, and condition 3 requires that judgment to remain open to being found wrong, so this exclusion only repeats them. Unlike the neighbouring "fixed measure" exclusion, which adds that revising estimates from use is not enough, it adds no clarification. It also makes the unsettled quantifier problem in the checks worse: "a change kept by default" invites reading every routine write, such as an automatic attempt log, as disqualifying, which threatens the draft's aim of covering all learning in Commonplace.

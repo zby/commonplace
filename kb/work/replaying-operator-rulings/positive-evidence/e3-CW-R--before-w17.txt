@@ -1,0 +1,19 @@
+**Adopt Version 2.**
+
+1. The stated purpose is to put all of Commonplace's learning under one name. Version 1's third condition excludes the ordinary case of an agent that judges a lesson worth recording and uses it later, but has no established route for later evidence to revise it.
+2. Version 2 can decide membership from the step that makes the change. Under Version 1, the checks leave Recuris, Warp and case 7 hanging on correction machinery the sources do not document, so the term goes undetermined where it is most needed.
+3. Correction comes in degrees, and Version 1 concedes this in "Attribution is graded". Version 2 reports it as a grade (none, bundle, targeted) instead of passing a graded property through a yes-or-no membership test.
+4. Version 2 treats displacement and correction as independent properties. Version 1 folds displacement into "being displaced is not enough", which hides the fact that a system can have both or neither.
+5. Version 2 also fits its own background better: deliberation weighs, learning keeps, and correction is something further. Version 1 claims that revision is what "learning" adds, which conflicts with the Simon sense of learning it cites under what the term does not cover.
+
+**What to keep from Version 1:** its first condition as legibility alone, without "addressable". Version 2's own notes say addressability matters because it enables targeted correction, and that it does not guarantee correction. Its place is therefore in the correction property, where it separates *bundle* from *targeted*. As a membership condition it adds nothing.
+
+**Fixes needed before adopting Version 2:**
+- The nested-loops bullet still says "meets the three conditions".
+- The single-loop definition says the learner "makes and reverses changes", which assumes correction. It should say "makes changes".
+- "These were a third condition until 2026-11-21" is revision history and belongs in the workshop notes.
+- The phrase "responds to evidence that bears on its objective" should say that this means at decision time. Otherwise it can be read as bringing condition 3 back.
+- The checks file needs C restated as a correction grade. Under that reading:
+  - Cases 3, 9, 13, 4 (repairer alone) and 7a become members with correction *none*.
+  - Case 16 gets a *bundle* grade but stays outside on legibility.
+  - Cases 2 and 11 stay outside on the judgment condition.

@@ -1,7 +1,0 @@
-**Decision: leave the definition unchanged.**
-
-1. The proposed wording would move "can the criterion itself be questioned" from membership into capability. That would flip placements the checks hold fixed: the repairer alone in case 4, the score-bound builder in case 7, Recuris, and PRODIGY taken alone. Each of these makes revisable judgments of expected contribution, yet each is bound to a measure it cannot question, and that boundary is the term's point.
-2. Condition 2 is not defined only by an absence. Its positive content is the linked on-balance judgment, meaning every reasonable measure with none selected, and its last sentence only states what follows from that.
-3. The draft already accepts that a system can deliberate under a fixed objective. The note on deterministic checks says a single measure qualifies when it is the only reasonable one, as long as the claim that it suffices stays open.
-4. A system that weighs reasons at length but must keep the score winner is excluded on purpose, as "Retention bound to a fixed measure" says. So the objection describes the intended boundary, not a defect.
-5. Adding a clause to separate the two properties would make the definition longer without changing any placement, which is the accretion the type specification warns against.

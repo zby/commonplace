@@ -1,0 +1,13 @@
+**Adopt Version 1.**
+
+1. Version 1 keeps the term to what its name and stated purpose support. Deliberation adds the judgment, and "learning" adds keeping the result in a store. Correction from later evidence then becomes a measure of how well a learner learns, reported as *none*, *bundle* or *targeted*. That matches the draft's own rule that the term "has no success condition" and the note's view that a judgment can be acted on while its verdict stays open.
+2. Version 2 makes correction a membership test. That excludes ordinary cases the KB needs to describe, such as an agent that decides lesson by lesson what to record but never revisits a lesson, and the Darwin Gödel Machine (case 13). Version 1 places these inside and records exactly what they lack, which tells the reader more than "outside on C."
+3. Version 2 is also internally inconsistent. Its condition 1 asks only for legibility, yet its notes rely on addressability "(condition 1)." It also says an addressable store lets later rounds reverse a change, which Version 1's first-instruction-governs example shows is false.
+4. Version 1 separates correction from displacement and capacity from episode. Version 2 merges them into one pass/fail line, the line the checks file itself admits "carries the weight" and that no reader outside the workshop has checked.
+5. Before adopting, fix Version 1's leftovers:
+   - "if each meets the three conditions" should say two.
+   - The single-loop definition "makes and reverses changes" presupposes correction, so it should read "makes changes."
+   - The "were a third condition until 2026-11-21" history belongs in Background.
+   - The checks file needs C moved from membership to a reported property.
+
+**Keep from Version 2:** the sentence "Later evidence indicts an operating state, not one line in isolation." Version 1 grades attribution but never says why it is hard. This sentence explains it: blaming one change is an inference from evidence about the whole store. It belongs in Version 1's note on legibility and addressability, or in its *targeted* correction bullet.

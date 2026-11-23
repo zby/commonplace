@@ -1,0 +1,49 @@
+# Three proposed changes, most important first
+
+## 1. Let a deliberated rule carry the judgment for the changes it makes automatically
+
+**Change.** Reword condition 2 so that a change counts when one of two things holds:
+- a judgment makes the change, or
+- a standing rule makes it, and that rule was itself adopted by a judgment and can be revisited.
+
+Related edits:
+- **Session traces.** Replace "Storing session traces is learning but not deliberative" with this rule-level reading.
+- **"What the term does not cover."** Narrow "Change without a judgment" to rules that nothing in the system decided or can revisit.
+- **Case 2.** Place the log inside with respect to the logging rule.
+- **Case 11.** Keep it outside only if no one in the named system adopted the rule or can revisit it.
+- **Open question.** Resolve the "which writes count as changes" question in the checks by this rule-level reading.
+
+**Reason.** The draft's stated job is to put *all* learning in Commonplace under one name. Yet it explicitly calls session-trace storage "learning but not deliberative," so it fails that job on its own example. Case 2 already contains the fix: introducing automatic storage is a deliberated change. Counting the entries under that rule keeps the definition general without weakening what "judgment" means.
+
+## 2. Make condition 3 a reported kind, not a condition of membership
+
+**Change.** Drop "Open to criticism" from the membership conditions. Instead, report it as a property alongside single-loop and double-loop:
+- **correctable:** later evidence can count against a kept change, with attribution graded from coarse rollback to localized blame;
+- **displacement-only:** a kept change is replaced only by a higher-scoring alternative.
+
+Corresponding updates:
+- **Cases moving inside.** Cases 4 (repairer alone), 7a, 9 and 13 (DGM), and Recuris become "inside, displacement-only."
+- **Cases 10 and 14.** HGM and case 10 become "inside, correctable."
+- **"What the checks expose."** Rewrite its first bullet accordingly.
+
+**Reason.** The operator ruled that a fixed measure is a special case of judgment so that "a small change to how a system judges does not move it out of the term." Condition 3 breaks that same continuity: case 9 versus case 10, and DGM versus HGM, flip membership over one small design detail. The checks themselves note that C now does the excluding J used to do. That separating feature is exactly the kind of thing better reported as a named kind than enforced as a gate.
+
+## 3. Have condition 2 require a decision about later work, not an on-balance judgment of improvement, and align the note
+
+**Change.** Reword condition 2 to: "Each change is made by a decision that could have gone against it, taken for reasons about the system's later work." Then state that such a decision may rest on any of three grounds:
+- an on-balance verdict of improvement;
+- a fixed measure;
+- an explicit decision under an Open verdict, including one tipped by reversibility.
+
+In the on-balance note, turn "An open verdict does not forbid the step…" into a short named subsection on *deciding under an open comparison*, so the definition can link to it. In case 5, fix "the fixed loss would pass J": a gradient step is applied unconditionally, so it is not a decision that could have gone against the change.
+
+**Reason.** The note defines an on-balance judgment as "every reasonable measure favors the successor." The draft itself says "Open" is the usual verdict for a recent change. Read literally, condition 2 therefore excludes most of Commonplace's real changes, including ADR 085's deletion rule, which was adopted while explicitly *not* claiming improvement. The draft's own requirement that "a decision is a judgment that could have gone against the change" is the test that should do this work.
+
+---
+
+**Runner-up.** "They are checked on the outermost loop that the system runs itself" contradicts several other parts of the draft:
+- "Both [nested loops] are deliberative learning";
+- the training-team example;
+- case 4's "repairer alone" placement.
+
+Restrict the outermost-loop rule to the autonomy claim.

@@ -1,0 +1,14 @@
+**Adopt Version 1.**
+
+1. Version 1's two conditions capture what the term is for: a decided edit to a legible store that later work consumes. Correction becomes a graded report (*none*, *bundle*, *targeted*) rather than a pass/fail gate, which fits the stated aim of putting all of Commonplace's learning under one name and Simon's sense of learning, where being able to revise is a quality of the learning, not a requirement for it.
+2. Version 2 contradicts itself where it matters: its condition 1 requires only legibility, yet its notes and its "attribution is graded" bullet rely on "an addressable store … (condition 1)". Version 1 puts addressability into the condition and adds a point Version 2 lacks, that addressability does not guarantee correction (the first-instruction-wins example), with a matching entry under Misuse.
+3. Version 1 also settles two questions the checks file leaves open. "A claim is made for a named class of changes" answers the KSI question about which writes count, and the capacity/episode distinction says what evidence each kind of claim needs.
+4. The cost falls on the checks file, which can be revised:
+   - Cases 3, 4 (repairer alone), 7a, 9 and 13 move from "outside on C" to "inside, correction none or displacement only".
+   - That is more informative than exclusion by a line the file admits only workshop agents have drawn.
+   - Darwin Gödel Machine versus Huxley-Gödel Machine remains the sharp pair, now as a difference in reported correction.
+5. Before adopting it, fix two things in Version 1:
+   - The leftover "if each meets the three conditions" in the loops section.
+   - "These were a third condition until 2026-11-21", which reads as edit history inside a definition.
+
+**Keep from Version 2:** "Later evidence indicts an operating state, not one line in isolation." Add it to Version 1's legibility/addressability bullet or to the *targeted* grade. Version 1 explains how a later change can point at an earlier one, but not why pointing is not yet blame. Without that sentence, an addressable store invites "targeted" claims that lack an account of how the evidence was pinned on one change.

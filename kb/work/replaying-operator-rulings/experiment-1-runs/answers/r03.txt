@@ -1,7 +1,0 @@
-**Decision: leave the definition unchanged.**
-
-1. The reviewer's example, a system that deliberates at length under a fixed objective it cannot question, is one the draft means to exclude. The checks rely on that exclusion: case 7, the repairer alone in case 4, and Recuris are all placed outside on J.
-2. The proposed wording would move that boundary out of membership and into capability. Case 7 would then become inside, or would fall outside only under C. The checks file says a flipped placement needs a justification, and the objection gives none beyond preference.
-3. The worry that the draft defines judgment "by absence" mixes up a measure with an objective. Condition 2 points to the on-balance note, where a declared objective limits which measures are reasonable and no single measure is selected. That is a positive account of the judgment, and the negative sentence only marks its edge.
-4. The second half of the proposal, "open to criticism and revision," already sits in condition 3. Folding it into condition 2 would add a clause without making anything sharper.
-5. Whether a system judges well enough is already treated as the conjecture under test in "The system, the store and the loop." So the capability question the reviewer wants is already kept separate from membership.

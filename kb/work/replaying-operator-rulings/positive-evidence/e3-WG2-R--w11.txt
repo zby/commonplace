@@ -1,0 +1,34 @@
+# Three proposed changes, most important first
+
+## 1. Let the judgment attach to a change or to the standing rule that produces it
+
+**Draft.** Rewrite condition 2 so that it reads "each change is made by a judgment, or by a rule that the system adopted by a judgment and can revisit." Condition 3 should likewise accept evidence against "the change or the rule that produced it." The draft's own note on condition 3 already uses that phrase.
+
+Then make these edits:
+- Replace "Storing session traces is learning but not deliberative" with an account in which the storage rule is the deliberated change.
+- Remove "a log that appends every interaction" from "What the term does not cover," or restrict that example to rules the system cannot revisit.
+- Move "a system that adds everything and removes nothing" out of the notes on condition 3. It concerns judgment, not criticism.
+
+**Checks.** Settle the open question about which writes count: the quantifier covers every write to the named store, each warranted either directly or through its rule. Re-place case 2 by whether the named system adopted and can revisit the logging rule. Keep case 11 outside only when that rule was fixed by designers outside the system boundary.
+
+**Reason.** The draft says the term should cover all the learning that happens in Commonplace, yet it names session traces as Commonplace learning that falls outside the term. Its "each change" quantifier would also exclude every automatic write that a deliberated rule produces, as the checks file points out. Moving the judgment to the rule level repairs the coverage without loosening anything else.
+
+## 2. Make condition 2 a decision to make the change, not a forecast that the change will be learned
+
+**Draft.** Rewrite condition 2 as follows: "each change is made by a decision reached by weighing reasons about the system's later work (for example, adopting it as a trial, or keeping it because it can be reversed); a fixed measure is the special case." Keep the link to the on-balance note in the "When a change was learned" section. That is where the strict test belongs.
+
+**Note.** Add one sentence saying that the judgment that licenses a step is a decision under the current verdict, which is often "Open," and is distinct from the improvement verdict. The section "An open verdict does not forbid the step" already states the idea.
+
+**Reason.** Condition 2 currently asks for a judgment that the system will do better with the change, and it links to the note's strict test that every reasonable measure must favor the change. Yet the draft also says "Open" is the usual verdict for a recent change. Read literally, condition 2 therefore excludes most of the decisions the draft itself describes: trials, keeping a change because it can be reversed, and ADR 085's deletion that knowingly accepts a loss.
+
+## 3. Demote "open to criticism" from a membership condition to a reported kind
+
+**Draft.** Make membership conditions 1 and 2 only. Report condition 3 as a named property, such as **self-correcting**, alongside single-loop and double-loop. Keep its notes, including graded attribution and "displacement is not enough," as the test for that property.
+
+Then make these edits:
+- Change the single-loop definition from "makes and reverses changes" to "makes changes."
+- Adjust the Background claim that revising from later evidence is "what learning adds." Simon's sense of learning does not require it.
+
+**Checks.** Cases 3, 4 (repairer alone), 7a, 9 and 13 (the Darwin Gödel Machine) move inside as "not self-correcting." Cases 10, 14 and 16 stay inside as "self-correcting." Rewrite "C now does the excluding" as "C sorts the kind," and update the table of what the ruling changed.
+
+**Reason.** The task is to cover Commonplace's learning, and nothing in Commonplace fails condition 3. Its only effect is to separate other systems from one another, such as the Darwin Gödel Machine from the Huxley-Gödel Machine, which is exactly what your guidance says belongs in a named kind. The line it draws is also new and contested: three workshop agents drew it, and no outside reader has checked it. Reporting it as a property means a mistake in that line would cost a misplaced label rather than a misplaced boundary for the term.

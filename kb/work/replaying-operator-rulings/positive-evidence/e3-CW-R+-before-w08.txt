@@ -1,0 +1,16 @@
+## Adopt Version 2
+
+1. The draft says the KB needs the term "to put all the learning that happens in Commonplace under one name." Version 1's third condition would exclude some of that learning: an agent deciding a lesson is worth recording in a memory file nobody revises yet, or a team that weighs every entry but gives earlier entries precedence, even though both deliberate in exactly the sense of the name and the on-balance note.
+2. Under Version 1, membership depends on a capacity claim that is hard to establish, and the checks show this. Recuris stays "undetermined on C", and case 3 falls outside despite passing S and J. Under Version 2, membership can be read off the step that admits the change.
+3. Version 2 still keeps the distinction the checks found most important, between displacement and evidence counting against a change. It does so as reported properties: correction as *none*, *bundle* or *targeted*, and displacement on its own axis, which grades more finely than Version 1's pass/fail.
+4. This fits the draft's own principle that the term "has no success condition." Whether later evidence can correct a change is a fact about how well a system learns, like the verdict "learned", and Version 2 keeps such quality claims out of membership.
+5. The operator should accept one consequence explicitly: cases 3, 4 (repairer alone), 7a, 9 and 13 move from "outside on C" to "inside, correction: none". Fixed-benchmark prompt search and the Darwin Gödel Machine archive then become deliberative learners, so the checks file must recast C as a reported property.
+
+Version 2 also needs cleanup before adoption:
+- It still says "if each meets the three conditions."
+- It defines a single-loop learner as one that "makes and reverses" changes, though reversing is no longer required.
+- The line "These were a third condition until 2026-11-21" is workshop history and belongs in the README, not the definition.
+
+## Keep from Version 1: condition 1 as "Legible store", without addressability
+
+Version 2's own notes give addressability only one job, which is correction. It lets a later change point at an earlier one, and it decides between *bundle* and *targeted*. Requiring it for membership brings back, through condition 1, part of what Version 2 removed from condition 3. Keep Version 1's "legible store" as the condition, with Version 2's "and its later work consumes them." Then move addressability into the correction property, where it does its work.

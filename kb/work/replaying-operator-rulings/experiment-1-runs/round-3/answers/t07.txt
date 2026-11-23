@@ -1,9 +1,0 @@
-**Adopt Version 1.**
-
-1. Version 1's second condition matches the linked on-balance note. That note lets a judgment reduce to one measure only where that measure is "the only reasonable one for a question." Version 2 lets it reduce whenever "the system treats one measure as the only one," which is the narrowing the note warns "smuggles a weighting back in."
-2. Version 2 admits retention bound to a fixed measure, so it flips stipulated placements in the checks file without the explanation that file asks for. The link repairer alone (case 4), the score-bound builder (case 7) and Recuris all fail J by design, and all would move inside or depend only on C.
-3. With fixed-measure loops inside the term, Version 2 rests all the work on the "double-loop" qualifier. The term itself would then stop marking the distinction it exists to name, which is judgment not bound to a measure the system cannot question.
-4. Version 2's continuity rationale does not hold. Gaining a measure-revising loop still moves a system from single-loop to double-loop in one step, so the sharp line has only moved from the term to its qualifier.
-5. Version 2 also has to re-explain gradient training as failing only on the legible store. The checks place it outside on both S and J (case 5), and Version 1 keeps that.
-
-**Keep from Version 2:** the bullet "Later evidence must be able to count against the kept change," under condition 3. It separates finding an earlier retention judgment wrong from simply overwriting it with a newer score winner. It also rules out a gate that admits once and never looks again, and a system that keeps everything. Version 1's third condition leaves this vague, and checks case 7 exposes the gap ("can … replace yesterday's winner, but cannot correct the judgment"). The PRODIGY example in that bullet still works under Version 1, because PRODIGY alone fails J there anyway and the example only illustrates C.
