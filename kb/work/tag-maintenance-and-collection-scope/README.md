@@ -1,0 +1,14 @@
+# Tag maintenance and collection scope
+
+Posed by the operator on 2026-11-23. Make tag maintenance usable again, run it against the existing KB, and make tracked sources routinely findable by topic. Decide whether other collections should use tags. A long interval since the last audit is a reason to inspect the structure, not evidence that a particular tag needs changing.
+
+## Where the work starts
+
+- The [maintenance instruction](../../instructions/maintain-curated-indexes.md) says its inventory covers the participating collections, but its command omits `reports`, which the [tag contract](../../tags/COLLECTION.md) includes. Check the procedure against actual membership and exclusions before relying on its results. Then use it to assess heads, assignments and eligible but untagged material. A passing validator cannot tell whether a head helps a writer distinguish two neighboring topics.
+- [Tracked source analyses](../../sources/COLLECTION.md#topic-search-tags) already permit topic tags, and some ingests carry them today. A source tag currently supports source-scoped search; it does not put the ingest in the published member list or count toward a head’s `complete` mark. Address both new ingests and the existing corpus. Do not tag immutable snapshots or treat a relevant source as an adopted KB claim.
+- For each proposed expansion, distinguish permission to tag an artifact from inclusion in tag membership. Before changing either, identify the lookup it would improve, the artifact types affected, and any standing exclusion it would reverse. Universal participation is an open question, not a rollout decision. Bring proposed reversals of explicit operator decisions back to the operator before migration.
+- Review instructions that **consume** tags as well as those that assign them. For example, finding source evidence and finding Commonplace theory on the same topic need different collection scopes; auditing a head needs the whole declared membership instead. Check representative searches against known matches and against same-tag artifacts that should not be returned. Carry the resulting distinctions through affected instructions, validation and published navigation where applicable.
+
+## Closure
+
+Close when the corrected maintenance instruction has been used, the audit findings have been repaired or explicitly deferred, and source tagging works for ongoing ingestion with a recorded disposition for the backlog. Record which other collections join, remain search-only or stay outside tagging, and why. Verify that affected searches return the intended kinds of artifacts and that head listings and completeness checks still agree on membership. Keep findings, newly discovered dependencies and unresolved decisions here while work is active; extract lasting rules into their owning contracts and instructions before removing the workshop and its active-list entry.
