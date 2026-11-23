@@ -7,7 +7,7 @@ genre: conversation-thread
 snapshot_sha256: 518ce74f0f6aba4881fb50b2f8f8160cf130b9ac0909b7744ea5098be00152dd
 ingested: "2026-03-12"
 type: types/ingest-report.md
-domains: [ai-scaling, automation-boundary, oracle-theory, deploy-time-learning]
+domains: [ai-scaling, automation-boundary, oracle-theory, continual-learning]
 ---
 
 # Ingest: Dario Amodei — "We are near the end of the exponential"
@@ -40,12 +40,12 @@ The `/connect` discovery found 7 connections to KB notes and 3 to other sources,
 
 **Notable tension:**
 
-- [constraining-during-deployment-is-continuous-learning](../theory/constraining-during-deployment-can-produce-learning-outside-weights.md) — **contradicts**: Amodei argues continual learning may be unnecessary because pre-training + RL + in-context learning suffice. This challenges the note's premise that deploy-time constraining fills a necessary adaptation gap. The tension may resolve at different levels of analysis: Amodei is talking about model-level capability, while the KB note is about system-level adaptation through inspectable artifacts.
+- [Constraining during deployment can produce learning outside weights](../theory/constraining-during-deployment-can-produce-learning-outside-weights.md) — **contrasts**: Amodei asks whether models need to keep learning on the job. The note asks what a system can improve by revising a rule while its model stays fixed. Showing that a revision helps on some tasks does not show that it is necessary on every task.
 
 **Other connections:**
 
 - [bitter-lesson-boundary](../theory/exact-implementation-does-not-validate-a-requirement.md) — **exemplifies**: the "Big Blob of Compute Hypothesis" is the bitter lesson stated as corporate strategy.
-- [deploy-time-learning-the-missing-middle](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — **extends**: Amodei's three mechanisms (pre-training, RL, in-context) are exactly the "training" and "in-context" timescales; his claim that they suffice sharpens the question of what deploy-time learning uniquely provides.
+- [Deployed systems can learn from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — **extends**: what does the next session gain from a revised rule that the model would not recover from the context supplied to that session?
 - [codification-and-relaxing-navigate-the-bitter-lesson-boundary](../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — **exemplifies**: "diffusion isn't cope" plus scaling optimism illustrates the codify/relax dynamic at the organizational level.
 
 **Cross-source convergence:** This is the third independent source (after [oracle-strength-spectrum](../theory/oracle-strength-spectrum.md) as theoretical framework and [Tam et al.](./when-code-is-free-research-is-all-that-matters-2031072399731675.ingest.md) as labor-economics evidence) to converge on the same thesis: tasks automate when verification is cheap, resist automation when verification is expensive. Amodei provides the supply-side (capability timeline) view.
@@ -54,7 +54,7 @@ The `/connect` discovery found 7 connections to KB notes and 3 to other sources,
 
 1. **Verification-confidence correlation from a frontier lab CEO** — Amodei's confidence split (near-certain on coding/math, hedged on novel writing/science) is a high-credibility data point for the oracle-strength thesis, coming from someone with direct visibility into frontier capabilities. Can be cited in the augmentation-automation boundary note and oracle-strength-spectrum note. [quick-win]
 
-2. **"Continual learning may be unnecessary" challenge** — the claim that pre-training generalization + RL generalization + in-context learning (million-token windows) may suffice without on-the-job learning directly challenges the deploy-time learning framework. Forces a sharper articulation of what deploy-time learning provides that model-level mechanisms cannot: durable, inspectable, diffable, testable artifacts that persist across sessions and are reviewable by humans. [deep-dive]
+2. **"Continual learning may be unnecessary" challenge** — If a long context and a trained model suffice for the current task, the case for revising an instruction depends on what the revision contributes to later tasks. A versioned instruction also gives reviewers a particular change to inspect, test, or reverse. [deep-dive]
 
 3. **Diffusion-is-not-cope with concrete numbers** — Anthropic's revenue trajectory ($100M -> $1B -> $9-10B, 10x/year) and the 3-5x faster-than-historical-technology-diffusion claim, plus the identification of real adoption constraints (legal review, security compliance, change management) as legitimate bottlenecks rather than excuses. Useful context for any discussion of AI adoption timelines. [just-a-reference]
 
@@ -66,7 +66,7 @@ The `/connect` discovery found 7 connections to KB notes and 3 to other sources,
 
 ## Curiosity Gate
 
-**What is most surprising?** Amodei's claim that continual learning "might prove unnecessary" is the most counterintuitive claim given the KB's framework. The KB treats deploy-time learning as a distinct and valuable timescale. But Amodei's argument has a specific mechanism: if million-token context windows can hold enough deployment-specific information within a session, and pre-training + RL provide sufficiently broad generalization, then the need for persistent cross-session adaptation (which deploy-time learning fills) may be smaller than expected. The surprise reveals an important scope question: is deploy-time learning necessary because models lack capability, or because systems need inspectable/reviewable adaptation regardless of model capability? If the latter, Amodei's claim doesn't threaten it.
+**What is most surprising?** Amodei's suggestion that continual learning "might prove unnecessary" challenges the assumption that each new task requires a lasting change. If a long context supplies the facts and the trained model can already act on them, what would a persistent update buy? Solving the current case and changing how future cases are handled are different objectives.
 
 **What's the simpler account?** For Amodei's strongest claim — that scaling continues to work — the simplest explanation is that he is correct because he has more data than anyone outside a frontier lab. For his verification-confidence split, the simpler account is just selection bias: he is confident where he has good benchmarks and uncertain where he doesn't, which is trivially true and doesn't require the oracle-strength framework to explain. The KB framework adds predictive power (it predicts *which* domains will automate and *why*), but Amodei's observation alone doesn't require it. Folded into Limitations below.
 
@@ -78,7 +78,7 @@ The `/connect` discovery found 7 connections to KB notes and 3 to other sources,
 
 2. **"90% of code written by models" lacks specificity.** What counts as "code"? Does this include boilerplate, tests, documentation? What is the error rate? What verification infrastructure supports this claim? Without these details, the data point is more rhetorical than evidential. The [MAKER paper](./meyerson-maker-million-step-llm-zero-errors.ingest.md) shows that high automation rates are achievable *specifically when hard oracles exist* — the Amodei claim likely benefits from the same dynamic (code has tests) without acknowledging it.
 
-3. **Continual learning dismissal conflates levels of analysis.** Amodei argues model-level mechanisms (pre-training + RL + in-context) may suffice, but the KB's [deploy-time learning framework](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) is about system-level adaptation through inspectable artifacts. Even if models don't need weight updates, deployed systems benefit from versioned prompts, schemas, evals, and deterministic code that accumulate across sessions. Amodei doesn't address this layer, so his dismissal doesn't apply to it.
+3. **The unit of analysis matters.** Amodei argues that pre-training, RL, and in-context learning may suffice. That leaves open a system-level question: [does revising the instructions or retrieval rules improve later work with the same model](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md)? The interview does not establish the answer either way.
 
 4. **Diffusion timeline optimism has survivorship bias.** Anthropic's 10x revenue growth is impressive but may not represent typical adoption. Anthropic sells to tech-forward enterprises and developers — the hardest-to-reach populations (regulated industries, government, developing economies) haven't adopted yet. The 3-5x faster-than-historical claim is plausible but unverified.
 

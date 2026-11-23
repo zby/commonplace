@@ -42,7 +42,7 @@ This is why falsifier blocks work: they convert criticism from "re-read and see 
 
 - **Contradiction-first connection passes** — When `/connect` discovers relationships, it should look for tension and contradiction *before* looking for agreement and extension. The current default is to find notes that "extend" or "ground" the new note. Reversing the priority means criticism is not optional — every note gets at least one check for conflict with existing claims. Target: `/connect` skill.
 
-- **Rejected interpretations become instruction tests** — When a user corrects an agent's interpretation ("that's not what I meant"), that rejection is evidence about the instruction's ambiguity. Encoding the rejected case as a test or example in the instruction makes the same failure harder to repeat. This is [constraining](./definitions/constraining.md) driven by error, and across sessions it compounds as [deploy-time learning](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md). Target: workflow convention or hook.
+- **Rejected interpretations become instruction tests** — When a user corrects an agent's interpretation ("that's not what I meant"), that rejection is evidence about the instruction's ambiguity. Encoding the rejected case as a test or example in the instruction makes the same failure harder to repeat. This is [constraining](./definitions/constraining.md) driven by error, and [later sessions can use the retained test](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md). Target: workflow convention or hook.
 
 ## What would defeat this claim?
 

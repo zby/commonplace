@@ -28,14 +28,14 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly connected sources in the KB. The primary analysis note ([memory-management-policy-is-learnable-but-oracle-dependent](../theory/memory-management-policy-is-learnable-but-oracle-dependent.md)) integrates AgeMem into the bitter-lesson boundary, oracle theory, and deploy-time learning frameworks. The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) covers AgeMem across the current shared architectural axes.
+Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly connected sources in the KB. The primary analysis note ([memory-management-policy-is-learnable-but-oracle-dependent](../theory/memory-management-policy-is-learnable-but-oracle-dependent.md)) examines what makes it possible to train a memory policy and how that differs from revising explicit memory rules. The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) covers AgeMem across the current shared architectural axes.
 
 **Established connections (via analysis note and comparative review):**
 
 - [Bitter lesson boundary](../theory/exact-implementation-does-not-validate-a-requirement.md) -- **exemplifies**: memory operations are the calculator part; the composition policy is the vision-feature part. AgeMem's hybrid architecture confirms the boundary's prediction.
 - [Oracle strength spectrum](../theory/oracle-strength-spectrum.md) -- **exemplifies**: task-completion oracle (binary: did the agent succeed?) sits at a specific position -- cheap, reliable, but domain-scoped.
 - [Automating KB learning is an open problem](../theory/automating-kb-learning-is-an-open-problem.md) -- **grounds**: confirms RL can learn memory policy when a clear oracle exists; the KB's evaluation gap is the bottleneck, not the learning mechanism.
-- [Deploy-time learning](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) -- **contrasts**: weight-based training vs inspectable artifact accumulation; same behavioral changes, different substrates.
+- [Deployed systems can learn from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) -- **contrasts**: AgeMem trains the policy that chooses memory operations. A system with fixed model weights can instead revise the instructions for choosing those operations.
 - [Inspectable substrate defeats the blackbox problem](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) -- **contrasts**: split substrate (facts in store, policy in weights) vs unified substrate (both in files).
 - [Learning is not only about generality](../theory/learning-is-not-only-about-generality.md) -- **foundation**: LTM Add is accumulation at the low-reach end; facts without reach to theories.
 - [In-context learning presupposes context engineering](../theory/in-context-learning-presupposes-context-engineering.md) -- **applies**: STM operations select focused content for working context rather than loading the whole retained store.
@@ -63,7 +63,7 @@ Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly
 
 5. **RL contribution quantified**: 8.53-8.72 percentage point improvement from the training strategy specifically, separable from base model capability. Quantifies the value of learned memory management over instruction-following. [just-a-reference]
 
-6. **Weight-based vs artifact-based learning tension**: AgeMem is the opposite pole from deploy-time learning. Adaptability (RL-trained policies generalize across tasks) vs inspectability (artifacts can be reviewed, rolled back, debugged). [deep-dive]
+6. **Where the memory policy lives**: AgeMem stores facts externally but learns when to store or retrieve them in its policy weights. If the corresponding policy is written as instructions, a reviewer can inspect or revert a particular rule. The benchmarks do not compare these two ways of maintaining the policy. [deep-dive]
 
 ## Limitations (our opinion)
 

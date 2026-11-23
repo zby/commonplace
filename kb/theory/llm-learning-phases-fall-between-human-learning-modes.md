@@ -23,9 +23,9 @@ Human long-term learning produces durable changes — you remember how to ride a
 
 In-context learning splits the difference. It can handle surprisingly complex adaptation within a session (few-shot learning, instruction following, extended reasoning chains), which is more than short-term human learning typically achieves. But it's ephemeral — nothing persists across sessions. A human who spent hours working through a problem retains something. An LLM retains nothing once the context window closes.
 
-## Deploy-time learning as a further intermediate
+## What persists outside the model
 
-The KB's [retained-artifact adaptation path](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) adds deployment-time learning — adaptation through repo artifacts that are durable and inspectable but don't change weights. This is another phase that falls between human modes. It's durable like long-term human learning, but it works through external artifacts rather than internalized change. It resembles cultural evolution — knowledge accumulated in books, tools, and institutions rather than in individual minds — more than it resembles individual human learning.
+A session can leave no change in the model yet still change the system. If an agent revises a procedure after a failure and later agents use that revision, [what persists is the procedure](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md). The closer human analogy is knowledge accumulated in books, tools, or institutions: someone else can use what was learned without sharing the first learner's memory.
 
 ## Why the non-mapping matters
 
@@ -53,7 +53,7 @@ Sources:
 
 Relevant Notes:
 
-- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: adds deployment-time learning as another phase that also falls between human modes; the KB's adaptation-path distinctions are its version of the spectrum Amodei describes
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: extends the comparison beyond the model to procedures a system retains across sessions
 - [human-LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — foundation: argues for evaluating each convention individually; this note extends the argument to learning mechanisms themselves
 - [three-space agent memory maps to Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — tension: the Tulving mapping is a human-to-LLM analogy of exactly the kind this note warns about, though it may still be useful if taken as suggestive rather than structural
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: Simon's definition of learning as capacity change applies regardless of which human mode a phase maps to

@@ -42,7 +42,7 @@ Relevant Notes:
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: the gradient from hard to no oracle that this note maps reliability dimensions onto
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism for hardening consistency and robustness oracles
-- [deploy-time-learning](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — reliability hardening as deploy-time learning, not training-time learning
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — reliability can improve through revised checks while the trained model stays fixed
 - [relaxing-signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — indicators for where a component sits on the spectrum; prompt robustness (R_prompt) is a relaxing signal measured at scale
 - [MAKER: Solving a Million-Step LLM Task with Zero Errors](https://arxiv.org/abs/2511.09030) — concrete architectural hardening: decomposition + voting hardens consistency, red-flagging hardens predictability, both enabled by hard per-step oracles
 - [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — extends: maps onto all four dimensions — safety (hard invariants), consistency (soft invariants with recovery), predictability (drift monitoring via D*=α/γ), robustness (compositionality theorem)

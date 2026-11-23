@@ -11,18 +11,18 @@ Amodei [argues](https://www.dwarkesh.com/p/dario-amodei-2) that continual learni
 
 But in-context learning doesn't happen by itself. It only works when the right knowledge is already in the window. Something has to decide what "right" means, find the relevant knowledge, organize it, and load it — all before the model sees a single token. That something is [context engineering](./definitions/context-engineering.md): routing, loading, scoping, and maintenance.
 
-Context engineering is not static infrastructure. It improves over deployment time. Teams learn which knowledge to route into context, how to structure it for the model, when to prune accumulated debris, and how to scope what each agent sees. This improvement produces exactly the artifacts the [deploy-time learning framework](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) describes: versioned prompts, routing rules, retrieval strategies, schemas, evals. These artifacts are durable, inspectable, diffable, and testable — everything that in-context learning alone is not.
+Teams can revise the rules that supply context when a session reveals a routing error. If an agent misses a relevant decision, for example, the team can change the retrieval rule and test whether the next agent sees it. The [revised rule persists across sessions](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md); the contents of the first agent's context window need not.
 
-Amodei's move is to eliminate weight updates during deployment. But in doing so he didn't eliminate learning — he relocated it. The learning moved from the model's weights to the system layer that feeds the model's context. That system layer is [continuously learning](./constraining-during-deployment-can-produce-learning-outside-weights.md) in Herbert Simon's sense: it undergoes permanent changes that improve its capacity for adaptation.
+Even if the model needs no further weight updates, a team can still improve the system that supplies its context. When the revised rule helps on later tasks, [the deployed system has learned](./constraining-during-deployment-can-produce-learning-outside-weights.md).
 
-The three [timescales](./llm-learning-phases-fall-between-human-learning-modes.md) remain necessary. Pre-training builds the general capability. In-context learning applies it within a session. Deploy-time learning builds the machinery that makes in-context learning effective — without it, the model has capability but no way to aim it at the right knowledge.
+The distinction is [what survives the session](./llm-learning-phases-fall-between-human-learning-modes.md). Conditioning on a retrieved decision helps the current agent. Revising the rule that retrieves decisions changes what future agents can condition on.
 
 ---
 
 Relevant Notes:
 
 - [context engineering](./definitions/context-engineering.md) — foundation: the machinery (routing, loading, scoping, maintenance) that in-context learning presupposes
-- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — foundation: the framework that context engineering improvement belongs to; the artifacts it produces are the substrate of deployment-time learning
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — foundation: explains how a revised routing rule can affect later sessions without a weight update
 - [Constraining during deployment can produce learning outside weights](./constraining-during-deployment-can-produce-learning-outside-weights.md) — extends: the system-layer adaptation that feeds context engineering meets Simon's definition of learning
-- [LLM learning phases fall between human learning modes](./llm-learning-phases-fall-between-human-learning-modes.md) — extends: in-context and deployment-time learning remain distinct even if weight updates are eliminated; this note adds a dependency arrow between the two
+- [LLM learning phases fall between human learning modes](./llm-learning-phases-fall-between-human-learning-modes.md) — extends: distinguishes using the current context from revising what later sessions receive
 - [Dario Amodei ingest](https://www.dwarkesh.com/p/dario-amodei-2) — responds to: Amodei's claim that continual learning may be unnecessary

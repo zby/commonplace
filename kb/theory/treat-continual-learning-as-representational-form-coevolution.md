@@ -50,7 +50,7 @@ Coevolution is the right conceptual frame, but a three-way joint optimizer isn't
 
 Relevant Notes:
 
-- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — foundation: retained readable artifacts already give a persistent deployment-time learning path
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — foundation: revising a readable artifact in response to use can change later behavior without updating weights
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the natural-language/symbolic/distributed-parametric split used throughout this note
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — extends: readable natural-language artifacts and readable scripts or validators are the tractable first slice where changes have bounded validation costs
 - [In-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: the context-engineering buildout is itself part of the joint loop

@@ -38,7 +38,7 @@ A combined system would likely use RLM-like within-execution orchestration to ex
 
 - When an RLM implementation discards its generated program after a run, when should that program instead be promoted into a Tendril-style durable capability?
 - When should recursive agent calls be allowed inside durable generated tools, rather than kept as ephemeral RLM-style orchestration?
-- What approval or testing threshold is enough for online generated tools without destroying the deployment-time learning loop?
+- Which checks would catch unsafe or unreliable generated tools without making it too costly to keep a useful tool for the next task?
 - Can Tendril-style generated capabilities live inside an llm-do-style unified namespace without making name selection and lifecycle management too noisy?
 
 ---

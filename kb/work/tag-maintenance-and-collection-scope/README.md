@@ -39,7 +39,7 @@ Review mentions separately from tag assignments. From the checkout root, `git gr
 - For link labels inherited from an old note title, name the actual destination. Review source analysis and source-specific search terms separately from verbatim quotations, which must not be rewritten.
 - Keep historical filenames, redirect keys, retained evidence, and published versions intact. Inspect current workshop instructions separately from captured plans and logs.
 
-The tag and navigation migration is distinct from finishing this prose review. Start the remaining pass with theory notes citing the fixed-model-weights note and the source ingests that contrast weights with inspectable artifacts.
+The first prose pass revised the 18 theory notes using the retired phrase. The context-engineering note now distinguishes using a decision in one session from revising how later sessions retrieve it. The source pass began with the AgeMem, Amodei, and “Why AI systems don't learn” ingests, separating where a change is retained from who selects it. A case-insensitive search allowing whitespace and dash variants found no further uses of the phrase in `kb/theory/` and 51 remaining tracked source files with matches. Review those in context; a quoted source term is not a cleanup target. Other collections and current workshop prose remain to check.
 
 ## Closure
 

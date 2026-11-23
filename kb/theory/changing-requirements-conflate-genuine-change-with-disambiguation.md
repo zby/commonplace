@@ -36,9 +36,9 @@ In waterfall, a wrong interpretation in an early spec can cascade through months
 
 This reframes iteration length as an **interpretation-error propagation bound**, not just a change-response latency. Even in a world where requirements never genuinely changed, short iterations would still be valuable — because a spec that leaves a consequential choice unsettled invites interpretation errors that only downstream work reveals.
 
-## Deploy-time learning
+## When use exposes an ambiguous specification
 
-[Deploy-time learning](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) extends the same loop to human–AI systems: each deploy surfaces interpretation choices that natural-language specs left open, and [constraining](./definitions/constraining.md) narrows the spec for the next cycle. Every prompt invocation shows its reading in the output, so misreadings surface faster—but the agile propagation bound still applies: shorter cycles limit how much downstream work rests on a wrong reading before correction.
+[Learning from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) extends the same loop to human–AI systems: each deploy surfaces interpretation choices that natural-language specs left open, and [constraining](./definitions/constraining.md) narrows the spec for the next cycle. Every prompt invocation shows its reading in the output, so misreadings surface faster—but the agile propagation bound still applies: shorter cycles limit how much downstream work rests on a wrong reading before correction.
 
 ## Open Questions
 

@@ -47,7 +47,7 @@ These strategies look like competing ideologies only if you assume a system shou
 2. Switch to bidirectional maintenance as execution discovers mismatches.
 3. Promote recurring discoveries into extracted rules once the pattern is stable and checked against the applicable requirement.
 
-This is why [deploy-time learning's agile-style natural-language/code co-evolution](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) needs a finer breakdown than "natural-language and code co-evolve." Co-evolution is real, but the right natural-language strategy depends on when the system can say something trustworthy.
+This is why [the joint revision of natural-language rules and code](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) needs a finer breakdown than "natural-language and code co-evolve." Co-evolution is real, but the right natural-language strategy depends on when the system can say something trustworthy.
 
 The strongest version of the claim: **move the disambiguation burden to the earliest artifact that can carry it truthfully.**
 
@@ -73,7 +73,7 @@ The three-step sequence above is a common maturation path, not a law. Some syste
 
 Relevant Notes:
 
-- [deploy-time-learning-is-the-missing-middle](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: splits "co-evolving natural-language and code" (the agile-style co-evolution that deploy-time learning adopts) into distinct lifecycle strategies depending on where the understanding sits
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: splits "co-evolving natural-language and code" into distinct lifecycle strategies depending on where the understanding sits
 - [changing-requirements-conflate-genuine-change-with-disambiguation-failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — grounds: late-discovered "requirement changes" often indicate that understanding was not actually available upfront
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — situates: this is the late-phase strategy for rules that only become visible after repeated execution
 - [The Spec Is the New Code — A Guide to Spec Driven Development](https://x.com/juliandeangeIis/status/2033303156340240481) — source: grounds the spec-first end of the strategy space and the maturity model from Spec-First to Spec-as-Source
