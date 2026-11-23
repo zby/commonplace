@@ -46,16 +46,16 @@ from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 REVIEW = r'''
 import json, os, re, sys
 from pathlib import Path
-frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
+frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text(encoding="utf-8")
 if frame.removeprefix("Task:\n").startswith("Review one note") and "review-a-rewrite-candidate.md`" in frame:
     def listed(name):
         return Path(re.search(rf"^- {re.escape(name)}: (.+)$", frame, re.MULTILINE).group(1))
-    candidate = listed("note.md").read_text()
+    candidate = listed("note.md").read_text(encoding="utf-8")
     kind = "review-repair" if "REPAIRED" in candidate else "review"
-    given = {name: listed(name + ".md").read_text() for name in re.findall(r"^- (supplied-[^:]+)\.md: ", frame, re.MULTILINE)}
-    with open(os.environ["FAKE_LOG"], "a") as log:
+    given = {name: listed(name + ".md").read_text(encoding="utf-8") for name in re.findall(r"^- (supplied-[^:]+)\.md: ", frame, re.MULTILINE)}
+    with open(os.environ["FAKE_LOG"], "a", encoding="utf-8") as log:
         log.write(kind + "\n")
-    with open(os.environ["FAKE_LOG"] + ".inputs", "a") as log:
+    with open(os.environ["FAKE_LOG"] + ".inputs", "a", encoding="utf-8") as log:
         log.write(json.dumps({"kind": kind, "prompt": frame,
                               "inputs": {"candidate": candidate, **given}}) + "\n")
     block = Path("block-all").exists() or (Path("block-1").exists() and kind == "review")
@@ -74,14 +74,14 @@ if frame.removeprefix("Task:\n").startswith("Review one note") and "review-a-rew
     else:
         findings, outcome = [], "pass"
     data = {"type": "types/review-result.md", "findings": findings, "outcome": outcome}
-    listed("review.md").write_text("---\n" + json.dumps(data) + "\n---\n\n# Review\n\n## Summary\n\nJudged.\n")
+    listed("review.md").write_text("---\n" + json.dumps(data) + "\n---\n\n# Review\n\n## Summary\n\nJudged.\n", encoding="utf-8")
     sys.exit(0)
 '''
 
 FAKE = r'''
 import json, os, re, sys
 from pathlib import Path
-frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
+frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text(encoding="utf-8")
 files, section = {}, None
 for line in frame.splitlines():
     header = re.fullmatch(r"(Inputs|Required outputs|Optional outputs)(?: \(.*\))?:", line)
@@ -95,18 +95,18 @@ for line in frame.splitlines():
 inputs = files.get("Inputs", {})
 outputs = files.get("Required outputs", {})
 kind = "candidate-repair" if "blocked-candidate" in inputs else "candidate"
-with open(os.environ["FAKE_LOG"], "a") as log:
+with open(os.environ["FAKE_LOG"], "a", encoding="utf-8") as log:
     log.write(kind + "\n")
-with open(os.environ["FAKE_LOG"] + ".inputs", "a") as log:
+with open(os.environ["FAKE_LOG"] + ".inputs", "a", encoding="utf-8") as log:
     log.write(json.dumps({"kind": kind, "prompt": frame,
-                          "inputs": {key: path.read_text() for key, path in inputs.items()}}) + "\n")
+                          "inputs": {key: path.read_text(encoding="utf-8") for key, path in inputs.items()}}) + "\n")
 if Path(f"problem-{kind}").exists():
     Path(frame.split("problem file:\n")[1].splitlines()[0]).write_text(json.dumps(
-        {"kind": "unable", "message": "The commission contradicts the write brief."}))
+        {"kind": "unable", "message": "The commission contradicts the write brief."}), encoding="utf-8")
     sys.exit(0)
 if Path("drift-source").exists():
-    Path("kb/sources/.snapshots/alpha/page.md").write_text("Changed while the worker ran.\n")
-text = inputs["note"].read_text()
+    Path("kb/sources/.snapshots/alpha/page.md").write_text("Changed while the worker ran.\n", encoding="utf-8")
+text = inputs["note"].read_text(encoding="utf-8")
 if Path("same-text").exists():
     candidate = text
 else:
@@ -115,8 +115,8 @@ if kind == "candidate-repair":
     candidate += "REPAIRED.\n"
 if Path("bad-bounds").exists():
     candidate = candidate.replace("\n# Alpha\n", "\n# Beta\n")
-outputs["candidate"].write_text(candidate, newline="\n")
-outputs["report"].write_text("# Report\n\n## Affected citations\n\nNone.\n")
+outputs["candidate"].write_text(candidate, newline="\n", encoding="utf-8")
+outputs["report"].write_text("# Report\n\n## Affected citations\n\nNone.\n", encoding="utf-8")
 '''
 
 INSTRUCTIONS = REPO_ROOT / "kb" / rewrite_module.INSTRUCTIONS_DIR
@@ -162,8 +162,8 @@ ROLE_REL = "kb/instructions/role-in-the-kb-gate.md"
 @pytest.fixture
 def repo(tmp_path, monkeypatch):
     root = tmp_path / "repo"
-    files = {rel: (REPO_ROOT / rel).read_text() for rel in (*NOTE_TYPE_SPECS, *EDIT_TYPES)}
-    files |= {f"kb/{rewrite_module.INSTRUCTIONS_DIR}/{path.name}": path.read_text() for path in INSTRUCTIONS.glob("*.md")}
+    files = {rel: (REPO_ROOT / rel).read_text(encoding="utf-8") for rel in (*NOTE_TYPE_SPECS, *EDIT_TYPES)}
+    files |= {f"kb/{rewrite_module.INSTRUCTIONS_DIR}/{path.name}": path.read_text(encoding="utf-8") for path in INSTRUCTIONS.glob("*.md")}
     files |= {rel: REVIEW_FILES[rel] for rel in (ROLE_REL, "kb/workflow-state/COLLECTION.md")}
     files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n",
               SOURCE: "# Alpha ingest\n\nAlpha holds when the condition is met.\n",

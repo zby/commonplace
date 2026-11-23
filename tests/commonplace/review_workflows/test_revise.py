@@ -35,7 +35,7 @@ from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 FAKE = r'''
 import json, os, re, sys
 from pathlib import Path
-frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
+frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text(encoding="utf-8")
 files, section = {}, None
 for line in frame.splitlines():
     header = re.fullmatch(r"(Inputs|Required outputs|Optional outputs)(?: \(.*\))?:", line)
@@ -60,23 +60,23 @@ else:
 found = re.search(r"(?:simplification-passes|fix-warnings)/([a-z-]+)\.md`", frame)
 name = found.group(1) if found and kind != "assess" else "-"
 model = sys.argv[sys.argv.index("--model") + 1]
-with open(os.environ["FAKE_LOG"], "a") as log:
+with open(os.environ["FAKE_LOG"], "a", encoding="utf-8") as log:
     log.write(f"{kind} {name} {model}\n")
 if Path(f"fail-{name}").exists():
     sys.exit(1)
-text = inputs["artifact" if kind == "assess" else "text"].read_text()
-with open(os.environ["FAKE_LOG"] + ".inputs", "a") as log:
+text = inputs["artifact" if kind == "assess" else "text"].read_text(encoding="utf-8")
+with open(os.environ["FAKE_LOG"] + ".inputs", "a", encoding="utf-8") as log:
     log.write(json.dumps({"kind": kind, "pass": name,
-        "inputs": {key: path.read_text() for key, path in inputs.items()}}) + "\n")
+        "inputs": {key: path.read_text(encoding="utf-8") for key, path in inputs.items()}}) + "\n")
 if Path(f"brief-problem-{kind}").exists():
     Path(frame.split("problem file:\n")[1].splitlines()[0]).write_text(json.dumps(
-        {"kind": "unable", "message": "The requested pass conflicts with the write brief."}))
+        {"kind": "unable", "message": "The requested pass conflicts with the write brief."}), encoding="utf-8")
     sys.exit(0)
 
 
 def result(outcome, **fields):
     data = {"type": "types/edit-result.md", "outcome": outcome, **fields}
-    outputs["result"].write_text("---\n" + json.dumps(data) + "\n---\n\n# Report\n\nDone.\n")
+    outputs["result"].write_text("---\n" + json.dumps(data) + "\n---\n\n# Report\n\nDone.\n", encoding="utf-8")
 
 
 if kind == "assess":
@@ -99,8 +99,8 @@ if kind == "assess":
         plan = "purpose: p\nmust-keep: []\npasses: []\nstop: rewrite-needed\n"
     if Path("new-proposal").exists():
         plan = plan.replace("purpose: p", "purpose: new")
-    outputs["assessment"].write_text("# Assessment\n\nRanked changes.\n")
-    outputs["plan"].write_text(plan)
+    outputs["assessment"].write_text("# Assessment\n\nRanked changes.\n", encoding="utf-8")
+    outputs["plan"].write_text(plan, encoding="utf-8")
 elif kind == "list":
     proposals = [{"quote": "Alpha body", "change": "alpha", "reason": "decorative"},
                  {"quote": "A note about", "change": "beta", "reason": "word"},
@@ -119,16 +119,16 @@ elif name == "repair-claim-title":
         revised = revised.replace("description: A note about alpha", "description: A concrete claim about alpha")
         if "BODYEDIT" in text and "was rejected" not in frame:
             revised = revised.replace("Alpha body", "Changed body")
-        outputs["candidate"].write_text(revised, newline="\n")
+        outputs["candidate"].write_text(revised, newline="\n", encoding="utf-8")
         result("changed", changes=["Retitled Alpha"])
 else:
     if kind == "apply":
         import yaml
-        answers = yaml.safe_load(inputs["answers"].read_text().split("---\n")[1])
+        answers = yaml.safe_load(inputs["answers"].read_text(encoding="utf-8").split("---\n")[1])
         kept = [item["proposal"]["change"] for item in answers["items"] if item["state"] == "approved"]
         revised = text.replace("user-verified: true\n", "") + f"{name} applied {' '.join(kept)}.\n"
     else:
-        scope = inputs["scope"].read_text() if "scope" in inputs else "all"
+        scope = inputs["scope"].read_text(encoding="utf-8") if "scope" in inputs else "all"
         revised = text.replace("user-verified: true\n", "") + f"{name} ({scope}).\n"
     if name == "readability-and-flow" and ("BADPASS" in text or
             "RETITLE" in text and "was rejected" not in frame):
@@ -137,12 +137,12 @@ else:
         revised = revised.replace("description: ", "description: " + "padding " * 32, 1)
     if "BRIEFDRIFT" in text and name == "opening-and-title":
         path = Path("kb/notes/alpha.brief.md")
-        path.write_text(path.read_text() + "Changed while the worker ran.\n")
+        path.write_text(path.read_text(encoding="utf-8") + "Changed while the worker ran.\n", encoding="utf-8")
     if "EDITMID" in text and name == "readability-and-flow":
-        Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n")
+        Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n", encoding="utf-8")
     if "TOUCH" in text and name == "opening-and-title":
-        Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n")
-    outputs["candidate"].write_text(revised, newline="\n")
+        Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n", encoding="utf-8")
+    outputs["candidate"].write_text(revised, newline="\n", encoding="utf-8")
     result("changed", changes=[f"{name} applied"])
 '''
 PROFILES = ("default: s\neffort: {simple: s, judgment: j}\nprofiles:\n"
@@ -161,9 +161,9 @@ ORDINARY = ["pass readability-and-flow big", "pass place-external-systems small"
 @pytest.fixture
 def repo(tmp_path, monkeypatch):
     root = tmp_path / "repo"
-    files = {rel: (REPO_ROOT / rel).read_text() for rel in NOTE_TYPE_SPECS}
-    files |= {f"kb/instructions/simplification-passes/{p.name}": p.read_text() for p in PASSES.glob("*.md")}
-    files |= {rel: (REPO_ROOT / rel).read_text() for rel in (*EDIT_TYPES, FIX)}
+    files = {rel: (REPO_ROOT / rel).read_text(encoding="utf-8") for rel in NOTE_TYPE_SPECS}
+    files |= {f"kb/instructions/simplification-passes/{p.name}": p.read_text(encoding="utf-8") for p in PASSES.glob("*.md")}
+    files |= {rel: (REPO_ROOT / rel).read_text(encoding="utf-8") for rel in (*EDIT_TYPES, FIX)}
     files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n"}
     for rel, text in files.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
@@ -1345,17 +1345,17 @@ def test_answers_record_takes_only_a_valid_file_under_a_run(repo, capsys, tmp_pa
 REVIEW_FAKE = FAKE_RESULT + r'''
 import json, os, re, sys
 from pathlib import Path
-frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
+frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text(encoding="utf-8")
 if frame.removeprefix("Task:\n").startswith("Review one note"):
     def listed(name):
         return re.search(rf"^- {re.escape(name)}: (.+)$", frame, re.MULTILINE).group(1)
     names = [a or b for a, b in re.findall(r"The criterion is `([^`]+)`|^- `([^`]+)`: its text is",
                                            frame, re.MULTILINE)]
-    with open(os.environ["FAKE_LOG"], "a") as log:
+    with open(os.environ["FAKE_LOG"], "a", encoding="utf-8") as log:
         log.write("review " + ",".join(sorted(Path(name).stem for name in names)) + "\n")
-    if "NOREVIEW" in Path(listed("note.md")).read_text() and "critique" in names[0]:
+    if "NOREVIEW" in Path(listed("note.md")).read_text(encoding="utf-8") and "critique" in names[0]:
         Path(frame.split("problem file:\n")[1].splitlines()[0]).write_text(
-            json.dumps({"kind": "unable", "message": "cannot review"}))
+            json.dumps({"kind": "unable", "message": "cannot review"}), encoding="utf-8")
         sys.exit(0)
     for output in re.findall(r"^- (review[^:]*\.md): ", frame, re.MULTILINE):
         criterion = names[0] if output == "review.md" else output

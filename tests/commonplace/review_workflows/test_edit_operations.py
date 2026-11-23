@@ -26,7 +26,7 @@ from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 FAKE = r'''
 import json, os, re, sys
 from pathlib import Path
-frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
+frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text(encoding="utf-8")
 files, section = {}, None
 for line in frame.splitlines():
     header = re.fullmatch(r"(Inputs|Required outputs|Optional outputs)(?: \(.*\))?:", line)
@@ -39,34 +39,34 @@ for line in frame.splitlines():
         section = None
 inputs = files.get("Inputs", {})
 outputs = {**files.get("Required outputs", {}), **files.get("Optional outputs", {})}
-text = inputs["text"].read_text()
+text = inputs["text"].read_text(encoding="utf-8")
 first = "was rejected" not in frame
-defect = Path(os.environ["FAKE_BEHAVIOUR"]).read_text().strip() if first else ""
-with open(os.environ["FAKE_LOG"], "a") as log:
-    log.write(json.dumps({"inputs": {key: path.read_text() for key, path in inputs.items()}, "first": first}) + "\n")
+defect = Path(os.environ["FAKE_BEHAVIOUR"]).read_text(encoding="utf-8").strip() if first else ""
+with open(os.environ["FAKE_LOG"], "a", encoding="utf-8") as log:
+    log.write(json.dumps({"inputs": {key: path.read_text(encoding="utf-8") for key, path in inputs.items()}, "first": first}) + "\n")
 if "PROBLEM" in text:
     Path(frame.split("problem file:\n")[1].splitlines()[0]).write_text(json.dumps(
-        {"kind": "unable", "message": "The operation cannot run on this text."}))
+        {"kind": "unable", "message": "The operation cannot run on this text."}), encoding="utf-8")
     sys.exit(0)
 
 def result(outcome, **fields):
     data = {"type": "types/edit-result.md", "outcome": outcome, **fields}
     if defect == "owned":
         data["input-sha256"] = "0" * 64
-    outputs["result"].write_text("---\n" + json.dumps(data) + "\n---\n\n# Report\n\nDone.\n")
+    outputs["result"].write_text("---\n" + json.dumps(data) + "\n---\n\n# Report\n\nDone.\n", encoding="utf-8")
 
 if "This operation asks before it edits" in frame:
     quotes = ["Nonexistent passage" if defect == "badquote" else "Alpha body", "Closing sentence"]
     result("proposed", proposals=[{"quote": quote, "change": quote.upper(), "reason": "plainer"} for quote in quotes])
 elif "The operator answered" in frame:
     import yaml
-    answers = yaml.safe_load(inputs["answers"].read_text().split("---\n")[1])
+    answers = yaml.safe_load(inputs["answers"].read_text(encoding="utf-8").split("---\n")[1])
     applied = text
     for item in answers["items"]:
         if item["state"] == "approved" or defect == "applyother":
             quote = item["proposal"]["quote"]
             applied = applied.replace(quote, quote.upper())
-    outputs["candidate"].write_text(applied, newline="\n")
+    outputs["candidate"].write_text(applied, newline="\n", encoding="utf-8")
     result("changed", changes=["applied the approved entries"])
 elif "UNCHANGED" in text:
     result("unchanged")
@@ -106,7 +106,7 @@ LIBRARY = ("kb/types/edit-result.md", "kb/types/edit-result.schema.yaml", "kb/ty
 @pytest.fixture
 def repo(tmp_path, monkeypatch):
     root = tmp_path / "repo"
-    files = {rel: (REPO_ROOT / rel).read_text() for rel in (*NOTE_TYPE_SPECS, *LIBRARY)}
+    files = {rel: (REPO_ROOT / rel).read_text(encoding="utf-8") for rel in (*NOTE_TYPE_SPECS, *LIBRARY)}
     files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n",
               NOTE_PATH: NOTE.format(words=""),
               "kb/notes/beta.md": NOTE.format(words="").replace("# Alpha", "# Beta")}
@@ -200,12 +200,15 @@ def test_each_bounds_failure_goes_back_to_the_worker(repo, capsys, defect, probl
 
 def test_candidate_line_endings_are_retained_as_the_worker_wrote_them(repo, capsys):
     """The result cites Workjig's output file, so its hash is over the bytes the worker wrote."""
+    words = "Alpha — 東京"
+    set_note(repo, words)
     repo[3].write_text("crlf")
     code, report, _ = edit(repo, capsys, NONE_OP, NOTE_PATH)
     assert code == 0 and report["outcome"] == "changed", report
     data = result(repo, report).data
     written = (repo[0] / data["candidate"]).read_bytes()
     assert b"\r\n" in written and b"\r\n" not in NOTE.encode()
+    assert words.encode("utf-8") in written
     assert data["candidate-sha256"] == observations.sha(written)
     assert main(["show", report["run-dir"], "--json"], harnesses=repo[1]) == 0, capsys.readouterr().err
 
