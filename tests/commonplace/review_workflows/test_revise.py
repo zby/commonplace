@@ -161,7 +161,9 @@ ORDINARY = ["pass readability-and-flow big", "pass place-external-systems small"
 @pytest.fixture
 def repo(tmp_path, monkeypatch):
     root = tmp_path / "repo"
-    files = {rel: (REPO_ROOT / rel).read_text(encoding="utf-8") for rel in NOTE_TYPE_SPECS}
+    # Later seed commits must not stage generated workflow state from earlier runs.
+    files = {rel: (REPO_ROOT / rel).read_text(encoding="utf-8")
+             for rel in (*NOTE_TYPE_SPECS, "kb/workflow-state/.gitignore")}
     files |= {f"kb/instructions/simplification-passes/{p.name}": p.read_text(encoding="utf-8") for p in PASSES.glob("*.md")}
     files |= {rel: (REPO_ROOT / rel).read_text(encoding="utf-8") for rel in (*EDIT_TYPES, FIX)}
     files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n"}
