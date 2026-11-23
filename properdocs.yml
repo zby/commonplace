@@ -900,6 +900,7 @@ plugins:
         'reference/proposals/library-served-from-the-installed-package.md': 'reference/adr/086-projects-read-the-library-from-the-installed-package.md'
         'reference/proposals/merging-analysis-runs-back-from-isolated-worktrees.md': 'reference/adr/106-merge-analysis-publications-from-isolated-worktrees.md'
         'reference/proposals/model-partition-registry.md': 'reference/proposals/archive/model-partition-registry.md'
+        'reference/proposals/multi-target-validation-cli.md': 'reference/proposals/archive/multi-target-validation-cli.md'
         'reference/proposals/one-improvement-pipeline-with-graded-authority.md': 'reference/proposals/one-improvement-procedure-over-atomic-instructions.md'
         'reference/proposals/one-validation-algorithm-over-declared-scopes.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/open-an-analysis-run-in-code.md': 'reference/proposals/archive/open-an-analysis-run-in-code.md'

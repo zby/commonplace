@@ -14,6 +14,8 @@ This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind
 
 ## Contents
 
+- [Multi-target validation in commonplace-validate](./multi-target-validation-cli.md) — adopted in `dc94eed87`, 2026-11-23. The single-target CLI baseline and five-file timing comparison.
+
 - [Model partition registry](./model-partition-registry.md) — retired by ADR 127, 2026-11-10. The 2026-era review identity keyed by model partition, and the registry weighed for validation, aliases and runner defaults.
 - [Review configuration object](./review-configuration-object.md) — retired by ADR 127, 2026-11-10. The hardcoded scan roots, gate locations and store path of the deleted review package, and the config object weighed for them.
 - [Coded engine stops](./coded-engine-stops.md) — retired by ADR 118, 2026-10-19. The 2026-10-08 stop sites of the artifact-run engine, the gbrain error-code comparison, and the two options weighed: a closed set of stop kinds coded by disposition, and an evidence pointer on uncertain stops.
