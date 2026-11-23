@@ -1,0 +1,55 @@
+{
+  "mixed": {
+    "source": "kb/reports/state/review/runs/v2/revise/kb/theory/on-balance-judgments-can-guide-improvement-without-a-global-measure/20261120T185155Z/calls/launches/1e119f261ce046b2825e55b062a96ec7",
+    "prompt_sha256": "1aa24ed8e422a8dc1b53dec811d3cc855ace17fcc164e730fdd5683a86bebbb7",
+    "inputs": {
+      "artifact.md": "010b6595056ba8f2bc32a244120b52e4c464357f17cbe7d3fede758464f8391b",
+      "criterion.md": "8aeb1c028881af9b6de27b851ce1605f0451ed72c37c50289de528be2d32a301",
+      "finding-1.md": "77eb2137ccf326731831f043d0622f13e72d08d4e71e3160095889d46f7935bf",
+      "finding-10.md": "89d8c553fe3bb4b521508eff17d57d490a9a196be265fba387b153661c295dd2",
+      "finding-2.md": "5fba837d1689d7de49d466c8606496290c72c84fd70c86a59619e9860ae5e0b7",
+      "finding-3.md": "e46566639341a5eb10c2b6bdf949ce25f1f87cf6d26e9407e7e0733fa324400e",
+      "finding-4.md": "86f6c2f8d840121ba19b28a738a6fca5190e998f80ebd73679d25c01acdc4a5a",
+      "finding-5.md": "f814e06c16c6f1eff2caf1a96bb7494797bb2e9d566419119aacd486b771afd8",
+      "finding-6.md": "0ae561e7987ee93793392e99e42674c5d3e695be145637872112fca4a0e981ff",
+      "finding-7.md": "d9f351cbd80dfc66e7e5cce69cce23bea58c7fe975f404d82f1f18c972443b23",
+      "finding-8.md": "1e03973120a1e46210389c25f87b611a016fe227790af0c84f8adb17c1d98dfc",
+      "finding-9.md": "110da6a1a89eea6341c8c9c9598579e344411db781a40d02f7e2ccdcf16ec075",
+      "must-keep.md": "9a3b0841d109f279baa4a87cd69812e54d972f6e7b98d783473090c1175c7777",
+      "passes.md": "57893e0003ebc072b465f261b1d6351578cd13cb618511bee30e27e814628d1b",
+      "purpose.md": "d45db3a020146f29fe47016f20fd68548b176373c6dbf34b328637f88be0f57b",
+      "report-1.md": "8caa5407f3520175a292c7bf1a060e538a8abe14284f738a117f1d7544ed81f6",
+      "report-2.md": "6987fdd3ef98f12b1cd898559b397ce658e67bd9f3bee5262f69376012851a67",
+      "report-3.md": "e1fe0f9af73d32013416874629d689b60d6ee89d1a0650a5c2eeb18487a9700e",
+      "report-4.md": "5f4b7d56ee3ca7ca84edb39ce82f1f88a6557f273cb496ffc90adae96d57dbad",
+      "report-5.md": "659e6d6927e23eca97219e0d67c5e43946a99c0773f3aebde7ee8581b84a3d09"
+    }
+  },
+  "stop": {
+    "source": "kb/reports/state/review/runs/v2/revise/kb/theory/continual-learning-requires-governing-behaviour-changing-writes/20261122T215019Z/calls/launches/24ad2a37343a4d59ab3144dfd766b422",
+    "prompt_sha256": "76257096d26b7b1571af7b88ad6fc49605e634887d3ce60fe1480d3bdf3c4d08",
+    "inputs": {
+      "artifact.md": "2214be116a950b1be4016de0633a69bd6e3df247b8c6750c25d37d0ef7013038",
+      "criterion.md": "8aeb1c028881af9b6de27b851ce1605f0451ed72c37c50289de528be2d32a301",
+      "finding-1.md": "7eab3b6f1cb72f34c99cd245e659c5dd709501fb08981bfa170634cc437cd8f0",
+      "finding-10.md": "6783375ebb0e0d40fccac80016b4fb3cfd8cf8050afce2e9ef945aacca5b3607",
+      "finding-11.md": "9530a0f2cc68a309dcddabee1b8d11dd586525dafde7e2d6d697b775fef4b771",
+      "finding-12.md": "469761c9f5bd080f1db295f0e6c83452df779c8ad692b3e4d74bac318f1c0ef0",
+      "finding-13.md": "4fc8560ad4ad43810980ef7b609236966f7d3826bef41d46cd24e7ec898fc893",
+      "finding-2.md": "3a388526a873e5a235f6b4ec08bb1c4196c40f3e481177c9ca43e4ab86039709",
+      "finding-3.md": "a71db6a297ff2bcb0cf0333e3ee10bb337969b0dbcd88b8f393462469b3f66bb",
+      "finding-4.md": "b2bae35e491e73e99a914f4e9893ca6961a85411249f84176bb5403b86c03eaa",
+      "finding-5.md": "9cd6bb6628a32a5e84cd7f43f50a3ed013ff1eff0c4c938846c99b8cfe9e7bdc",
+      "finding-6.md": "48866409f72811d474e20b14fa1c8c5aa222c2a03c1392400f53eea2a27561cd",
+      "finding-7.md": "dc06b69ba58df1611581af6317e2787221a13af101be83bc9b37dd9bcd7b308c",
+      "finding-8.md": "8367aa9743911c588233b7534273706b094f7383c863d5ec2b3d45aa16e85012",
+      "finding-9.md": "6c8369cd2f02fcbc456572327b71564a95565b51860269ac6810a260b598952f",
+      "passes.md": "57893e0003ebc072b465f261b1d6351578cd13cb618511bee30e27e814628d1b",
+      "report-1.md": "5329d1d7c97d98ab5174d62009a7b5176ad906dbb4b10d7c2e087633c8fb563f",
+      "report-2.md": "cfa05998005299cab7c81c159470b9ab56ab002de17de94774ab06281b7525a2",
+      "report-3.md": "4e15258eca49739853ad0592a38b521287d5c3d68cf65d5294dfe1226873683c",
+      "report-4.md": "5b507f458d77eb3729cd168c5e45ac35fbc94b74a070816081bad5bc8bb802dc",
+      "report-5.md": "d5d24c8fed64b4e308153be76e57511fc1a1a558fac78f6f1d03bb4c57a86563"
+    }
+  }
+}

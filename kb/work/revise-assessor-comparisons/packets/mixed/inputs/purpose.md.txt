@@ -1,0 +1,1 @@
+Explain how on-balance judgments guide decisions without a global measure, and where analysis helps or stops.
