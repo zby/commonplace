@@ -34,4 +34,4 @@ type: types/tag-readme.md
 
 ## Related Tags
 
-- [deploy-time-learning](./deploy-time-learning-README.md) — the post-release change constraining absorbs; the verifiability gradient locates constrained artifacts
+- [continual-learning](./continual-learning-README.md) — the post-release change constraining absorbs; the verifiability gradient locates constrained artifacts

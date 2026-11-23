@@ -2,14 +2,14 @@
 description: A deployed system can use feedback from live runs to choose changes to prompts, rules, or tools that shape its behavior in later runs.
 type: types/note.md
 traits: [has-comparison, title-as-claim]
-tags: [learning-theory, deploy-time-learning, self-improving-systems, continual-learning, improvement-loop]
+tags: [learning-theory, self-improving-systems, continual-learning, improvement-loop]
 ---
 
 # Deployed systems can learn from feedback with fixed model weights
 
 Durable changes to deployed behavior need not wait for another model-weight training cycle. During deployment, a system can evaluate and retain changes to [system-definition artifacts](./definitions/system-definition-artifact.md)—prompts, rules, tools, schemas, tests, and configuration that it consumes with binding force.
 
-This is a distinct adaptation path because the selected change affects later sessions without becoming part of the model's weights. This note calls that path **deployment-time learning**. When deployment experience drives a proposal, evaluation selects it, and retention allows it to change later behavior, the process is [selection-based learning](./definitions/selection-based-learning.md). "Deployment-time" says when the change is made, and "selection-based" says how it is decided.
+This is a distinct adaptation path because the selected change affects later sessions without becoming part of the model's weights. When deployment experience drives a proposal, evaluation selects it, and retention allows it to change later behavior, the process is [selection-based learning](./definitions/selection-based-learning.md).
 
 ## Lifecycle phase is not update speed
 
@@ -21,7 +21,7 @@ Five properties must remain separate:
 - **Update mechanism:** Weight training, context assembly, artifact revision, or another process.
 - **[Representational form](./definitions/representational-form.md):** Whether the retained change lives in distributed model weights, natural language, symbolic code, or a mixture.
 
-Common adaptation paths combine these properties in different ways, but they do not form exclusive timescale categories. Offline weight training is usually durable and occurs before deployment, yet online training can update weights during deployment. Live context changes behavior within a session, but context alone does not write changes into later sessions. Summaries or saved state persist only because another retention path stores them. A system-definition edit can be produced within one session and retained for later ones. When an evidence-responsive selection loop completes this artifact-revision path within the deployed system's operating cadence, the result is persistent deployment-time learning. “During deployment” locates the change in the lifecycle; it does not by itself make the change fast.
+Common adaptation paths combine these properties in different ways, but they do not form exclusive timescale categories. Offline weight training is usually durable and occurs before deployment, yet online training can update weights during deployment. Live context changes behavior within a session, but context alone does not write changes into later sessions. Summaries or saved state persist only because another retention path stores them. A system-definition edit can be produced within one session and retained for later ones. When an evidence-responsive selection loop completes this artifact-revision path within the deployed system's operating cadence, later sessions can benefit from feedback collected in service. “During deployment” locates the change in the lifecycle; it does not by itself make the change fast.
 
 ## Why localized artifacts are practical now
 
@@ -41,11 +41,11 @@ Persistence alone is insufficient. A manually edited configuration remains an en
 
 ## Forms can coevolve
 
-Deployment-time learning does not privilege natural language or code. [Constraining during deployment can produce learning outside weights](./constraining-during-deployment-can-produce-learning-outside-weights.md) develops one concrete path in which prompts, schemas, tools, tests, and code accumulate adaptive capacity. Settled interpretations can move toward symbolic enforcement, while new evidence can reopen a commitment for model judgment. The allocation of state among natural-language, symbolic, and distributed-parametric forms may therefore change while the timing and persistence of the learning loop remain the same. How those forms should divide responsibility is the separate argument in [treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md).
+Learning from use need not favor natural language or code. [Constraining during deployment can produce learning outside weights](./constraining-during-deployment-can-produce-learning-outside-weights.md) develops one concrete path in which prompts, schemas, tools, tests, and code accumulate adaptive capacity. Settled interpretations can move toward symbolic enforcement, while new evidence can reopen a commitment for model judgment. The allocation of state among natural-language, symbolic, and distributed-parametric forms may therefore change while the timing and persistence of the learning loop remain the same. How those forms should divide responsibility is the separate argument in [treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md).
 
 ## Boundary
 
-The claim is that a persistent deployment-time learning path exists outside model-weight updates—not that it is a third exhaustive timescale, always faster than training, or exclusive to readable artifacts. Its practical advantage depends on evidence-responsive selection and a validation surface whose consequences are actually bounded.
+The claim is that a deployed system can learn by revising artifacts without updating model weights—not that it is a third exhaustive timescale, always faster than training, or exclusive to readable artifacts. Its practical advantage depends on evidence-responsive selection and a validation surface whose consequences are actually bounded.
 
 ---
 

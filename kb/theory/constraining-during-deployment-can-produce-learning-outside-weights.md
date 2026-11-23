@@ -2,12 +2,12 @@
 description: Evaluated constraints retained during deployment can change later behavior without weight updates; persistence and successful composition require separate assessment
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, constraining, deploy-time-learning, self-improving-systems, continual-learning]
+tags: [learning-theory, constraining, self-improving-systems, continual-learning]
 ---
 
 # Constraining during deployment can produce learning outside weights
 
-[Constraining](./definitions/constraining.md) commits choices about what a rule permits or prefers. When deployment experience leads a system to select and retain a useful constraint, later executions can benefit without changing the model's weights. This is one path within [deployment-time learning through retained artifacts](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md).
+[Constraining](./definitions/constraining.md) commits choices about what a rule permits or prefers. When experience in use exposes a choice that a rule left open, the system can test a more specific rule and keep it for later tasks. What changes is [the rule that later executions apply, not the model's weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md).
 
 Retention makes the change available for later use. To establish an improvement, the system must also check what the constraint changes and whether those effects serve the task. Saving an instruction or committing a validator does not by itself establish a gain in adaptive capacity.
 

@@ -1,13 +1,13 @@
 ---
-description: "Curated head for the continual-learning tag — how a deployed AI system keeps learning outside model weights through retained prompts, rules, tools, and tests, and why that fits the Bitter Lesson"
+description: "Continual learning in model weights and in the systems around them: learning from use, retaining lessons across runs, and evaluating changes."
 type: types/tag-readme.md
 ---
 
 # continual-learning
 
-Assign this tag to work on continued learning through retained changes outside model weights: prompts, rules, tools, schemas, and tests; how those changes are governed; and how this learning relates to updates in other representational forms. Two notes establish the tag: [Deployed systems can learn from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) and [The readable-artifact loop is the tractable unit for continual learning](../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). Bitter Lesson notes defend the bet that learning in readable forms can scale. It is a child of [self-improving-systems](./self-improving-systems-README.md). Boundary: [deploy-time-learning](./deploy-time-learning-README.md) covers what deployed use reveals and responses to it, including human maintenance. This tag requires learning through retained changes outside weights; work on that learning as a response to deployed experience may carry both tags.
+Commonplace’s work on continual learning asks what a system learns from successive tasks or actual use, what changes, and how later work benefits. Start with [Deployed systems can learn from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) for the system-level case and [Sutton and Javed on why AI models stop learning](../sources/sutton-javed-why-ai-models-stop-learning.ingest.md) for the argument for continued weight learning.
 
-The distinction from [improvement-loop](./improvement-loop-README.md) is **how learning persists outside model weights** versus **how changes are selected**. Assign this tag when evidence becomes a retained change used in later operation, or the note develops that path's governance, limits, or relation to weight updates. Saving a file or issuing a one-off prompt is insufficient. A separate candidate-admission gate is not required, and people or the system's own loop may do the selecting; a note that also develops proposal selection can carry both tags.
+Assign the tag when learning across experiences, or a mechanism or limit of that learning, is substantive. Deployment alone is not enough. [Improvement loop](./improvement-loop-README.md) focuses instead on how proposed changes are selected.
 
 ## Where learning lives in a deployed system
 
@@ -43,9 +43,9 @@ The distinction from [improvement-loop](./improvement-loop-README.md) is **how l
 
 ## Related Tags
 
-- [self-improving-systems](./self-improving-systems-README.md) — the parent; continual learning is a deployed system learning outside its weights, whether people or the system's own loop select the changes
-- [deploy-time-learning](./deploy-time-learning-README.md) — what deployed use reveals and how systems respond; retained learning is one response, so several members carry both tags
-- [learning-theory](./learning-theory-README.md) — the general account of learning these notes apply
+- [self-improving-systems](./self-improving-systems-README.md) — the case where the system changes its own organization.
+- [Learning theory](./learning-theory-README.md) — the broader area.
+- [Abstract an experience only when you can state where the lesson stops](../theory/abstract-an-experience-only-when-you-can-state-the-boundary.md) — deciding what to carry forward from an episode.
 - [reflection](./reflection-README.md) — whether the retained changes are represented and selectively revisable
 - [warranted-autonomy](./warranted-autonomy-README.md) — who may authorize the behavior-changing writes
 - [improvement-loop](./improvement-loop-README.md) — candidate search, reject-capable evaluation, and retention; one update architecture, distinct from direct updates

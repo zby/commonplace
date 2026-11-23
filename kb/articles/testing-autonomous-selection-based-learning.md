@@ -222,7 +222,7 @@ is separated from the evidence visible only to the scorer.
 
 ## Where to go next
 
-- [Deployment-Time Machine Learning: LLM-Selected Updates Without a Single Score](./continual-learning-with-fixed-model-weights-llm-selected-updates.md)
+- [Continual Learning with Fixed Model Weights: LLM-Selected Updates Without a Single Score](./continual-learning-with-fixed-model-weights-llm-selected-updates.md)
   — why a change to the system’s own method can close a learning loop, and
   which further gains require separate evidence.
 - [Can an LLM Judge Which Changes Are Worth Making?](./can-an-llm-judge-which-changes-are-worth-making.md)

@@ -2,7 +2,7 @@
 description: "A claim gains provisional fit when withholding or replacing it changes proposal, diagnosis or recovery and its use survives later demands; this selects without a complete oracle but can confirm the system's own misconceptions"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, deploy-time-learning, evaluation, self-improving-systems, theory-builder, improvement-loop]
+tags: [learning-theory, continual-learning, evaluation, self-improving-systems, theory-builder, improvement-loop]
 ---
 
 # System use is an initial selection environment when theory fit lacks a fixed oracle

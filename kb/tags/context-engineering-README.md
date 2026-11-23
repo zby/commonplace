@@ -33,4 +33,4 @@ This tag gathers work on getting the right knowledge into a bounded LLM context 
 
 - [Agent memory](./agent-memory-README.md) - the retention side: what agents keep across sessions and how it is activated; most memory-requirements notes carry both tags
 - [Computational model](./computational-model-README.md) - the bounded-call substrate context engineering operates on, including framework-owned loops and when scheduling must become explicit
-- [Deploy-time learning](./deploy-time-learning-README.md) - the post-release change that context machinery helps absorb without retraining
+- [Continual learning](./continual-learning-README.md) - the post-release change that context machinery helps absorb without retraining

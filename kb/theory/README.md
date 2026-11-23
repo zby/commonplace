@@ -2,7 +2,7 @@
 
 The theory collection of the Commonplace KB: transferable claims, mechanisms, definitions, and synthesis about how agent-operated knowledge bases — LLM wikis — should be built and operated. This is the theory the rest of the repository runs on; the methodology these notes describe is what agents follow to maintain this wiki.
 
-The central thread is [deploy-time learning](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — how deployed AI systems improve through structured knowledge that accumulates alongside the code — developed through [constraining](./definitions/constraining.md), source-derived reshaping, and the [discovery lifecycle](./definitions/discovery-lifecycle.md).
+The central thread is [continual learning](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — how deployed AI systems improve through structured knowledge that accumulates alongside the code — developed through [constraining](./definitions/constraining.md), source-derived reshaping, and the [discovery lifecycle](./definitions/discovery-lifecycle.md).
 
 ## Navigation
 

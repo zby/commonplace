@@ -29,6 +29,18 @@ The operator chose to retire `complete` from tag heads. In the operator’s expe
 
 [ADR 141](../../reference/adr/141-list-tag-members-by-collection.md) replaces `participating:` with generated groups. The exact listing includes editorial picks and tagged source analyses, but skips workflow state and source snapshots before traversal. The checkout's `continual-learning` group gained two existing source ingests alongside 28 theory artifacts without retagging. The operator removed the headless `foundations` tag from the Ashby source review; its `computational-model` tag remains.
 
+## Decision: one route for continual learning
+
+Retire the separate `deploy-time-learning` tag. Its distinction from `continual-learning` did not help navigation. Keep timing in the claim when it matters, not as a sub-tag or a dedicated navigation section. The mainstream term needs no new KB definition.
+
+Review mentions separately from tag assignments. From the checkout root, `git grep -inEi 'deploy(ment)?[- ]time[- ]learning'` finds old labels, domains, discussion and historical paths without walking snapshots or local run data. Also check split-line and typographic variants. A hit is not automatically an edit:
+
+- In authored explanations, say what changes and when. For instance, a contrast between a trained policy and a retained instruction is a contrast between mechanisms, not a contrast with continual learning. Preserve the narrower claim.
+- For link labels inherited from an old note title, name the actual destination. Review source analysis and source-specific search terms separately from verbatim quotations, which must not be rewritten.
+- Keep historical filenames, redirect keys, retained evidence, and published versions intact. Inspect current workshop instructions separately from captured plans and logs.
+
+The tag and navigation migration is distinct from finishing this prose review. Start the remaining pass with theory notes citing the fixed-model-weights note and the source ingests that contrast weights with inspectable artifacts.
+
 ## Closure
 
 Close when the corrected maintenance instruction has been used, the audit findings have been repaired or explicitly deferred, and source tagging works for ongoing ingestion with a recorded disposition for the backlog. Record any proposed changes to which artifacts authors should tag and why. Verify that affected searches return the intended kinds of artifacts and that generated listings agree with exact membership queries and no instruction treats a curated head as exhaustive. Keep findings, newly discovered dependencies and unresolved decisions here while work is active; extract lasting rules into their owning contracts and instructions before removing the workshop and its active-list entry.

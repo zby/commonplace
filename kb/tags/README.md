@@ -11,14 +11,14 @@ For current-state documentation about the live Commonplace system rather than tr
   - [Improvement loop](./improvement-loop-README.md) — the proposal-selection architecture: search control, evaluation, retention
   - [Reflection](./reflection-README.md) — reflective systems: addressability, second-order lessons, graded coverage
   - [Warranted autonomy](./warranted-autonomy-README.md) — which decisions a computational actor is warranted to take over, and how far
-  - [Continual learning](./continual-learning-README.md) — how a deployed system keeps learning outside model weights
+
   - [Theory builder](./theory-builder-README.md) — an earlier definition, due for rewriting
 - [Architecture](./architecture-README.md) — responsibility boundaries, state, control planes, and interfaces in agent-operated KBs and runtimes
   - [Commonplace architecture](./commonplace-architecture-README.md) — Commonplace-specific structure, installation, storage choices, subsystem boundaries, and design proposals
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
   - [Robust comparison](./robust-comparison-README.md) — comparing two versions across every measure compatible with the purpose of the work
-- [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by six child tags (enforced), so its README routes rather than enumerates:
-  - [Deploy-time learning](./deploy-time-learning-README.md) — what deployed use reveals and how people and systems respond
+- [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve
+  - [Continual learning](./continual-learning-README.md) — learning across successive experiences, in model weights or elsewhere in the system
   - [Constraining](./constraining-README.md) — narrowing interpretation space, codification, relaxing
   - [Discovery](./discovery-README.md) — positing generals, recognizing instances; explanatory-reach
   - [Artifact analysis](./artifact-analysis-README.md) — the four-field vocabulary for retained artifacts

@@ -25,4 +25,4 @@ This tag gathers external systems that learn from their own agent traces: memory
 
 - [agent-memory](./agent-memory-README.md) — the memory architecture the distilled stage lands in
 - [self-improving-systems](./self-improving-systems-README.md) — the theory of systems that change their own organization; trace-learning systems are its largest external casebook
-- [deploy-time-learning](./deploy-time-learning-README.md) — the post-release change these loops are built to absorb
+- [continual-learning](./continual-learning-README.md) — the post-release change these loops are built to absorb

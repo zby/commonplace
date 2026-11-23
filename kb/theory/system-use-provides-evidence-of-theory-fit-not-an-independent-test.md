@@ -2,7 +2,7 @@
 description: "Consequences of using a claim in a live system show its fit and causal usefulness in the working theory; they add to its independent test record only where the use could have gone against the claim"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, deploy-time-learning, evaluation, self-improving-systems, theory-builder]
+tags: [learning-theory, evaluation, self-improving-systems, theory-builder]
 ---
 
 # System use provides evidence of theory fit and causal usefulness, not an independent test

@@ -19,32 +19,28 @@ source_notes:
   - kb/theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md
 ---
 
-# Deployment-Time Machine Learning: LLM-Selected Updates Without a Single Score
+# Continual Learning with Fixed Model Weights: LLM-Selected Updates Without a Single Score
 
 > **Draft.** The claims and structure of this article may change. Comments
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-Standard machine learning updates opaque numerical weights during training,
-driven directly by a scalar loss or reward. Open-ended knowledge work
-rarely comes with a single score that captures what matters, because gains
-and losses fall on different tasks and different people—whether the work is
-research synthesis, curating a knowledge base, reviewing technical
-documents, applying operational policies, or maintaining software.
+An agent can finish a task with its model weights unchanged and still be
+better prepared for the next one. Suppose it misses a build failure because
+its instructions tell it to skip tests on documentation edits. Fixing the
+broken build helps one repository. Changing how the agent chooses tests
+could help on the next repository too.
 
-Yet a deployed agent system can still learn after training while its model
-weights stay fixed
-([deployment-time learning with fixed weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md)).
-Between tasks, it updates what it retains—procedures, routing rules, review
-criteria, explanatory notes, and scripts—by proposing changes, evaluating
-whether they make later work better, and rejecting weak ones. Because
-proposing updates is costly, evaluation needs only a local comparison among
-the few candidates at hand rather than a global score ranking every
-possible state
+In this account of [learning with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md),
+what changes between tasks is a procedure, routing rule, review criterion,
+note, or script that the agent will use again. The hard part is deciding
+which change to keep. Running more tests may prevent failures but delay
+unrelated work. The system needs evidence to choose among the options it
+actually faces, not a single score ranking every possible state
 ([local comparison suffices](../theory/selection-based-learning-needs-only-a-local-comparison.md)).
 
 This article makes one empirical bet and two conditional arguments about
-such a deployment-time learning loop for open-ended knowledge work. The bet
+this way of learning across tasks for open-ended knowledge work. The bet
 is that a large language model (LLM) can help find candidates and
 discriminating checks, and select among them well enough that later work
 improves without a person judging each update. If the bet holds, a fully
@@ -55,15 +51,9 @@ bounded, testable explanations of what it learned.
 
 ## One failure, two repairs
 
-To see the loop clearly, start with a concrete build-maintenance case—where
-diffs and replay tests make every causal step easy to inspect—and then look
-at the exact same pattern in prose knowledge work.
-
-Take a hypothetical deployed agent system that maintains build pipelines
-across several repositories. Its test-selection workflow skips build tests
-for edits it classifies as documentation-only. One such edit changes a
-repository's README, and the build breaks: the packaging step reads that
-README to generate the package description.
+In the hypothetical build failure, the documentation edit changes a README
+that the packaging step reads to generate the package description. Consider
+two ways an agent maintaining pipelines across repositories could respond.
 
 **The first repair fixes the work product.** The agent diagnoses the
 failure, adds a test that builds the package, ships the fix, and closes the
@@ -134,8 +124,8 @@ The second repair in both cases has the structure of
 [selection-based learning](../theory/definitions/selection-based-learning.md):
 a change to what the system retains for its later work is proposed,
 evaluated on whether it makes that work better, and can be rejected. Unlike
-a direct gradient update—where a scalar loss determines the next weights
-without proposing or rejecting a candidate—selection admits or rejects
+a gradient step that adjusts weights to reduce a training loss, the loop
+here admits or rejects
 discrete updates to the system's retained store of instructions, policies,
 notes, or scripts. Because the deployed system does the selecting itself, routes each update
 through inspectable instructions or scripts that govern its later work
@@ -205,7 +195,7 @@ well as floating-point weights. Reading the lesson this way is an
 interpretation; Sutton's own essay does not address representation, and in
 later work he argues for continual weight updates.
 
-The deployment-time loop is compatible with the lesson only on one
+This proposed loop is compatible with the lesson only on one
 condition: additional computation does the domain-specific discovery and
 selection. Computation must diagnose the recurring failure, generate
 candidate methods and discriminating checks, and reach the verdict, rather
