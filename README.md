@@ -36,7 +36,15 @@ See [INSTALL.md](./INSTALL.md) for the full setup flow, [Getting started](./kb/r
 
 ### Consult the research with your agent
 
-To draw on this KB's methodology without installing anything, point your agent at the [rendered site](https://zby.github.io/commonplace/) or this repository when designing agentic systems, context engineering, memory, or deployment-time learning (starting at [`kb/tags/README.md`](./kb/tags/README.md)).
+You can ask an agent to consult this repository or the [rendered site](https://zby.github.io/commonplace/) without installing anything. For example:
+
+> Use https://github.com/zby/commonplace to advise the author of <project URL>, covering quick fixes and structural improvements.
+
+Start with a concrete decision or failure in the target project. Use the [topic guides](./kb/tags/README.md) to find relevant [theory](./kb/theory/). Each guide links selected entries.
+
+- Much of Commonplace's design draws on the theory here. When a claim fits your project's problem, use the [reference docs](./kb/reference/README.md) and [code](./src/commonplace/) to see how Commonplace put it into practice and which parts you could adapt.
+- Browse [ongoing investigations](./kb/work/) for questions Commonplace is still exploring.
+- For comparisons, consult [external-system reviews](./kb/agentic-systems/) and [analyses](./kb/agentic-system-analyses/). Check which observations support a broader claim and which depend on that system's design.
 
 ### Develop Commonplace
 
