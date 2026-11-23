@@ -269,7 +269,7 @@ def test_local_and_document_routes_are_explicit_and_absolute(tmp_path):
     assert auto.target(documents) == documents
 
 
-@pytest.mark.parametrize("failure", ["install", "startup", "behind"])
+@pytest.mark.parametrize("failure", ["install", "behind"])
 def test_preparation_failure_retains_evidence_without_alternate_method(command_origin, capsys, tmp_path, monkeypatch, failure):
     origin, _, _ = command_origin
     before = git(origin, "rev-parse", "HEAD")
@@ -277,8 +277,6 @@ def test_preparation_failure_retains_evidence_without_alternate_method(command_o
         def fail(tree):
             raise ValueError("fixture install refusal")
         monkeypatch.setattr(preparation, "_install", fail)
-    elif failure == "startup":
-        (origin / "AGENTS.md").write_text("dirty startup")
     else:
         git(origin, "checkout", "--quiet", "--detach", "HEAD~1")
     state = tmp_path / "state"
@@ -293,7 +291,7 @@ def test_preparation_failure_retains_evidence_without_alternate_method(command_o
         assert not (tree / STATE_ROOT).exists()
     else:
         assert not state.exists()
-        assert "startup instructions" in err or "behind" in err
+        assert "behind" in err
 
 
 def scheduler_state(tmp_path, count=5):

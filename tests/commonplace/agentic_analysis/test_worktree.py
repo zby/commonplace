@@ -77,6 +77,8 @@ def test_dirty_default_uses_clean_committed_bytes_and_leaves_origin_alone(origin
     (origin / "note.md").write_text("Pending edit\n")
     git(origin, "add", "note.md")
     (origin / "untracked.md").write_text("Not in the analysis\n")
+    (origin / "AGENTS.md").write_text("Local instructions\n")
+    _startup_change(origin, "ignored")
     before = git(origin, "status", "--porcelain")
 
     prepared = iso.prepare_worktree(origin, name="example")
@@ -92,6 +94,9 @@ def test_dirty_default_uses_clean_committed_bytes_and_leaves_origin_alone(origin
     assert iso.preparation_for(tree) == prepared
     assert (tree / "note.md").read_text() == "Committed note\n"
     assert not (tree / "untracked.md").exists()
+    assert (tree / "AGENTS.md").read_text() == "Committed instructions\n"
+    assert not (tree / ".pi/settings.json").exists()
+    assert (origin / ".pi/settings.json").is_file()
     assert git(tree, "status", "--porcelain") == ""
     assert git(tree, "rev-parse", "--show-toplevel") == str(tree)
     assert git(origin, "status", "--porcelain") == before

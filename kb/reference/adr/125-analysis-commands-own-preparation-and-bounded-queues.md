@@ -23,12 +23,9 @@ which effects belong to which input across interruption without supplying those
 bindings itself. Replacing an uncertain allocation can duplicate expensive work;
 seeing no controller PID cannot establish that its workers stopped.
 
-The implementation commission requires command-owned preparation and reporting,
-one bounded queue, and the startup-file and branch-freshness checks stated by
-the skill. ADR 118 deliberately removed origin-side checks because headless
-workers do not inherit the caller's loaded context. These new origin checks are
-an intake policy requested by this commission, not proof that origin context
-reaches a worker. Unrelated dirty content may still be excluded.
+Headless workers load project startup files from the prepared worktree.
+Rejecting local settings in the origin would block runs on files the workers
+never receive.
 
 ## Decision
 
@@ -61,7 +58,8 @@ terminal process-group signals reach its handler, not its preparation children.
 Low-level prepare/integrate callers keep group cancellation; they do not detach
 children without a drain owner.
 
-Preparation checks origin startup files against the selected commit. Default
+Startup files are checked against the selected commit in the prepared worktree,
+not in the origin. Default
 revision selection refuses a HEAD behind or diverging from the locally known
 default branch, without fetching. Another revision is an operator choice.
 The prepared worktree's existing code, cleanliness and method guards remain

@@ -14,8 +14,8 @@ status: accepted
 
 **Amended by:** [ADR 125](./125-analysis-commands-own-preparation-and-bounded-queues.md) (2026-11-07):
 commands own isolated preparation, reporting and a durable bounded queue;
-origin startup and default-branch freshness checks apply at intake. The
-worktree-only origin policy and shell-loop batch below are historical.
+default-branch freshness is checked at intake. Startup checks apply only to
+the prepared worktree. The shell-loop batch below is historical.
 
 ## Context
 

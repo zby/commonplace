@@ -3,8 +3,7 @@
 A run's method is the commit its worktree was prepared at. These checks keep
 the running code, the worktree's startup instructions and the worktree tied
 to that commit, and move a finished result back to ``main`` as one merge.
-The origin checkout is not checked beyond what Git needs: a headless run is
-a process, and nothing the origin's session loaded reaches a worker.
+Startup checks apply to the prepared worktree, where headless workers run.
 """
 
 from __future__ import annotations
@@ -237,7 +236,6 @@ def select_method(origin: Path, revision: str | None = None) -> tuple[Path, str]
     commit = run_command(
         ["git", "rev-parse", "--verify", "--end-of-options", f"{revision or 'HEAD'}^{{commit}}"], cwd=origin,
     )
-    require_committed_startup(origin, commit)
     if revision is None:
         remote = _git(origin, "symbolic-ref", "--quiet", "refs/remotes/origin/HEAD")
         candidates = [remote.stdout.strip()] if remote.returncode == 0 else ["refs/heads/main", "refs/heads/master"]

@@ -77,8 +77,8 @@ worktree-placement decisions. Fixtures do not establish live capacity.
 
 `analyse` and `batch` prepare dedicated, commit-bound worktrees and invoke their
 own commands with explicit working directories and environments. Keep the
-prepared method, code, lockfile and environment unchanged. The origin's unrelated
-dirty files are excluded; startup changes or a stale default method stop setup.
+prepared method, code, lockfile and environment unchanged. Uncommitted origin files, including startup settings, are not copied.
+A stale default method stops setup. Startup checks run in the prepared worktree.
 The command retains failed preparations and never chooses another destination
 or revision automatically. After analysis children drain, new controllers
 integrate complete publications serially through their pinned commands. The
