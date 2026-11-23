@@ -74,7 +74,7 @@ This is evidence that the automated loop is buildable for benchmark tasks with f
 
 These cases expose the same unresolved oracle problem: **we lack a validated way to judge whether mutations improve evolving, open-ended KB question-answering.** Usage data could supply part of that signal. Composite structural and LLM signals or task-grounded evaluations are other possible routes, but none is yet validated for this setting. Until one is, manual curation remains the appropriate baseline.
 
-Commonplace now states a bet about this problem. [Selection-based learning](./definitions/selection-based-learning.md) needs a comparison between the KB with a mutation and the KB without it, not a score for every mutation. The [lead article](../articles/deployment-time-machine-learning-llm-selected-updates.md) bets that a fixed-weight language model can make that comparison from the KB's stated purpose. The bet is untested. If it holds, what is missing is a validated judge of single changes, not an oracle that scores the whole KB.
+Commonplace now states a bet about this problem. [Selection-based learning](./definitions/selection-based-learning.md) needs a comparison between the KB with a mutation and the KB without it, not a score for every mutation. The [lead article](../articles/continual-learning-with-fixed-model-weights-llm-selected-updates.md) bets that a fixed-weight language model can make that comparison from the KB's stated purpose. The bet is untested. If it holds, what is missing is a validated judge of single changes, not an oracle that scores the whole KB.
 
 ## Connection to codification
 

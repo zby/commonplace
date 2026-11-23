@@ -17,7 +17,7 @@ progress by a removal test with stated failure conditions.
 
 - Anchor on selection-based learning as defined in
   `kb/theory/definitions/selection-based-learning.md` and on the lead article
-  `deployment-time-machine-learning-llm-selected-updates.md`.
+  `continual-learning-with-fixed-model-weights-llm-selected-updates.md`.
 - Early in the body, state plainly that the full machinery being built is a
   reflective self-improving system, using the lead article's phrase
   "reflective self-improvement by selection" and linking the reflective-system

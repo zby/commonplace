@@ -32,7 +32,7 @@ source_notes:
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-[The lead article](./deployment-time-machine-learning-llm-selected-updates.md)
+[The lead article](./continual-learning-with-fixed-model-weights-llm-selected-updates.md)
 bets that a deployed agent system can learn while its model weights stay
 fixed, with an LLM selecting which updates to keep. The learning it has in
 mind is

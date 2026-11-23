@@ -20,7 +20,7 @@ source_notes:
 A deployed agent system can improve with fixed model weights by keeping the
 updates that win: it proposes changes to its own procedures, checks them,
 and retains the ones that make later work better. The
-[lead article](./deployment-time-machine-learning-llm-selected-updates.md)
+[lead article](./continual-learning-with-fixed-model-weights-llm-selected-updates.md)
 describes that loop. This article asks a narrower question for a
 maintainer deciding what to build: is it worth paying to also retain an
 explanation of *why* a winning patch works, and to keep testing it? We see

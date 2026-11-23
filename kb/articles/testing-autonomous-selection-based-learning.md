@@ -30,7 +30,7 @@ its own routing instruction, and uses the new instruction on later drafts.
 Now there are two questions to test: did the system change how it does its
 next job, and did those jobs go better than they would have otherwise?
 
-The [lead article](./deployment-time-machine-learning-llm-selected-updates.md)
+The [lead article](./continual-learning-with-fixed-model-weights-llm-selected-updates.md)
 bets that a large language model (LLM) can help find candidate changes and
 discriminating checks, and can select updates without a person choosing
 each one. Commonplace, an agent-operated knowledge base, gives us a place
@@ -222,7 +222,7 @@ is separated from the evidence visible only to the scorer.
 
 ## Where to go next
 
-- [Deployment-Time Machine Learning: LLM-Selected Updates Without a Single Score](./deployment-time-machine-learning-llm-selected-updates.md)
+- [Deployment-Time Machine Learning: LLM-Selected Updates Without a Single Score](./continual-learning-with-fixed-model-weights-llm-selected-updates.md)
   — why a change to the system’s own method can close a learning loop, and
   which further gains require separate evidence.
 - [Can an LLM Judge Which Changes Are Worth Making?](./can-an-llm-judge-which-changes-are-worth-making.md)
