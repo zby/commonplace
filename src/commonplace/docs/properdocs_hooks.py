@@ -270,7 +270,7 @@ def _append_generated_tail(markdown: str, page, config) -> str:
     section = index_generated.generated_section_for_head(
         page_path, curated_text=markdown, tag_space=_tag_space(root)
     )
-    # A complete-marked head curates every member, leaving the generated
+    # A selective head may already link every member, leaving the generated
     # section as a bare heading — skip it rather than render an empty shell.
     if not section or "\n- " not in section:
         return markdown

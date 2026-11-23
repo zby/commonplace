@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the kb-maintenance tag — keeping an agent-operated knowledge base healthy as it grows: three child areas (review-system, claims-and-grounding, curation) plus the dynamics, evidence, and open proposals that cut across them"
 type: types/tag-readme.md
-complete: true
 ---
 
 # KB maintenance

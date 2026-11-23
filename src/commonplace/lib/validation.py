@@ -23,8 +23,8 @@ from commonplace.lib.directory_artifact import (
 )
 from commonplace.lib.directory_layout import Finding, layout_findings
 from commonplace.lib.index_generated import (
-    TagSpace,
-    collect_tag_space,
+    TagCatalog,
+    collect_tag_catalog,
     head_path,
     tag_for_head,
     tags_collection,
@@ -173,7 +173,7 @@ class ValidationRun:
     _notes: dict[Path, tuple[ParsedNote | None, str | None]] = field(
         default_factory=dict, init=False
     )
-    _tag_space: TagSpace | None = field(default=None, init=False)
+    _tag_catalog: TagCatalog | None = field(default=None, init=False)
     _git_ignored: dict[Path, bool] = field(default_factory=dict, init=False)
     _verbatim_quotes: dict[Path, list[QuoteResult]] = field(
         default_factory=dict, init=False
@@ -306,14 +306,14 @@ class ValidationRun:
         limit = result.data.get(UNQUOTED_SOURCE_LIMIT_FIELD) if result.data else None
         return limit if isinstance(limit, int) and not isinstance(limit, bool) else None
 
-    def tag_space(self) -> TagSpace:
-        """Scan the KB's tag space once per run (ADR 089)."""
-        if self._tag_space is None:
-            self._tag_space = collect_tag_space(
+    def tag_catalog(self) -> TagCatalog:
+        """Read participation and head filenames once; validation does not need member lists."""
+        if self._tag_catalog is None:
+            self._tag_catalog = collect_tag_catalog(
                 self.repo_root,
                 load_document=lambda path: self.load_document(path).document,
             )
-        return self._tag_space
+        return self._tag_catalog
 
     def verbatim_quotes(self, parsed: ParsedNote) -> list[QuoteResult]:
         """Resolve a note's verbatim quotes once for every check that reads them."""
@@ -409,48 +409,6 @@ class ValidationRun:
         key = path.resolve()
         self.prime_git_ignored((key,))
         return self._git_ignored[key]
-
-    def impacted_marked_tag_readmes(self, paths: tuple[Path, ...]) -> list[Path]:
-        """Return marked tag READMEs whose claims may be affected by paths."""
-        seen = {path.resolve() for path in paths}
-        impacted: list[Path] = []
-
-        for path in paths:
-            try:
-                parsed, parse_error = self.parse_note(path)
-            except (OSError, UnicodeError, ValueError):
-                continue
-            if parse_error or parsed is None or parsed.document.frontmatter is None:
-                continue
-            tags = parsed.document.frontmatter.get("tags")
-            if not isinstance(tags, list):
-                continue
-            tag_space = self.tag_space()
-            if not tag_space.is_participating(path):
-                continue
-
-            for tag in tags:
-                if not isinstance(tag, str):
-                    continue
-                readme = tag_space.heads.get(tag)
-                if readme is None or readme in seen:
-                    continue
-                readme_parsed, readme_error = self.parse_note(readme)
-                if (
-                    readme_error
-                    or readme_parsed is None
-                    or canonical_type_identity(readme_parsed.profile)
-                    != TAG_README_TYPE
-                ):
-                    continue
-                frontmatter = readme_parsed.document.frontmatter or {}
-                if frontmatter.get("complete") is not True:
-                    continue
-
-                impacted.append(readme)
-                seen.add(readme)
-
-        return impacted
 
     def inbound_info(self, paths: tuple[Path, ...]) -> dict[Path, bool]:
         """Build authored-link inbound presence once for this evaluation."""
@@ -570,9 +528,9 @@ class ValidationRun:
         return results
 
     def evaluate(self) -> ValidationRunResults:
-        """Expand explicit impacts and evaluate every anchor in this run."""
+        """Evaluate the requested anchors in this run."""
         notes = tuple(path for path in self.paths if path.suffix == ".md" and not path.is_dir())
-        paths = self.paths + tuple(self.impacted_marked_tag_readmes(notes))
+        paths = self.paths
         directories = {path for path in paths if path.is_dir()}
         paths = tuple(dict.fromkeys(
             path for path in paths if path.parent not in directories or path.is_dir()
@@ -1215,16 +1173,6 @@ def validate_ingest_contract(results: CheckResults, content: str, path: Path) ->
             warn(f"'{key}' is {metadata[key]!r}, but the snapshot has {value!r}")
 
 
-def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
-    """Resolve the note's local markdown links to absolute paths."""
-    targets: set[Path] = set()
-    for link in parsed.document.links:
-        target = resolve_local_link_target(parsed.path, link)
-        if target is None or target.suffix != ".md":
-            continue
-        targets.add(target)
-    return targets
-
 
 @type_rule("types/snapshot.md")
 def _snapshot_body_rule(
@@ -1285,10 +1233,7 @@ def validate_type_spec_definition(
 def validate_tag_readme(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    """Enforce the tag-readme type contract: the head's place and identity
-    (ADR 089), weight gates, and the optional `complete` mark, which claims the
-    head reaches every member in one hop (ADR 026 as amended by ADR 090)."""
-    fm = parsed.document.frontmatter or {}
+    """Enforce the head's location, filename identity and size."""
 
     size = len(parsed.content.encode("utf-8"))
     entry_count = len(re.findall(r"^\s*- \[", parsed.content, re.MULTILINE))
@@ -1317,45 +1262,6 @@ def validate_tag_readme(
         )
         return
     results.passes.append(f"tag head: names the tag `{tag}` by its filename")
-
-    tag_space = run.tag_space()
-    if tag_space.declaration_error:
-        results.warns.append(
-            f"tag space: {tag_space.declaration_error} — marks checked against no members"
-        )
-    members = tag_space.notes_by_tag.get(tag, [])
-
-    if fm.get("complete") is True:
-        linked = _linked_md_targets(parsed)
-        linked_heads = [
-            child
-            for target in linked
-            if target.parent == expected_dir and (child := tag_for_head(target))
-        ]
-        covered = {
-            path.resolve()
-            for child in linked_heads
-            for path, _, _ in tag_space.notes_by_tag.get(child, [])
-        }
-        missing = [
-            path
-            for path, _, _ in members
-            if path.resolve() not in linked
-            and path.resolve() not in covered
-            and path.resolve() != parsed.path.resolve()
-        ]
-        if missing:
-            for path in missing:
-                results.fails.append(
-                    f"complete mark: missing entry for {path.relative_to(run.repo_root).as_posix()} — "
-                    "link it with a context phrase, link its tag's head, or drop the mark; "
-                    f"{_TAG_README_FIX_HINT}"
-                )
-        else:
-            results.passes.append(
-                f"complete mark: all {len(members)} members linked or reached "
-                f"through {len(linked_heads)} linked heads"
-            )
 
 
 @type_rule("articles/types/article.md")
@@ -1534,14 +1440,14 @@ def validate_tag_heads(
     tags = fm.get("tags")
     if not isinstance(tags, list) or not tags:
         return
-    tag_space = run.tag_space()
-    if tag_space.declaration_error and not tag_space.participating:
-        results.warns.append(f"tags unchecked: {tag_space.declaration_error}")
+    catalog = run.tag_catalog()
+    if catalog.declaration_error and not catalog.participating:
+        results.warns.append(f"tags unchecked: {catalog.declaration_error}")
         return
-    if not tag_space.is_participating(parsed.path):
+    if not catalog.is_participating(parsed.path):
         return
     headless = [
-        tag for tag in tags if isinstance(tag, str) and tag not in tag_space.heads
+        tag for tag in tags if isinstance(tag, str) and tag not in catalog.heads
     ]
     for tag in headless:
         results.fails.append(
@@ -1733,8 +1639,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         checks (link health, verbatim quotes), which the schema cannot express
         because JSON Schema cannot dereference.
     `type: <name>`
-        Imperative rules the type owns. May dereference (tag-readme marks are
-        re-derived from the collection), which is why type-owned and referential
+        Imperative rules the type owns. May dereference (type specs resolve their schemas), which is why type-owned and referential
         are independent axes, not two ends of one.
     `schema`
         Declarative constraints the type's schema owns, over frontmatter *and*

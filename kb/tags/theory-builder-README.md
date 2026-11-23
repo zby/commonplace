@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the theory-builder tag — systems that apply conjecture and refutation to stated theories: addressable and tentative theory, criticism, theory fit, program theory, reach-assessment"
 type: types/tag-readme.md
-complete: true
 ---
 
 # theory-builder

@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the deploy-time-learning tag — what deployed use reveals beyond design and testing, and how people or systems respond through maintenance, adaptation, and learning from experience"
 type: types/tag-readme.md
-complete: true
 ---
 
 # deploy-time-learning

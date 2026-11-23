@@ -11,6 +11,8 @@ status: accepted
 **Date:** 2026-06-10
 **Amended by:** [ADR 090](./090-one-completeness-mark-reaches-members-in-one-hop.md) — `covered_by` retired; `complete` now means every member is reached in one hop, directly or through a linked head. [ADR 089](./089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) — heads moved to `kb/tags/`, `index_source`/`index_key` retired, marks range over the participating collections, the `tags-README.md` hub replaced by `kb/tags/README.md`.
 
+**Amended by:** [ADR 140](./140-tag-heads-are-selective.md) retires the remaining completeness mark. The head type and weight gates remain.
+
 ## Context
 
 ADR 025 moved complete generated listings (`dir-index.md` pages and per-tag `## Other tagged notes` tails) to build-time-only, keeping curated heads committed for agents. That left the `index` type doing two jobs at once: being an *index* (complete enumeration) and being an *introduction to a tag* (the retired "area" role from ADR 004). The bundle worked at small scale; collection growth forces the general design move of separating the two contracts.

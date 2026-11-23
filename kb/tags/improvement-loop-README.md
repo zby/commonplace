@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the improvement-loop tag — proposal-selection loops: search for candidates, reject-capable evaluation, operative retention, search control, backtracking, and oracle quality"
 type: types/tag-readme.md
-complete: true
 ---
 
 # improvement-loop

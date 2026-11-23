@@ -2,12 +2,12 @@
 description: "A tag head carries one mark, complete, meaning every member is linked from the head or carries a tag whose head is linked from it; covered_by and its typed child list are retired"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 090-One completeness mark reaches members in one hop
 
-**Status:** accepted
+**Status:** superseded by [ADR 140](./140-tag-heads-are-selective.md); the one-hop mark below describes the former contract.
 **Date:** 2026-09-26
 **Amends:** [ADR 026](./026-tag-readme-type-with-completeness-and-coverage-marks.md) (retires `covered_by`, redefines `complete`) and [ADR 089](./089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) (point 6, which kept both marks)
 

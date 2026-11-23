@@ -28,8 +28,7 @@ and carries no type.
 ## Participating collections
 
 The `participating:` list in this file's frontmatter names the collections
-whose `tags:` lines are membership claims. Every `complete`
-mark, the generated listing on the site, and the head requirement range over
+whose `tags:` lines are membership claims. The generated listing on the site, and the head requirement range over
 exactly those collections, through one collector. Tags on artifacts elsewhere
 (`work`, `sources`, `types`, and the proposal archive under
 `reference/proposals/archive/`) are not read by membership consumers, nor are tags inside a
@@ -42,7 +41,7 @@ reference proposals, and by evidence notes in `reports/retained/`. Instructions,
 through their own indexes and carry no tags; that is a rule, not a gap
 (operator decision, 2026-09-26).
 
-Tracked source analyses may reuse existing tags for explicit source-scoped search without joining the participating set. Their assignments follow the heads' inclusion conditions but do not affect generated member listings or `complete` checks. A complete head is not an exhaustive source index. Membership validation does not check source tag heads or assignment fit; authors must check them.
+Tracked source analyses may reuse existing tags for explicit source-scoped search without joining the participating set. Their assignments follow the heads' inclusion conditions but do not affect generated member listings. A head is not a source index. Membership validation does not check source tag heads or assignment fit; authors must check them.
 
 ## Tag assignment
 
@@ -71,16 +70,9 @@ without the full listing. Keep heads small: the type warns past 8 KB
 and fails past 16 KB. Prefer splitting a large tag into child tags, each with
 its own head, over grouping inside one head.
 
-## Marks
+## Reading a head
 
-`complete: true` is a validated cache of membership, enforced or omitted: every
-member is linked from the head or carries a tag whose head is linked from it,
-so the head reaches every member in one hop ([ADR 090](../reference/adr/090-one-completeness-mark-reaches-members-in-one-hop.md)).
-Children are the heads the body links; no list names them. Drop the mark
-rather than force a weak child tag or a tag created to hold a few notes;
-listing those members by hand also satisfies it. The [`tag-readme` type](../types/tag-readme.md) carries the
-maintenance procedure; [`maintain-curated-indexes`](../instructions/maintain-curated-indexes.md)
-carries the audit workflow.
+A tag head is selective. It introduces the topic and recommends where to start. For every member, use the [exact membership query](../types/tag-readme.md#checking-exact-membership) or the published listing.
 
 ## Outbound links
 

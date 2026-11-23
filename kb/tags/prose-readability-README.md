@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the prose-readability tag — how prose is made easy for a reader to follow at sentence and paragraph level, and how it is edited for that without changing its claims; evidence from Commonplace rewrite runs"
 type: types/tag-readme.md
-complete: true
 ---
 
 # Prose readability

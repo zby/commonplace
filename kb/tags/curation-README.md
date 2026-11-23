@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the curation tag — keeping indexes, tag heads, and the note set usable as the KB grows: index recall, quality scores, staleness signals, retirement, and hygiene operations"
 type: types/tag-readme.md
-complete: true
 ---
 
 # curation
@@ -41,6 +40,6 @@ How the KB's indexes, tag heads, and body of notes stay usable as it grows: what
 - [kb-maintenance](./kb-maintenance-README.md) — the parent: curation is the collection-level half of keeping the KB healthy
 - [review-system](./review-system-README.md) — sibling: LLM review of individual notes
 - [claims-and-grounding](./claims-and-grounding-README.md) — sibling: whether a note's claims hold and are supported
-- [document-system](./document-system-README.md) — the tag-README type and validation that enforce the completeness mark
+- [document-system](./document-system-README.md) — the tag-README type and validation of tag heads
 - [observability](./observability-README.md) — shares the staleness and quality-signal notes
 - [links](./links-README.md) — the link graph that staleness detection and quality signals read

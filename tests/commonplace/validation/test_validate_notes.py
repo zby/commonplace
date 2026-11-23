@@ -526,7 +526,7 @@ def test_types_target_scans_all_type_spec_directories(tmp_path: Path) -> None:
     assert target.collection is None
 
 
-def test_note_target_also_validates_marked_tag_readmes(
+def test_note_target_checks_tag_existence_without_validating_head_contents(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
@@ -546,7 +546,7 @@ tags: [kb-design, unmarked]
     write(
         tmp_path / "kb" / "tags" / "kb-design-README.md",
         """---
-description: "Complete curated head for the kb-design tag"
+description: "Intentionally invalid head; validating its member must not validate the retired field"
 type: types/tag-readme.md
 complete: true
 ---
@@ -573,11 +573,10 @@ Orientation paragraph.
     exit_code = validate_notes.main(["--full", "kb/notes/tagged-note.md"])
     output = capsys.readouterr().out
 
-    assert exit_code == 1
+    assert exit_code == 0
     assert "=== VALIDATION: tagged-note.md ===" in output
-    assert "=== VALIDATION: kb-design-README.md ===" in output
+    assert "=== VALIDATION: kb-design-README.md ===" not in output
     assert "=== VALIDATION: unmarked-README.md ===" not in output
-    assert "complete mark: missing entry for kb/notes/tagged-note.md" in output
     assert "=== BATCH INFO ===" not in output
 
 

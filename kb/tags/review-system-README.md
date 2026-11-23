@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the review-system tag — LLM review of notes: gates and criteria, assays, verdict freshness and invalidation, review cost, and proposals for the review pipeline"
 type: types/tag-readme.md
-complete: true
 ---
 
 # review-system

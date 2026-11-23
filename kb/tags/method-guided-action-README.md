@@ -1,7 +1,6 @@
 ---
 description: "Curated head for method-guided-action — how an agent selects or acquires a method, brings it into use, and lets it guide decisions, including where that guidance ends"
 type: types/tag-readme.md
-complete: true
 ---
 
 # Method-guided action

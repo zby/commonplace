@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the software-factory tag — software factories, software houses, and factory development: family-specific production machinery, how agents build it, and what factory learning means"
 type: types/tag-readme.md
-complete: true
 ---
 
 # software-factory

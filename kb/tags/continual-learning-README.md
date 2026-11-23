@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the continual-learning tag — how a deployed AI system keeps learning outside model weights through retained prompts, rules, tools, and tests, and why that fits the Bitter Lesson"
 type: types/tag-readme.md
-complete: true
 ---
 
 # continual-learning

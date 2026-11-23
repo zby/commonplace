@@ -7,7 +7,7 @@ tags: [kb-maintenance, document-system, curation]
 
 # An enforced tag-README combines a MOC pattern with checked membership
 
-Within Commonplace, an **enforced tag-README** is a tag-README carrying at least
+The example below describes the design before [ADR 140](../reference/adr/140-tag-heads-are-selective.md) retired the mark. In that design, an **enforced tag-README** is a tag-README carrying at least
 one validator-enforced membership mark. It combines two distinct layers. Its
 curated orientation inherits Nick Milo's MOC pattern of contextual mapping. Its
 declared `complete` relation adds a separate membership contract
@@ -40,7 +40,7 @@ the tag is linked from the README or carries a tag whose head the README links,
 so the parent's membership is contained in the union of its direct links and
 the linked children's memberships: the README reaches every member in one hop.
 The validator re-derives the relation, and the [local
-contract](../types/tag-readme.md) permits completeness to be claimed only
+contract](../reference/adr/090-one-completeness-mark-reaches-members-in-one-hop.md) permits completeness to be claimed only
 through the enforced mark. These exact assertions
 are the machine-checked addition; they are not part of the inherited MOC
 premise.

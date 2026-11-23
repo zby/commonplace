@@ -33,7 +33,7 @@ def test_participating_declaration_is_read_and_checked(tmp_path: Path) -> None:
 # Drift guard over this checkout: every collection that tags anything is either
 # declared participating or deliberately outside the tag space. A new
 # collection that starts tagging without a declaration fails here rather than
-# silently falsifying a mark.
+# silently omitting its tagged artifacts from the published member lists.
 
 OUTSIDE_TAG_SPACE = frozenset({"work", "sources", "reports", "types", "articles", "tags"})
 TAGS_LINE = re.compile(r"^tags: \[[^\]]+\]", re.MULTILINE)

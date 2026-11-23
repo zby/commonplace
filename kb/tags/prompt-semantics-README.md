@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the prompt-semantics tag — what fixes the meaning of a prompt (an English requirement or an adopted model package) and how accurately that meaning can be predicted or inspected"
 type: types/tag-readme.md
-complete: true
 ---
 
 # prompt-semantics

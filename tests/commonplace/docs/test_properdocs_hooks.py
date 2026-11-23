@@ -24,13 +24,13 @@ def tag_space(root: Path, participating: str = "[notes]") -> Path:
     return tags
 
 
-def head(tags: Path, tag: str, marks: str = "") -> Path:
+def head(tags: Path, tag: str) -> Path:
     return write(
         tags / f"{tag}-README.md",
         f"""---
 description: "Curated head for {tag}"
 type: types/tag-readme.md
-{marks}---
+---
 
 # {tag}
 """,

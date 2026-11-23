@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the robust-comparison tag — comparing two versions across every measure compatible with the purpose of the work: necessary and possible preference, splitting a comparison, and deciding when it stays open"
 type: types/tag-readme.md
-complete: true
 ---
 
 # robust-comparison

@@ -13,7 +13,7 @@ PASS:
 - [base] link health: all local relative links resolve
 - [schema] type schema: note requirements satisfied
 FAIL:
-- [type: tag-readme] complete mark: missing entry for kb/theory/foo.md
+- [type: tag-readme] weight gate: head exceeds hard limit
 ```
 
 In one sentence: **a type declares what the document must contain; the framework checks that what it points at is really there.**
@@ -163,10 +163,10 @@ This page documents 1 and 2. The third is not a lesser mechanism: **a type spec'
 |---|---|---|---|
 | `base` | framework | imperative, applies to every typed note; repository-boundary, write-brief pairing, and collection-contract naming rules also cover bare text | yes — link health, archive boundary, tag heads, verbatim quotes |
 | `collection` | the collection | imperative, checks `unquoted-source-limit` where the nearest `COLLECTION.md` sets it (typed and bare text) | yes — resolves tracked-source links and verbatim quotes |
-| `type: <name>` | the type | imperative rules registered for that type | yes — tag-readme marks re-derive from the tag space; type specs resolve their declared schemas |
+| `type: <name>` | the type | imperative rules registered for that type | yes — type specs resolve their declared schemas |
 | `schema` | the type | declarative JSON Schema over the parsed document | **no** |
 
-**A type is not verified by its schema alone.** `tag-readme` proves it: its `complete` mark is checked by re-walking the participating collections declared in `kb/tags/COLLECTION.md` and re-deriving membership from every tagged artifact — imperative, dereferencing, and impossible to express in a schema. `type-spec` supplies a smaller example: `type-spec.schema.yaml` can constrain the `schema:` field's shape, but an imperative rule must follow a non-null path and load the declared schema. So *who owns a rule* and *whether it dereferences* are independent axes, which is why the table has no empty cells and why "schema versus everything else" is the wrong mental model.
+**A type is not verified by its schema alone.** For example, `type-spec.schema.yaml` can constrain the `schema:` field's shape, but an imperative rule must follow a non-null path and load the declared schema. So *who owns a rule* and *whether it dereferences* are independent axes, which is why the table has no empty cells and why "schema versus everything else" is the wrong mental model.
 
 Type-spec documents are ordinary validation artifacts. Collection validation includes local type specs, and `commonplace-validate types` runs the same base, type-rule, and schema pipeline over every type spec under the project's `kb/`, skipping subtrees under a validation-ignore marker. In this checkout that includes the library's global types; in an installed project the read-only library is not validated. There is no separate type-system validation pass.
 

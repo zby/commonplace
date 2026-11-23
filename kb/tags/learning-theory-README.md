@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the learning-theory tag — how systems learn, verify, and improve: accumulation, continual learning, verification, memory, and self-improvement, anchored on selection-based learning, with routes through its child areas"
 type: types/tag-readme.md
-complete: true
 ---
 
 # Learning theory

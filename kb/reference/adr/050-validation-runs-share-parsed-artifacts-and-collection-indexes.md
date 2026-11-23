@@ -10,6 +10,8 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-07-13
 
+**Amended by:** [ADR 140](./140-tag-heads-are-selective.md) removes marked-head impact selection. The shared validation run remains.
+
 ## Context
 
 Deterministic validation had one per-note pipeline in the library, but the CLI separately expanded impacted tag-READMEs, built the collection inbound-link graph, merged orphan findings, and checked collection structure. A collection sweep consequently parsed target artifacts three times — during impact selection, orphan calculation, and per-note validation — and each marked tag-README rescanned its collection independently.

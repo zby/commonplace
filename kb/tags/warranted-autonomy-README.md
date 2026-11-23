@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the warranted-autonomy tag — which decisions an AI agent is warranted to take over from humans, how oracles bound that, and how autonomy is measured"
 type: types/tag-readme.md
-complete: true
 ---
 
 # warranted-autonomy

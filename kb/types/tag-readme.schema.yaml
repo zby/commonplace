@@ -12,12 +12,13 @@ allOf:
           type:
             const: types/tag-readme.md
           complete:
-            type: boolean
+            not: {}
+            description: "Tag heads are selective; remove the retired complete field."
           # Retired fields are rejected by name so a stale copy cannot claim
           # the old relation or a second identity.
           covered_by:
             not: {}
-            description: "covered_by is retired (ADR 090): link the child heads in the body; `complete` counts them"
+            description: "covered_by is retired (ADR 090): link related heads in the body"
           index_source:
             not: {}
             description: "index_source is retired (ADR 089): a head is identified by its filename under kb/tags/"

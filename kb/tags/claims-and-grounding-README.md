@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the claims-and-grounding tag — claim titles, claim modality, ground truth and supersession, source grounding and quotes, and grounding evidence from review runs"
 type: types/tag-readme.md
-complete: true
 ---
 
 # claims-and-grounding

@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the links tag — linking theory, link labels and relationship semantics, link position and strength, backlinks, link-following versus search navigation, and lineage links"
 type: types/tag-readme.md
-complete: true
 ---
 
 # Links

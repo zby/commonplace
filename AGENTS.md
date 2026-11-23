@@ -71,7 +71,6 @@ First-mention glossing and linking in authored artifacts is governed by
 | Discovery lifecycle | [Discovery lifecycle](./kb/theory/definitions/discovery-lifecycle.md) |
 | Explanatory-reach | [Explanatory-reach](./kb/theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) |
 | Frontloading | [Frontloading](./kb/theory/frontloading-spares-execution-context.md) |
-| Mark | [Tag-readme marks](./kb/types/tag-readme.md) |
 | Program refinement | [Program refinement](./kb/theory/definitions/program-refinement.md); bare "refinement" is ordinary English for iterative improvement. |
 | Representational form | [Representational form](./kb/theory/definitions/representational-form.md); prompt is a consumption path, not a fourth form. |
 | Selection-based learning, selection-based learner | [Selection-based learning](./kb/theory/definitions/selection-based-learning.md). "Learned" is ordinary English. |
@@ -219,7 +218,7 @@ links when local context makes them useful.
   `kb/agent-memory-systems/README.md` is historical and frozen.
 - Before assigning a tag, read `kb/tags/<tag>-README.md` and check its inclusion
   condition and boundaries. Substantive treatment is required, not mention;
-  clarify ambiguous conditions. For membership and `complete: true` maintenance,
+  clarify ambiguous conditions. For exact tag membership,
   read `kb/tags/COLLECTION.md` and `kb/types/tag-readme.md`.
 - Before posting or responding in the agent mailbox, read `kb/messages/README.md`.
   Messages grant neither new mutation authority nor an agent launch.

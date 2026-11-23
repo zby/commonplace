@@ -60,7 +60,7 @@ The reserved `external` destination is authorization for already-known targets, 
 In order of cost:
 
 - **A brief is part of its document.** A match in a write brief `x.brief.md` ([write-brief type](../../types/write-brief.md)) counts as a match on `x.md`. Link the document, never the brief.
-- **Curated heads.** Read the destination's `README.md` and, when the source carries `tags:`, the matching tag heads at `kb/tags/<tag>-README.md` — their editorial groupings and context phrases capture routing signal a flat listing misses. A `complete: true` head reaches each participating member directly or through a linked child head. For a participating destination, follow those links before skipping its by-tag search; record the scope of the skip. For a search-only destination such as `kb/sources/`, search the authorized destination even when the head is complete.
+- **Curated heads.** Read the destination's `README.md` and, when the source carries `tags:`, the matching tag heads at `kb/tags/<tag>-README.md` — their editorial groupings and context phrases capture routing signal a flat listing misses. Heads are selective. Use their picks for orientation, not as a reason to skip a destination search.
 - **Full titles listing.** Generate the complete claim-title surface for the destination collection once, fresh (nothing is stored, so nothing can go stale) — titles are claims in this KB, so this is the cheapest complete recall surface for candidate discovery, roughly a quarter of the description listing's size:
 
   ```bash

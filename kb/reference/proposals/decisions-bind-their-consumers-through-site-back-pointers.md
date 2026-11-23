@@ -54,10 +54,7 @@ has something to choose from.
   the site it constrains over this collection, because a warning found only by
   someone who thought to read a reference document is a warning most changers
   will miss.
-- The tag-README mark contract is shipped and enforced
-  ([`kb/types/tag-readme.md`](../../types/tag-readme.md), ADR 026); the
-  `complete` and `covered_by` marks are the working precedent for checking
-  declared relations. That contract does not require checking every cached value.
+- The former tag-head marks were a precedent for checking declared relations, not for checking every cached value. [ADR 140](../adr/140-tag-heads-are-selective.md) retired those marks.
 - A change-operations catalogue exists in the workshop layer as an
   observational first pass: eighteen operations, each with observed instances,
   premises the actor must know before acting, the current home of those

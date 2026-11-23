@@ -38,18 +38,12 @@ authoring and semantic review; deterministic validation does not establish it.
 ## Participating collections
 
 The `participating:` list in this file's frontmatter names the collections
-whose `tags:` lines count as membership. Every completeness or coverage mark
-on a head, and every generated tag listing on the site, ranges over exactly
+whose `tags:` lines count as membership. Each generated tag listing on the site ranges over exactly
 those collections. Tags on artifacts elsewhere are not read. Add a collection
 here to bring its tags into the tag space; nothing is inferred from the
 directory tree.
 
-## Marks
-
-A head may declare `complete: true`: every member is linked from the head or
-carries a tag whose head is linked from it, so the head reaches every member
-in one hop. Validation checks the claim; drop the mark when it cannot be made
-true. See the `tag-readme` type spec in the Commonplace library.
+A head is selective. Use it for orientation and the membership collector or published listing for enumeration.
 
 ## Outbound links
 

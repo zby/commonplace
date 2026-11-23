@@ -5,9 +5,9 @@ type: types/instruction.md
 
 # Maintain curated indexes
 
-Audit curated tag READMEs (`kb/tags/<tag>-README.md`, type `tag-readme`) for editorial quality, completeness, and coherence. A tag README is the tag's curated head: a hand-written editorial body with groupings and context phrases, small by type contract (weight gates). The complete per-tag listing is not committed — it is generated at ProperDocs build time for the published site (ADR 025); agents reconstruct it with the same membership collector the validator and site use.
+Audit curated tag READMEs (`kb/tags/<tag>-README.md`, type `tag-readme`) for editorial quality and coherence. A tag README is the tag's curated head: a hand-written editorial body with groupings and context phrases, small by type contract (weight gates). The complete per-tag listing is not committed — it is generated at ProperDocs build time for the published site (ADR 025); agents reconstruct it with the same membership collector the site uses.
 
-This instruction is also the route for fixing validator warnings on tag-READMEs (weight gate, `complete` one-hop reach). The mark's maintenance rules — when to declare or drop `complete`, the lifecycle exits, the smells — live in the [tag-readme type spec](../types/tag-readme.md); read it before changing a mark.
+For the head size limits and split rules, see the [tag-readme type spec](../types/tag-readme.md).
 
 ## When to use
 
@@ -89,11 +89,11 @@ When a tag grows large and internal clusters emerge:
 
 ### 5. Update the tags hub
 
-Add a new head to `kb/tags/README.md`, the hub readers use to browse by tag. It is an ordinary collection landing with no completeness mark, so nothing checks that it lists every head.
+Add a new head to `kb/tags/README.md`, the hub readers use to browse by tag. It is an ordinary collection landing, so nothing checks that it lists every head.
 
 ### 6. Validate the tag collection
 
-Run `commonplace-validate kb/tags`. Marks range over every participating collection, so a clean validation of one collection does not clear a head.
+Run `commonplace-validate kb/tags`. Check the edited heads for structure, weight and link warnings.
 
 ## Principles
 

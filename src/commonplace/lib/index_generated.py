@@ -61,11 +61,10 @@ def tag_for_head(path: Path) -> str | None:
 
 
 @dataclass(frozen=True)
-class TagSpace:
-    """One scan of a KB's tag space."""
+class TagCatalog:
+    """Participation and head locations, without enumerating member artifacts."""
 
     participating: tuple[Path, ...]
-    notes_by_tag: dict[str, list[Entry]]
     heads: dict[str, Path]
     declaration_error: str | None
 
@@ -77,6 +76,13 @@ class TagSpace:
             if resolved == collection or collection in resolved.parents:
                 return _is_member_candidate(resolved, collection)
         return False
+
+
+@dataclass(frozen=True)
+class TagSpace(TagCatalog):
+    """The tag catalog plus the exact member listing."""
+
+    notes_by_tag: dict[str, list[Entry]]
 
 
 def _default_load_document(path: Path) -> ParsedDocument | None:
@@ -173,18 +179,21 @@ def collect_heads(root: Path) -> dict[str, Path]:
     return heads
 
 
-def collect_tag_space(
+def collect_tag_catalog(
     root: Path, *, load_document: LoadDocument | None = None
-) -> TagSpace:
+) -> TagCatalog:
+    participating, error = read_participating(root, load_document=load_document)
+    return TagCatalog(participating, collect_heads(root), error)
+
+
+def collect_tag_space(root: Path) -> TagSpace:
     """Scan the participating collections once for membership, and the tag
     collection for heads."""
-    if load_document is None:
-        load_document = _default_load_document
-    participating, error = read_participating(root, load_document=load_document)
+    catalog = collect_tag_catalog(root, load_document=_default_load_document)
     by_tag: dict[str, list[Entry]] = {}
-    for collection in participating:
-        _scan_members(collection, load_document, by_tag)
-    return TagSpace(participating, by_tag, collect_heads(root), error)
+    for collection in catalog.participating:
+        _scan_members(collection, _default_load_document, by_tag)
+    return TagSpace(catalog.participating, catalog.heads, catalog.declaration_error, by_tag)
 
 
 def extract_curated_links(curated_section: str) -> set[str]:

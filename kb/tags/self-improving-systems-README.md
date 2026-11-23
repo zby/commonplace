@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the self-improving-systems tag — systems that make operative, evidence-responsive changes to their own organization; definition, objective, accumulation, and six child areas"
 type: types/tag-readme.md
-complete: true
 ---
 
 # Self-improving systems

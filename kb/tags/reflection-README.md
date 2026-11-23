@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the reflection tag — reflective systems and self-representation: how a system reads and revises its own rules, what addressable retention buys, and where reflective coverage stops"
 type: types/tag-readme.md
-complete: true
 ---
 
 # reflection

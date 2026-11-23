@@ -1,7 +1,6 @@
 ---
 description: "Curated head for the failure-modes tag — recurring ways knowledge and claims in an agent-operated KB fail to do their job: stored but never activated, promoted without authority, over-generalized, or escaping review by widening or narrowing"
 type: types/tag-readme.md
-complete: true
 ---
 
 # Failure modes

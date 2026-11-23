@@ -11,6 +11,8 @@ status: accepted
 **Date:** 2026-09-25
 **Refines:** [ADR 026](./026-tag-readme-type-with-completeness-and-coverage-marks.md) (keeps the `tag-readme` type, weight gates, and marks; retires its hub binding and fixes the scope its marks range over)
 
+**Amended by:** [ADR 140](./140-tag-heads-are-selective.md) retires completeness marks and the search shortcut. The namespace, heads and declared membership scope remain.
+
 ## Context
 
 A tag string is used across collections, but every surface that makes a claim about a tag's membership scans one collection. The validator checks a head's `complete` and `covered_by` marks over the head's own collection. The generated tail on the published site enumerates that same collection, while a rendered note's tag link routes across collection boundaries to that page. A reader who follows a tag from a reference document therefore lands on a tag page whose authored content plus generated listing omits the document they came from. ADR 026 made the marks enforced-or-omitted so that a claim telling exhaustive consumers to stop looking is never silently false; at repository scope the claims are false, because their scope was never named.

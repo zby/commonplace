@@ -1,7 +1,7 @@
 ---
 type: types/type-spec.md
 name: tag-readme
-description: A tag's curated head at kb/tags/<tag>-README.md — small by type contract (weight-gated), with an optional validator-enforced completeness mark (complete) meaning every member is reached in one hop across the KB's participating collections
+description: A selective introduction to a tag, with an inclusion condition and editorial picks; use the membership collector for exact enumeration.
 schema: ./tag-readme.schema.yaml
 ---
 
@@ -13,19 +13,18 @@ A tag-README is the tag's curated head: a short orientation paragraph plus selec
 
 Every tag in use has a head. The validator reports a tag on an artifact in a participating collection whose head does not exist; the remedy is to write the head or drop the tag. A head may be minimal: what qualifies for the tag, and a few picks.
 
-A tag-README is understood standalone — the field names are self-describing and the body is ordinary curated prose. This spec is **maintenance-path only**: load it when writing a head, declaring or dropping the mark, fixing a validator warning, or executing a lifecycle exit.
+A tag-README is understood standalone — the field names are self-describing and the body is ordinary curated prose. This spec is **maintenance-path only**: load it when writing a head, fixing a validator warning, or executing a lifecycle exit.
 
 - Open with what the tag gathers, in the words a reader would search for, and name the defining note if the tag has one. State what makes an artifact qualify for the tag: the subject, question, or mechanism it must substantively address. Mentioning the topic or using it as background is insufficient. A writer must be able to justify or challenge an assignment from this opening without inferring the rule from the picks.
 - Where neighboring tags could be confused, state the boundary: what belongs here and what belongs under the neighbor. Tags may overlap when an artifact meets both inclusion conditions; a boundary is not a demand to choose only one tag. Ordinary prose is sufficient; no fixed heading or formal predicate is required.
 - Curated entries MUST have context phrases — a bare link list is an address book, not a map.
-- Be selective by default. The site build supplies the full listing; authors need not link every member unless they declare the `complete` mark.
-- Do not hand-write a complete listing, or claim in body text that the linked child heads cover the tag, without declaring `complete: true` — an unenforced version of that claim decays silently into the stale-index failure.
+- A head is selective. Recommend useful starting points; do not promise exhaustive coverage. A small head may happen to link every member.
 
-Assignment fit is judged during authoring and semantic review. The deterministic validator checks head existence, structure, links, weight, and declared completeness; it does not establish that an artifact fits the tag's meaning.
+Assignment fit is judged during authoring and semantic review. The deterministic validator checks head existence, structure, links, and weight; it does not establish that an artifact fits the tag's meaning.
 
 ## Scope
 
-Membership ranges over the collections that `kb/tags/COLLECTION.md` declares in its `participating:` list, and over nothing else. The mark, the generated tail on the published site, and the head requirement read that one declaration. Artifacts outside it may carry `tags:` lines; membership consumers do not read them. Explicit source-scoped searches may read tags on tracked source analyses under the source collection contract. These search results are outside the head's completeness claim, even when they reuse its topic vocabulary.
+Membership ranges over the collections that `kb/tags/COLLECTION.md` declares in its `participating:` list, and over nothing else. The generated tail on the published site, and the head requirement read that one declaration. Artifacts outside it may carry `tags:` lines; membership consumers do not read them. Explicit source-scoped searches may read tags on tracked source analyses under the source collection contract. These search results are outside the member listing, even when they reuse its topic vocabulary.
 
 ### Checking exact membership
 
@@ -46,33 +45,15 @@ for path, _, description in space.notes_by_tag.get(sys.argv[1], []):
 PY
 ```
 
-The validator and site build use this collector. A text search finds candidates, not exact membership: it can match ignored captures or miss multiline YAML tags.
-
-## Frontmatter
-
-- `complete: true` (optional) — every artifact carrying the tag, across the participating collections, is linked from this head or carries a tag whose head is linked from this head: the head reaches every member in one hop. Validator-enforced; readers may use the head instead of enumerating members. Children are the heads the body links; no list names them, and a link's context phrase says whether the linked head is a child or a neighbour ([ADR 090](../reference/adr/090-one-completeness-mark-reaches-members-in-one-hop.md)).
-
-The mark is a **validated cache** of tag membership, computed independently of the head's links. Two properties follow, and any future mark must keep both: **recomputable, therefore never load-bearing** — dropping the mark costs one recomputation, never correctness; and **enforced-or-omitted** — a false mark tells exhaustive consumers to stop looking while members are still out there (`kb/theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md`). A mark that cannot be made true without a weak child tag or a tag created to hold a few notes is dropped, or those members are linked by hand, which satisfies it. ADR 026 is the decision record for marks; ADR 090 folded its two marks into this one; the theory combines the reuse benefit (`kb/theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md`) with [checking cost and reliance risk](../theory/checking-retained-results-trades-cost-against-reliance-risk.md). Enforced-or-omitted is this contract's policy for a mark that authorizes stopping, not a universal requirement for retained results; the PKM grounding is `kb/theory/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md`.
+The site build uses this collector. To check a tag assignment, validation reads the participation declaration and head filenames, not the member listing. A text search finds candidates, not exact membership: it can match ignored captures or miss multiline YAML tags.
 
 ## The weight contract
 
 Every tag-README is small by type contract: validation warns past **8 KB** and fails past **16 KB** (bytes; entry count is reported as diagnosis). No exemptions. Remedies past threshold: curate harder, split the tag, or narrow it.
 
-## Maintaining the mark
+## Splitting a tag
 
-Enforcement is reactive (the two properties above are why): writing a note does not require touching any head; the validator queues the gap when the marked head is next validated, and its message routes here. Because membership spans collections, a clean validation of one collection does not clear a head: validate `kb/tags/` after tagging artifacts anywhere in the participating set.
-
-**Declaring it.** Declare `complete` while the head can reach every member in one hop under the weight gates: link the load-bearing members directly and link the child heads whose tags cover the rest. Each new member then either carries a child tag whose head is linked, or queues a direct entry (add the link with a context phrase). A complete head crossing the soft warn is the early signal to split.
-
-**Exits, in order of preference:**
-
-1. **Drop to selective** (default): remove the mark, trim to the editorial best-of; readers needing every member use the listing or collector.
-2. **Split with overlap** (only when the groupings reveal real substructure): mint child tags with their own heads; child-tagged notes **keep the parent tag**; this head links the child heads and keeps the mark if the hop still reaches everyone. Never split so that only some members keep the parent tag — partial migration makes the structure invisible.
-3. Retiring the parent tag is a decision about the concept dissolving, never a size remedy.
-
-Watch for the catch-all-child smell: a `<tag>-misc` child satisfies the hop trivially while destroying its routing value; list such members by hand instead.
-
-For the audit workflow (groupings, orphans, splits), read `kb/instructions/maintain-curated-indexes.md`. For the design rationale, read ADR 026 (marks and weight), ADR 089 (place, identity, scope), and ADR 090 (one mark).
+Split only when the groupings are useful topics in their own right. Keep the parent tag on child-tagged members; never split so that only some members keep the parent tag. Relate the heads with a phrase explaining the connection. Retiring the parent tag is a decision about the concept, not a size remedy. For the audit procedure, see [maintain curated indexes](../instructions/maintain-curated-indexes.md).
 
 ## Template
 

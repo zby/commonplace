@@ -17,11 +17,7 @@ separates the document being checked from the related artifacts used as context.
 - [ADR 050](../adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md)
   established a shared validation context and explicit impacted-tag-head
   selection, without a general inverse dependency graph.
-- In `src/commonplace/lib/validation.py`,
-  `ValidationRun.impacted_marked_tag_readmes()` selects marked heads from the
-  current tags of supplied participating artifacts. `evaluate()` adds those
-  heads to its targets. The selector does not reconstruct removed tags or the
-  contents of deleted artifacts.
+- [ADR 140](../adr/140-tag-heads-are-selective.md) subsequently retired the tag completeness check and its impacted-head selector. It no longer expands the validation targets.
 - [Directory validation](../validation-contract.md#directory-artifacts) checks
   a manifest and its direct Markdown members together. Explicit member-file
   validation does not automatically validate the containing directory. This is
@@ -48,9 +44,9 @@ not whether the validator has cross-artifact dependencies at all.
 
 ### A. Add explicit selectors where concrete consumers need them
 
-Keep each impact rule specific to its relation, following the existing
+Keep each impact rule specific to its relation, as in the former
 marked-tag-head selector. A member-to-container selector or a type-to-instance
-selector could join the same target expansion path without a general language.
+selector could expand the validation targets without a general language.
 
 The validation target resolver or run would consume the selector's output and
 validate the added artifacts through the ordinary pipeline. Its selection
