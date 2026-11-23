@@ -80,9 +80,12 @@ class ValidationReport:
     diagnostics: tuple[ValidationDiagnostic, ...]
     analysed_artifacts: tuple[AnalysedArtifact, ...] = ()
     excluded_subtrees: tuple[str, ...] = ()
+    requested_targets: tuple[str, ...] = ()
 
     @property
     def details_command(self) -> str:
+        if self.requested_targets:
+            return shlex.join(["commonplace-validate", "--full", "--", *self.requested_targets])
         args = ["commonplace-validate", "--full", self.target]
         if self.target in {"today", "recent"}:
             args.extend(["--collection", self.scope])
@@ -258,6 +261,7 @@ def build_validation_report(
     target: ResolvedValidationTarget,
     outcome: ValidationRunResults,
     repo_root: Path,
+    requested_targets: tuple[str, ...] = (),
 ) -> ValidationReport:
     diagnostics: list[ValidationDiagnostic] = []
     warning_subjects: set[Path] = set()
@@ -330,6 +334,7 @@ def build_validation_report(
     )
     return ValidationReport(
         target=target_arg,
+        requested_targets=requested_targets,
         scope=scope,
         files_analysed=len(outcome.paths),
         text_files=text_files,
@@ -507,6 +512,10 @@ def format_json_report(report: ValidationReport) -> str:
         "excluded_subtrees": list(report.excluded_subtrees),
         "details_command": report.details_command,
     }
+    if report.requested_targets:
+        payload["schema"] = "commonplace.validation.batch.v1"
+        del payload["target"]
+        payload["targets"] = list(report.requested_targets)
     return json.dumps(payload, indent=2, sort_keys=True)
 
 
@@ -694,10 +703,11 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     parser.add_argument(
-        "target",
+        "targets", nargs="+", metavar="target",
         help=(
             "directory, note path or name, types, landings, redirects, "
-            "lifecycle, or today/recent (requires --collection)"
+            "lifecycle, or today/recent (requires --collection); alternatively, two or more "
+            "explicit .md file paths (no directory or collection checks)"
         ),
     )
     parser.add_argument(
@@ -705,6 +715,14 @@ def main(argv: list[str] | None = None) -> int:
         help="Collection name or path to scope today/recent validation.",
     )
     args = parser.parse_args(argv)
+    batch = tuple(args.targets) if len(args.targets) > 1 else ()
+    args.target = args.targets[0]
+    if batch and any(x is not None for x in (
+        args.collection, args.artifact_directory, args.role, args.handoff,
+    )):
+        parser.error("multiple targets take only explicit .md file paths, not single-target modes")
+    if batch and any(Path(arg).suffix != ".md" for arg in batch):
+        parser.error("multiple targets must be explicit .md file paths")
     if args.collection is not None and (args.target not in {"today", "recent"} or args.role):
         parser.error("--collection is only valid with today/recent")
     if (args.artifact_directory is None) != (args.role is None):
@@ -779,9 +797,18 @@ def main(argv: list[str] | None = None) -> int:
         return 1 if results.fails else 0
 
     try:
-        target = resolve_validation_target(
-            args.target, repo_root=repo_root, collection=args.collection,
-        )
+        if batch:
+            paths = []
+            for arg in batch:
+                path = (repo_root / arg).resolve()
+                if not path.is_file() or path.suffix != ".md":
+                    raise ValueError(f"not a Markdown file: {arg}")
+                paths.append(path)
+            target = ResolvedValidationTarget(paths=tuple(dict.fromkeys(paths)))
+        else:
+            target = resolve_validation_target(
+                args.target, repo_root=repo_root, collection=args.collection,
+            )
     except (FileNotFoundError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
         return 1
@@ -796,7 +823,8 @@ def main(argv: list[str] | None = None) -> int:
         collection=target.collection,
     )
     report = build_validation_report(
-        target_arg=args.target,
+        target_arg=f"explicit files ({len(target.paths)})" if batch else args.target,
+        requested_targets=batch,
         target=target,
         outcome=outcome,
         repo_root=repo_root,

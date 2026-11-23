@@ -26,7 +26,7 @@ Print a compact, read-only project situation report (versions, Git state, scoped
 
 ### commonplace-validate
 
-Run deterministic validation on a note, directory, collection, `types`, `landings`, `redirects`, `lifecycle`, `today`/`recent` (with `--collection`), a directory-artifact role draft (`--artifact` + `--role`), or an ingest handoff candidate (`--handoff`). See [validation contract](./validation-contract.md).
+Run deterministic validation on a note, directory, collection, `types`, `landings`, `redirects`, `lifecycle`, `today`/`recent` (with `--collection`), a directory-artifact role draft (`--artifact` + `--role`), or an ingest handoff candidate (`--handoff`). To check several edited files without sweeping their collections, pass their `.md` paths together: `commonplace-validate PATH [PATH ...]`. See [validation contract](./validation-contract.md).
 
 ### commonplace-verify-quotes
 

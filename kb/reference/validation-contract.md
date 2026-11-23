@@ -35,7 +35,7 @@ while still making each broader invariant deterministic.
 The command presents these findings through two views. The default compact view
 prints counts plus every warning, failure, and material notice. `--full` retains
 the per-artifact PASS/WARN/FAIL/INFO transcript for deliberate inspection.
-`--json` emits the versioned `commonplace.validation.v1` envelope with stable
+For one ordinary target, `--json` emits the versioned `commonplace.validation.v1` envelope with stable
 diagnostic rule IDs, subjects, reasons, the path and detected type of every
 analysed artifact, and the detailed drill-down command. A caller that requires
 one particular typed artifact checks both `summary.files_analysed` and the
@@ -43,6 +43,8 @@ corresponding `analysed_artifacts[].type`; `text_files` counts standalone frontm
 grouped under directory artifacts. It is not the total number of targets.
 Presentation does not change severities or exit behavior: warnings exit zero;
 failures exit nonzero.
+
+With two or more explicit `.md` paths, the command validates each distinct file once in first-seen order. It does not expand note names or run collection checks. All inputs must resolve to Markdown files before validation begins. Batch JSON uses `commonplace.validation.batch.v1`: `targets` records the supplied arguments instead of a scalar `target`, and `analysed_artifacts` lists the files actually checked.
 
 ## Explicit collection and date scopes
 
