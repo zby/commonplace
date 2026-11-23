@@ -93,7 +93,7 @@ def _states(root: Path, pairs) -> list[Freshness]:
 def test_written_result_reads_back_equal_at_its_pair_path(repo: Path) -> None:
     # The body keeps CRLF and frontmatter-like text: the reviewer's text must survive unchanged.
     result, path = _review(repo, NOTE, GATE, outcome="warn", body="## Summary\r\n---\nnot: frontmatter\n")
-    assert path == repo / "kb/reports/state/review/results/kb/notes/alpha.md/prose/residue.md"
+    assert path == repo / "kb/workflow-state/data/current/review/results/kb/notes/alpha.md/prose/residue.md"
     assert read_result(path) == result
     [row] = status(repo, [(NOTE, GATE)])
     assert (row.freshness, row.outcome, row.model) == (Freshness("fresh"), "warn", "claude-sonnet-x")

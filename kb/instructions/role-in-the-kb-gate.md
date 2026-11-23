@@ -11,7 +11,7 @@ A note's text does not show what the KB uses it for. Other notes cite it for a t
 ## Inputs
 
 - The note.
-- `inbound`: the note's inbound contexts. For each file under `kb/` that links to the note, outside `kb/reports/` and `kb/work/`, it gives the file's repository path, title and description, and each passage that holds a link to the note. The text says when a cap cut files or passages. When nothing links to the note, it says so.
+- `inbound`: the note's inbound contexts. For each file under `kb/` that links to the note, outside `kb/reports/`, `kb/workflow-state/` and `kb/work/`, it gives the file's repository path, title and description, and each passage that holds a link to the note. The text says when a cap cut files or passages. When nothing links to the note, it says so.
 
 Judge only from these inputs. Do not open the linking files, and do not search for other links. A file or passage the caps cut is unseen: name the cut where it limits a finding.
 

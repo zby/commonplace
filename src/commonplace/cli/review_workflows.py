@@ -48,7 +48,7 @@ synthesizes as `--input ROLE=PATH` files, such as the four compression check
 results; it never runs the checks. `role`, the role report, runs alone on one
 note and takes the note's inbound contexts as `--input inbound=PATH`; without
 `--input`, the command collects them itself (the passages under kb/ that link
-to the note, outside kb/reports/ and kb/work/). Like every run with `--input`,
+to the note, outside kb/reports/, kb/workflow-state/ and kb/work/). Like every run with `--input`,
 these write no current result and are never skipped as fresh. Their freshness
 is unassessed, so `status` refuses them; inspect a retained observation with
 `show RUN`.
@@ -64,7 +64,7 @@ one is deleting its file. `--json` gives each row's result file, so a fixer
 can read the finding.
 
 `commonplace-revise NOTE`, `apply`, `triage` and `rewrite` open a new run on every invocation, under
-kb/reports/state/review/runs/v2/<workflow>/<note path without .md>/<UTC
+kb/workflow-state/data/current/review/runs/v2/<workflow>/<note path without .md>/<UTC
 stamp>/, with `-2`, `-3` on a collision. These names sort in time order;
 runs made before this layout are named by a hash of their start text and do
 not, so the time of a run is in its records, not its name. The run records the hash of the note's start text in
@@ -207,7 +207,7 @@ no change or a block, 1 for a stop or a conflict, and 2 when the command
 failed. The guard's finding is in the report and does not change the exit
 status.
 
-`commonplace-review NOTES...` opens a new run under kb/reports/state/review/runs/v2/<UTC stamp>/,
+`commonplace-review NOTES...` opens a new run under kb/workflow-state/data/current/review/runs/v2/<UTC stamp>/,
 or continues RUN_DIR with `--resume`, which replays the calls whose work is
 unchanged; give the same NOTES and criteria again. It prints a JSON report and
 exits 0 only when every pair has a current result, 1 otherwise, and 2 when

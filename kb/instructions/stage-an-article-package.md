@@ -30,7 +30,7 @@ is where it is requested.
 ## Package layout
 
 All output goes to a new package directory
-`kb/reports/state/staging/{slug}/{YYYYMMDD-HHMMSS}/` in the ignored operational
+`kb/workflow-state/data/current/staging/{slug}/{YYYYMMDD-HHMMSS}/` in the ignored operational
 tree; below, `{package}` names it. Never patch or delete an earlier package:
 restaging regenerates from the current article into a new stamped directory
 beside it.
@@ -151,7 +151,7 @@ unchanged.
       returned.
    3. Placeholders: no `TODO`, `TBD`, `{`, or empty section in any package
       file; no link from an appendix or reference file into `kb/work/` or
-      `kb/reports/state/`.
+      `kb/workflow-state/data/current/`.
    4. Provenance: every Appendix A and B entry ends with a provenance line
       naming the source commit.
    5. `commonplace-validate` on each package file reports no failures. The

@@ -49,7 +49,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
    rg -c '<artifact-slug>' -g '*.md' kb/
    ```
 
-   Present every reference with the disposition you propose for it and wait for approval before editing anything. Gitignored reports under `kb/reports/state/connect/` are exempt — leave them.
+   Present every reference with the disposition you propose for it and wait for approval before editing anything. Gitignored reports under `kb/workflow-state/data/current/connect/` are exempt — leave them.
 
 6. **Handle inbound references — this differs by destination.**
 
@@ -102,17 +102,17 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
    ```bash
    RETIRED=kb/theory/<artifact>.md
    commonplace-review status --json \
-     | python3 -c 'import json, sys; [print(p) for p in json.load(sys.stdin)["orphaned"] if p.startswith("kb/reports/state/review/results/" + sys.argv[1] + "/")]' "$RETIRED"
+     | python3 -c 'import json, sys; [print(p) for p in json.load(sys.stdin)["orphaned"] if p.startswith("kb/workflow-state/data/current/review/results/" + sys.argv[1] + "/")]' "$RETIRED"
    ```
 
-   An artifact that was never reviewed has no results and the command prints nothing. Otherwise delete each listed result file, then the empty `kb/reports/state/review/results/<artifact-path>/` directory. Leave any full-pass packet under `kb/reports/state/review/packets/`: it records an operator decision of a retired procedure, which `commonplace-revise decisions` still lists. Delete only paths under the retired artifact's own path: `commonplace-review status` also lists orphans left by earlier retirements, which are not this procedure's to remove.
+   An artifact that was never reviewed has no results and the command prints nothing. Otherwise delete each listed result file, then the empty `kb/workflow-state/data/current/review/results/<artifact-path>/` directory. Leave any full-pass packet under `kb/workflow-state/data/current/review/packets/`: it records an operator decision of a retired procedure, which `commonplace-revise decisions` still lists. Delete only paths under the retired artifact's own path: `commonplace-review status` also lists orphans left by earlier retirements, which are not this procedure's to remove.
 
 ## Verify
 
 - `commonplace-validate` on each touched artifact — clean, link health in particular.
 - `commonplace-validate kb/theory` — no new orphan.
 - `commonplace-validate kb/tags` — no weight-gate warning on a curated head that absorbed routing.
-- `commonplace-review status --json` — its `orphaned` list names nothing under `kb/reports/state/review/results/<artifact-path>/`.
+- `commonplace-review status --json` — its `orphaned` list names nothing under `kb/workflow-state/data/current/review/results/<artifact-path>/`.
 - `rg -l '<artifact-slug>' -g '*.md' kb/` — for delete, nothing outside gitignored reports; for archive, nothing outside the archive directory and `kb/work/`.
 - `uv run pytest` — only when the retirement touched code, tests, test fixtures or test inputs, or `properdocs.yml` (whose redirects tests check). A retirement confined to Markdown KB data relies on the validator checks above, as `AGENTS.md` requires.
 

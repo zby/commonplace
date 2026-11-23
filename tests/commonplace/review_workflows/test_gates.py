@@ -72,7 +72,7 @@ FILES = {
     "kb/instructions/critique-note.md": "# Critique\n\nWrite a critique.\n",
     "kb/types/note.md": "# Note type\n\nWrite one claim.\n",
     "kb/notes/COLLECTION.md": "# Notes\n\nOne claim per note.\n",
-    "kb/reports/COLLECTION.md": "---\ntype: types/collection-contract.md\nunquoted-source-limit: 0\n---\n\n# Reports\n\nRetained operational evidence.\n",
+    "kb/workflow-state/COLLECTION.md": "---\ntype: types/collection-contract.md\nunquoted-source-limit: 0\n---\n\n# Reports\n\nRetained operational evidence.\n",
     "kb/notes/alpha.md": note("Alpha", "Alpha body."),
     "kb/notes/beta.md": note("Beta", "Beta body FAILME."),
 }
@@ -217,7 +217,7 @@ def test_status_reports_fresh_stale_missing_and_orphaned_results(repo, capsys):
     stored = json.loads(capsys.readouterr().out)
     assert {row["note"] for row in stored["pairs"]} == {"kb/notes/alpha.md", "kb/notes/beta.md"}
     assert stored["orphaned"] == [
-        "kb/reports/state/review/results/kb/notes/gamma.md/prose/body-gate.md"]
+        "kb/workflow-state/data/current/review/results/kb/notes/gamma.md/prose/body-gate.md"]
 
 
 def test_named_note_status_reads_only_requested_pair_results(repo, capsys, monkeypatch):
@@ -230,7 +230,7 @@ def test_named_note_status_reads_only_requested_pair_results(repo, capsys, monke
         result_path(root, "kb/notes/beta.md", "prose/description-gate"),
     }
     assert selected.is_file() and all(path.is_file() for path in unselected)
-    result_root = root / "kb/reports/state/review/results"
+    result_root = root / "kb/workflow-state/data/current/review/results"
     reads = []
     read_bytes = Path.read_bytes
 
@@ -308,7 +308,7 @@ def test_installed_project_reviews_against_library_criteria(installed, capsys):
     (lib / "instructions/critique-note.md").unlink()
     assert main(["status", "--json"], harnesses=installed[1]) == 0
     assert json.loads(capsys.readouterr().out)["orphaned"] == [
-        "kb/reports/state/review/results/kb/notes/beta.md/commonplace/instructions/critique-note.md"]
+        "kb/workflow-state/data/current/review/results/kb/notes/beta.md/commonplace/instructions/critique-note.md"]
 
 
 @pytest.mark.slow

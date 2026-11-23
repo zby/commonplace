@@ -12,7 +12,7 @@ This is deliberately separate from the gate sweep in [run-review-batches.md](./r
 Inputs:
 
 - first argument: `{note-path}` — repository-relative note path, for example `kb/theory/linking-theory.md`
-- optional second argument: `{output-path}` — repository-relative Markdown path for the sub-agent's report. If omitted, write it to the report state tree as `kb/reports/state/compression-bundle/<note-name>.md`.
+- optional second argument: `{output-path}` — repository-relative Markdown path for the sub-agent's report. If omitted, write it to the report state tree as `kb/workflow-state/data/current/compression-bundle/<note-name>.md`.
 
 ## Compression criteria
 
@@ -25,7 +25,7 @@ Use these criterion files, in this order:
 
 After the four criteria, apply [high-impact-simplification-synthesis.md](./compression-bundle/high-impact-simplification-synthesis.md) to the artifact and the combined findings. This synthesis has no independent verdict; it selects the few structural changes most worth authorial attention.
 
-Do not request these criteria from `commonplace-review`, and do not write under `kb/reports/state/review/results/`.
+Do not request these criteria from `commonplace-review`, and do not write under `kb/workflow-state/data/current/review/results/`.
 
 ## Dispatch
 

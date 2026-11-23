@@ -92,7 +92,7 @@ def library_files(root: Path | None = None, *, use_git: bool = True) -> dict[str
     for parent, directories, files in os.walk(root):
         base = Path(parent)
         directories[:] = sorted(name for name in directories if not name.startswith(".")
-                                and (base / name).relative_to(root).parts != ("reports", "state")
+                                and (base / name).relative_to(root).parts != ("workflow-state", "data")
                                 and (eligible is None or (base / name).relative_to(root).as_posix() in parents
                                      or (base / name).relative_to(root).as_posix() in eligible))
         for name in directories:
@@ -116,7 +116,7 @@ def content_state(root: Path) -> dict[str, dict]:
                                capture_output=True, check=False).stdout
     found = {}
     for name in sorted(set((changed + untracked).decode("utf-8").split("\0")) - {""}):
-        if name.startswith("kb/reports/state/"):
+        if name.startswith("kb/workflow-state/data/"):
             continue
         path = safe_path(root, name)
         if path.is_symlink():

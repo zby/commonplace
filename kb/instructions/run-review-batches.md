@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Review chosen notes against chosen criteria so that every selected (note, criterion) pair has a fresh result file. `commonplace-review` launches the reviewer workers, checks each review and writes the results; the agent running this procedure chooses the scope, runs the command and settles what the report hands back. Do not launch reviewer sub-agents yourself, and do not review the pairs in your own context.
 
-A result is fresh while the hashes it records still match the note's watched parts (title, description or body, as the criterion's `watches:` declares; the whole note when it declares none) and the criterion's text. Results live under `kb/reports/state/review/results/<note-path>/<criterion-id>.md`.
+A result is fresh while the hashes it records still match the note's watched parts (title, description or body, as the criterion's `watches:` declares; the whole note when it declares none) and the criterion's text. Results live under `kb/workflow-state/data/current/review/results/<note-path>/<criterion-id>.md`.
 
 ## Inputs
 
@@ -49,7 +49,7 @@ A result is fresh while the hashes it records still match the note's watched par
 
 ## Rules
 
-- A rerun without `--resume` opens a new run directory under `kb/reports/state/review/runs/`, even when nothing is stale.
+- A rerun without `--resume` opens a new run directory under `kb/workflow-state/data/current/review/runs/`, even when nothing is stale.
 - One process at a time may hold a run; a second exits 2.
 - `--resume` replays every call whose work is unchanged. Give the same notes and criteria, and either no `--profile` or the one the run was opened with.
 - `retry {run-dir} {job} --key {key}` dismisses one recorded answer instead of the problems. The answer's result file already makes the pair fresh, so the rerun needs `--force`.

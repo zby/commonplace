@@ -1,7 +1,7 @@
 """Open, publish and close the drafting handoff of one ingest.
 
 The drafting worker writes a candidate in an ignored working directory under
-kb/reports/state/ingest/; the ingest in kb/sources/ is not touched until the
+kb/workflow-state/data/current/ingest/; the ingest in kb/sources/ is not touched until the
 candidate is accepted.
 
 ``prepare`` guards the target and writes the handoff record. ``publish`` checks
@@ -94,7 +94,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "prepare",
         help="guard the target and open its working directory",
         description=(
-            "Guard the target and open kb/reports/state/ingest/<slug>/. Requires "
+            "Guard the target and open kb/workflow-state/data/current/ingest/<slug>/. Requires "
             "the name-paired snapshot, refuses an incumbent whose snapshot_sha256 "
             "differs from the snapshot, and refuses an open prior run. Only the "
             "last run of an ingest is kept (a finished run is replaced)."

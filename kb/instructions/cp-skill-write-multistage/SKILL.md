@@ -145,7 +145,7 @@ commonplace-revise rewrite <note> --commission <file>
 `rewrite` spawns the configured headless worker CLI, which needs outbound model-API network access and writable harness state outside the workspace. If your runtime runs shell commands in a sandbox that blocks network access or writes outside the workspace, run it outside that sandbox (requesting sandbox bypass or escalated execution up front) rather than probing inside the sandbox first; keep local-only commands (`publish`, `triage`, `commonplace-validate`) in the default sandbox.
 
 Every invocation opens a new run under
-`kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<UTC start
+`kb/workflow-state/data/current/review/runs/v2/rewrite/<note path without .md>/<UTC start
 stamp>/` and needs the commission. No run is repeated or resumed: to rewrite
 under a changed commission, brief or source, run the command again, which
 starts a new run.
@@ -239,12 +239,12 @@ ambiguous.
 
 A change of identity, mode, collection, or type restarts setup.
 
-The run parent is exactly `kb/reports/state/multistage/`, in the ignored
+The run parent is exactly `kb/workflow-state/data/current/multistage/`, in the ignored
 operational tree; a run is not a workshop. Before
 creating or writing any run artifact, resolve the proposed repo-relative run
-path and require its direct parent to be `kb/reports/state/multistage/`, its
+path and require its direct parent to be `kb/workflow-state/data/current/multistage/`, its
 basename to match `multistage-write-<short-topic>-<YYYYMMDD>`, and its canonical
-path to remain inside that parent. A run directly under `kb/reports/state/`, the
+path to remain inside that parent. A run directly under `kb/workflow-state/data/current/`, the
 grouping directory itself, or any unresolved or escaping path is a setup blocker.
 
 Create or resume one valid run at that path. An ambiguous or malformed

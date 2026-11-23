@@ -24,18 +24,15 @@ Every report artifact lives in exactly one first-level policy area:
 
 | Area | Retention policy | Typical contents |
 |---|---|---|
-| `state/` | Ignored, one directory per producing workflow. Not disposable merely because it was generated: the owning workflow decides when an output may be removed, and the [state README](./state/README.md) states per workflow what deletion loses. | Review results, packets and runs; fix dispositions; ingest working directories; connect, critique, friction, premise-decomposition and promotion-candidate reports. |
 | `retained/` | Durable report records kept with the project. Payloads are tracked. | Evaluation corpora, experiment reports, measurements, and exact records cited by later work. |
 | `types/` | Collection-local structural contracts, not report payloads. | Optional project-authored report contracts; command-produced generic report types are global. |
 
-The published site includes `retained/` and leaves out `state/`. Inside `retained/`, a subtree carrying a
+The published site includes retained reports. Inside `retained/`, a subtree carrying a
 `.commonplace-validation-ignore` marker is left out of the site as well as
 validation; mark exact captures and trial bundles so, keeping the report that
 interprets them published.
 
-Do not put report payloads directly at the collection root. Moving an artifact
-between policy areas is a change in its retention contract, not a filing-only
-rename.
+Keep report payloads under `retained/`. Use the [workflow state collection](../workflow-state/COLLECTION.md) for records owned by a workflow.
 
 ## Quality goal
 
@@ -46,9 +43,7 @@ or reproduce the output. Record the model and prompt or instruction identity
 when an LLM judgment is part of the evidence and the producing workflow does
 not already retain them.
 
-`state/` must satisfy the owning workflow's authority, integrity, and cleanup
-rules. `retained/` must remain
-understandable from a clean checkout without relying on ignored files.
+`retained/` must be understandable from a clean checkout without relying on ignored files.
 
 ## Titles, descriptions, and exact records
 
@@ -64,12 +59,7 @@ understandable from a clean checkout without relying on ignored files.
 
 ## Maintenance semantics
 
-- A state producer owns cleanup and states, in the state README, what deleting
-  its output loses: nothing unique (rebuild from retained inputs), one paid
-  judgment (rerun when needed) or current coverage, an unresolved disposition
-  or decision evidence (preserve). Generated state may contain non-reproducible
-  judgments or the only current disposition, so Git ignore status never
-  licenses deletion.
+
 - A retained report is changed according to its declared role. Correct a
   living report in place; preserve a dated or frozen observation as an exact
   record and create a new observation when the measured state changes.
@@ -100,25 +90,12 @@ small authorized set:
 
 The destination collection separately decides whether it may author a
 reciprocal edge. A formal edge into this collection targets `retained/`;
-`state/` may be mentioned inline only as local operational context.
+workflow state may be mentioned inline only as local operational context.
 
-Tracked library artifacts must not depend on an ignored `state/` file being
+Tracked library artifacts must not depend on an ignored workflow state file being
 present. Summarize the needed evidence in the tracked artifact or
 promote the exact report to `retained/` first. Tracked artifacts may cite a
 `retained/` report when the exact record is useful to their reader.
-
-## Validation markers
-
-The tracked `.commonplace-validation-ignore` marker at `state/` excludes its
-data-bearing subtree from collection-scoped validation. The marker does not
-hide files from ordinary discovery, and explicit validation of
-one typed report still applies its type contract.
-
-A file under `state/` may declare any valid type spec, including another
-collection's local type. Workflows stage candidates there for other
-collections, and a candidate must validate against its destination's contract.
-The type spec itself stays in the owning collection's `types/` directory.
-`retained/` does not share this exception.
 
 ## What does not belong here
 

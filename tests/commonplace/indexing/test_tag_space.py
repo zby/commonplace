@@ -6,7 +6,11 @@ import re
 from pathlib import Path
 
 from commonplace.lib import index_generated
-from commonplace.lib.project_paths import is_proposal_archive, is_replaced_archive
+from commonplace.lib.project_paths import (
+    is_proposal_archive,
+    is_replaced_archive,
+    iter_validation_markdown_files,
+)
 from tests.commonplace.validation_helpers import REPO_ROOT, write
 
 
@@ -40,7 +44,7 @@ def _collections_that_tag(kb: Path) -> set[str]:
     for collection in sorted(kb.iterdir()):
         if not (collection / "COLLECTION.md").is_file():
             continue
-        for path in collection.rglob("*.md"):
+        for path in iter_validation_markdown_files(collection):
             if is_replaced_archive(path) or is_proposal_archive(path):
                 continue
             if "types" in path.relative_to(collection).parts:

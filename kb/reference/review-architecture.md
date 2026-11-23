@@ -150,11 +150,11 @@ A revised candidate is not the judged text, and its review is not stored.
 
 | State | Location | Lifetime |
 |---|---|---|
-| result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
-| full-pass packet (retired) | `kb/reports/state/review/packets/<note-path>` | written by the retired full-pass workflow; nothing writes it now, and `commonplace-revise decisions` still reads it |
-| run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<stamp>/` for a revise or rewrite run, with `-<n>` on a collision; older revise and rewrite runs keep `<start-hash prefix>/` names | a sweep and its resumes; one invocation of a revise or rewrite command |
+| result files | `kb/workflow-state/data/current/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
+| full-pass packet (retired) | `kb/workflow-state/data/review/packets/<note-path>` in the migrated checkout | historical evidence from the retired full-pass workflow; current queries do not scan it |
+| run directory | `kb/workflow-state/data/current/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<stamp>/` for a revise or rewrite run, with `-<n>` on a collision; older revise and rewrite runs keep `<start-hash prefix>/` names | a sweep and its resumes; one invocation of a revise or rewrite command |
 | observation | a run's `artifact/reviews/<id>/`, or `artifact/edits/<id>/` for an edit operation | one assessment or edit execution, including retries and replay; references keep exact Workjig inputs and outputs citable alongside controller-completed results |
-| fixture | `kb/reports/state/review/fixtures/<id>/` | one retained content baseline; each new trial owns independent mutable files and Git state |
+| fixture | `kb/workflow-state/data/current/review/fixtures/<id>/` | one retained content baseline; each new trial owns independent mutable files and Git state |
 
 A run directory holds Workjig's records under `calls/`, the profile and
 options it opened with in `sweep.json`, a revise or rewrite run's
@@ -260,7 +260,7 @@ layouts store results the same way.
 ## Checkout guard
 
 `gates.checkout_state()` records `HEAD` and, for each path `git status` lists
-(including untracked files) outside `kb/reports/state/review/`, its status
+(including untracked files) outside `kb/workflow-state/data/current/review/`, its status
 code and content digest. A run compares the record before and after; a
 workflow that writes the checkout drops its note when the note holds exactly
 the final text the run applied. The guard can say that a path changed while the run was

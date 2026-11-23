@@ -327,7 +327,7 @@ def validate_type_eligibility(
     also use specs under its own ``types/`` directory. Two lifecycle subtrees
     may use any valid type spec, because both hold work staged for other
     collections: ``kb/work/`` and the workflow state tree
-    ``kb/reports/state/``. Files that are not inside a declared collection
+    ``kb/workflow-state/data/current/``. Files that are not inside a declared collection
     retain the referential-only behavior.
     """
     workspace_root = repo_root.resolve()
@@ -340,7 +340,7 @@ def validate_type_eligibility(
     except ValueError:
         return
 
-    if artifact_rel.parts[:1] == ("work",) or artifact_rel.parts[:2] == ("reports", "state"):
+    if artifact_rel.parts[:1] == ("work",) or artifact_rel.parts[:2] == ("workflow-state", "data"):
         return
 
     try:

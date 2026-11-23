@@ -38,8 +38,8 @@ def test_only_retained_reports_and_analysis_sets_are_published() -> None:
     excluded = PathSpec().run_validation(config["exclude_docs"])
 
     assert not excluded.match_file("reports/README.md")
-    assert excluded.match_file("reports/state/connect/example.connect.md")
-    assert excluded.match_file("reports/state/reviews/example.md")
+    assert excluded.match_file("workflow-state/data/current/connect/example.connect.md")
+    assert excluded.match_file("workflow-state/data/review/historical.md")
     assert not excluded.match_file("reports/retained/example.md")
     run = "example/"
     for member in ("ARTIFACT.yaml", *(role.path for role in analysis_layout().roles.values())):

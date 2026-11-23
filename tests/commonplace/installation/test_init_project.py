@@ -50,20 +50,19 @@ def test_init_project_creates_core_layout_and_is_idempotent(tmp_path: Path) -> N
         Path("kb/instructions"),
         Path("kb/tags"),
         Path("kb/reports"),
-        Path("kb/reports/state"),
+        Path("kb/workflow-state/data/current"),
         Path("kb/reports/retained"),
         Path("kb/reports/types"),
     } <= relative_directories(tmp_path)
     assert (tmp_path / "kb" / "sources" / ".gitignore").read_text(
         encoding="utf-8"
     ) == ".snapshots/\n"
-    reports_ignore = (tmp_path / "kb" / "reports" / ".gitignore").read_text(
+    state_ignore = (tmp_path / "kb/workflow-state/.gitignore").read_text(
         encoding="utf-8"
     )
-    assert "state/**" in reports_ignore
-    assert "!state/README.md" not in reports_ignore
-    assert "!state/.commonplace-validation-ignore" in reports_ignore
-    assert (tmp_path / "kb/reports/state/README.md").is_file()
+    assert state_ignore == "/data/\n"
+    assert (tmp_path / "kb/workflow-state/data/README.md").is_file()
+    assert not (tmp_path / "kb/reports/state").exists()
     assert not (tmp_path / "kb/reports/cache").exists()
     assert (tmp_path / "kb" / "log.md").is_file()
 
@@ -114,7 +113,9 @@ def test_init_project_does_not_copy_the_library(tmp_path: Path) -> None:
         Path("kb/work/README.md"),
         Path("kb/reports/COLLECTION.md"),
         Path("kb/reports/README.md"),
-        Path("kb/reports/.gitignore"),
+        Path("kb/workflow-state/.gitignore"),
+        Path("kb/workflow-state/COLLECTION.md"),
+        Path("kb/workflow-state/README.md"),
         Path("kb/sources/.gitignore"),
         Path("AGENTS.md.template"),
         Path("CLAUDE.md.template"),
@@ -304,7 +305,7 @@ def test_init_project_preserves_existing_kb_content_and_snapshot_pins(tmp_path: 
         "kb/notes/note.md": b"---\ntype: note\n---\n# Note\n",
         "kb/notes/types/custom.schema.yaml": b"properties:\n  type:\n    const: kb/notes/types/custom.md\n",
         "kb/reports/types/custom.schema.yaml": b'allOf:\n  - $ref: "../../types/note.schema.yaml"\n',
-        "kb/reports/state/report.md": b"---\ntype: kb/reports/types/custom.md\n---\n# Report\n",
+        "kb/workflow-state/data/current/report.md": b"---\ntype: kb/reports/types/custom.md\n---\n# Report\n",
         "kb/reports/retained/report.md": b"---\ntype: note\n---\n# Retained report\n",
         "kb/sources/.snapshots/source.md": snapshot,
         "kb/sources/source.ingest.md": (

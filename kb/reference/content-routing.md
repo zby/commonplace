@@ -25,6 +25,7 @@ Force decides the destination among retained kinds:
 | decision: the reader must not silently reverse it | `kb/reference/adr/` | when revising or superseding a decision |
 | theory: the reader reasons with it | `kb/theory/` | on demand, via routing and links |
 | record: the reader needs the exact analytical output | `kb/reports/retained/` | when reproducing, auditing, or citing the report |
+| workflow state: the operator needs to continue or explain a run | `kb/workflow-state/data/current/` | when inspecting a workflow result, stop, or decision |
 | audit: the reader reconstructs what happened | git | through an instruction that declares the read path |
 | reuse: the reader wants the reply, example or comparison as written | `kb/notes/` | when the question or situation recurs |
 | publish: an external reader wants a self-standing technical article | `kb/articles/` | on the published site or when citing a finished synthesis |
@@ -67,8 +68,7 @@ Force decides the destination among retained kinds:
 - [`types/adr.md`](./types/adr.md) — the ADR retention rule; rows 3–5, 13.
 - `AGENTS.md` `## Git` — the commit-message convention; rows 10–11.
 - `kb/reports/COLLECTION.md` — policy for exact outputs after this table has
-  selected a report as the consumed artifact; `state/` holds operational
-  outputs with workflow-owned cleanup rather than admission to the tracked record.
+  selected a retained report. The [workflow state contract](../workflow-state/COLLECTION.md) governs operational outputs instead.
 - [Design rationale management](./design-rationale-management.md) — the same
   surfaces organized by lifecycle state of a rationale rather than by content
   kind; the two tables agree on every shared cell.

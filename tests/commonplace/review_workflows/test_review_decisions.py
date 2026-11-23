@@ -11,8 +11,8 @@ from commonplace.lib.review_workflows import decisions
 
 NOTE = "kb/theory/foo.md"
 NOTE_TEXT = "# Foo\n"
-RUN = "kb/reports/state/review/runs/v2/revise/kb/theory/foo/20261112T100000Z"
-OLD_RUN = f"kb/reports/state/review/runs/v2/revise/kb/theory/foo/{sha256(NOTE_TEXT.encode()).hexdigest()[:12]}"
+RUN = "kb/workflow-state/data/current/review/runs/v2/revise/kb/theory/foo/20261112T100000Z"
+OLD_RUN = f"kb/workflow-state/data/current/review/runs/v2/revise/kb/theory/foo/{sha256(NOTE_TEXT.encode()).hexdigest()[:12]}"
 DECIDED = {"decided-by": "operator", "decided-at": "2026-11-12T10:00:00Z"}
 ITEMS = [{"id": "1", "proposal": {"quote": "first entry", "change": "kept", "reason": "plain"}},
          {"id": "2", "proposal": {"quote": "second entry", "change": "rejected", "reason": "plain"}},
@@ -55,7 +55,7 @@ def kept(root, run, name, text, at):
 
 PACKET = """---
 note: {note}
-run: kb/reports/state/review/runs/v2/full-pass/kb/theory/bar/aaaaaaaaaaaa
+run: kb/workflow-state/data/current/review/runs/v2/full-pass/kb/theory/bar/aaaaaaaaaaaa
 disposition: revise
 resolution: {resolution}
 resolution-authority: {authority}
@@ -81,15 +81,15 @@ def repo(tmp_path, monkeypatch):
     write(root, f"{OLD_RUN}/published.json", json.dumps({"publications": [
         {"number": 1, "text": f"{OLD_RUN}/artifact/publications/1.md", "sha256": sha256(NOTE_TEXT.encode()).hexdigest(),
          "at": "2026-11-11T09:00:00Z", "decided-by": "operator", "revised": True}]}))
-    write(root, "kb/reports/state/review/runs/20261112T073040Z/sweep.json", "{}")
-    write(root, "kb/reports/state/review/runs/v2/revise/kb/theory/baz/bbbbbbbbbbbb/log.jsonl", "")
-    write(root, "kb/reports/state/review/packets/kb/theory/bar.md",
+    write(root, "kb/workflow-state/data/current/review/runs/20261112T073040Z/sweep.json", "{}")
+    write(root, "kb/workflow-state/data/current/review/runs/v2/revise/kb/theory/baz/bbbbbbbbbbbb/log.jsonl", "")
+    write(root, "kb/workflow-state/data/current/review/packets/kb/theory/bar.md",
           PACKET.format(note="kb/theory/bar.md", resolution="rejected", authority="user",
                         at='"2026-11-12T16:15:19Z"', summary="The operator kept the note."))
-    write(root, "kb/reports/state/review/packets/kb/theory/qux.md",
+    write(root, "kb/workflow-state/data/current/review/packets/kb/theory/qux.md",
           PACKET.format(note="kb/theory/qux.md", resolution="pending", authority="null", at="null", summary="null"))
     write(root, "kb/theory/qux.md", "# Qux\n")
-    write(root, "kb/reports/state/fixes/qux.fix-report.md", "# Fix report: qux\n\n| a | b |\n")
+    write(root, "kb/workflow-state/data/current/fixes/qux.fix-report.md", "# Fix report: qux\n\n| a | b |\n")
     monkeypatch.setattr(cli, "_root", lambda: root)
     return root
 
@@ -137,7 +137,7 @@ def test_packet_yields_disposition_and_user_resolution(repo):
     assert (disposition["decided-by"], disposition["decision"], disposition["at"]) == ("agent", "revise", None)
     assert (resolution["decided-by"], resolution["decision"], resolution["reason"], resolution["at"]) == (
         "operator", "rejected", "The operator kept the note.", "2026-11-12T16:15:19Z")
-    assert resolution["record"] == "kb/reports/state/review/packets/kb/theory/bar.md"
+    assert resolution["record"] == "kb/workflow-state/data/current/review/packets/kb/theory/bar.md"
     assert resolution["workflow"] == "full-pass" and resolution["unit"] == "bundle"
 
 

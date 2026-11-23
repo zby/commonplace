@@ -107,7 +107,7 @@ from commonplace.lib.review_workflows import (
     results,
 )
 
-STATE = Path("kb/reports/state/review")
+STATE = Path("kb/workflow-state/data/current/review")
 RUNS = STATE / "runs" / "v2"
 PROFILES_REL = "instructions/review-profiles.yaml"
 ATTEMPTS = 3

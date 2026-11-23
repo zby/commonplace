@@ -42,7 +42,7 @@ A descendant directory with no `COLLECTION.md` of its own is an area of the encl
 
 Tools may also treat collections as operational units, but those roles vary by tool and remain secondary to the local authoring contract.
 
-The current top-level source-repo collections are `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/articles/`, `kb/instructions/`, `kb/theory/`, `kb/reference/`, `kb/reports/`, `kb/sources/`, `kb/types/`, and `kb/work/`. `kb/types/` is both the global type layer and a collection: its `COLLECTION.md` governs authoring and outbound links, while its type specs and schemas govern artifact structure and semantics. The installed package ships `kb/types/`, together with the Theory, Reference, and Instructions collections, as the library that installed projects read in place. An installed project holds only its own collections, such as `kb/notes/` and its reports collection at `kb/reports/` beside its local types.
+The current top-level source-repo collections are `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/articles/`, `kb/instructions/`, `kb/theory/`, `kb/reference/`, `kb/reports/`, `kb/workflow-state/`, `kb/sources/`, `kb/types/`, and `kb/work/`. `kb/types/` is both the global type layer and a collection: its `COLLECTION.md` governs authoring and outbound links, while its type specs and schemas govern artifact structure and semantics. The installed package ships `kb/types/`, together with the Theory, Reference, and Instructions collections, as the library that installed projects read in place. An installed project holds only its own collections, such as `kb/notes/` and its reports collection at `kb/reports/` beside its local types.
 
 ## Exclusions
 

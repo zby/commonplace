@@ -14,7 +14,7 @@ Plain markdown without frontmatter is fine. Imported, copied, or transitional fi
 
 ## Structure
 
-Substantial work lives in a named subdirectory `kb/work/<workshop-name>/` with a short `README.md` (or `framing.md` / `plan.md`) saying what the work is and what would close it. Workflow run bundles are not workshops; they live in the ignored operational tree under `kb/reports/state/`. Small one-off files can live directly under `kb/work/` until they disappear or grow into a workshop.
+Substantial work lives in a named subdirectory `kb/work/<workshop-name>/` with a short `README.md` (or `framing.md` / `plan.md`) saying what the work is and what would close it. Workflow run bundles are not workshops; they live in the ignored operational tree under `kb/workflow-state/data/current/`. Small one-off files can live directly under `kb/work/` until they disappear or grow into a workshop.
 
 The framing file should fix only what a later session cannot safely determine
 from its authorized evidence — the goal, who posed it and in what role (the
@@ -98,4 +98,4 @@ When the workshop's question is answered, extract the durable conclusions into t
 - Anything stable enough to be referenced from the library → promote to the right durable collection
 - External source captures → `kb/sources/`
 - Durable external agentic-system and harness analyses → `kb/agentic-systems/reviews/`
-- Report outputs → choose `kb/reports/state/` or `retained/` from the reports collection contract
+- Report outputs → choose `kb/workflow-state/data/current/` for run records or `kb/reports/retained/` for citable reports

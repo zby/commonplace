@@ -27,6 +27,8 @@ Visibility is a package-owned contract and the `commonplace-*` commands never in
 
 The contract: hidden (dot-prefixed) entries and nested git repositories are invisible to every markdown walk; repository-wide walks additionally skip a fixed set of build/vendor artifact directory names. Collection walks exclude structural metadata and archives at the caller, but otherwise treat every visible Markdown file as content. Gitignore rules have no effect on what the tools see. Nested repositories are detected by the presence of a `.git` entry — a filesystem layout check, not a git invocation.
 
+KB discovery also skips the workflow payload directory `kb/workflow-state/data/` ([ADR 128](./128-one-ignored-operational-tree-under-kb-reports-state.md)). A captured collection inside a run is evidence, not another live collection. This exclusion works without a nested `.git`. It does not prevent a command from reading a result by its explicit path.
+
 General content visibility has no mechanism for declaring collection content
 local-only. Everything visible under a collection remains KB content to search,
 index, and repository-wide tools. Collection-scoped validation has one narrower

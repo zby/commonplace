@@ -62,7 +62,7 @@ It supplies the independent conditions and separately evidenced properties.
 
 Durable analysis excludes current Commonplace differences, adoption advice and
 watch items. Those belong in separately commissioned transfer scans under
-`kb/reports/state/agentic-system-transfer/`. Transferable claims go to `kb/theory/`,
+`kb/workflow-state/data/current/agentic-system-transfer/`. Transferable claims go to `kb/theory/`,
 raw captures to source snapshots, descriptions of Commonplace to `kb/reference/`,
 and in-flight work to `kb/work/`.
 

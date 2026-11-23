@@ -24,7 +24,7 @@ Markdown snapshot under `kb/sources/.snapshots/`.
 
 The direct output is the `.ingest.md` report in `kb/sources/`, with the local
 snapshot's slug. It is drafted as a candidate in an ignored working directory,
-`kb/reports/state/ingest/<slug>/`, and copied to `kb/sources/` only after it
+`kb/workflow-state/data/current/ingest/<slug>/`, and copied to `kb/sources/` only after it
 passes the handoff check; until then an existing ingest stays unchanged. URL
 snapshotting and connection discovery may write their own local or generated
 artifacts. The parent may also shorten an unpaired local
@@ -186,7 +186,7 @@ re_ingest_request:
 2. **Run connection discovery.**
    Invoke `cp-skill-connect` on the source snapshot path. Wait for it to finish.
    For a source snapshot, require the completed report at
-   `kb/reports/state/connect/sources/<snapshot-name>.connect.md`. Verify that it
+   `kb/workflow-state/data/current/connect/sources/<snapshot-name>.connect.md`. Verify that it
    exists and is non-empty. The parent does not extract connections, classify
    the source, or begin value judgments; those belong to the fresh drafting
    worker.
@@ -311,7 +311,7 @@ re_ingest_request:
    including a same-checksum refresh. Invoke `cp-skill-connect` on `output_path`
    and wait for completion. This is a separate pass from snapshot discovery;
    keep its report at
-   `kb/reports/state/connect/sources/<snapshot-slug>.ingest.connect.md`.
+   `kb/workflow-state/data/current/connect/sources/<snapshot-slug>.ingest.connect.md`.
    Require a non-empty report whose `source` is `output_path` and run
    `commonplace-validate` on that report; the command takes one path per
    run. Read its `Bidirectional Candidates` and `Reverse-edge Candidates` in

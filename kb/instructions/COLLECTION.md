@@ -144,6 +144,6 @@ type: types/instruction.md
 
 - Transferable claims about KB methodology → `kb/theory/`
 - Descriptions of how the system works → `kb/reference/`
-- Report outputs and review evidence → choose `kb/reports/state/` or `retained/` from the reports collection contract
+- Report outputs and review evidence → choose `kb/workflow-state/data/current/` for run records or `kb/reports/retained/` for citable reports
 - Collection-specific analysis, synthesis and taxonomy procedures → their owning collection's `instructions/`
 - Work in progress → `kb/work/` (workshops)

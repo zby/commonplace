@@ -19,7 +19,7 @@ Promote an approved circulating draft on the ProperDocs deployment to either a r
 ## Publish
 
 1. Run `commonplace-validate {draft-path}` and resolve every failure. Warnings require judgment but do not automatically block publication.
-   If a staged package exists under `kb/reports/state/staging/{slug}/`, use the stamped package directory the operator names, defaulting to the newest. Its `closure-check.md` must open with `Closure: reached`; otherwise stop and report the free variables it lists. Copy its appendix and reference files into `kb/articles/`, apply every row of its `link-map.md` to the body, and validate again. Do not delete the package.
+   If a staged package exists under `kb/workflow-state/data/current/staging/{slug}/`, use the stamped package directory the operator names, defaulting to the newest. Its `closure-check.md` must open with `Closure: reached`; otherwise stop and report the free variables it lists. Copy its appendix and reference files into `kb/articles/`, apply every row of its `link-map.md` to the body, and validate again. Do not delete the package.
 2. Remove the draft banner without changing the substantive body.
 3. Set the frontmatter for the approved target state, using the date supplied by the user, or the current local date when the user says “today.” Do not infer a date for “tomorrow” before that day arrives.
    - Working paper: `status: working-paper`, `published: YYYY-MM-DD` for the first public date, `version: 1`, and `revised: YYYY-MM-DD` matching the publication date.

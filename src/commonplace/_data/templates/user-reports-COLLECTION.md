@@ -28,12 +28,10 @@ Every report payload lives in exactly one first-level policy area:
 
 | Area | Retention policy |
 |---|---|
-| `state/` | Ignored workflow outputs, one directory per producing workflow, whose owning workflow controls cleanup. Its README states per workflow what deletion loses. |
 | `retained/` | Durable report records kept with the project. |
 | `types/` | Collection-local structural contracts, not report payloads. |
 
-Do not put report payloads directly at the collection root. Moving a report
-between areas changes its retention contract.
+Keep report payloads under `retained/`. Use the [workflow state collection](../workflow-state/COLLECTION.md) for records owned by a workflow.
 
 ## Quality goal
 
@@ -43,7 +41,7 @@ state, method, result, and material limits to the degree needed to interpret
 or reproduce the output. Record model and instruction provenance when an LLM
 judgment is part of the evidence and the workflow does not retain it elsewhere.
 
-`state/` follows the producing workflow's integrity and cleanup rules. `retained/` must be understandable
+`retained/` must be understandable
 from a clean checkout without ignored files.
 
 ## Titles and descriptions
@@ -59,9 +57,7 @@ from a clean checkout without ignored files.
 
 ## Maintenance semantics
 
-- Git ignore status never licenses deletion from `state/`; follow the owning
-  workflow's completion or retirement rule, and record in the state README
-  what deleting each workflow's output loses.
+
 - Correct a living retained report in place. Preserve a dated or frozen
   observation as an exact record and create a new observation when its measured
   state changes.
@@ -83,14 +79,8 @@ procedural context. Footer-shaped formal edges use this authorized set:
 
 The destination collection separately decides whether it may author a
 reciprocal edge. A formal edge into this collection targets `retained/`;
-`state/` may be mentioned inline only as local operational context.
+workflow state may be mentioned inline only as local operational context.
 
-Tracked library artifacts must not depend on an ignored `state/` file being
+Tracked library artifacts must not depend on an ignored workflow state file being
 present. Summarize the evidence in the tracked artifact or promote
 the exact report to `retained/` first.
-
-## Validation markers
-
-The `.commonplace-validation-ignore` marker under `state/` excludes that
-data-bearing subtree from collection-scoped validation. It does not hide files from ordinary discovery, and explicit file validation still
-applies a typed report's contract.

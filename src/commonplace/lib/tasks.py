@@ -1,7 +1,7 @@
 """Launch one unattended task from `kb/tasks/` through a headless worker and check its commit.
 
 A task is a runbook `kb/tasks/<name>.md` beside its log. `launch()` opens a
-Workjig run under `kb/reports/state/tasks/<name>/<stamp>/`, asks one worker
+Workjig run under `kb/workflow-state/data/current/tasks/<name>/<stamp>/`, asks one worker
 to follow the runbook in the checkout itself, then checks the worker's
 report against git: exactly one new commit, carrying the runbook's subject,
 touching only the runbook's write scope, and no other change left in the
@@ -24,7 +24,7 @@ from commonplace.headless.jobs import Run, output_ref
 
 TASKS = Path("kb/tasks")
 PROFILES = TASKS / "profiles.yaml"
-STATE = Path("kb/reports/state/tasks")
+STATE = Path("kb/workflow-state/data/current/tasks")
 RESULT = "result"
 
 PROMPT = """\

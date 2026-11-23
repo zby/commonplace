@@ -1,11 +1,3 @@
 # Reports
 
-Analytical outputs, evaluation records, and local operational evidence. Read
-[COLLECTION.md](./COLLECTION.md) before adding an artifact: the first-level
-directory is its retention contract.
-
-| Area | Meaning |
-|---|---|
-| [`state/`](./state/README.md) | Ignored workflow outputs, one directory per workflow, with workflow-owned cleanup. |
-| [`retained/`](./retained/README.md) | Durable report records kept with the project. |
-| [`types/`](./types/) | Collection-local report type contracts. |
+Use [retained reports](./retained/README.md) for analytical outputs and evidence that readers can cite from a clean checkout. Read the [reports contract](./COLLECTION.md) before retaining a report. For workflow results, decisions and run records, see [workflow state](../workflow-state/README.md).

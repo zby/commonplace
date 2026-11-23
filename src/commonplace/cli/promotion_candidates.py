@@ -1,6 +1,6 @@
 """Rank unstructured text files in an explicit collection by incoming links.
 
-Writes `kb/reports/state/promotion-candidates/<collection>/report.md`. Invalid
+Writes `kb/workflow-state/data/current/promotion-candidates/<collection>/report.md`. Invalid
 frontmatter files are listed separately; validation-ignored subtrees are
 excluded.
 """

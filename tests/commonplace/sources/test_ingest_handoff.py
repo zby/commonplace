@@ -123,7 +123,7 @@ def test_a_new_report_is_drafted_outside_the_library_and_published(
     root = ingest.parents[2]
 
     record = _prepare(ingest)
-    assert record.candidate == root / "kb/reports/state/ingest/paper/candidate.md"
+    assert record.candidate == root / "kb/workflow-state/data/current/ingest/paper/candidate.md"
     assert record.snapshot_sha256 == checksum
     assert record.incumbent_sha256 is None
     assert record.retained_quotes_path.read_text(encoding="utf-8") == CANONICAL_EMPTY_QUOTES
@@ -224,7 +224,7 @@ def test_prepare_refuses_a_changed_observation_before_writing(
 
     with pytest.raises(HandoffError, match="instruction re-ingest with Target"):
         _prepare(ingest)
-    assert not (ingest.parents[2] / "kb/reports/state").exists()
+    assert not (ingest.parents[2] / "kb/workflow-state/data/current").exists()
 
 
 def test_prepare_refuses_a_missing_snapshot_duplicate_quotes_and_an_open_run(
@@ -423,15 +423,15 @@ def test_commands_run_prepare_check_and_publish(
 
     assert handoff_main(["prepare", "kb/sources/paper.ingest.md"]) == 0
     fields = dict(line.split(": ", 1) for line in capsys.readouterr().out.splitlines())
-    assert fields["handoff_record"] == "kb/reports/state/ingest/paper/handoff.yaml"
-    assert fields["candidate_path"] == "kb/reports/state/ingest/paper/candidate.md"
+    assert fields["handoff_record"] == "kb/workflow-state/data/current/ingest/paper/handoff.yaml"
+    assert fields["candidate_path"] == "kb/workflow-state/data/current/ingest/paper/candidate.md"
     assert fields["snapshot_sha256"] == checksum
 
     candidate = root / fields["candidate_path"]
     candidate.write_text(refreshed.replace(CANONICAL_EMPTY_QUOTES, ""), encoding="utf-8", newline="\n")
     assert validate_main([fields["candidate_path"], "--handoff", fields["handoff_record"]]) == 1
     out = capsys.readouterr().out
-    assert out.startswith("HANDOFF FAILED: kb/reports/state/ingest/paper/candidate.md for kb/sources/paper.ingest.md")
+    assert out.startswith("HANDOFF FAILED: kb/workflow-state/data/current/ingest/paper/candidate.md for kb/sources/paper.ingest.md")
     assert "- quotes: expected exactly one Quotes block, found 0" in out
     assert handoff_main(["publish", fields["handoff_record"]]) == 1
     assert "Not published" in capsys.readouterr().out
@@ -447,5 +447,5 @@ def test_commands_run_prepare_check_and_publish(
     capsys.readouterr()
 
     assert handoff_main(["prune", "--days", "0"]) == 0
-    assert "removed: kb/reports/state/ingest/paper" in capsys.readouterr().out
-    assert not (root / "kb/reports/state/ingest/paper").exists()
+    assert "removed: kb/workflow-state/data/current/ingest/paper" in capsys.readouterr().out
+    assert not (root / "kb/workflow-state/data/current/ingest/paper").exists()

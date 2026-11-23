@@ -99,7 +99,7 @@ def capture_contract(repo: Path | None = None, type_path: str = TYPE) -> dict[st
     snapshot.registry(root / Path(type_path).parent / parsed.data["schema"])
     if repo is not None:
         try:
-            collection = collection_for_path(repo / "kb/reports/state/review/review.md", repo)
+            collection = collection_for_path(repo / "kb/workflow-state/data/current/review/review.md", repo)
         except ValueError:
             collection = None
         if collection is not None:
@@ -119,7 +119,7 @@ def preflight(root: Path, contracts: dict[str, bytes], type_path: str = TYPE) ->
         if not spec.ok or not isinstance(spec.data.get("schema"), str):
             raise ControllerError(f"invalid captured result type: {type_path}")
         snapshot.registry(snapshot.root / Path(type_path).parent / spec.data["schema"])
-        anchor = root / "kb/reports/state/review/review.md"
+        anchor = root / "kb/workflow-state/data/current/review/review.md"
         try:
             governing = collection_for_path(anchor, root) / "COLLECTION.md"
         except ValueError:

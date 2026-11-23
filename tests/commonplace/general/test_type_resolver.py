@@ -97,13 +97,13 @@ def test_work_subtree_accepts_peer_collection_local_type(tmp_path: Path) -> None
     assert profile.type_path == "reference/types/adr.md"
 
 
-def test_report_state_tree_accepts_peer_collection_local_type(tmp_path: Path) -> None:
-    reports = write_collection(tmp_path, "kb/reports")
+def test_workflow_state_accepts_peer_collection_local_type(tmp_path: Path) -> None:
+    state = write_collection(tmp_path, "kb/workflow-state")
     write_collection(tmp_path, "kb/reference")
     write_type_spec(tmp_path, "kb/reference/types/adr.md", name="adr", schema=None)
 
     profile = type_resolver.resolve_type(
-        reports / "state" / "multistage" / "run" / "candidate.md",
+        state / "data/current" / "multistage" / "run" / "candidate.md",
         {"type": "reference/types/adr.md"},
         repo_root=tmp_path,
     )

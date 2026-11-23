@@ -17,14 +17,13 @@ reconstructed. It does not catalogue the installed directory tree; see
 | Authored KB artifacts | Tracked Markdown | Canonical retained knowledge, contracts, instructions, and decisions; edited and reviewed as source |
 | Source reading copies | Ignored files under `.snapshots/` | Reconstructable local materializations; the tracked ingest owns source identity and capture provenance |
 | Navigation and publishing views | Generated listings and the static site | Rebuilt from authored artifacts; not a second authority |
-| Workflow outputs | Ignored files under `kb/reports/state/`, one directory per workflow | Kept under the producing workflow's cleanup rule; the state README states per workflow what deletion loses ([ADR 128](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md)) |
+| Workflow outputs | Ignored files under `kb/workflow-state/data/current/`, one directory per workflow | Kept under the producing workflow's cleanup rule; the state README states per workflow what deletion loses ([ADR 128](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md)) |
 | Retained report records | Tracked files under `kb/reports/retained/` | Exact measurements, experiments, or analyses whose record remains useful without becoming a library claim |
-| Review results | One file per (note, criterion) pair under `kb/reports/state/review/results/` | The only review and freshness state: judgment text plus the hashes of the inputs it was produced from; machine-local |
-| Retired decision records | Full-pass packets under `kb/reports/state/review/packets/` and fix reports under `kb/reports/state/fixes/` | Written by the procedures ADR 135 retired; nothing writes them now. `commonplace-revise decisions` reads them, so they hold recorded operator decisions |
-| Workflow run records | Run directories under `kb/reports/state/review/runs/` | Replay records belong to the producing run. A later invocation may consume a named output without depending on the run’s private control state. |
+| Review results | One file per (note, criterion) pair under `kb/workflow-state/data/current/review/results/` | The only review and freshness state: judgment text plus the hashes of the inputs it was produced from; machine-local |
+| Retired decision records | Pre-migration packets and fix reports in the separate state checkout, outside `current/` | Historical evidence; current queries do not read them |
+| Workflow run records | Run directories under `kb/workflow-state/data/current/review/runs/` | Replay records belong to the producing run. A later invocation may consume a named output without depending on the run’s private control state. |
 
-The reports collection separates ignored operational outputs in `state/`
-from tracked records in `retained/`. Rebuildability and cleanup depend on the
+The workflow state collection separates operational outputs from the tracked records in `kb/reports/retained/`. Rebuildability and cleanup depend on the
 producing workflow, not the directory class. Promotion into `retained/` is a
 separate retention decision.
 
@@ -99,18 +98,16 @@ its configuration.
 
 Generated reports are ignored to keep them out of the library's record, not
 because they can be rebuilt: a connect report under
-`kb/reports/state/connect/` is a paid judgment with no freshness accounting
+`kb/workflow-state/data/current/connect/` is a paid judgment with no freshness accounting
 ([ADR 128](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md)). Generated
 and ignored do not imply disposable: per-pair review result files under
-`kb/reports/state/review/results/` hold paid judgments and the hashes that
+`kb/workflow-state/data/current/review/results/` hold paid judgments and the hashes that
 make them current. Exact report records whose value survives the run live under
 `kb/reports/retained/` and are kept with the project.
 
 Full-pass packets and fix reports are records of two retired procedures
 ([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
-No workflow writes or resolves them now. They hold operator decisions that
-`commonplace-revise decisions` lists, so keep them until the operator says
-the old records are dispensable. They are local and ignored; portability
+No workflow writes or resolves them now. The pre-migration records retain operator decisions for historical inspection, not for replay by current commands. They are local and ignored; portability
 across machines is not promised.
 
 ## No operational database

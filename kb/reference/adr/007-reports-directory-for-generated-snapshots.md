@@ -12,6 +12,8 @@ status: accepted
 **Amended:** 2026-08-29 — collection boundary and retention-policy areas
 **Amended:** 2026-11-11 — [ADR 128](./128-one-ignored-operational-tree-under-kb-reports-state.md) removes the `cache/` area; every ignored workflow output lives under `state/`
 
+**Layout amendment (2026-11-23):** [ADR 128](./128-one-ignored-operational-tree-under-kb-reports-state.md) places new workflow records in `kb/workflow-state/data/current/`. Paths below describe the layout at the time of this decision.
+
 ## Context
 
 The original decision created `kb/reports/` for generated, regenerable

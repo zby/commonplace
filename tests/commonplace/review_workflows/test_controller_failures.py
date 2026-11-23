@@ -37,13 +37,13 @@ def test_all_kinds_validate_at_both_locations(tmp_path, monkeypatch, capsys, ins
         captured = observations.read_inputs(path.parent, data)
         contracts = {item["origin"]: captured[item["path"]]
                      for item in data["inputs"] if item["role"] == "contract"}
-        assert contracts["reports/COLLECTION.md"] == (root / "kb/reports/COLLECTION.md").read_bytes()
+        assert contracts["workflow-state/COLLECTION.md"] == (root / "kb/workflow-state/COLLECTION.md").read_bytes()
         held = path.parent / data["completed-results"][0]
         text = held.read_text()
         current = results.result_path(root, data["request"]["note"], data["request"]["criterion-id"])
         assert not result_contract.validate_saved(root, held, text, contracts=contracts).fails
         assert not result_contract.validate_saved(root, current, text, contracts=contracts).fails
-        del contracts["reports/COLLECTION.md"]
+        del contracts["workflow-state/COLLECTION.md"]
         with pytest.raises(result_contract.ControllerError, match="missing pinned criterion"):
             result_contract.validate_saved(root, current, text, contracts=contracts)
     assert main(["show", report["run-dir"], "--json"], harnesses=repo[1]) == 0
@@ -55,7 +55,7 @@ def test_missing_capture_stops_before_launch(tmp_path, monkeypatch, capsys):
     capture = result_contract.capture_contract
 
     def incomplete(root=None):
-        return {k: v for k, v in capture(root).items() if k != "reports/COLLECTION.md"}
+        return {k: v for k, v in capture(root).items() if k != "workflow-state/COLLECTION.md"}
 
     monkeypatch.setattr(result_contract, "capture_contract", incomplete)
     assert main(["kb/notes/alpha.md", "--criteria", "collection"], harnesses=repo[1]) == 2
@@ -81,7 +81,7 @@ def test_evidence_corruption_is_not_a_worker_correction(tmp_path, monkeypatch, c
     record = observations.load(path.parent)
     assert record["state"] == "controller-error" and record["content-rejections"] == 0
     assert any(e["event"] == "controller-error" for e in record["diagnostics"])
-    assert not list((repo[0] / "kb/reports/state/review/results").rglob("*.md"))
+    assert not list((repo[0] / "kb/workflow-state/data/current/review/results").rglob("*.md"))
 
 
 def test_real_registry_fixture_selector_uses_claude_code(tmp_path, monkeypatch, capsys):

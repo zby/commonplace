@@ -78,7 +78,7 @@ def test_fixture_excludes_ignored_ambient_files_but_retains_explicit_input(tmp_p
     tree = root / trial["evidence-root"]
     assert not (tree / "kb/messages/private.md").exists()
     assert not (tree / "kb/sources/cache/selected.txt").exists()
-    [held] = records(tree, "kb/reports/state/review/runs/v2/trial")
+    [held] = records(tree, "kb/workflow-state/data/current/review/runs/v2/trial")
     data = observations.load(held.parent)
     assert data["library-sha256"] == record["library-sha256"]
     assert any(item["role"] == "operational" for item in data["inputs"])
@@ -217,7 +217,7 @@ def test_interruption_before_workjig_registration_can_resume(repo, capsys, monke
         assert main(["kb/notes/alpha.md", "--criteria", "prose/body-gate", "--timeout", "30"],
                     harnesses=repo[1]) == 2
     assert "stopped before Workjig registration" in capsys.readouterr().err
-    [path] = (root / "kb/reports/state/review/runs/v2").glob("*/artifact/reviews/*/observation.json")
+    [path] = (root / "kb/workflow-state/data/current/review/runs/v2").glob("*/artifact/reviews/*/observation.json")
     data = observations.load(path.parent)
     assert data["calls"] == [] and not (path.parent / "inputs").exists()
     run = observations.run_root(path.parent).relative_to(root).as_posix()
@@ -246,7 +246,7 @@ def test_draft_and_show_do_not_publish(repo, capsys):
         assert code == 0 and len(launches) == 1, report
         runs.append(report["run-dir"])
     assert runs[0] != runs[1]
-    assert not list((root / "kb/reports/state/review/results").rglob("*.md"))
+    assert not list((root / "kb/workflow-state/data/current/review/results").rglob("*.md"))
     assert main(["show", runs[0], "--json"], harnesses=repo[1]) == 0
     shown = json.loads(capsys.readouterr().out)
     assert shown["observations"][0]["results"][0]["findings"] == []
@@ -266,7 +266,7 @@ def test_fixture_trials_are_independent_and_resume_is_not_a_trial(tmp_path, monk
         fixtures.create(root, source["run-dir"], record.parent.name)
     fixture = fixtures.create(root, source["run-dir"], record.parent.name, substitute_executor=True)
     name = fixture.relative_to(root).as_posix()
-    live = {str(p): p.read_bytes() for p in (root / "kb/reports/state/review/results").rglob("*.md") if p.is_file()}
+    live = {str(p): p.read_bytes() for p in (root / "kb/workflow-state/data/current/review/results").rglob("*.md") if p.is_file()}
     runs = []
     for _ in range(2):
         before = len(log.read_text().splitlines())
@@ -281,7 +281,7 @@ def test_fixture_trials_are_independent_and_resume_is_not_a_trial(tmp_path, monk
     assert main(["--fixture", name, "--resume", runs[0]], harnesses=harnesses) == 0
     capsys.readouterr()
     assert log.read_text() == before
-    assert {str(p): p.read_bytes() for p in (root / "kb/reports/state/review/results").rglob("*.md") if p.is_file()} == live
+    assert {str(p): p.read_bytes() for p in (root / "kb/workflow-state/data/current/review/results").rglob("*.md") if p.is_file()} == live
     (fixture / "inputs/criterion.md").write_text("tampered")
     with pytest.raises(ValueError, match="changed"):
         fixtures.load(root, name)
@@ -298,7 +298,7 @@ def test_unsafe_capture_and_old_run_are_rejected(repo, capsys):
         escape.symlink_to(root.parent, target_is_directory=True)
     with pytest.raises(ValueError, match="escapes"):
         observations.safe_path(root, "escape/file")
-    old = root / "kb/reports/state/review/runs/old"
+    old = root / "kb/workflow-state/data/current/review/runs/old"
     old.mkdir(parents=True)
     (old / "sweep.json").write_text('{"profile": {}}')
     assert main(["kb/notes/alpha.md", "--criteria", "prose/body-gate", "--resume", str(old)],
@@ -311,13 +311,13 @@ def test_explicit_input_and_historical_content_repair(repo, capsys):
     support = "kb/notes/support.md"
     original = note("Support", "Historical support content.")
     write(root, support, original)
-    source = "kb/reports/state/other-run/findings.md"
+    source = "kb/workflow-state/data/current/other-run/findings.md"
     (root / source).parent.mkdir(parents=True)
     write(root, source, "Self-contained finding. See [unavailable provenance](missing.md).\r\n")
     code, report, _ = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose/body-gate",
                              "--input", f"findings={source}")
     assert code == 0, report
-    assert not list((root / "kb/reports/state/review/results").rglob("*.md"))
+    assert not list((root / "kb/workflow-state/data/current/review/results").rglob("*.md"))
     [record] = records(root, report["run-dir"])
     held = json.loads(record.read_text())
     [supplied] = [item for item in held["inputs"] if item["role"] == "operational"]
@@ -333,7 +333,7 @@ def test_explicit_input_and_historical_content_repair(repo, capsys):
     tree = root / trial["evidence-root"]
     assert (tree / support).read_text() == original
     assert not (tree / source).exists()
-    assert not (tree / "kb/reports/state/other-run/missing.md").exists()
+    assert not (tree / "kb/workflow-state/data/current/other-run/missing.md").exists()
     assert main(["show", trial["run-dir"], "--json"], harnesses=repo[1]) == 0
     shown = json.loads(capsys.readouterr().out)
     assert len(shown["observations"]) == 1

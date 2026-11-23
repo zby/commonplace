@@ -164,7 +164,7 @@ def repo(tmp_path, monkeypatch):
     root = tmp_path / "repo"
     files = {rel: (REPO_ROOT / rel).read_text() for rel in (*NOTE_TYPE_SPECS, *EDIT_TYPES)}
     files |= {f"kb/{rewrite_module.INSTRUCTIONS_DIR}/{path.name}": path.read_text() for path in INSTRUCTIONS.glob("*.md")}
-    files |= {rel: REVIEW_FILES[rel] for rel in (ROLE_REL, "kb/reports/COLLECTION.md")}
+    files |= {rel: REVIEW_FILES[rel] for rel in (ROLE_REL, "kb/workflow-state/COLLECTION.md")}
     files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n",
               SOURCE: "# Alpha ingest\n\nAlpha holds when the condition is met.\n",
               "kb/sources/.gitignore": ".snapshots/\n", SNAPSHOT: SNAPSHOT_TEXT,
@@ -227,7 +227,7 @@ def test_a_rewrite_runs_its_calls_and_holds_its_candidate_for_the_operator(repo,
     assert "finding(s) of level warn" not in held["what"]
     assert note_text(repo) == start != original
     run = repo[0] / report["run-dir"]
-    assert re.fullmatch(r"kb/reports/state/review/runs/v2/rewrite/kb/notes/alpha/[0-9]{8}T[0-9]{6}Z(-[0-9]+)?",
+    assert re.fullmatch(r"kb/workflow-state/data/current/review/runs/v2/rewrite/kb/notes/alpha/[0-9]{8}T[0-9]{6}Z(-[0-9]+)?",
                         report["run-dir"])
     started = json.loads((run / edits.START_RECORD).read_text())
     assert started == {"note": NOTE_PATH, "sha256": observations.sha(start.encode()),
@@ -405,7 +405,7 @@ def test_the_commission_is_required_and_checked_and_every_invocation_is_a_new_ru
         "note: kb/notes/alpha.md", "note: kb/notes/beta.md"))
     code, error, launches = rewrite(repo, capsys)
     assert code == 2 and "`## Must exclude` is missing" in error and "`note` must be kb/notes/alpha.md" in error
-    assert launches == [] and not (repo[0] / "kb/reports/state/review/runs/v2/rewrite").exists()
+    assert launches == [] and not (repo[0] / "kb/workflow-state/data/current/review/runs/v2/rewrite").exists()
     repo[3].write_text(COMMISSION.replace(SOURCE, NOTE_PATH))
     code, error, _ = rewrite(repo, capsys)
     assert code == 2 and "is the note or its write brief" in error
@@ -422,7 +422,7 @@ def test_the_commission_is_required_and_checked_and_every_invocation_is_a_new_ru
 DECIDED = {"proposal": {"quote": "Alpha body", "change": "alpha", "reason": "plain"}, "state": "rejected",
            "reason": "a registered word", "revisit": None, "decided-by": "operator",
            "decided-at": "2026-11-15T12:00:00Z",
-           "answers-file": "kb/reports/state/review/runs/v2/revise/kb/notes/alpha/0123456789ab/artifact/x.md"}
+           "answers-file": "kb/workflow-state/data/current/review/runs/v2/revise/kb/notes/alpha/0123456789ab/artifact/x.md"}
 
 
 def test_earlier_decisions_reach_the_candidate_repair_and_review_calls(repo, capsys, monkeypatch):

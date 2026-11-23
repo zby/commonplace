@@ -11,6 +11,8 @@ status: accepted
 **Date:** 2026-11-12
 **Amends:** [ADR 128](./128-one-ignored-operational-tree-under-kb-reports-state.md): four workflow families whose bundles lived outside `state/` now write under it, and their rows say "kept"; the analysis process record stays outside the tree until integration copies it.
 
+**Layout amendment (2026-11-23):** [ADR 128](./128-one-ignored-operational-tree-under-kb-reports-state.md) places new workflow records in `kb/workflow-state/data/current/`. Paths below describe the layout at the time of this decision.
+
 ## Context
 
 On 2026-11-11 the operator set a direction: intermediate workflow artifacts

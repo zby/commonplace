@@ -11,6 +11,8 @@ status: accepted
 **Supersedes:** [ADR 051](./051-full-pass-packets-own-guarded-captures-and-resolutions.md) (packets own captures and resolutions) and [ADR 080](./080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) (full passes hand claim changes back as a pending revise).
 **Extends:** [ADR 133](./133-edit-operations-run-alone-through-one-typed-route.md) and [ADR 134](./134-stops-record-the-operators-answers-in-one-typed-file.md): the runner uses their edit route, bounds, answers stops and publication unchanged.
 
+**Layout amendment (2026-11-23):** [ADR 128](./128-one-ignored-operational-tree-under-kb-reports-state.md) places new workflow records in `kb/workflow-state/data/current/`. Paths below describe the layout at the time of this decision.
+
 ## Context
 
 Commonplace had three procedures that improve a note. The full-pass workflow ran method reports, wrote a packet with a disposition for the whole note, and for a `keep` ran an editor, a copyeditor and a closing cycle that reviewed the edited text again, with one repair. The fix procedure was a session instruction: an agent fixed the current review warnings and wrote a fix report with one row per finding. The revise workflow ran a plan of simplification passes.

@@ -71,7 +71,7 @@ hand-patched to make a comparison pass.
    synthesis: commit it under its own authority or drop it from the selection
    with a new commit; never read an uncommitted finding. By default, keep the
    matrix, the working query ledger, and the draft in one run directory,
-   `kb/reports/state/agent-memory-landscape/<YYYYMMDD-HHMMSS>/`, in the ignored
+   `kb/workflow-state/data/current/agent-memory-landscape/<YYYYMMDD-HHMMSS>/`, in the ignored
    operational tree; keep it after publication and do not commit it. Build the
    matrix from the same selection into that directory, never over the public
    comparison files:

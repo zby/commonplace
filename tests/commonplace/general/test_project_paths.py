@@ -174,11 +174,12 @@ def test_resolve_note_raises_on_ambiguous_match(tmp_path: Path) -> None:
 
 def test_type_spec_paths_skip_validation_ignored_subtrees(tmp_path: Path) -> None:
     kb = tmp_path / "kb"
-    for rel in ("types/note.md", "reports/types/local.md", "reports/state/run/kb/types/copy.md"):
+    for rel in ("types/note.md", "reports/types/local.md", "reports/retained/trial/kb/types/copy.md",
+                "workflow-state/data/current/run/kb/types/copy.md"):
         path = kb / rel
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("---\n---\n", encoding="utf-8")
-    (kb / "reports" / "state" / ".commonplace-validation-ignore").write_text("state\n", encoding="utf-8")
+    (kb / "reports/retained/trial/.commonplace-validation-ignore").touch()
 
     found = {p.relative_to(kb).as_posix() for p in project_paths.list_type_spec_paths(tmp_path)}
 

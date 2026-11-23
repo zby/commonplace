@@ -2,7 +2,7 @@
 
 The role report (`criteria.ROLE`) judges a note's role in the KB from these
 contexts. `collect()` reads every Markdown file under kb/ except the note,
-kb/reports/, kb/work/ and hidden directories (such as the ignored source
+kb/reports/, kb/workflow-state/, kb/work/ and hidden directories (such as the ignored source
 snapshots), and keeps each file with a local link that resolves to the note.
 For each it gives the file's repository path, title and description, and
 each passage that holds such a link: the list item, table row, heading or
@@ -31,7 +31,7 @@ INPUT = criteria.SUPPLIED[criteria.ROLE]
 """The input role the role report reads the collected text under: `inbound`."""
 ORIGIN = "controller: inbound links collected from kb/"
 """The origin recorded for the collected text, which is no file."""
-EXCLUDED = ("reports", "work")
+EXCLUDED = ("reports", "workflow-state", "work")
 """Directories directly under kb/ whose files are not inbound contexts: operational outputs and workshops."""
 MAX_LINKING_FILES = 30
 MAX_PASSAGES_PER_FILE = 5
@@ -111,7 +111,7 @@ def _quoted(passage: str) -> str:
 
 def render(note: str, found: list[Linking]) -> str:
     """The inbound contexts as one Markdown text."""
-    scope = ("Markdown files under kb/, except kb/reports/, kb/work/, hidden directories and the note itself")
+    scope = ("Markdown files under kb/, except kb/reports/, kb/workflow-state/, kb/work/, hidden directories and the note itself")
     head = f"# Inbound contexts of `{note}`\n\n"
     if not found:
         return head + f"No file links to this note. Searched: {scope}.\n"

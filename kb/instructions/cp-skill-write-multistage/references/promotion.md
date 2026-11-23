@@ -15,9 +15,9 @@ word.
 ## Preflight and drift
 
 Resolve the active run path before any live mutation. Require its direct parent
-to be exactly `kb/reports/state/multistage/`, its basename to conform to
+to be exactly `kb/workflow-state/data/current/multistage/`, its basename to conform to
 `multistage-write-<short-topic>-<YYYYMMDD>`, and its canonical path to remain
-inside that parent. A path directly under `kb/reports/state/`, the grouping
+inside that parent. A path directly under `kb/workflow-state/data/current/`, the grouping
 directory itself, or an unresolved or escaping path is a setup blocker: do not
 promote or remove anything.
 
@@ -105,7 +105,7 @@ user acceptance, or separate completion. A composition mismatch blocks
 promotion.
 
 Immediately before closing, resolve the run path again and require the same
-`kb/reports/state/multistage/` parent and basename constraints. On any mismatch,
+`kb/workflow-state/data/current/multistage/` parent and basename constraints. On any mismatch,
 report the blocker. Close only after the target and lineage validate, the
 closing account is complete, and no authorized decision remains unexecuted.
 Leave the run directory in place and report its path; do not remove or commit

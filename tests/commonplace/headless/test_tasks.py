@@ -100,7 +100,7 @@ def test_clean_run_is_ok_and_leaves_other_work_alone(repo):
     assert report.model == "fake-model-1"
     assert report.result.startswith(f"commit: {report.commit}")
     assert "?? other.md" in git(root, "status", "--porcelain")
-    assert (root / "kb/reports/state/tasks/demo/t1/calls").is_dir()
+    assert (root / "kb/workflow-state/data/current/tasks/demo/t1/calls").is_dir()
 
 
 def test_stray_file_outside_scope_is_leftover(repo):

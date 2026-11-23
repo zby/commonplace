@@ -44,7 +44,7 @@ Move a KB directory, rewrite links, and optionally add one ProperDocs redirect. 
 
 ### commonplace-promotion-candidates
 
-Rank unstructured text files in a collection by incoming links and write `kb/reports/state/promotion-candidates/<collection>/report.md`.
+Rank unstructured text files in a collection by incoming links and write `kb/workflow-state/data/current/promotion-candidates/<collection>/report.md`.
 
 ## Sources and snapshots
 
@@ -58,7 +58,7 @@ Capture an X/Twitter post, thread, or article into ignored `kb/sources/.snapshot
 
 ### commonplace-ingest-handoff
 
-Open (`prepare`), `publish`, `close`, and `prune` the staging handoff under `kb/reports/state/ingest/` for an ingest draft. Used by `cp-skill-ingest`.
+Open (`prepare`), `publish`, `close`, and `prune` the staging handoff under `kb/workflow-state/data/current/ingest/` for an ingest draft. Used by `cp-skill-ingest`.
 
 ## Review and editing
 

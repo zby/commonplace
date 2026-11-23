@@ -1,7 +1,7 @@
 """Review result files and their freshness.
 
 A result is one reviewer's judgment of one note against one criterion, kept
-at `kb/reports/state/review/results/<note-path>/<criterion-id>.md`. Its
+at `kb/workflow-state/data/current/review/results/<note-path>/<criterion-id>.md`. Its
 frontmatter names both inputs with the SHA-256 of the text the judgment was
 produced from, the outcome and the executor; its body is the reviewer's text.
 A pair is fresh when its normalized input hashes and output-contract fingerprint
@@ -49,7 +49,7 @@ from commonplace.lib.library import (
 from commonplace.lib.review_workflows import result_contract
 from commonplace.lib.review_workflows.criteria import gates_dir
 
-RESULTS = Path("kb/reports/state/review/results")
+RESULTS = Path("kb/workflow-state/data/current/review/results")
 LIBRARY_ID_PREFIX = "commonplace/"
 """Where a library criterion outside the gate catalog keeps its results; repository criteria live under kb/."""
 WATCHABLE = {"title", "description", "body"}

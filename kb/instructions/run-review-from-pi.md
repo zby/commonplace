@@ -12,7 +12,7 @@ The Pi session that starts a review and the worker that judges the note are sepa
 ## Use Pi as the reviewer worker
 
 1. Follow [INSTALL.md](../../INSTALL.md) for the consuming project. Use a Git repository with at least one commit (the checkout guard reads `HEAD`) and an existing KB note. Confirm `commonplace-review --help` and `pi --version` work in the launch shell.
-2. Pick a provider and model from `pi --list-models`, set up provider credentials (for example via `/login` in Pi), and verify in the launch environment with `pi auth check --model PROVIDER/MODEL`. The worker must read the note and installed library and write its result under `kb/reports/state/review/runs/` without prompting.
+2. Pick a provider and model from `pi --list-models`, set up provider credentials (for example via `/login` in Pi), and verify in the launch environment with `pi auth check --model PROVIDER/MODEL`. The worker must read the note and installed library and write its result under `kb/workflow-state/data/current/review/runs/` without prompting.
 3. Add an entry under the existing `profiles:` key in the library's [review-profiles.yaml](./review-profiles.yaml), replacing `PROVIDER/MODEL` with your chosen ID. For durable customization, use an editable Commonplace install and edit `kb/instructions/review-profiles.yaml` in that checkout (a file of the same name in a consuming KB is not an override):
 
    ```yaml

@@ -32,7 +32,7 @@ The [compression bundle](../run-compression-bundle-on-note.md) applies this synt
 
 ### Inputs
 
-The compression findings are explicit input files, one per check, such as the four check results under `kb/reports/state/review/results/<note-path>/`. Run the synthesis alone:
+The compression findings are explicit input files, one per check, such as the four check results under `kb/workflow-state/data/current/review/results/<note-path>/`. Run the synthesis alone:
 
 ```bash
 commonplace-review NOTE --criteria compression-synthesis \

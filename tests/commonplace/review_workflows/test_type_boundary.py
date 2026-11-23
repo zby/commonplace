@@ -16,7 +16,7 @@ def test_explicit_state_artifacts_are_validated_despite_ignore_marker(tmp_path, 
     copy_repo_files(root, *NOTE_TYPE_SPECS, "kb/types/connect-report.md", "kb/types/connect-report.schema.yaml")
     monkeypatch.setattr(library, "_library_root", lambda *_args, **_kwargs: root / "kb")
     monkeypatch.chdir(root)
-    state = root / "kb/reports/state"
+    state = root / "kb/workflow-state/data/current"
     state.mkdir(parents=True)
     (state / ".commonplace-validation-ignore").touch()
     path = state / "invalid-report.md"

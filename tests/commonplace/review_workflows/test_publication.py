@@ -40,7 +40,7 @@ def held(tmp_path, monkeypatch):
 
 def test_a_run_directory_is_a_timestamp_under_the_note(held):
     root, run_dir, _ = held
-    assert run_dir.parent == root / "kb/reports/state/review/runs/v2/revise/kb/notes/note"
+    assert run_dir.parent == root / "kb/workflow-state/data/current/review/runs/v2/revise/kb/notes/note"
     assert len(run_dir.name) == len("20261118T120000Z") and run_dir.name.endswith("Z")
     second = edits.new_run_dir(root, "revise", NOTE)
     assert second.parent == run_dir.parent and second != run_dir

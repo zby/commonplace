@@ -1196,7 +1196,7 @@ def validate_ingest_contract(results: CheckResults, content: str, path: Path) ->
         warn("frontmatter names a .snapshots/ path")
     if "related-systems/" in outside_quotes:
         warn("the report cites a related-systems/ checkout")
-    if ".connect.md" in outside_quotes or "reports/state/connect" in outside_quotes:
+    if ".connect.md" in outside_quotes or "workflow-state/data/current/connect" in outside_quotes:
         warn("the report names the generated connect report")
 
     snapshot = name_paired_snapshot(path)
@@ -1399,13 +1399,13 @@ def validate_unquoted_sources(
     it carries needs the snapshot rather than the retained extract.
     """
     review_result = (canonical_type_identity(parsed.profile) == "types/review-result.md"
-                     and parsed.path.resolve().is_relative_to(run.repo_root / "kb/reports/state/review"))
+                     and parsed.path.resolve().is_relative_to(run.repo_root / "kb/workflow-state/data/current/review"))
     if is_collection_metadata(parsed.path) and not review_result:
         return
     # Review results can be named COLLECTION.md after their criterion, but are
     # not collection declarations. Use the state tree's governing contract.
     limit = run.unquoted_source_limit(
-        run.repo_root / "kb/reports/state/review/review.md" if review_result else parsed.path)
+        run.repo_root / "kb/workflow-state/data/current/review/review.md" if review_result else parsed.path)
     if limit is None:
         return
     repo_root = run.repo_root.resolve()
@@ -1626,7 +1626,7 @@ def validate_collection_contract_name(results: CheckResults, parsed: ParsedNote)
     # Result paths preserve criterion names, including COLLECTION.md. They are
     # assessments in the review state tree, not collection declarations.
     if (type_identity == "types/review-result.md"
-            and "/kb/reports/state/review/" in parsed.path.as_posix()):
+            and "/kb/workflow-state/data/current/review/" in parsed.path.as_posix()):
         return
     if is_collection_metadata(parsed.path) and type_identity != COLLECTION_CONTRACT_TYPE:
         results.fails.append(

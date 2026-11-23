@@ -1,5 +1,7 @@
 # Public state repository
 
+The paths below describe the pre-migration layout. For the current state checkout and the distinction between historical and current runs, see the [workflow state landing](../../workflow-state/README.md).
+
 ## Goal
 
 Decide whether the local operational state under `kb/reports/state/` should be
@@ -69,7 +71,7 @@ Measured on 2026-11-11, before archiving retired review state: 964 MB in
 24,099 files.
 
 - About 500 MB is abandoned review data: the retired SQLite stores, their
-  backups, and directories the [state README](../../reports/state/README.md)
+  backups, and directories the state README
   already permits deleting. These are not the current review state.
 - 231 MB was old agentic-system analysis runs under `agentic-system-analysis/`,
   96 runs of the retired method. 210 MB of it was verbatim source extractions

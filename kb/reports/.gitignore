@@ -1,6 +1,0 @@
-# Operational workflow outputs. Policy documents and validation markers stay tracked.
-# The state README belongs to the state repository checked out here; the
-# validation marker belongs to this repository.
-state/**
-!state/
-!state/.commonplace-validation-ignore

@@ -4,7 +4,7 @@
 
 Runs in the current checkout, on the current branch, as the task's runbook
 says; prints a JSON report and checks git commit count, subject, write scope,
-and uncommitted leftovers. Records live under kb/reports/state/tasks/.
+and uncommitted leftovers. Records live under kb/workflow-state/data/current/tasks/.
 Exits 0 when all checks pass, 1 when any check fails, and 2 when the runbook
 or profile cannot be loaded. The worker's own report is shown but decides
 nothing.

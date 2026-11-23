@@ -16,7 +16,7 @@ def copy_contract(library: Path) -> None:
 
 def evidence(root: Path, target: str = "Fixture target", raw: str = "Fixture raw output") -> dict:
     digest = hashlib.sha256(target.encode()).hexdigest()
-    base = root / "kb/reports/state/fixtures" / digest
+    base = root / "kb/workflow-state/data/current/fixtures" / digest
     base.mkdir(parents=True, exist_ok=True)
     (base / "target.md").write_bytes(target.encode())
     (base / "review.md").write_bytes(raw.encode())

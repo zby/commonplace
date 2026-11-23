@@ -11,6 +11,8 @@ status: accepted
 **Extends:** [ADR 135](./135-improvement-procedures-are-three-plans-on-one-runner.md), whose runner edits a note within bounds that preserve its claims, and [ADR 134](./134-stops-record-the-operators-answers-in-one-typed-file.md), whose publication stop the rewrite uses unchanged.
 **Amends:** [ADR 129](./129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md) for rewrites of existing notes: their runs live under `kb/reports/state/review/runs/v2/rewrite/`, not under `kb/reports/state/multistage/`.
 
+**Layout amendment (2026-11-23):** [ADR 128](./128-one-ignored-operational-tree-under-kb-reports-state.md) places new workflow records in `kb/workflow-state/data/current/`. Paths below describe the layout at the time of this decision.
+
 ## Context
 
 The improvement procedures edit a note without changing its claims. When a review finds a problem with a claim itself, the full procedure stops and leaves the change to the operator. On 2026-11-16 such a stop led to a rewrite done by hand in a conversation.

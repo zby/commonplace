@@ -67,8 +67,8 @@ The pending file for a proposed edit result; `commonplace-revise answers create`
 ```markdown
 ---
 type: types/answers.md
-description: The operator's answers to kb/reports/state/review/runs/v2/<run>/artifact/edits/<observation>/results/<launch>/result.md
-question: kb/reports/state/review/runs/v2/<run>/artifact/edits/<observation>/results/<launch>/result.md
+description: The operator's answers to kb/workflow-state/data/current/review/runs/v2/<run>/artifact/edits/<observation>/results/<launch>/result.md
+question: kb/workflow-state/data/current/review/runs/v2/<run>/artifact/edits/<observation>/results/<launch>/result.md
 question-sha256: <64 hex>
 items:
 - id: '1'

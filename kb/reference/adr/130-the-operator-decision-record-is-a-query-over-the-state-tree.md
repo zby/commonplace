@@ -10,6 +10,8 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-11-13
 
+**Layout amendment (2026-11-23):** [ADR 128](./128-one-ignored-operational-tree-under-kb-reports-state.md) places new workflow records in `kb/workflow-state/data/current/`. Paths below describe the layout at the time of this decision.
+
 ## Context
 
 Three procedures improve one note after review: the full improvement pass,

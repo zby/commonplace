@@ -254,6 +254,8 @@ def walk_visible(
             for dirname in dirnames
             if not dirname.startswith(".")
             and dirname not in exclude_dir_names
+            # A plain-directory install can hold captured KBs here, even without .git.
+            and not (dirname == "data" and current_path.parts[-2:] == ("kb", "workflow-state"))
             and not (current_path / dirname / ".git").exists()
         )
         yield current_path, dirnames, sorted(filenames)

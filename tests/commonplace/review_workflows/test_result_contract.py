@@ -9,10 +9,10 @@ def metadata():
     return {"description": "One retained assessment of the captured target against its criterion",
             "contract": "verdict", "note": "kb/notes/a.md", "criterion": "kb/test.md",
             "note-sha256": "0" * 64, "criterion-sha256": "1" * 64,
-            "target-sha256": "2" * 64, "target-capture": "kb/reports/state/run/target.md",
-            "observation": "kb/reports/state/run/observation.json", "contract-sha256": "3" * 64,
-            "profile": {}, "model": None, "run": "kb/reports/state/run", "launch": "launch",
-            "completed-at": "2026-11-15T10:00:00Z", "raw-output": "kb/reports/state/run/review.md",
+            "target-sha256": "2" * 64, "target-capture": "kb/workflow-state/data/current/run/target.md",
+            "observation": "kb/workflow-state/data/current/run/observation.json", "contract-sha256": "3" * 64,
+            "profile": {}, "model": None, "run": "kb/workflow-state/data/current/run", "launch": "launch",
+            "completed-at": "2026-11-15T10:00:00Z", "raw-output": "kb/workflow-state/data/current/run/review.md",
             "raw-output-sha256": "4" * 64}
 
 
@@ -22,7 +22,7 @@ def fragment(outcome="pass", findings=None, **extra):
 
 
 def complete(tmp_path, text, target="A unique passage.", **kwargs):
-    path = tmp_path / "kb/reports/state/review.md"
+    path = tmp_path / "kb/workflow-state/data/current/review.md"
     from tests.commonplace.review_workflows.result_helpers import evidence
     given = kwargs.get("metadata", metadata())
     given.update({key.replace("_", "-"): value for key, value in evidence(tmp_path, target, text).items()})

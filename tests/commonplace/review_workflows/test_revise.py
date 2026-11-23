@@ -189,7 +189,7 @@ def start(repo, words="", path=NOTE_PATH, text=None):
     subprocess.run(["git", "commit", "-q", "-m", "seed"], cwd=repo[0], check=True)
     return text
 
-RUN_DIR = re.compile(r"kb/reports/state/review/runs/v2/revise/kb/notes/alpha/[0-9]{8}T[0-9]{6}Z(?:-[0-9]+)?")
+RUN_DIR = re.compile(r"kb/workflow-state/data/current/review/runs/v2/revise/kb/notes/alpha/[0-9]{8}T[0-9]{6}Z(?:-[0-9]+)?")
 
 
 def revise(repo, capsys, *args):
@@ -295,7 +295,7 @@ def items_of(report):
 
 
 def run_dirs(repo):
-    base = repo[0] / "kb/reports/state/review/runs/v2/revise" / NOTE_PATH.removesuffix(".md")
+    base = repo[0] / "kb/workflow-state/data/current/review/runs/v2/revise" / NOTE_PATH.removesuffix(".md")
     return sorted(path.name for path in base.iterdir()) if base.is_dir() else []
 
 
@@ -1382,7 +1382,7 @@ REVIEW_FILES = {
     "kb/instructions/composition-friction-gate.md": review_operation(1),
     "kb/instructions/premise-decomposition-gate.md": review_operation(1),
     "kb/instructions/role-in-the-kb-gate.md": review_operation(1),
-    "kb/reports/COLLECTION.md": ("---\ntype: types/collection-contract.md\nunquoted-source-limit: 0\n---\n\n"
+    "kb/workflow-state/COLLECTION.md": ("---\ntype: types/collection-contract.md\nunquoted-source-limit: 0\n---\n\n"
                                  "# Reports\n\nRetained operational evidence.\n"),
 }
 
@@ -1416,7 +1416,7 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     assert set(launches[:8]) == REVIEWS and launches[8:10] == [SYNTHESIS, ROLE]
     assert launches[10:] == ["assess - big", ORDINARY[0], "list plain-wording small"]
     assert [sweep["counts"] for sweep in report["reviews"]] == [{"reviewed": 9}, {"reviewed": 1}, {"reviewed": 1}]
-    store = repo[0] / "kb/reports/state/review/results" / NOTE_PATH
+    store = repo[0] / "kb/workflow-state/data/current/review/results" / NOTE_PATH
     role = repo[0] / report["reviews"][2]["run-dir"]
     assert role.name == "role" and not (store / "kb/instructions/role-in-the-kb-gate.md").exists()
     [given] = role.glob("artifact/reviews/*/observation.json")
@@ -1514,7 +1514,7 @@ def test_a_rejection_reaches_the_next_review_of_that_pair_only(reviewed, capsys)
     repo = reviewed
     start(repo)
     gates_run(repo, capsys, "--grouping", "bundle")
-    store = repo[0] / "kb/reports/state/review/results" / NOTE_PATH / "prose"
+    store = repo[0] / "kb/workflow-state/data/current/review/results" / NOTE_PATH / "prose"
     residue, warned = (store / "residue.md").read_bytes(), (store / "warned.md").read_bytes()
     criterion = (repo[0] / "kb/instructions/review-gates/prose/residue.md").read_text()
     stored_hash = yaml.safe_load(residue.decode().split("---\n")[1])["criterion-sha256"]

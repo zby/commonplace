@@ -1,5 +1,0 @@
-# Operational workflow outputs, including their workflow-owned README.
-# Only the validation marker belongs to the main repository.
-state/**
-!state/
-!state/.commonplace-validation-ignore

@@ -54,7 +54,7 @@ RECORD_NAME = "handoff.yaml"
 CANDIDATE_NAME = "candidate.md"
 RETAINED_QUOTES_NAME = "retained-quotes.md"
 # Local, ignored and owned by this workflow (see kb/reports/COLLECTION.md).
-WORKING_ROOT = Path("kb/reports/state/ingest")
+WORKING_ROOT = Path("kb/workflow-state/data/current/ingest")
 CANONICAL_EMPTY_QUOTES = f"## Quotes\n\n{EMPTY_INGEST_QUOTES_SENTENCE}\n\n"
 RETIRED_FIELDS = ("source_snapshot", "code_revisions")
 # Validation warnings that refuse a handoff: a published ingest must not carry them.

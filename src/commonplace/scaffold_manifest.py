@@ -44,8 +44,8 @@ MANIFEST = ScaffoldManifest(
         Path("kb/tasks"),
         Path("kb/work"),
         Path("kb/reports"),
-        Path("kb/reports/state"),
-        Path("kb/reports/state/connect"),
+        Path("kb/workflow-state/data/current"),
+        Path("kb/workflow-state/data/current/connect"),
         Path("kb/reports/retained"),
         Path("kb/reports/types"),
     ),
@@ -69,13 +69,11 @@ MANIFEST = ScaffoldManifest(
         ("templates/user-work-README.md", "kb/work/README.md"),
         ("templates/user-reports-COLLECTION.md", "kb/reports/COLLECTION.md"),
         ("templates/user-reports-README.md", "kb/reports/README.md"),
-        ("templates/user-reports-state-README.md", "kb/reports/state/README.md"),
+        ("templates/user-workflow-state-COLLECTION.md", "kb/workflow-state/COLLECTION.md"),
+        ("templates/user-workflow-state-README.md", "kb/workflow-state/README.md"),
+        ("templates/user-workflow-data-README.md", "kb/workflow-state/data/README.md"),
         ("templates/user-reports-retained-README.md", "kb/reports/retained/README.md"),
-        ("templates/user-reports-gitignore", "kb/reports/.gitignore"),
-        (
-            "templates/user-reports-state-validation-ignore",
-            "kb/reports/state/.commonplace-validation-ignore",
-        ),
+        ("templates/user-workflow-state-gitignore", "kb/workflow-state/.gitignore"),
     ),
     # Resolved with project-specific replacements at install time.
     templates=(

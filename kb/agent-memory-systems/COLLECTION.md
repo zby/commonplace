@@ -39,7 +39,7 @@ reconstructable revision. Current synthesis reads retained main-analysis sets
 directly and records the commit holding the reviews, sets, contracts and
 reader code. Its CSV uses that same selected population.
 
-Selective Commonplace implications are living transfer scans under `kb/reports/state/agentic-system-transfer/`. They are conditioned on a current interest brief and current Commonplace artifacts, never feed the matrix or public corpus analysis, and do not belong in a durable review. Their owning workflow keeps unresolved candidate judgments until disposition, then may replace or delete them. Historical `Comparison with Our System`, `Borrowable Ideas`, and `What to Watch` sections remain evidence of the earlier review boundary, not current transfer advice.
+Selective Commonplace implications are living transfer scans under `kb/workflow-state/data/current/agentic-system-transfer/`. They are conditioned on a current interest brief and current Commonplace artifacts, never feed the matrix or public corpus analysis, and do not belong in a durable review. Their owning workflow keeps unresolved candidate judgments until disposition, then may replace or delete them. Historical `Comparison with Our System`, `Borrowable Ideas`, and `What to Watch` sections remain evidence of the earlier review boundary, not current transfer advice.
 
 ## Title conventions
 
@@ -70,7 +70,7 @@ Organised per destination: when to prospect for links, and the authorised labels
 - Transferable claims about KB methodology → `kb/theory/`
 - Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of the Commonplace system itself → `kb/reference/`
-- Selective Commonplace differences, borrowable ideas, or current watch items → a transfer scan under `kb/reports/state/agentic-system-transfer/`
+- Selective Commonplace differences, borrowable ideas, or current watch items → a transfer scan under `kb/workflow-state/data/current/agentic-system-transfer/`
 - Whole external agentic-system or harness analyses not centered on memory/knowledge/context engineering → `kb/agentic-systems/reviews/`
 - Raw captures of external sources → `kb/sources/.snapshots/`, each analysed by a tracked ingest in `kb/sources/`
 - Work in progress → `kb/work/`

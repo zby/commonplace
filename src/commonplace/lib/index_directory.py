@@ -19,7 +19,7 @@ INDEX_TYPE = "types/generated-index.md"
 # The shipped site's directory-listing policy. Keep the hook and redirect
 # validation on this same selection path; a directory name alone is not a page.
 COLLECTION_MAX_DEPTH = {"instructions": 1}
-UNPUBLISHED_COLLECTIONS = frozenset({"messages", "reports"})
+UNPUBLISHED_COLLECTIONS = frozenset({"messages", "reports", "workflow-state"})
 
 
 def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:

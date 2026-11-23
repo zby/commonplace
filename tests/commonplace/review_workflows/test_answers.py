@@ -11,7 +11,7 @@ from commonplace.lib import answers, library
 from commonplace.lib.review_workflows.edits import answered
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 
-QUESTION = "kb/reports/state/run/result.md"
+QUESTION = "kb/workflow-state/data/current/run/result.md"
 PROPOSALS = [{"quote": "Alpha body", "change": "ALPHA BODY", "reason": "plainer"},
              {"quote": "Closing sentence", "change": "End", "reason": "shorter"}]
 RESULT = ("---\n" + yaml.safe_dump({"type": "types/edit-result.md", "outcome": "proposed", "proposals": PROPOSALS},
@@ -37,7 +37,7 @@ def render(data: dict) -> str:
 
 
 def check(root, data: dict) -> list[str]:
-    path = root / "kb/reports/state/run/result-answers.md"
+    path = root / "kb/workflow-state/data/current/run/result-answers.md"
     _, fails = answered(root, path, render(data))
     return fails
 
@@ -115,7 +115,7 @@ def test_an_edit_result_that_proposes_nothing_is_no_question(root):
 FINDINGS = [{"scope": "passage", "quotes": ["Alpha body"], "reason": "residue", "level": "warn"},
             {"scope": "document", "quotes": [], "reason": "a remark", "level": "info"},
             {"scope": "document", "quotes": [], "reason": "missing condition", "level": "fail"}]
-REVIEW = "kb/reports/state/run/findings/prose/residue.md"
+REVIEW = "kb/workflow-state/data/current/run/findings/prose/residue.md"
 
 
 def review(outcome="fail", found=FINDINGS):

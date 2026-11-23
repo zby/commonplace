@@ -11,7 +11,7 @@ path as `origin`, its text, the text's hash and the time. `kept_answers()`
 is the one reader.
 
 The listing (`entries()`) writes nothing. Its entries come from three places
-under kb/reports/state/:
+under kb/workflow-state/data/current/:
 
 - the revise and rewrite run directories, named by the hash prefix of the
   start text (older runs) or by their UTC start stamp: one entry per item of
@@ -74,7 +74,7 @@ WORKFLOWS = ("revise", "rewrite", "full-pass")
 `full-pass` is the run family of the retired full-pass workflow (ADR 135)."""
 PACKETS = gates.STATE / "packets"
 """Where the retired full-pass workflow kept one current packet per note."""
-FIXES = Path("kb/reports/state/fixes")
+FIXES = Path("kb/workflow-state/data/current/fixes")
 """Where the retired fix procedure wrote its fix reports."""
 
 ITEM_WIDTH = 80
@@ -394,7 +394,7 @@ def _notes(root: Path) -> dict[str, list[str]]:
     found: dict[str, list[str]] = {}
     for path in (root / "kb").rglob("*.md"):
         relative = path.relative_to(root)
-        if relative.parts[1] not in ("reports", "work") and not any(p.startswith(".") for p in relative.parts):
+        if relative.parts[1] not in ("reports", "workflow-state", "work") and not any(p.startswith(".") for p in relative.parts):
             found.setdefault(path.stem, []).append(relative.as_posix())
     return found
 

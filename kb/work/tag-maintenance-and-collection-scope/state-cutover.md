@@ -1,0 +1,14 @@
+# Workflow state cutover checks
+
+[ADR 128](../../reference/adr/128-one-ignored-operational-tree-under-kb-reports-state.md) and the [collection contract](../../workflow-state/COLLECTION.md) govern the layout. This packet distinguishes changing current consumers from rewriting historical evidence.
+
+| Consumer or constraint | Cutover and check |
+|---|---|
+| State repository and byte pins | Rehearsed on a copy. Moved the live directory with its `.git` and ignored files at clean checkpoint `c30b3818`. Its HEAD and working-tree status were unchanged; Git's connectivity check passed. No reindex, rewrite of paths or re-pinning of historical evidence. |
+| Path-based identities | `data/` is the checkout, not a run. `data/current/<workflow>/` is the root for new results, decisions and runs. The extra directory keeps a new status scan from mistaking an old pair result with an obsolete evidence path for live state. No compatibility alias or second writable tree. |
+| Producers and readers | Updated run commands, decision and freshness readers, ingest and task handoffs, review profiles, staging and promotion instructions. A promotion in a fresh scratch project wrote its report under `data/current/`; explicit validation read it there. `kb/reports/state/` was not created. Review tests exercise publication followed by status and evidence reads. |
+| Contracts and generated views | The reports collection governs retained reports; workflow state is not a tag participant. The package's directory walk prunes `data/` even without a nested `.git`. This keeps copied `COLLECTION.md` and type files out of KB discovery. ProperDocs excludes the full payload tree, including historical data. Explicit validation of current review results still uses their captured contract. No new type or schema. |
+| Packaging and checkout routing | Scaffold manifest, templates, operator instructions and project routing point to the new collection. Built the wheel and checked its scaffold files. Ran `commonplace-init` only in temporary projects. A fresh project gets a single `/data/` ignore rule. In a second project with a sentinel under the old root, init preserved the sentinel; the new workflow wrote to the new root only. Existing installs must update their scaffold and reconcile any locally owned contracts; init is not a data mover. |
+| Rescan and exceptions | `git grep -l 'reports/state' -- src tests kb/instructions` found only the installation test asserting the old directory does not exist. The split Python spelling `"reports" / "state"` has no remaining matches in `src` or `tests`. Old paths in dated ADRs, captured evidence, workshop records and the state checkout describe their original layouts. No diagnostic or automated recovery for old continuations is promised. |
+
+The state split does not make all retained reports tag members. Exact captures under `reports/retained/` retain their own exclusions when auditing tags.
