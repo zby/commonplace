@@ -6,7 +6,9 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [Replaying operator rulings](./replaying-operator-rulings/README.md) — posed 2026-11-21: which general instructions lead a fresh worker to notice what the operator noticed while the deliberative-learning definition was drafted; experiment 1 is designed and not run
+- [Tag maintenance and collection scope](./tag-maintenance-and-collection-scope/README.md) — posed 2026-11-23: repair and run the tag audit, establish routine source tagging, and decide which collections each tag search should cover.
+
+- [Replaying operator rulings](./replaying-operator-rulings/README.md) — posed 2026-11-21: five definition experiments and two rounds on optional link discovery are complete; repeat the cases where workers independently proposed an accepted correction.
 
 - [Local and global thinking](./local-global-thinking/README.md) — posed 2026-11-21: when does shifting attention from an artifact to a connection change which problem is worth pursuing?
 
