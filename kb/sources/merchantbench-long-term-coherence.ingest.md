@@ -30,7 +30,7 @@ No source quotes have been retained yet.
 
 The paper supplies a bounded empirical case for [evaluating memory by effects](../theory/agent-memory-requirements/evaluate-memory-by-effects.md): it reports created skills, subsequent recorded uses, policy content, and terminal outcomes as different observations. Seventeen of 18 created skills record later use, but that does not establish beneficial causal uptake. Because Hermes versus ReAct is a comparison of framework bundles, its performance advantage cannot supply the missing memory-specific attribution.
 
-It also illustrates the concern behind [governing behaviour-changing writes](../theory/continual-learning-requires-governing-behaviour-changing-writes.md). In one Claude Opus 4.8 Hermes run, the agent inferred that removing weak listings would concentrate traffic, and its shelf contracted from 47 listings on Day 54 to three on Day 322 despite the simulator's independent demand opportunities. The case shows why retained operating beliefs deserve evaluation; it does not test whether a particular admission or revision procedure would have prevented the loss.
+It also illustrates the concern behind [governing behaviour-changing writes](../theory/fixed-review-rules-must-identify-when-incident-lessons-apply.md). In one Claude Opus 4.8 Hermes run, the agent inferred that removing weak listings would concentrate traffic, and its shelf contracted from 47 listings on Day 54 to three on Day 322 despite the simulator's independent demand opportunities. The case shows why retained operating beliefs deserve evaluation; it does not test whether a particular admission or revision procedure would have prevented the loss.
 
 ## Learning Claims (our opinion)
 

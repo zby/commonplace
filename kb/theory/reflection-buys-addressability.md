@@ -53,7 +53,7 @@ Explicit retention makes a change nameable, citable, and selectively revisable. 
 - **Credit assignment.** A failure does not say which of many artifacts, or which interaction among them, should change. Gradient descent has the chain rule inside a fixed differentiable graph; an artifact corpus has no default, [since the Bitter Lesson selects production methods, not representational form](./the-bitter-lesson-selects-production-methods-not-representational.md), and [learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
 - **Coherence.** Two explicit artifacts that contradict each other are not detected by being explicit; detection is a separate check whose cost grows with the pairs that could conflict.
 - **Retrieval.** [A miss is a local path failure](./a-retrieval-miss-is-a-local-reflective-path-failure.md) that explicitness does not prevent, and [raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md).
-- **Admission.** Whether a proposed change enters the store is decided by a gate, not by the change being writable, [since continual learning requires governing behaviour-changing writes](./continual-learning-requires-governing-behaviour-changing-writes.md).
+- **Admission.** Whether a proposed change enters the store is decided by a gate, not by the change being writable, [since continual learning requires governing behaviour-changing writes](./fixed-review-rules-must-identify-when-incident-lessons-apply.md).
 
 Reading "explicit" as "coherent and correct" is the common error. A governed artifact layer is at most a candidate learning substrate until each of the four is shown separately.
 
@@ -85,4 +85,4 @@ Relevant Notes:
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the floor case — an operative incumbent whose random successor carries no improvement-relevant information from it
 - [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — extends: a citation at the decision point turns the nameable retained object into a checkable record of which theory was consumed
 - [The Bitter Lesson selects production methods, not representational form](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: credit assignment without a chain rule as the open problem for learned artifacts
-- [Continual learning requires governing behaviour-changing writes](./continual-learning-requires-governing-behaviour-changing-writes.md) — grounds: admission is a gate, not a property of writability
+- [Continual learning requires governing behaviour-changing writes](./fixed-review-rules-must-identify-when-incident-lessons-apply.md) — grounds: admission is a gate, not a property of writability

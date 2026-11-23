@@ -31,7 +31,7 @@ The distinction from [improvement-loop](./improvement-loop-README.md) is **how l
 
 ## Governing updates and their limits
 
-- [Continual learning requires governing behaviour-changing writes, not just storing content](../theory/continual-learning-requires-governing-behaviour-changing-writes.md) — persistence is not enough: updates must be selected, validated, authorized, and coordinated
+- [Continual learning requires governing behaviour-changing writes, not just storing content](../theory/fixed-review-rules-must-identify-when-incident-lessons-apply.md) — persistence is not enough: updates must be selected, validated, authorized, and coordinated
 - [Learning inside a fixed decomposition inherits its mistakes](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — optimization cannot repair distinctions outside the decomposition's update space
 - [Automating KB learning is an open problem](../theory/automating-kb-learning-is-an-open-problem.md) — the KB learns through manual improvement; automating judgment-heavy mutations lacks oracles
 

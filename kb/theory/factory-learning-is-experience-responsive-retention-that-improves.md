@@ -82,7 +82,7 @@ Some retention paths expose proposals, reject candidates, select one, and instal
 
 The [proposal-selection loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) remains important for architectures that expose rejectable candidates. It should not be imported as the definition of the retention path itself.
 
-Likewise, [continual-learning governance](./continual-learning-requires-governing-behaviour-changing-writes.md) adds selection, validation, authorization, coordination, and regression control for safe deployment. Those requirements govern retention well; they are stronger than the minimal occurrence condition.
+Likewise, [continual-learning governance](./fixed-review-rules-must-identify-when-incident-lessons-apply.md) adds selection, validation, authorization, coordination, and regression control for safe deployment. Those requirements govern retention well; they are stronger than the minimal occurrence condition.
 
 ## Evidence
 
@@ -111,6 +111,6 @@ Relevant Notes:
 
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: places all behavior-determining factory machinery inside the candidate learning surface
 - [A better-factory claim compares operative states under an antecedent assessment relation](./a-better-factory-claim-compares-operative-states.md) — extends: disciplines the improvement half of the learning claim with its relata and antecedent relation
-- [Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) — extends: adds governance requirements for safe and coordinated deployment
+- [Continual learning requires governing behaviour-changing writes, not just storing content](./fixed-review-rules-must-identify-when-incident-lessons-apply.md) — extends: adds governance requirements for safe and coordinated deployment
 - [Operative change](./definitions/operative-change.md) — extends: supplies the stronger persistence and behavioral-authority account for retained system changes
 - [Task families and product families classify different things](./task-families-and-product-families-classify-different-things.md) — grounds: clarifies what later transfer establishes at task and family levels

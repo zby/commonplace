@@ -7,7 +7,7 @@ tags: [learning-theory, deploy-time-learning, self-improving-systems, continual-
 
 # Deployed systems can learn from feedback with fixed model weights
 
-[Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) argues that deployed systems need durable behavior changes installed within their operating feedback loops. These changes need not wait for another model-weight training cycle. During deployment, a system can evaluate and retain changes to [system-definition artifacts](./definitions/system-definition-artifact.md)—prompts, rules, tools, schemas, tests, and configuration that it consumes with binding force.
+[Continual learning requires governing behaviour-changing writes, not just storing content](./fixed-review-rules-must-identify-when-incident-lessons-apply.md) argues that deployed systems need durable behavior changes installed within their operating feedback loops. These changes need not wait for another model-weight training cycle. During deployment, a system can evaluate and retain changes to [system-definition artifacts](./definitions/system-definition-artifact.md)—prompts, rules, tools, schemas, tests, and configuration that it consumes with binding force.
 
 This is a distinct adaptation path because the selected change affects later sessions without becoming part of the model's weights. This note calls that path **deployment-time learning**. When deployment experience drives a proposal, evaluation selects it, and retention allows it to change later behavior, the process is [selection-based learning](./definitions/selection-based-learning.md). "Deployment-time" says when the change is made, and "selection-based" says how it is decided.
 
@@ -51,7 +51,7 @@ The claim is that a persistent deployment-time learning path exists outside mode
 
 Relevant Notes:
 
-- [Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) — grounds: supplies the durable behavior-change objective whose lifecycle consequence this note develops
+- [Continual learning requires governing behaviour-changing writes, not just storing content](./fixed-review-rules-must-identify-when-incident-lessons-apply.md) — grounds: supplies the durable behavior-change objective whose lifecycle consequence this note develops
 - [Learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: supplies Herbert Simon's capacity-change criterion
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: identifies the behavior-producing system as the learning boundary
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: distinguishes selected learning from arbitrary persistent maintenance
