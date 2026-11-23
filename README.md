@@ -49,7 +49,7 @@ uv tool update-shell
 
 Restart consumers of the command path. Ordinary Python edits take effect immediately through the editable install; reinstall with `uv tool install --reinstall --python ">=3.11" --editable .` after dependency, entry-point, build-metadata, or packaged-scaffold changes. Do not run `commonplace-init` in this source checkout.
 
-Run development checks with `uv run ruff check .` and `uv run pytest` (which excludes slow integration tests by default; use `uv run pytest -m slow` for slow suites or `uv run pytest -m ""` for the full CI suite).
+Run lint with `uv run ruff check .`. For tests, start with `uv run pytest tests/commonplace/general` and follow [test selection](./tests/README.md) for affected subsystems, relevant slow tests, and pre-push verification.
 
 ## Core design choices
 

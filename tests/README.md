@@ -1,27 +1,32 @@
 # Test selection
 
-Use a small selected suite during development. GitHub CI runs the complete
-default suite on pushes and pull requests; no additional local full-suite run
-is required before pushing. Subsystem directories describe responsibility; the
+Use selected tests during development and before local commits. Run the complete
+suite immediately before an actual push, or when explicitly requested. Subsystem directories describe responsibility; the
 `slow` marker describes cost independently of responsibility.
 
 ## Commands
 
 ```bash
-# Local iteration: general tests plus the affected subsystem (fast tests).
+# Local baseline: general tests only.
+uv run pytest tests/commonplace/general
+
+# For a code change, add affected subsystems to the baseline command.
 uv run pytest tests/commonplace/general tests/commonplace/review_workflows
 
 # Slow coverage for a subsystem. An explicit -m replaces the default filter.
 uv run pytest tests/commonplace/agentic_analysis -m slow
 
-# Full verification when needed locally (also run by CI), including slow tests.
+# Uncertain impact: full fast suite (still excludes slow tests).
+uv run pytest
+
+# Immediately before pushing, or on explicit request: include all slow tests.
 uv run pytest -m ''
 
 # Development lint.
 uv run ruff check .
 ```
 
-On Windows, first create `.venv` from the signed system Python as described in [Windows development tests](../INSTALL.md#windows-development-tests), then run pytest as a module:
+For the complete suite on Windows, first create `.venv` from the signed system Python as described in [Windows development tests](../INSTALL.md#windows-development-tests), then run pytest as a module:
 
 ```powershell
 uv run python -m pytest -m 'slow or not slow'
@@ -43,7 +48,8 @@ Report the directories and marker filter actually run, not â€œall tests passed.â
 
 Use the table below as a starting point, not an exhaustive dependency graph.
 Select consumers when changing shared code. Run the full fast suite if impact
-is uncertain; run the full suite for broad runtime or analysis changes.
+is uncertain. Once the selected checks pass, a local commit needs no additional
+full run.
 
 All suite paths below are relative to `tests/commonplace/`.
 
@@ -60,7 +66,7 @@ All suite paths below are relative to `tests/commonplace/`.
 | `lib/systems_matrix.py`, matrix build/render/analyze scripts | `comparison/` |
 | `lib/project_status.py`, `cli/status.py` | `review_workflows/` (the status tests, including its review summary, live there) |
 | Foundational parsing, naming, library/type/path resolution, directory contracts | Full fast suite, plus relevant slow tests for affected consumers |
-| `cli/init_project.py`, `scaffold_manifest.py`, `build_hooks.py`, packaging/dependency metadata | Full suite; follow editable-installation checks in `INSTALL.md` |
+| `cli/init_project.py`, `scaffold_manifest.py`, `build_hooks.py`, packaging/dependency metadata | `installation/` plus affected consumers; follow editable-installation checks in `INSTALL.md` |
 | Site configuration, `src/commonplace/docs/`, published collection/type/command contracts | `docs/`; also `validation/` for schema or validator contract changes |
 | Test-state capture, isolated Codex runner | `tooling/` |
 | Test helpers or fixtures | Every suite importing them; full fast suite if uncertain |
@@ -126,6 +132,5 @@ Do not trade assertions or isolation for a shorter run.
 ## CI verification
 
 [GitHub CI](../.github/workflows/ci.yml) runs `uv run pytest -m ''` on pushes and
-pull requests. There is no repository-managed pre-push test hook. Local test
-selection remains governed by the rules above; do not duplicate the CI run
-solely to push.
+pull requests. There is no repository-managed pre-push test hook; whoever pushes
+must run the complete suite first.

@@ -241,10 +241,10 @@ On Windows, `.venv\Scripts\python.exe` is a signed launcher based on that interp
 Get-AuthenticodeSignature .venv\Scripts\python.exe | Format-List Path, Status, SignerCertificate
 ```
 
-The base executable must match `$systemPython`. Run pytest as a module through this environment:
+The base executable must match `$systemPython`. Run pytest as a module through this environment. For the local baseline:
 
 ```powershell
-uv run python -m pytest -m 'slow or not slow'
+uv run python -m pytest tests/commonplace/general
 ```
 
 This uses the signed Python in `.venv` and avoids the unsigned `pytest.exe` launcher. No test wrapper is needed. Without `-m`, pytest keeps its default exclusion of slow tests. Windows still excludes the Linux-only analysis tests; see [test selection](tests/README.md) for coverage.
@@ -394,17 +394,14 @@ relative symlinks as plain files. If a `cp-skill-*` skill is undiscoverable,
 read and follow its canonical `kb/instructions/<skill>/SKILL.md` directly.
 Do not run `commonplace-init` to repair the source checkout.
 
-Development dependencies run through uv: `uv run pytest` and
-`uv run ruff check .`. The default test run excludes expensive analysis workflow
-tests marked `slow`. Use `uv run pytest -m slow` for those tests, or
-`uv run pytest -m ""` for the complete suite, as CI does. During source-checkout
-work, run general tests plus affected subsystem suites according to
-[test selection](./tests/README.md); include relevant slow tests when changing
-the behavior they cover. GitHub CI runs the complete suite on pushes and pull
-requests; no additional local full-suite run is required before pushing.
-There is no repository-managed pre-push test hook.
+During source-checkout work, start with `uv run pytest tests/commonplace/general`.
+Add affected suites and run relevant slow tests according to
+[test selection](./tests/README.md). Run lint with `uv run ruff check .`.
+Run the complete suite immediately before an actual push, or when explicitly
+requested; a local commit does not require it. CI also runs it on pushes and
+pull requests. There is no repository-managed pre-push test hook.
 If a sandboxed Windows session cannot write
-`.pytest_cache`, use `uv run pytest -p no:cacheprovider`; a cache-only warning
+`.pytest_cache`, add `-p no:cacheprovider` to the selected test command; a cache-only warning
 is not a test failure. The editable tool installation commands above work
 in PowerShell too; after restarting the consuming process, use
 `Get-Command commonplace-validate` to check discovery.

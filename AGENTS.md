@@ -110,14 +110,14 @@ for that term. If it appears, follow the linked record’s writing decision.
   Exception: isolated Commonplace analysis worktrees use their own command
   environment as described in [run setup](./kb/agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
   There, call each command in the directory that setup reports.
-- Run development dependencies through uv: `uv run pytest`, `uv run ruff check .`.
-  For code changes, follow [test selection](./tests/README.md): during work and
-  before committing, run general tests plus affected subsystem suites, including
-  relevant slow tests. Shared changes require consumer suites; uncertain impact
-  requires the full fast suite. Report selected coverage accurately. Before
-  pushing, no additional full-suite run is required: GitHub CI runs the complete
-  suite with `uv run pytest -m ''` on pushes and pull requests. All required
-  local tests and CI checks must pass.
+- For code changes, the local baseline is `uv run pytest tests/commonplace/general`.
+  Add affected subsystem directories to that command, including consumers of
+  shared code. Run relevant slow tests separately. If impact is uncertain, run
+  the full fast suite (`uv run pytest`). See [test selection](./tests/README.md).
+  Once those checks pass, stop and report the coverage. A request to commit is
+  not a request to push. Run the complete suite (`uv run pytest -m ''`) immediately
+  before an actual push, or when explicitly requested. CI also runs it on pushes
+  and pull requests. Run lint with `uv run ruff check .`.
   Test directories select subsystem responsibility; `slow` selects cost. When
   optimizing fixtures, reuse only immutable baselines: each test gets independent
   mutable files, Git state, plan data and monkeypatches. Invalidate cached derived
