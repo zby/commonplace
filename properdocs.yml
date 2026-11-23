@@ -412,8 +412,6 @@ plugins:
         'notes/cross-task-transition-policy-remains-scheduling-behind-tools.md': 'theory/cross-task-transition-policy-remains-scheduling-behind-tools.md'
         'notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md': 'theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md'
         'notes/decomposition-heuristics-for-bounded-context-scheduling.md': 'theory/decomposition-heuristics-for-bounded-context-scheduling.md'
-        'notes/definitions/actionable-methodology.md': 'theory/definitions/actionable-methodology.md'
-        'notes/definitions/actionable-theory.md': 'theory/definitions/actionable-methodology.md'
         'notes/definitions/addressable-theory.md': 'theory/definitions/addressable-theory.md'
         'notes/definitions/answerability.md': 'reference/definitions/answerability.md'
         'notes/definitions/autonomous-theory-builder.md': 'theory/definitions/theory-builder.md'

@@ -2,7 +2,7 @@
 
 **Original proposal; the 36-author-run design remains unrun.** The operator subsequently authorized a smaller [eight-session screen](./citation-repair-screen.md). Help the maintainer decide whether Thread A deserves a larger test: does explicitly stating the environmental assumption linking an available action to a desired outcome improve decisions over ordinary instructions or a matched checklist?
 
-Keep task, executor, setting and objective fixed, as in the [previous account](../operationalization-executability-automation/README.md). Usable guidance does not imply success ([actionable methodology](../../theory/definitions/actionable-methodology.md)); [local conformance does not validate the upstream link](../../theory/exact-implementation-does-not-validate-a-requirement.md). Retain the [source/access boundary](./README.md#evidence-boundary-six-slots-not-six-available-papers), including blocked Gunter and Jureta 2009 texts and manuscript/edition limits. This plan adds no source-content claims or adoption decision.
+Keep task, executor, setting and objective fixed, as in the [previous account](../operationalization-executability-automation/README.md). Usable guidance does not imply success; [local conformance does not validate the upstream link](../../theory/exact-implementation-does-not-validate-a-requirement.md). Retain the [source/access boundary](./README.md#evidence-boundary-six-slots-not-six-available-papers), including blocked Gunter and Jureta 2009 texts and manuscript/edition limits. This plan adds no source-content claims or adoption decision.
 
 ## 1. Establish a discriminating comparison
 

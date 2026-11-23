@@ -38,7 +38,7 @@ Schema-defined positions offer the strongest scope available: a link-label token
 |---|---|---|
 | Definition note + vocabulary entry | Corpus-wide natural-language convention, not mechanically scoped | Drift or conflicting use |
 | "In this note, X means…" | Local declaration, not preserved when excerpted | A citation can lose the qualifier |
-| Clausal binding + required link (`actionable`) | Grammar-scoped, link-anchored convention | Mis-predication or a missing link |
+| Clausal binding + required link (historically, `actionable`) | Grammar-scoped, link-anchored convention | Mis-predication or a missing link |
 | Rare compound token (`trace-learning`) | Distinctive exact string, corpus-auditable | Accidental reuse or jargon opacity |
 | Link label / field / tag in a defined slot | Positional, validator-enforced | Schema ambiguity or content misuse |
 
@@ -62,7 +62,7 @@ The approximation must therefore carry visible scope — “in practical terms,�
 
 ### Clausal binding is admissible with a required link
 
-A predicate can receive limited grammatical scope: the technical sense is licensed only where the word predicates an explicit subject in the same clause, as with `actionable` in [actionable methodology](./definitions/actionable-methodology.md) — "a methodology is **actionable** for an operator when…". Grammar alone is weaker than a distinctive string: the frame depends entirely on writer discipline, no validator enforces it, and an exact-string search cannot confirm it because every candidate clause needs semantic reading. That is why clausal binding is admissible only with a required definition link. The link does not prevent mis-predication, but it makes each intended technical use visible and spot-checkable — under the convention, an unlinked `actionable` simply has its ordinary reading. A corpus audit on 2026-07-18 found all 36 bare uses of `actionable` across the library to be ordinary ones: exactly the many-innocent-occurrences profile that makes capturing a bare common word dangerous, and evidence the frame convention has held so far.
+A predicate can receive limited grammatical scope: the technical sense is licensed only where the word predicates an explicit subject in the same clause, as Commonplace once did with `actionable` in [actionable methodology](https://github.com/zby/commonplace/blob/6cf7eaaa0298816ca864db6a2b8bc52e263f7951/kb/theory/definitions/actionable-methodology.md) — "a methodology is **actionable** for an operator when…". Grammar alone is weaker than a distinctive string: the frame depends entirely on writer discipline, no validator enforces it, and an exact-string search cannot confirm it because every candidate clause needs semantic reading. That is why clausal binding is admissible only with a required definition link. The link does not prevent mis-predication, but it makes each intended technical use visible and spot-checkable — under the convention, an unlinked `actionable` had its ordinary reading. A corpus audit on 2026-07-18 found all 36 bare uses of `actionable` across the library to be ordinary ones: exactly the many-innocent-occurrences profile that makes capturing a bare common word dangerous, and evidence the convention held in that audit.
 
 ## The invariant targets load-bearing technical senses
 

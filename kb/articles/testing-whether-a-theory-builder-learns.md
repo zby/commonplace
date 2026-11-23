@@ -6,7 +6,6 @@ byline: Zbigniew Lukasiak
 source_notes:
   - kb/theory/definitions/theory-builder.md
   - kb/theory/definitions/operative-change.md
-  - kb/theory/definitions/actionable-methodology.md
   - kb/theory/a-complete-theory-path-does-not-establish-improved-capacity.md
   - kb/theory/an-action-model-matters-only-through-its-consumption-path.md
   - kb/theory/retained-theory-intervention-isolates-one-explicit-surface.md
@@ -260,8 +259,7 @@ instructions, knowledge, tools, and orchestration, not changes to model
 weights.
 
 > **Sufficiency hypothesis.** A training methodology expressed in
-> natural-language and symbolic form is
-> [actionable](../theory/definitions/actionable-methodology.md) for a
+> natural-language and symbolic form can guide a
 > computational operator using fixed weights from currently public models.
 > Without people performing its internal theory-building roles or designing
 > a new learning method for each area, the builder develops, retains, and

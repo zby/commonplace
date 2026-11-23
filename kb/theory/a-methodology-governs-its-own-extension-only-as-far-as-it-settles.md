@@ -7,9 +7,9 @@ tags: [constraining, self-improving-systems, warranted-autonomy, method-guided-a
 
 # A methodology governs its own extension only as far as it settles the meta-decisions it raises
 
-A [methodology](./definitions/actionable-methodology.md) maps represented
-conditions to interventions and is actionable for an operator able to carry
-them out. Extending a system according to that methodology can raise further
+A methodology maps represented
+conditions to interventions. An operator can use it when those interventions
+are available. Extending a system according to that methodology can raise further
 decisions: what form a new artifact takes, how its use is checked, and what
 authority it acquires. The method governs those decisions only as far as its
 retained content supplies or imports a basis for them. Call this **closure
@@ -138,7 +138,6 @@ not be kept as reusable code. Each claim needs its own evidence.
 
 Relevant Notes:
 
-- [Actionable methodology](./definitions/actionable-methodology.md) — grounds: supplies the relation between method, operator, and target
 - [Reflective system](./definitions/reflective-system.md) — contrasts: self-representation and method coverage are separate properties
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — contrasts: a settled method need not be human-free and human-free execution need not use a complete method
 - [Explicit retention provides direct targets for selective revision](./only-explicit-retention-is-durable-writable-and-addressable.md) — mechanism: gives imported criteria inspectable revision targets

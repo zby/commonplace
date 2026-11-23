@@ -7,7 +7,7 @@ type: types/tag-readme.md
 
 How an agent selects or acquires a method, brings it into use, and lets it guide decisions—including where that guidance ends. Assign this tag when a note substantively explains method selection, borrowing and transfer, activation, enforcement, or the choices a method settles or leaves open. Definitions and worked cases qualify when they explain one of these relations.
 
-Guidance for borrowing conceptual frameworks qualifies when it supplies criteria for choosing or checking what to reuse in the receiving problem. Merely describing a framework, following a method, or containing instructions is insufficient. The defining note is [actionable methodology](../theory/definitions/actionable-methodology.md): a methodology can guide action only relative to an operator, available operations, a target, and a setting.
+Guidance for borrowing conceptual frameworks qualifies when it supplies criteria for choosing or checking what to reuse in the receiving problem. Merely describing a framework, following a method, or containing instructions is insufficient. A methodology can guide action only relative to an operator, available operations, a target, and a setting.
 
 A theory–method relationship qualifies when it explains how decisions move between following the method and reasoning beyond its coverage. Notes that also explain learning can carry [learning-theory](./learning-theory-README.md); the tags can overlap.
 
