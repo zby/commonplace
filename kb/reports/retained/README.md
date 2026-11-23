@@ -7,6 +7,8 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Revise assessor smaller-repair trial, 2026-11-23](./revise-assessor-smaller-repair-trial-2026-11-23.md) — across three models the amendment lengthened every assessment without a consistent plan advantage.
+
 - [Operator rulings on the deliberative-learning definition: replay index, 2026-11-21](./definition-rulings-replay-index-2026-11-21.md) — five points at which the operator reversed what three agents held, each with the commit holding the state before it; an index into git for replay experiments, with nothing replayed
 
 - [Python change judgment probe, designed 2026-11-20, not run](./python-change-judgment-probe-2026-11-20/README.md) — an experiment design, with no results, for whether LLMs judge a change on balance as people do; five design versions, known weaknesses and ideas for a better design
