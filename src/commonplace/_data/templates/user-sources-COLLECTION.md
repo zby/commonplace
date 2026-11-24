@@ -50,6 +50,8 @@ different filename, when an alternate file redundantly duplicates an already
 valid pair, and when no ingest matches either the URL or checksum. A tracked
 ingest whose ignored snapshot is simply absent does not warn.
 
+Tracked ingests and source reviews may carry tags in frontmatter. Assign a tag to the analysis, not the external article, using the existing tag head’s inclusion condition. Ingest `domains` remain source-specific search terms.
+
 Frontmatter-free Markdown is for deliberate unstructured source work only.
 Captures under `.snapshots/` use the global `types/snapshot.md` contract even
 though they are not collection content.

@@ -177,7 +177,7 @@ Then suggest `cp-skill-connect` as the next step, for the graph discovery that S
 
 These apply to every document regardless of collection; the frontmatter rules apply to typed documents.
 
-**Frontmatter** makes documents queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library documents also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags` (keep `tags: [a, b]` inline on one line so lexical by-tag `rg` searches match it), and `user-verified`. Never grant user verification implicitly.
+**Frontmatter** makes documents queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library documents also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags` (write `tags: [a, b]` on one line so lexical by-tag `rg` searches match it), and `user-verified`. Never grant user verification implicitly.
 
 **Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this document's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 

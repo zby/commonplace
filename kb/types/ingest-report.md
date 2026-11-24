@@ -50,10 +50,12 @@ their differences in meaning made explicit.
   Omit the field otherwise. The occasion governs only the selection sections
   named below; it is not evidence about the source.
 - Use `domains` for two to four source-specific search terms.
-- The installed source collection contract may allow optional inline `tags`
-  using existing KB topic heads. Read each head and apply its substantive
-  inclusion condition; do not infer endorsement from topical relevance.
-  Tagged analyses appear in the sources group of the tag listing. Tags do not replace `domains`.
+- The same tag assignment rule applies to ingests as to other notes. Read each
+  candidate tag’s head. Assign the tag only when the ingest substantively
+  addresses the head’s subject, question, or mechanism. Put tags in the
+  ingest’s frontmatter, not on the snapshot.
+  A page that uses a finding should cite the ingest at the relevant claim;
+  the ingest does not inherit that page’s tags. Tagging is not endorsement.
 - Copy capture-adapter metadata such as `status_id`, `conversation_id`,
   `post_count`, and `api_url` under its existing flat field name. Do not copy a
   snapshot's `type`, `description`, `genre`, or `tags`; set ingest `genre` from
@@ -214,7 +216,7 @@ snapshot_sha256: {lowercase SHA-256 of the exact snapshot file bytes}
 ingested: "{YYYY-MM-DD}"
 occasion: "{caller's pre-reading question or job, verbatim; omit when none}"
 type: types/ingest-report.md
-domains: [{tag1}, {tag2}, {tag3}]
+domains: [{search-term-1}, {search-term-2}, {search-term-3}]
 ---
 
 # Ingest: {source title}
