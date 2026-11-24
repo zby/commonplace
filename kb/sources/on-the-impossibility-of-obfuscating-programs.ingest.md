@@ -10,7 +10,7 @@ ingested: "2026-11-01"
 occasion: "What does the virtual black-box impossibility result establish, for which function families, how is indistinguishability obfuscation defined, and what does the paper say about reading versus running a program? What scope limits must accompany its use as evidence about opacity of symbolic form? The source is the author-hosted copy; the ePrint 2001/069 PDF returned 403 at capture. The work appeared at CRYPTO 2001 and in JACM 2012."
 type: types/ingest-report.md
 domains: [program-obfuscation, virtual-black-box, indistinguishability-obfuscation, rice-theorem]
-tags: [artifact-analysis]
+tags: [artifact-analysis, learning-theory]
 ---
 
 # Ingest: On the (Im)possibility of Obfuscating Programs

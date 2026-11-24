@@ -1,7 +1,7 @@
 ---
 description: "Proposal: whether an artifact_function declaration should expose a document's intended whole-artifact job for writing and review routing without asserting atomicity"
 type: reference/types/design-proposal.md
-tags: [context-engineering, type-system]
+tags: [context-engineering, type-system, document-system]
 ---
 
 # Artifact function as a routing field

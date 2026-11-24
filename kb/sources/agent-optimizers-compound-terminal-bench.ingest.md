@@ -8,7 +8,7 @@ snapshot_sha256: 0649885841dda6a9aaaffef0db3e26cd4cce0d30f4dafaec51bc90975e6b1b1
 ingested: "2026-08-04"
 type: types/ingest-report.md
 domains: [self-improvement, harness-optimization, continual-learning, evaluation]
-tags: [learning-theory, continual-learning, self-improving-systems, improvement-loop]
+tags: [learning-theory, continual-learning, self-improving-systems, improvement-loop, evaluation]
 ---
 
 # Ingest: Do Agent Optimizers Compound? A Continual-Learning Evaluation on Terminal-Bench 2.0

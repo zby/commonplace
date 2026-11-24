@@ -1,7 +1,7 @@
 ---
 description: "Proposal: give each routine search controller a record of what it brought to stronger evaluation and what it cost, stating the context regime it ran in, so that controllers in unattended pipelines can be compared on cost as well as yield"
 type: reference/types/design-proposal.md
-tags: [evaluation, improvement-loop]
+tags: [evaluation, improvement-loop, self-improving-systems, learning-theory]
 ---
 
 # Cost-per-yield records for routine controllers

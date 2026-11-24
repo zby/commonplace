@@ -10,6 +10,7 @@ ingested: "2026-09-02"
 occasion: "for kb/work/factory-theory-restart we need to ground the failure claim - snapshot and ingest a retrospective"
 type: types/ingest-report.md
 domains: [model-driven-engineering, software-factories, organizational-adoption]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: The State of Practice in Model-Driven Engineering

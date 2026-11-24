@@ -1,7 +1,7 @@
 ---
 description: "Proposal: determine when validation needs general change-driven target selection rather than explicit selectors, with old/new state and conservative fallback as adoption conditions."
 type: reference/types/design-proposal.md
-tags: [type-system, kb-maintenance]
+tags: [type-system, kb-maintenance, document-system]
 ---
 
 # Generalized validation invalidation

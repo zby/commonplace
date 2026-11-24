@@ -9,7 +9,7 @@ snapshot_sha256: 863362e2599890858a8b7cfa64c6f3be4c456e340578be91bc8de6212027ec0
 ingested: "2026-11-16"
 type: types/ingest-report.md
 domains: [auto-research, agent-swarms, nightly-consolidation, vendor-claims]
-tags: [self-improving-systems]
+tags: [self-improving-systems, learning-theory]
 learning_claims: true
 ---
 

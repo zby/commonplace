@@ -10,6 +10,7 @@ ingested: "2026-08-31"
 occasion: "Investigate the original 2004 Software Factories book without treating a partial Google Books preview as full-text evidence for the ontology."
 type: types/ingest-report.md
 domains: [software-factories, domain-specific-languages, software-development-automation]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: Software Factories book preview

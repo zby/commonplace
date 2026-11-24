@@ -10,6 +10,7 @@ genre: scientific-paper
 snapshot_sha256: bbda3936457faf1d008d11f74276163370269870ebb7461b9d6fb3ccd4574735
 occasion: "Assess 2026 computational implementations and evaluations of conjecture, criticism, revision, and persistence for a learning paradigm grounded directly in Popper; distinguish epistemic commitments, implementation choices, and demonstrated effects."
 domains: [scientific-agents, evaluation, theory-refinement]
+tags: [evaluation, observability]
 learning_claims: true
 ---
 

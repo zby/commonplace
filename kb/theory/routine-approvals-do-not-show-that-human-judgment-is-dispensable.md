@@ -2,7 +2,7 @@
 description: "A caution when removing human approval stops: repeated acceptance can conceal an exceptional-case check that has not been exercised or has been omitted"
 type: types/note.md
 traits: [title-as-claim]
-tags: []
+tags: [warranted-autonomy, self-improving-systems, learning-theory]
 ---
 
 # Routine approvals do not show that human judgment is dispensable

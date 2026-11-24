@@ -2,7 +2,7 @@
 description: "Separates removing a human approval wait from automating or retiring a required evaluation task; optional assessment need not be part of either change"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: []
+tags: [warranted-autonomy, self-improving-systems, learning-theory]
 ---
 
 # Removing approval waits can leave required human evaluation in place

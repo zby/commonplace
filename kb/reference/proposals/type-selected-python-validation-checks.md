@@ -1,7 +1,7 @@
 ---
 description: "Proposal: let document and directory types select Python validation checks without a new constraint language, while leaving code trust, registration and the hook interface open."
 type: reference/types/design-proposal.md
-tags: [type-system, kb-maintenance]
+tags: [type-system, kb-maintenance, document-system]
 ---
 
 # Type-selected Python validation checks

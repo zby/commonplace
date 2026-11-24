@@ -10,7 +10,7 @@ ingested: "2026-11-07"
 type: types/ingest-report.md
 learning_claims: true
 domains: [offline-memory-consolidation, managed-agents, memory-store, transcript-mining]
-tags: [agent-memory, trace-learning]
+tags: [agent-memory, trace-learning, learning-theory]
 ---
 
 # Ingest: Dreaming with a dynamic workflow

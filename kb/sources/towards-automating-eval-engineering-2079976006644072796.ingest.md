@@ -11,7 +11,7 @@ post_count: 8
 ingested: "2026-07-23"
 type: types/ingest-report.md
 domains: [evaluation, harness-engineering, trace-learning, deploy-time-learning]
-tags: [learning-theory, continual-learning]
+tags: [learning-theory, continual-learning, evaluation]
 ---
 
 # Ingest: Towards Automating Eval Engineering

@@ -10,6 +10,7 @@ ingested: "2026-08-31"
 occasion: "Reconstruct the established software-factory ontology and distinguish factory development from solution development as a basis for later agentic-learning extensions."
 type: types/ingest-report.md
 domains: [software-factories, software-product-lines, model-driven-development, mass-customization]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: Mass Customizing Solutions with Software Development Factories

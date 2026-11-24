@@ -10,6 +10,7 @@ ingested: "2026-08-31"
 occasion: "reconstruct Greenfield and Short’s original software-factory ontology and distinguish factory construction from family-member production, including their explicit bootstrapping claim."
 type: types/ingest-report.md
 domains: [software-factories, software-product-lines, model-driven-development, bootstrapping]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: Software Factories: Assembling Applications with Patterns, Models, Frameworks and Tools

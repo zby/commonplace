@@ -1,5 +1,5 @@
 ---
-description: "Curated head for the self-improving-systems tag — systems that make operative, evidence-responsive changes to their own organization; definition, objective, accumulation, and six child areas"
+description: "Curated head for the self-improving-systems tag — systems that make operative, evidence-responsive changes to their own organization; definition, objective, accumulation, and its child areas"
 type: types/tag-readme.md
 ---
 
@@ -15,7 +15,6 @@ The child areas are [software-factory](./software-factory-README.md), [improveme
 - [improvement-loop](./improvement-loop-README.md) — the proposal-selection architecture and selection-based learning, with the bet Commonplace tests: search control, what to learn, oracle accumulation, diagnostic richness, false-positive filtering, omitted versus frozen loop functions
 - [reflection](./reflection-README.md) — reflective systems: addressability, second-order lessons, graded coverage, retrieval misses, Gödel machines, and the Commonplace reflective-trace evidence
 - [warranted-autonomy](./warranted-autonomy-README.md) — which decisions a computational actor is warranted to take over from humans, the oracle domain that bounds it, closure, and measuring autonomy
-
 - [theory-builder](./theory-builder-README.md) — an earlier definition and its companions, stated before selection-based learning was defined and due for rewriting
 
 ## Definition and objective
@@ -45,6 +44,6 @@ The child areas are [software-factory](./software-factory-README.md), [improveme
 ## Related Tags
 
 - [continual-learning](./continual-learning-README.md) — what deployment reveals and the responses, from human maintenance to self-improvement
-- [learning-theory](./learning-theory-README.md) — the parent area for how systems learn; the six children above are also its routes into self-revision
+- [learning-theory](./learning-theory-README.md) — the parent area for how systems learn; the child areas above are also its routes into self-revision
 - [robust-comparison](./robust-comparison-README.md) — the comparison that says whether a change improved the system
 - [computational-model](./computational-model-README.md) — the execution substrate these systems run on

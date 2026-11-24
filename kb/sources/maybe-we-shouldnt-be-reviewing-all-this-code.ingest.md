@@ -9,6 +9,7 @@ snapshot_sha256: d128b71543ab75142b644357a415cd892ae63158b23e1455e589a55c56ea7fe
 ingested: "2026-09-03"
 type: types/ingest-report.md
 domains: [agentic-coding, code-review, human-judgment, software-development]
+tags: [warranted-autonomy, self-improving-systems, learning-theory]
 ---
 
 # Ingest: Maybe We Shouldn't Be Reviewing All This Code

@@ -8,7 +8,7 @@ snapshot_sha256: 766ac2524317884b6a531f6577101a889365e4ecefb9b933b67b8172e0e79da
 ingested: "2026-08-25"
 type: types/ingest-report.md
 domains: [agent-harnesses, optimization, evaluation]
-tags: [learning-theory, continual-learning, self-improving-systems, improvement-loop]
+tags: [learning-theory, continual-learning, self-improving-systems, improvement-loop, trace-learning]
 ---
 
 # Ingest: AutoSaddler: Automatic Harness Optimization with Durable Updates

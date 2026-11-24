@@ -8,6 +8,7 @@ snapshot_sha256: 09408280ae1e1d43ea25ae222e43e5d0f37c6632c0450e1ce8c9b377050020d
 ingested: "2026-04-09"
 type: types/ingest-report.md
 domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
+tags: [agent-memory, learning-theory]
 ---
 
 # Ingest: The Geometry of Forgetting

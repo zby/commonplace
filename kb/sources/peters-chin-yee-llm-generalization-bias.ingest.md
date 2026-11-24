@@ -10,7 +10,7 @@ ingested: "2026-11-01"
 occasion: "the epistemic-relevance-and-conceptual-blending workshop (kb/work/epistemic-relevance-and-conceptual-blending/) screened this paper as evidence-register entry E16 from an operator-supplied external review; the workshop needs the paper's own account of how model summaries change what a source licenses a reader to conclude, and how the overgeneralization was coded and measured. Ingest it as a tracked source; do not edit the workshop."
 type: types/ingest-report.md
 domains: [generalization-bias, scientific-summarization, scope-qualifiers, summary-faithfulness]
-tags: [llm-reliability]
+tags: [llm-reliability, learning-theory]
 ---
 
 # Ingest: Generalization Bias in LLM Summarization of Scientific Research

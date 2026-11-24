@@ -1,7 +1,7 @@
 ---
 type: reference/types/design-proposal.md
 description: "Proposal: revise a note's write brief through a recorded operator decision instead of an unrecorded hand edit, so that changes to what a note must keep leave the same record as changes to the note"
-tags: [review-system]
+tags: [review-system, kb-maintenance]
 ---
 
 # Recorded revision of write briefs

@@ -10,7 +10,7 @@ ingested: "2026-11-01"
 occasion: "What does the construction establish, under which assumptions, and what does the paper itself say indistinguishability obfuscation guarantees or does not guarantee about hiding how a program works? What scope limits must accompany its use as evidence about opacity of symbolic form? The paper also appears as IACR ePrint 2020/1003, whose PDF returned 403 at capture, and at STOC 2021."
 type: types/ingest-report.md
 domains: [indistinguishability-obfuscation, program-obfuscation, cryptographic-assumptions, functional-encryption]
-tags: [artifact-analysis]
+tags: [artifact-analysis, learning-theory]
 ---
 
 # Ingest: Indistinguishability Obfuscation from Well-Founded Assumptions

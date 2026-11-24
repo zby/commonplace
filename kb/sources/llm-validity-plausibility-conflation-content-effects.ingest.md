@@ -10,7 +10,7 @@ ingested: "2026-11-01"
 occasion: "the epistemic-relevance-and-conceptual-blending workshop (kb/work/epistemic-relevance-and-conceptual-blending/) screened this paper as evidence-register entry E15 from an operator-supplied external review; the workshop needs the paper's own content on how validity and plausibility are represented and whether interventions on one affect the other. Ingest it as a tracked source; do not edit the workshop."
 type: types/ingest-report.md
 domains: [content-effects, activation-steering, syllogistic-reasoning, linear-representations]
-tags: [llm-reliability]
+tags: [llm-reliability, learning-theory]
 ---
 
 # Ingest: How Language Models Conflate Logical Validity with Plausibility

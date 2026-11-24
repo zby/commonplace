@@ -11,6 +11,7 @@ post_count: 8
 ingested: "2026-07-28"
 type: types/ingest-report.md
 domains: [agentic-coding, maintainability, evaluation, verification]
+tags: [warranted-autonomy, self-improving-systems, learning-theory]
 ---
 
 # Ingest: Why Software Factories Fail: Benchmarking the new frontier

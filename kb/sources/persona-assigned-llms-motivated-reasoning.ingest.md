@@ -10,7 +10,7 @@ ingested: "2026-11-01"
 occasion: "the epistemic-relevance-and-conceptual-blending workshop (kb/work/epistemic-relevance-and-conceptual-blending/) screened this paper as evidence-register entry E18 from an operator-supplied external review; the workshop needs the paper's own account of how an assigned persona changes the accuracy of evidence evaluation, what the tasks measured, and what debiasing was tried."
 type: types/ingest-report.md
 domains: [persona-prompting, motivated-reasoning, evidence-evaluation, prompt-debiasing]
-tags: [llm-reliability]
+tags: [llm-reliability, learning-theory]
 ---
 
 # Ingest: Persona-Assigned Large Language Models Exhibit Human-Like Motivated Reasoning

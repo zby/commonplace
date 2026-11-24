@@ -1,7 +1,7 @@
 ---
 description: "Proposal: register the synthesis and the three verifications as members of the analysis set, thin the overview to an entry page, check drafts in their role through commonplace-validate, and retire the separate analyst check command."
 type: reference/types/design-proposal.md
-tags: [type-system]
+tags: [type-system, document-system]
 ---
 
 # Adopt the declared layout in the analysis workflow

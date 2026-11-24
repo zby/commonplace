@@ -8,6 +8,7 @@ snapshot_sha256: a00a81a28f24ab4ea195d623039cd8cdecfbeff0f6c3770ac23864bc219ca0f
 ingested: "2026-03-09"
 type: types/ingest-report.md
 domains: [argumentation-theory, knowledge-representation, structured-reasoning]
+tags: [claims-and-grounding, kb-maintenance, type-system, document-system]
 ---
 
 # Ingest: Toulmin Argument

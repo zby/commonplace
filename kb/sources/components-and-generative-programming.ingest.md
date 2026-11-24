@@ -10,6 +10,7 @@ ingested: "2026-08-31"
 occasion: "Establish the generative-programming lineage needed to distinguish automatic product generation inside a supplied family model from computational construction of family-specific production machinery and retained successor factories."
 type: types/ingest-report.md
 domains: [generative-programming, software-product-lines, system-families, computational-production]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: Components and Generative Programming

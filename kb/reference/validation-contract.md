@@ -1,7 +1,7 @@
 ---
 description: "The base, collection, type-rule, and schema sources of deterministic findings, their dereferencing limits, and the run-scoped execution model"
 type: types/note.md
-tags: [type-system]
+tags: [type-system, document-system]
 ---
 
 # The validation contract

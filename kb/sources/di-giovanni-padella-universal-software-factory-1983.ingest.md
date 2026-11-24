@@ -10,6 +10,7 @@ ingested: "2026-08-31"
 occasion: "determine whether established universal-factory terminology conflicts with an unqualified claim about computational acquisition of family-specific production knowledge."
 type: types/ingest-report.md
 domains: [software-factories, software-configuration, cross-development, product-families]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: A Top Down Approach to Structured Software Design for MARA

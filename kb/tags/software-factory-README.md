@@ -15,6 +15,8 @@ Software factories in the Greenfield sense: configured, family-specific software
 - [Task families and product families classify different things](../theory/task-families-and-product-families-classify-different-things.md) — why a benchmark task family is not a factory's product family
 - [Universal software factory needs a declared universality axis](../theory/universal-software-factory-needs-a-declared-universality-axis.md) — what must be declared before "universal" means anything
 
+For the original distinction, read the [Greenfield and Short ingest](../sources/greenfield-short-software-factories-oopsla-2003.ingest.md): the template configures a development environment for a family, rather than generating just one product. For an example of one factory producing another, the [MDSoFa ingest](../sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md) identifies which production knowledge its designers still had to supply.
+
 ## Agentic factories
 
 - [An agentic substrate becomes a software factory through family-specific production machinery](../theory/agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md) — a generic harness is not yet a factory

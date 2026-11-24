@@ -11,6 +11,7 @@ post_count: 6
 ingested: "2026-07-26"
 type: types/ingest-report.md
 domains: [agentic-coding, specification, human-oversight, maintainability]
+tags: [warranted-autonomy, self-improving-systems, learning-theory]
 ---
 
 # Ingest: Why Software Factories Fail: Turning the lights back on

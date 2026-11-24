@@ -48,5 +48,5 @@ This tag gathers how claims, changes, and agent outputs are judged and tested: o
 - [review-system](./review-system-README.md) — the shipped assay pipeline whose gates, verdicts, and runs several evidence records here measure
 - [claims-and-grounding](./claims-and-grounding-README.md) — whether a claim is supported by its sources; the grounding-verdict evidence records belong to both
 - [robust-comparison](./robust-comparison-README.md) — a child area: comparing two versions across every measure compatible with the purpose of the work
-- [learning-theory](./learning-theory-README.md) — the parent area for how systems learn; warrant and fit notes feed it
+- [learning-theory](./learning-theory-README.md) — how systems learn; an evaluation belongs on both lists when it also addresses learning, not simply because it tests a claim
 - [self-improving-systems](./self-improving-systems-README.md) — improvement loops need oracles and evidence of improvement; warranted autonomy and theory-fit notes are shared

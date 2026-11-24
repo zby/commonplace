@@ -9,7 +9,7 @@ snapshot_sha256: 27e89a8ac0125eba1cdb1d3aded91d20a76018617eb6a355639aaf866230a85
 ingested: "2026-11-16"
 type: types/ingest-report.md
 domains: [agentic-reasoning, self-evolving-agents, agent-memory, llm-agent-survey]
-tags: [agent-memory, self-improving-systems]
+tags: [agent-memory, self-improving-systems, learning-theory]
 learning_claims: true
 ---
 

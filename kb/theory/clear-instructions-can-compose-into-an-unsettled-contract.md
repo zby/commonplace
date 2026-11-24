@@ -2,7 +2,7 @@
 description: "Uses a JSON-only rule and a general exception rule to show how scope and precedence can leave combined requirements unsettled, even when each instruction has a clear ordinary use."
 type: types/note.md
 traits: [title-as-claim]
-tags: [computational-model, prompt-semantics, llm-reliability]
+tags: [computational-model, prompt-semantics, llm-reliability, learning-theory]
 ---
 
 # Clear instructions can compose into an unsettled contract

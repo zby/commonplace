@@ -8,7 +8,7 @@ snapshot_sha256: 90dd40a414e31e14978e8011ec4a4deba785dd5d81c022a15217b5828628473
 ingested: "2026-08-21"
 type: types/ingest-report.md
 domains: [continual-learning, evaluation-methodology, resource-accounting, benchmark-design]
-tags: [learning-theory, continual-learning]
+tags: [learning-theory, continual-learning, evaluation]
 ---
 
 # Ingest: LibContinual: A Comprehensive Library towards Realistic Continual Learning

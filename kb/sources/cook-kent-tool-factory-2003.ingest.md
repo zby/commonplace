@@ -10,6 +10,7 @@ ingested: "2026-08-31"
 occasion: "Investigate the book-derived Tool Factory as primary evidence on software factories or tools constructing and bootstrapping other production tools, and distinguish generated production tooling from acquisition of family-specific production knowledge."
 type: types/ingest-report.md
 domains: [software-factories, domain-specific-languages, tool-generation, bootstrapping]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: The Tool Factory

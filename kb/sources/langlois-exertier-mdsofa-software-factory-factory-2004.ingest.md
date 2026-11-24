@@ -10,6 +10,7 @@ ingested: "2026-08-31"
 occasion: "determine whether established universal-factory and factory-generator terminology conflicts with or subsumes a proposed concept about computational acquisition of family-specific production knowledge."
 type: types/ingest-report.md
 domains: [software-factories, model-driven-engineering, metamodeling, generative-programming]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: MDSoFa: A Model-Driven Software Factory

@@ -10,6 +10,7 @@ ingested: "2026-08-31"
 occasion: "Establish the adjacent software-product-line lineage needed to distinguish family-level production machinery from individual product development and to locate which family knowledge conventional engineering supplies."
 type: types/ingest-report.md
 domains: [software-product-lines, software-reuse, variability-management, software-architecture]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: A Framework for Software Product Line Engineering

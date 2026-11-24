@@ -10,6 +10,7 @@ ingested: "2026-08-31"
 occasion: "reconstruct Greenfield's mature ontology—schema, viewpoints/views, concerns, work-product types/instances, task/workstream templates and instances, assets, factory developer versus development team, product state and lifecycle—and preserve the boundary that human factory developers supply family-specific knowledge"
 type: types/ingest-report.md
 domains: [software-factories, metamodeling, domain-specific-knowledge, development-process]
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # Ingest: Software factory specification and execution model

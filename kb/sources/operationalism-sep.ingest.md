@@ -10,7 +10,7 @@ ingested: "2026-10-31"
 occasion: "How does making knowledge usable for a defined task and executor relate to execution, function-level automation, and decision autonomy? This is a Stanford Encyclopedia of Philosophy entry, secondary scholarship rather than a primary text."
 type: types/ingest-report.md
 domains: [operationalism, operational-definition, philosophy-of-science, measurement]
-tags: [constraining]
+tags: [constraining, learning-theory]
 ---
 
 # Ingest: Operationalism

@@ -10,7 +10,7 @@ ingested: "2026-11-03"
 occasion: "the Golden Gate Claude case as a found decomposition with an intervention test at production scale: a sparse autoencoder feature located, clamped, and behavior changed as predicted. The KB question is whether and how far such a decomposition makes weights localized under a further consumption path for the behaviors it covers, and whether it gives content-addressability without scope-addressability, as kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md found for ROME."
 type: types/ingest-report.md
 domains: [interpretability, sparse-autoencoders, feature-steering, model-internals]
-tags: [observability, artifact-analysis]
+tags: [observability, artifact-analysis, learning-theory]
 ---
 
 # Ingest: Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet

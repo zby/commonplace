@@ -10,7 +10,7 @@ ingested: "2026-11-04"
 occasion: "Morgan, \"The specification statement\", ACM TOPLAS 10(3):403–419, 1988, reprinted as the first paper in Oxford PRG-70 \"On the Refinement Calculus\" (October 1988); ingest only that paper, not the other papers in the monograph. Occasion: how a specification written as precondition and postcondition is itself a program denoting the set of permitted outcomes, and how code refines it by choosing a subset; retain the definition of the specification statement and its weakest-precondition semantics, the refinement ordering, and the remark on miracles."
 type: types/ingest-report.md
 domains: [refinement-calculus, specification-statement, weakest-precondition, miracles]
-tags: [constraining]
+tags: [constraining, learning-theory]
 ---
 
 # Ingest: The specification statement (Morgan 1988, first paper of PRG-70)

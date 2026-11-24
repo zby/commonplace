@@ -8,6 +8,7 @@ snapshot_sha256: 0c347da93d8ee40f3682310485126ece879daed7dcd8049dffb8f004d745c58
 ingested: "2026-08-10"
 type: types/ingest-report.md
 domains: [writing-as-thinking, conjecture-testing, argumentation, constraining]
+tags: [theory-builder, self-improving-systems, learning-theory]
 ---
 
 # Ingest: How to think in writing

@@ -1,7 +1,7 @@
 ---
 description: "Proposal: replace the full pass, fix procedure and simplification passes with one improvement procedure that is mostly LLM instructions, composed as variants from typed atomic instructions, with each run a typed directory the validator checks"
 type: reference/types/design-proposal.md
-tags: [review-system]
+tags: [review-system, kb-maintenance]
 ---
 
 # One improvement procedure over atomic instructions

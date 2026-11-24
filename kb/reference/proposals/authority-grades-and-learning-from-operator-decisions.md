@@ -1,7 +1,7 @@
 ---
 description: "Proposal: put authority grades on the atomic instructions of the improvement procedure, expose cross-run narrowing as a composition failure, and move grades toward automation only on discriminating evidence from recorded operator decisions"
 type: reference/types/design-proposal.md
-tags: [review-system, warranted-autonomy]
+tags: [review-system, warranted-autonomy, self-improving-systems, learning-theory, kb-maintenance]
 ---
 
 # Authority grades and learning from operator decisions

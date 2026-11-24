@@ -8,6 +8,7 @@ snapshot_sha256: 483fad0c56261786edf53408fd9117fe307f0058909ae36cf8457b75e22af13
 ingested: "2026-04-04"
 type: types/ingest-report.md
 domains: [agent-memory, context-efficiency, memory-curation, forgetting]
+tags: [agent-memory, learning-theory]
 ---
 
 # Ingest: Novel Memory Forgetting Techniques for Autonomous AI Agents

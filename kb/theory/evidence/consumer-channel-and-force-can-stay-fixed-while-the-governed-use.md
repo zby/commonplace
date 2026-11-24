@@ -2,7 +2,7 @@
 description: "Two audited Commonplace authority paths kept the same consumer, channel and force while the cohort or trigger they act on changed, so a behavioral-authority record of those three components cannot by itself say which use it describes"
 type: types/note.md
 traits: [title-as-claim]
-tags: [artifact-analysis]
+tags: [artifact-analysis, learning-theory]
 ---
 
 # Consumer, channel and force can stay fixed while the governed use changes

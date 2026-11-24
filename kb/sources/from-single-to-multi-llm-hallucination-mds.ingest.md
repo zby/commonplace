@@ -11,7 +11,7 @@ ingested: "2026-11-01"
 occasion: "the epistemic-relevance-and-conceptual-blending workshop (kb/work/epistemic-relevance-and-conceptual-blending/) screened this paper as evidence-register entry E17 from an operator-supplied external review; the workshop needs the paper's own account of what models produce when asked for information shared across documents and that shared information is absent or thin, and how the hallucination categories were defined and counted."
 type: types/ingest-report.md
 domains: [multi-document-summarization, hallucination-taxonomy, abstention, shared-information]
-tags: [llm-reliability]
+tags: [llm-reliability, learning-theory]
 ---
 
 # Ingest: From Single to Multi: How LLMs Hallucinate in Multi-Document Summarization

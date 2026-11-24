@@ -8,6 +8,7 @@ snapshot_sha256: e692df9343e96ecfd699ac0d21b54151403222c4e6eb0551ea98ef7281f0c87
 ingested: "2026-08-10"
 type: types/ingest-report.md
 domains: [writing-as-thinking, claim-routed-reading, belief-revision, human-agent-transfer]
+tags: [theory-builder, self-improving-systems, learning-theory, goal-prioritization]
 ---
 
 # Ingest: Learning By Writing

@@ -9,6 +9,7 @@ snapshot_sha256: e38cc80009dc9a90da49a8e0ad7aa05ed9eb9b8c11dd189e1c6441051c1a4e3
 ingested: "2026-08-27"
 type: types/ingest-report.md
 domains: [proof-structure, verifiability, decomposition, writing-conventions]
+tags: [prose-readability, type-system, document-system]
 ---
 
 # Ingest: How to Write a 21st Century Proof

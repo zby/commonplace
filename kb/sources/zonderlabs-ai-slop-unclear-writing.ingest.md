@@ -9,7 +9,7 @@ snapshot_sha256: 520ed773344d97ba9566f86fee71ce6c5c19d85d62999719ff6fd1823eeda2d
 ingested: "2026-11-11"
 type: types/ingest-report.md
 domains: [ai-writing, clarity-faults, williams-style, claude-code-replies]
-tags: [prose-readability]
+tags: [prose-readability, document-system]
 ---
 
 # Ingest: Why is AI Slop so Frustrating to Read?
