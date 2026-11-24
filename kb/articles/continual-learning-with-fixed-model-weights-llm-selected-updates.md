@@ -219,16 +219,16 @@ sets out the comparisons for admission, targeted correction, criterion
 revision, and whole-loop net gain.
 
 Closing this loop autonomously still depends on what the frozen weights supply
-up front. [Autonomous selection-based learning requires five base LLM
-competences](../theory/base-llm-competences-for-autonomous-selection-based-learning.md):
-following retained rules in operation under realistic context loads,
-diagnosing failures through traces and tools, synthesizing reusable candidates
-across text and code, making local comparative judgments without a scalar
-score, and maintaining the store while revising misleading criteria. Below
-that competence floor, edits to prompts or tools cannot substitute for
-capabilities the loop itself needs; weight training still builds the base
-learner. Above that floor, the two arguments below are conditional on the bet
-holding.
+up front. Harness code can handle much of the loop's machinery—enforcing
+codified validators, capturing traces, replaying past cases, tracking bloat,
+and executing rollbacks—but our working hypothesis is that
+[three irreducible semantic competences remain on the frozen base LLM](../theory/base-llm-competences-for-autonomous-selection-based-learning.md):
+interpreting unformalized text into action, diagnosing novel failures and
+synthesizing candidate fixes in text or code, and judging unformalized
+trade-offs while recognizing missing evidence. Below that competence floor,
+edits to prompts or tools cannot substitute for capabilities the loop itself
+needs; weight training still builds the base learner. Above that floor, the
+two arguments below are conditional on the bet holding.
 
 ## First argument: the loop can sit on the compute side of the Bitter Lesson
 
@@ -256,11 +256,13 @@ knowledge. A system bootstrapped from hand-written instructions and checks
 fits the lesson
 [only if its learning outgrows that starting point](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
-Even then, scaling is not automatic. The decisive open bottleneck is
+Even then, scaling is not automatic. A key open challenge is
 [**credit assignment without a chain rule**](../theory/credit-assignment-without-a-chain-rule-bounds-selection-based-learning.md):
-as a store of instructions, notes, checks, and scripts grows interdependent, a
-later failure rarely points straight to which retained entry should change.
-Whether results improve as more compute is spent has to be measured.
+credit assignment by debugging is far less scalable than backpropagation
+across billions of coupled weights, yet coding agents already automate much of
+that debugging on large deterministic codebases. The open question is whether
+automated debugging remains reliable when the store mixes code with
+natural-language instructions whose traces, coupling, and failures are softer.
 
 ## Second argument: retained hypotheses may buy sample efficiency and explanation
 
@@ -350,10 +352,10 @@ these four bars yet. The bet and both conditional arguments remain untested.
   [Selection-based learning needs only a local comparison](../theory/selection-based-learning-needs-only-a-local-comparison.md)
   — the definition of the learning process and why costly search means
   evaluation compares only the candidates reached.
-- [Autonomous selection-based learning requires five base LLM competences](../theory/base-llm-competences-for-autonomous-selection-based-learning.md)
+- [Harness code may offload much of a selection loop, leaving three base LLM competences](../theory/base-llm-competences-for-autonomous-selection-based-learning.md)
   and
-  [Credit assignment without a chain rule bounds selection-based learning over an interdependent store](../theory/credit-assignment-without-a-chain-rule-bounds-selection-based-learning.md)
-  — the base-model floor and the primary scaling bottleneck.
+  [Credit assignment without a chain rule is a debugging problem over an interdependent store](../theory/credit-assignment-without-a-chain-rule-bounds-selection-based-learning.md)
+  — our working hypothesis on the base-model floor and how debugging governs credit assignment as the store grows.
 - [Defining Improvement for Open-Ended Work](../theory/defining-improvement-for-open-ended-work.md),
   [On-balance judgment with an LLM](../theory/on-balance-judgment-with-an-llm.md),
   and
