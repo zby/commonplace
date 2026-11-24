@@ -90,11 +90,11 @@ Suppose it installs dependency inspection on trial.
 No single score was needed: missed failures and compute fall on different
 jobs, and the comparison only had to decide among the four candidates
 reached. Under
-[strict necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md),
-a change counts as an improvement when every compatible way of weighing
-consequences favors it, while an open comparison still permits a bounded
-trial. Choosing a candidate is not proof that it helps; it is a decision
-made on current evidence.
+[necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md),
+a change counts as an improvement when no compatible way of weighing
+consequences opposes it and at least one favors it, while an open comparison
+still permits a bounded trial. Choosing a candidate is not proof that it helps;
+it is a decision made on current evidence.
 
 Weeks later, in another repository, an edit changes a changelog that the
 release script includes in its archive. The old rule would have classified

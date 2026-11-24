@@ -1,5 +1,5 @@
 ---
-description: "Empirical conjecture: an LLM may judge which changes are worth making in open-ended work under strict necessary preference as a working definition; traces packet vs. tool-use setups and a three-arm diagnostic test"
+description: "Empirical conjecture: an LLM may judge which changes are worth making in open-ended work under necessary preference as a working definition; traces packet vs. tool-use setups and a three-arm diagnostic test"
 type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -35,16 +35,18 @@ existing admission check—over a stream of real work, once investigation
 cost, human help, and mistakes before rollback are counted.
 
 To keep that claim testable, we adopt
-[strict necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
+[necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
 as our working definition of improvement. Once the alternative, the work,
 the affected parties, and the horizon are fixed, a change counts as an
 **improvement** when every way of weighing the consequences compatible with
-the stated purpose favors it over the alternative. When every compatible
-weighting favors the current state, the change is a **loss**; when
-compatible weightings pull in opposite directions or decisive facts are
-missing, the comparison stays **open**. That working definition is fixed
-before testing, not presented as the only meaning of *better*—and it does
-not forbid acting when a comparison is open.
+the stated purpose scores it at least as high as the alternative and at
+least one strictly favors it (which includes clean Pareto wins). When every
+compatible weighting scores the current state at least as high and at least
+one strictly favors it, the change is a **loss**; when compatible weightings
+pull in opposite directions or decisive facts are missing, the comparison
+stays **open**. That working definition is fixed before testing, not
+presented as the only meaning of *better*—and it does not forbid acting when
+a comparison is open.
 
 Three observations make the LLM conjecture worth testing rather than
 dismissing on sight. First,
@@ -254,7 +256,7 @@ Evaluating this bet stays clear only if three separate questions are not
 collapsed into one:
 
 1. **What counts as improvement is fixed for the test.** Adopting
-   [strict necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
+   [necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
    as our working definition fixes the standard before running the test,
    without demanding that every decision have a robust winner. Open
    comparisons still allow a maintainer or system to act—including by
@@ -266,7 +268,7 @@ collapsed into one:
    trial there means a pre-release deprecation check or opt-in canary
    rather than merging straight to default.
 2. **Whether an LLM can make useful selections is this article's empirical
-   bet.** Strict necessary preference could be completely sound as an
+   bet.** Necessary preference could be completely sound as an
    evaluation standard while current LLMs still fail as judges—because they
    miss diffuse costs, fail to query the right logs, or ignore coverage
    gaps.
@@ -289,8 +291,8 @@ collapsed into one:
   editors, releases, dependencies, knowledge bases, and operational
   policies, starting from the expected stream of work.
 - [Necessary preference can guide improvement without a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md)
-  — states the strict necessary preference working definition adopted here,
-  with its six verdicts and the split between missing evidence and
+  — states the necessary preference working definition adopted here,
+  with its four verdicts and the split between missing evidence and
   contested trade-offs.
 - [Selection-based learning needs only a local comparison](../theory/selection-based-learning-needs-only-a-local-comparison.md)
   — explains why costly search means a selection step compares only the

@@ -64,10 +64,11 @@ comparing fresh work with the edit against fresh work without it while
 leaving the rest of the store intact except for edits that depend on it.
 Fix the standard before the test. [Defining improvement for open-ended
 work](../theory/defining-improvement-for-open-ended-work.md) starts with the
-tasks the system will serve. Here we use [strict necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md):
+tasks the system will serve. Here we use [necessary preference](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md):
 name the alternative, whose work counts, and the horizon; call the change
 an improvement if every way of weighing the consequences compatible with
-those commitments favors it. The judge can have grounds to expect a gain
+those commitments scores it at least as high and at least one strictly favors
+it. The judge can have grounds to expect a gain
 at admission; whether a gain occurred calls for evidence from later work.
 
 Changed behavior alone proves only that the edit mattered

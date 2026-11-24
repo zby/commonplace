@@ -23,7 +23,7 @@ source_notes:
   - kb/theory/revising-an-improvement-objective-is-licensed-from-outside-it.md
   - kb/theory/increasing-computational-autonomy-relocates-human-effort.md
   - kb/theory/computationally-directed-self-improvement-is-a-reallocation.md
-  - kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md
+  - kb/theory/defining-improvement-for-open-ended-work.md
 ---
 
 # Bootstrapping Autonomous Selection-Based Learning with Commonplace
@@ -255,7 +255,7 @@ Seeing growth takes no overall score: a kind that failed now passes, and
 none that passed now fails. A transfer can also let one kind pass while
 another stops passing. Then we ask whether the change is better on
 balance, which
-[takes a judgment about who gains and who loses, not a global measure](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md).
+[takes a judgment about who gains and who loses, not a global measure](../theory/defining-improvement-for-open-ended-work.md).
 
 Human decisions are counted, but only within one kind of update. Operator
 decisions per routing-rule change, before and after a transfer, can be

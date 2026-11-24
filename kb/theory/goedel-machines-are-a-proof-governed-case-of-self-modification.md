@@ -155,18 +155,18 @@ The useful comparison has at least two dimensions: the rigor of inference from
 stated premises, and how well those premises and observations cover the
 objective. A strong answer on one dimension does not supply the other.
 
-## Grounds for change: proof against robust comparison
+## Grounds for change: proof against on-balance judgment
 
 The Gödel machine is one selection-based learner. Commonplace aims at another:
-a learner whose judgment is a
-[robust comparison](./necessary-preference-can-guide-improvement-without-a-global-measure.md)
+a learner whose judgment is an
+[on-balance judgment](./on-balance-judgment-with-an-llm.md)
 made by a language model. The two share the readable store and the
 rejectable decision. They differ in the grounds required for a change, not
 in whether the system observes the world or can rewrite its own evaluators.
 Natural language, fixed model weights, and the mere presence of
 self-modification do not define the difference.
 
-| Question | Proof-governed route | Robust comparison by a language model |
+| Question | Proof-governed route | On-balance judgment by a language model |
 |---|---|---|
 | What justifies a change? | A proof of the switching claim under the formalization | A judgment, on the evidence available, that later work is expected to go better with the change; no single measure is selected |
 | How does evidence enter? | Observations enter through formalized operations and can support proofs | Cases, traces and operating consequences are read directly and weighed |
@@ -209,7 +209,7 @@ Relevant Notes:
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection does not require proof-gated admission
 - [Selection-based learning](./definitions/selection-based-learning.md) — defined-in: the definition the machine meets
 - [Single-loop and double-loop learning](./definitions/single-loop-and-double-loop-learning.md) — defined-in: the double-loop kind the machine is capable of
-- [Necessary preference can guide improvement without a global measure](./necessary-preference-can-guide-improvement-without-a-global-measure.md) — contrasts: the comparison Commonplace puts in the place of the proof
+- [On-balance judgment with an LLM](./on-balance-judgment-with-an-llm.md) — contrasts: the judgment Commonplace puts in the place of the proof
 - [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why a proved change of utility function replaces a stand-in and leaves the objective fixed
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: explains how a current policy can govern its own revision
 - [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — mechanism: identifies the risk of admitting a harmful retained change

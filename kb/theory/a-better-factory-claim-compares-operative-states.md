@@ -51,7 +51,7 @@ The comparison is also separate from other judgments of the factory. A change th
 
 ## Scope
 
-- The framework indexes and disciplines the comparison. It does not supply an oracle for it. For an open family, [a comparison across compatible measures](./necessary-preference-can-guide-improvement-without-a-global-measure.md) can guide a choice beyond the checked scope; passing the declared requirements does not settle that broader judgment.
+- The framework indexes and disciplines the comparison. It does not supply an oracle for it. For an open family, [judging improvement for open-ended work](./defining-improvement-for-open-ended-work.md) can guide a choice beyond the checked scope; passing the declared requirements does not settle that broader judgment.
 - Antecedence guards this claim's auditability; it is not constitutive of improvement. An independently supplied retrospective criterion can ground a legitimate improvement claim, just not this antecedently declared, auditable one.
 - The two-component relation — non-regression plus a named target — is the shape this framework declares, not the only declarable one. A relation permitting retirement of obsolete or unsafe prior capability can be declared, and the preserved-path consequence then no longer follows.
 - A comparison judges the adopted states. Whether an evaluator also controlled adoption is a separate causal question. A description cannot change whether the evaluator's judgment was required for installation.

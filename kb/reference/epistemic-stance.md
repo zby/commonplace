@@ -42,7 +42,7 @@ how the KB tests claims, chooses rules, defines terms and interprets instruction
 ## Judgment under uncertainty
 
 A test can show what a rule achieved. Deciding whether to keep the rule
-still calls for a [comparison across compatible measures](../theory/necessary-preference-can-guide-improvement-without-a-global-measure.md).
+still calls for [judging what counts as better work](../theory/defining-improvement-for-open-ended-work.md).
 A validator may catch an omission the old search missed. That is a reason to
 keep it, but it does not settle the choice. How often would readers otherwise
 miss an entry? How much upkeep will maintainers face? Experience can narrow

@@ -58,7 +58,8 @@ Relevant Notes:
 
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the anatomy of the loop and its boundary cases
 - [Selection-based learning needs only a local comparison](../selection-based-learning-needs-only-a-local-comparison.md) — extends: why evaluation needs only a local comparison among reached candidates, with or without a global value function
-- [Necessary preference can guide improvement without a global measure](../necessary-preference-can-guide-improvement-without-a-global-measure.md) — grounds: the comparison across compatible measures, and what a claim of improvement asserts
+- [Defining improvement for open-ended work](../defining-improvement-for-open-ended-work.md) — grounds: what a claim of improvement requires when no single score settles the choice
+- [Necessary preference can guide improvement without a global measure](../necessary-preference-can-guide-improvement-without-a-global-measure.md) — mechanism: one formal comparison across compatible measures
 - [Learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: the sense of learning the term uses
 - [Self-improving system](./self-improving-system.md) — defined-in: the second step of the ladder, where selection lies inside the declared boundary
 - [Single-loop and double-loop learning](./single-loop-and-double-loop-learning.md) — defined-in: the third step, where the learner can revise the criterion that decides its changes

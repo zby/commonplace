@@ -9,7 +9,7 @@ tags: [evaluation, robust-comparison]
 
 Suppose a team can try an interface internally or publish it for other projects to use. The same expected gain may justify the internal change but not publication. Internally, a failing check could reveal a mistake and let the team revert before the next use. After publication, reverting could break programs written against the new interface. The team can compare either alternative with leaving the interface unchanged.
 
-“Worth trying” can be acceptance of a modified proposal. Compare installing a rule as proposed with installing the same rule and scheduling a review of its effects. Both put the rule into use now. Only the trial also commits the team to reconsider it on specified evidence. Marking the rule “temporary” does not limit future loss unless someone or something acts on that status. The [comparison across compatible measures](./necessary-preference-can-guide-improvement-without-a-global-measure.md) may favor the trial while leaving outright adoption undecided.
+“Worth trying” can be acceptance of a modified proposal. Compare installing a rule as proposed with installing the same rule and scheduling a review of its effects. Both put the rule into use now. Only the trial also commits the team to reconsider it on specified evidence. Marking the rule “temporary” does not limit future loss unless someone or something acts on that status. An [on-balance comparison](./defining-improvement-for-open-ended-work.md)—for example, formalized through [necessary preference](./necessary-preference-can-guide-improvement-without-a-global-measure.md)—may favor the trial while leaving outright adoption undecided.
 
 To bound the downside of a trial without listing every possible failure, ask three questions:
 
