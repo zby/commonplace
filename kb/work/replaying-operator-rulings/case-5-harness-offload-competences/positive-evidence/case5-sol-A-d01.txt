@@ -1,0 +1,54 @@
+---
+title: "A frozen LLM needs only the competences the learning loop leaves to it"
+description: "In autonomous selection over retained methods, the model's required competences follow from the decisions and interpretations not supplied by other layers."
+traits:
+  - title-as-claim
+---
+
+# A frozen LLM needs only the competences the learning loop leaves to it
+
+A selection-based learner proposes changes to retained methods, evaluates them,
+and can reject them before they govern later work. In any such loop with a
+frozen LLM, a competence is required of the model only if the loop needs it
+and the rest of the system does not supply it. Autonomy requires the deployed
+system to make its own update decisions, not the model to make every decision.
+Reports and outcomes can come from people without people choosing the updates.
+
+## What the model must be able to do when assigned the role
+
+- **Interpret outcomes and propose revisions.** If traces do not already identify
+  what should change, connect a failure to plausible causes in the retained
+  method and distinguish repairing the work product from repairing the method.
+  Where candidate search is delegated to the model, express usable alternatives
+  in the store's artifact format. A trace analyzer or repair generator can
+  supply either part.
+- **Seek discriminating evidence.** If no test service specifies what to check,
+  identify an observation or comparison that could favor one candidate over
+  another, including no change. If a runner can replay tasks or measure costs,
+  the model need only request the relevant check and interpret the result to
+  the extent that the runner leaves its meaning unresolved.
+- **Judge what the evidence warrants.** If gates do not settle adoption, compare
+  the live alternatives under the applicable criteria. Recognize when evidence
+  supports rejection, further inquiry, or a bounded trial rather than adoption.
+  A fixed gate can decide cases it covers; the model need not invent a scalar
+  score for cases left open.
+- **Use retained methods in later work.** If the model executes a prose method,
+  it must recognize when it applies and follow it in context. If a dispatcher
+  invokes an executable method, applicability and execution can live there
+  instead. Successful storage alone does not close the loop.
+
+## Where the boundary moves
+
+Scheduling, retrieval, versioning, replay, installation, and rollback can live
+in the harness. Running a rollback is distinct from deciding which update
+caused a regression: the model needs causal diagnosis only if that decision
+is left to it. Likewise, revising the adoption criteria is not required for
+selection under fixed criteria. If the loop is meant to revise its criteria
+and that role is delegated to the model, it must distinguish a bad candidate
+from a check that admits bad candidates and propose a way to test the difference.
+
+A competence is adequate relative to its interface and workload, not to unaided
+performance. To test a claimed requirement, keep the rest of the loop fixed
+and remove the model's contribution at that interface. If the loop still makes
+the relevant decisions on fresh cases without human intervention, that
+competence was not required of the model in that configuration.

@@ -1,0 +1,54 @@
+---
+type: types/note.md
+title: A frozen LLM needs the update judgments the rest of the loop leaves open
+description: In autonomous selection over retained artifacts, the model must resolve the choices delegated to it, not implement the machinery that carries them out.
+traits:
+  - title-as-claim
+---
+
+# A frozen LLM needs the update judgments the rest of the loop leaves open
+
+In a selection loop, the system proposes changes to artifacts that guide later work,
+tests those changes, and can reject them. If the surrounding layers leave an update
+decision to a frozen LLM, the model must be able to make that decision from the
+artifacts and evidence its interface supplies. The same decision ceases to be a model
+requirement if another layer supplies an adequate answer for the cases the loop handles.
+
+## Base competences under an open-ended allocation
+
+Consider a Commonplace-like allocation: tools expose and test versioned notes,
+procedures, and scripts; the model fills in decisions not settled by those tools
+or by fixed policy. Where those decisions remain open, the model needs to:
+
+- **Locate a plausible cause worth testing.** Use traces and artifact contents to
+  distinguish a defect in the work product from a retained method that may cause
+  repeat failures. Use supplied provenance; do not infer causation from it alone.
+- **Propose usable changes.** Turn a diagnosis into candidate edits another layer can
+  apply or test, with scope and preconditions clear enough to distinguish a reusable
+  repair from a one-off patch. Search control and patch application can live elsewhere.
+- **Specify discriminating checks.** When existing checks do not settle the issue,
+  say what observation would distinguish candidates, including leaving the artifact
+  unchanged. A runner can set up replays, execute them, and report their results.
+- **Judge the evidence against the adoption criteria.** Interpret what the results
+  support and compare benefits and costs where policy leaves the trade-off unresolved.
+  Return an actionable verdict, including no change or a bounded trial when warranted.
+  A fixed gate can decide cases it covers; the model need not invent a single score.
+- **Diagnose misleading criteria if the loop may revise them.** When admitted changes
+  repeatedly pass their checks yet harm later work, distinguish a bad update from a
+  check that rewards the wrong thing, and propose a testable revision to that check.
+  This is not a prerequisite for a loop with fixed adoption criteria.
+
+## Boundary and test
+
+These competences must be reliable enough, with the supplied tools and context, that
+a person need not routinely supply the diagnosis, alternatives, checks, or verdict.
+External task requests and feedback are still inputs. Retrieval, scheduling, versioning,
+installation, and rollback execution can all be delegated; deciding *what* to undo
+from ambiguous evidence is separate from restoring a version.
+
+A substitution test isolates a proposed requirement: hold the tasks and acceptance
+standard fixed, move one decision to a layer that covers those cases, and replace
+the model with one that cannot make that decision unaided. If reliable updates still
+require that competence, look for another decision that depends on it. If no such
+dependency remains and the competence is still necessary, the claim fails for that
+allocation. This specifies a competence boundary, not a guarantee of long-run gains.

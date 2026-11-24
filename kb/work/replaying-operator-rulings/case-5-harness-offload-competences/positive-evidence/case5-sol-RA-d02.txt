@@ -1,0 +1,57 @@
+---
+description: "A frozen LLM in an autonomous selection loop needs to supply the diagnoses, proposals, and judgments that the surrounding system does not already supply."
+type: types/note.md
+traits: [title-as-claim]
+tags: [learning-theory, computational-model, llm-reliability]
+---
+
+# A frozen model needs the competences its selection loop leaves to it
+
+In a selection loop that proposes, tests, and accepts or rejects changes to
+retained methods, a frozen LLM needs to perform the steps for which neither
+another component nor an available signal supplies an adequate answer.
+Autonomy means that no person makes those internal update decisions;
+task requests, bug reports, and external acceptance can still supply evidence.
+
+The requirement follows the interface, not the name of the step.
+A test runner can report a regression, and a gate can reject the exact
+candidate that failed. Neither identifies which retained rule caused the
+regression unless the system also supplies evidence that distinguishes the
+causes. As [semantic work can be relocated but not eliminated](./semantic-work-can-be-relocated-but-not-eliminated.md),
+a separate diagnostic component can remove that burden from the model.
+
+## Base competences where the model supplies the missing answers
+
+- **Interpret methods and feedback.** Apply retained instructions if the
+  model does the work; otherwise read the worker's traces. Distinguish a
+  bad work product from evidence that the method producing it should change.
+- **Diagnose and propose.** Trace a failure to plausible retained rules or
+  tools, and express materially different repairs in a form the harness can
+  apply. Include leaving the method unchanged when the evidence is weak.
+- **Seek discriminating evidence.** When available checks do not separate
+  the alternatives, specify a replay, comparison, or observation that would.
+  Read the results without treating a passing check as evidence for more
+  than it tested.
+- **Judge unresolved trade-offs.** When no gate or external verdict settles
+  the choice, compare candidates with the incumbent under the stated
+  objectives. If the evidence does not warrant adoption, identify a bounded
+  trial, further inquiry, or deferral rather than inventing a total ranking.
+- **Reconsider the adoption criterion, if it is revisable.** Distinguish a
+  weak candidate from a check that repeatedly admits harmful changes.
+  Propose a revised check and evidence that could show it is better.
+
+## What the surrounding system can own
+
+In a Commonplace-like split, code can store and retrieve artifacts, bind
+results to versions, run checks, enforce gates, schedule trials, and execute
+rollbacks. [Scheduler–LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)
+explains why enforcing an explicit transition need not require model judgment.
+What remains is choosing an inquiry or action where the records and rules
+do not settle it. If a replay gate settles adoption, for example, the model
+need not also be a competent adoption judge.
+
+These competences must be reliable enough with the deployed tools, prompts,
+and review calls; they need not appear together in one response. To test a
+claimed requirement, hold the other layers fixed and remove the model's
+contribution at that step. If the loop still makes equally good updates on
+fresh cases that exercise the step, the competence was not required there.

@@ -1,0 +1,49 @@
+---
+type: types/note.md
+title: "A frozen LLM must supply the judgments its selection loop does not delegate"
+description: "The base competences for autonomous selection over retained methods depend on which judgments tools can settle and which the model must make."
+traits:
+  - title-as-claim
+---
+
+# A frozen LLM must supply the judgments its selection loop does not delegate
+
+**Hypothesis.** In a selection loop that changes later work by retaining or rejecting
+discrete updates to its own methods, a frozen LLM needs the competences below
+wherever the harness does not supply them. Autonomy means no person makes the
+internal decisions for each update; goals, constraints, and feedback may still
+come from outside the loop.
+
+## Competences at the decision points
+
+| Decision | What the model must be able to do if not delegated |
+|---|---|
+| What should change? | Find the retained artifacts that governed the work. Distinguish a defect in the work product from a recurring defect in the method, and use traces or replay to separate plausible causes rather than blaming the last edit. |
+| What could replace it? | Produce distinct, feasible changes at the right scope, with the unchanged method as a baseline. State which future cases each change should affect and which it should leave alone. |
+| What would distinguish the candidates? | Devise or choose checks whose outcomes could favor different candidates. Use tools to gather and interpret evidence, checking both the triggering case and cases that could expose collateral failures. |
+| What should be retained? | Apply the governing criteria to the observed consequences, including costs and regressions. When no single score is supplied, compare the trade-offs directly; reject, defer, or bound a trial when the evidence does not warrant adoption. |
+| Did the retained change help? | Make the selected edit effective in later work and verify that it is actually used. When later results disappoint, distinguish non-use from a bad update and use the recorded baseline and rationale to decide whether to narrow, replace, or revert it. |
+
+These competences attach to decisions, not to implementation steps. A replay
+tool can execute a comparison without deciding whether its cases represent
+future work. If replay cases and an acceptance rule fully settle a class of
+updates, the model need not invent checks or weigh trade-offs for that class.
+Where they do not, a fluent patch is not a substitute: a check that every
+candidate passes cannot tell the selector which change to retain.
+
+## Scope and test
+
+Fix the task stream, available tools, governing criteria, and acceptable rates
+of missed improvements and harmful admissions before assessing competence.
+Probe the decisions with cases that separate them: a bad result caused by an
+unused rule, a patch that fixes the trigger but breaks a neighboring case, and
+an apparent win that only passes because the check omits a relevant cost.
+An autonomous loop that reliably handles such cases despite the model failing
+the corresponding probes, with no other component supplying the missing
+function, would challenge the claimed requirement.
+
+Revising adoption criteria adds a separate competence only when that decision
+is in scope: diagnose why a check admits bad updates, propose a replacement,
+and compare the decisions it would make on cases beyond the motivating failure.
+A fixed-gate loop need not do this. The requirements explain who can run the
+loop; they do not establish that running it yields sustained gains.

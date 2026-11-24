@@ -1,0 +1,56 @@
+---
+description: "A frozen LLM can run a selection loop without per-update human judgment only if it can turn task feedback into testable revisions and use the results to make and revisit adoption decisions."
+type: types/note.md
+traits: [title-as-claim]
+tags: [learning-theory, llm-reliability]
+---
+
+# Autonomous selection requires a model that can turn feedback into testable revisions
+
+**Hypothesis.** In a selection loop that delegates open-ended update judgments to a
+frozen LLM, the model must be able to diagnose, propose, test, and select revisions
+to its own working methods using the evidence and tools the loop exposes. This
+applies to Commonplace-like loops in which admitting or rejecting an edit changes
+which instructions, notes, or scripts govern later work. Autonomy means no person
+supplies the diagnosis, candidate, or verdict for each update; people may still
+set objectives and report outcomes.
+
+## Competences the loop needs
+
+- **Diagnose from traces.** Reconstruct what governed the action, distinguish a
+  bad retained rule from a sound rule applied badly or a change in the task, and
+  identify what further observation would separate the plausible causes.
+- **Formulate usable alternatives.** Turn a diagnosis into an edit to a retained
+  instruction, note, or script that the system can actually use. State when the
+  edit should apply and what it should change, and keep the unchanged method as
+  a candidate. Repairing the current output alone does not revise the method.
+- **Obtain discriminating evidence.** Choose cases or checks on which competing
+  explanations or edits predict different results. Use the available tools to
+  compare the candidate with the incumbent, inspect regressions as well as the
+  motivating case, and recognize when the evidence does not distinguish them.
+- **Decide and revisit.** Compare observed benefits, regressions, and costs
+  against the stated objectives without requiring a single score. Retain,
+  reject, defer, or run a bounded trial as the evidence warrants. On later
+  failure, use the record of what changed to decide what to retest or revert.
+
+A loop that also revises its adoption criteria needs one further competence:
+distinguish a bad edit from a check that systematically admits bad edits.
+The model must be able to propose a replacement check and test whether it
+separates useful changes from regressions better than the incumbent check.
+
+## Boundary and test
+
+These are competences of the model **with its deployed interfaces**, not demands
+for unaided recall or flawless single calls. A harness can record versions,
+execute replays, and enforce rollback without making the model interpret every
+transition, as in [scheduler–LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
+If an executable comparator settles a decision, the model need not exercise
+judgment there. Conversely, a model cannot reliably attribute a failure when
+the interface exposes no evidence that distinguishes its possible causes.
+
+Test the claim by holding the harness and evidence access fixed, withholding
+per-update human judgment, and presenting recurring failures with competing
+causes and plausible but regressive fixes. A reproducible loop that makes sound
+revisions on those cases despite failing a stage-specific probe for a claimed
+competence would challenge its necessity, provided the harness did not supply
+that judgment. Passing the probes would not by itself establish reliable learning.

@@ -1,0 +1,58 @@
+---
+type: types/note.md
+description: "A frozen LLM must already be able to make the learning-loop judgments that neither executable checks nor external decision makers supply."
+traits: [title-as-claim]
+tags: [learning-theory, llm-reliability]
+---
+
+# A frozen LLM must already be competent at the learning judgments it owns
+
+In any selection-based learning system where a frozen LLM supplies the judgments
+that decide updates, the model must be able to make those judgments from the
+starting instructions, tools, and evidence available to it. Selection can improve
+the procedures it uses later, but the first useful update cannot depend on a
+competence that only that update would supply.
+
+A Commonplace-like loop here means one that proposes, tests, and accepts or rejects
+changes to inspectable artifacts that guide later work. It is autonomous with
+respect to those updates when people can supply tasks, objections, and outcomes
+without having to diagnose the failures, propose remedies, or decide what to keep.
+
+## Base competences
+
+- **Apply retained methods.** Recognize when an instruction, procedure, or tool is
+  relevant, use it, and interpret the result. An accepted update cannot improve
+  later work if the model cannot act on it in the cases it was meant to change.
+- **Diagnose failures in the method.** Distinguish repairing the current output
+  from repairing how future outputs are produced. Form plausible explanations
+  involving a retained rule, its application, or conditions outside the system.
+- **Generate testable alternatives.** Turn a diagnosis into a usable change to
+  the retained store. Consider alternatives with different consequences,
+  including leaving the current method unchanged.
+- **Seek discriminating evidence.** Choose cases and checks that could favor one
+  alternative over another, use available tools to run them, and distinguish
+  what the results show from what they leave unresolved.
+- **Make bounded adoption judgments.** Compare candidates against the current
+  method on the consequences that matter, without requiring a single score.
+  Accept, reject, defer, or choose a reversible trial as the evidence warrants.
+- **Assign credit after deployment.** Trace a later gain or regression to
+  candidate updates rather than treating sequence as causation. Use replay or
+  comparisons with an update withheld when available to judge what to keep,
+  revise, or undo.
+
+## What the model need not do
+
+As in [scheduler–LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md),
+code can track versions, execute checks, and enforce adoption or rollback
+decisions. If a check settles a comparison, the model need not judge it again.
+If the loop can revise its own adoption criteria, the model also needs to tell
+when a bad outcome indicts the criterion rather than just the adopted change,
+and to propose and test a replacement. A fixed-criterion loop does not need
+that additional competence.
+
+Competence is measured with the starting scaffold in place, across the calls
+that make a decision, not by demanding a correct answer from every call.
+The list specifies prerequisites, not a guarantee of improvement. To challenge
+a listed prerequisite, show repeatable improvement from the starting system
+while the model lacks that competence on decisions assigned to it, and verify
+that neither the harness nor a person is making those decisions in its place.

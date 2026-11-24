@@ -1,0 +1,57 @@
+---
+description: "In autonomous selection over retained artifacts, a frozen LLM needs to supply the task-dependent judgments and proposals that the rest of the system does not supply."
+type: types/note.md
+traits: [title-as-claim]
+tags: [learning-theory, computational-model]
+---
+
+# A frozen LLM needs the competences its selection loop leaves to it
+
+In an autonomous selection loop, the deployed system proposes, evaluates, and can
+reject changes to artifacts that govern later work. For each of those operations,
+the frozen LLM needs the competence to produce the part of the result that the
+other layers do not supply. Autonomy excludes people making the internal update
+decisions; it does not exclude external feedback or human-authored initial rules.
+
+This follows from the division of labor: a scheduler can enforce a transition
+once its conditions are represented, but enforcing it does not supply a missing
+premise for the decision. See [scheduler–LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
+A test runner can report what happened; whether that result answers the adoption
+question must be settled elsewhere unless the test and gate already encode it.
+
+## Base competences at the model boundary
+
+Where a Commonplace-like loop delegates the following work to the model, it needs:
+
+- **Diagnose what should change.** Use task outcomes and the relevant retained
+  artifacts to distinguish a defect in the work product from a defect in the
+  method that produced it. Treat suspected causes as provisional when the record
+  cannot distinguish them. Logs can establish which rule ran, not by themselves
+  whether that rule caused the failure.
+- **Propose usable alternatives.** Express a scoped change in a form the system
+  can evaluate and later use. When checks are missing, formulate one that could
+  distinguish the candidate from leaving the method unchanged. The harness can
+  enumerate templated edits and run existing checks; neither requires model invention.
+- **Judge what the evidence warrants.** Interpret results against the baseline
+  and applicable criteria, accounting for relevant costs and regressions. Where
+  the gate leaves a trade-off unresolved, distinguish grounds to adopt from
+  grounds to reject, defer, or run a bounded trial. A fully specified gate can
+  make the verdict without the model.
+- **Work through the supplied interfaces.** Interpret retrieved rules, records,
+  and tool results, and return changes or decisions in the forms the harness
+  consumes. The model need not itself schedule trials, maintain provenance,
+  persist versions, apply patches, or execute rollbacks.
+
+## Scope and test
+
+If the loop also selects changes to its adoption criteria, the same division
+applies one level up: detecting a misleading check and proposing a replacement
+are model competences only where no other layer supplies those outputs.
+Criterion revision is not a prerequisite for selection under a fixed gate.
+
+Hold the architecture and required decision quality fixed when testing a claimed
+model requirement. If removing that model contribution leaves the loop able to
+make the same class of updates at the required quality without human decisions,
+the competence was not required of the model in that configuration. Assess
+reliability with the loop's actual checks and retries, not by demanding that
+each model call be correct on its own.
