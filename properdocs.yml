@@ -976,6 +976,7 @@ plugins:
         'theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md': 'theory/near-decomposability-may-make-local-inspection-affordable.md'
         'theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md': 'theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md'
         'theory/reversibility-can-favour-a-change-by-limiting-future-loss.md': 'theory/reversibility-can-favor-a-change-by-limiting-future-loss.md'
+        'theory/selection-based-learning-requires-five-base-llm-competences.md': 'theory/base-llm-competences-for-autonomous-selection-based-learning.md'
         'theory/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md': 'theory/system-use-provides-evidence-of-theory-fit-not-an-independent-test.md'
         'theory/two-context-boundaries-govern-collection-operations.md': 'theory/areas-exist-because-useful-operations-require-reading-notes-together.md'
         'theory/two-context-boundaries-govern-operations-on-read-together-note-sets.md': 'theory/areas-exist-because-useful-operations-require-reading-notes-together.md'

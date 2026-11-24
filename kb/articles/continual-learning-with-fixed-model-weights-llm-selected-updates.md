@@ -8,7 +8,7 @@ source_notes:
   - kb/theory/definitions/reflective-system.md
   - kb/theory/definitions/selection-based-learning.md
   - kb/theory/selection-based-learning-needs-only-a-local-comparison.md
-  - kb/theory/selection-based-learning-requires-five-base-llm-competences.md
+  - kb/theory/base-llm-competences-for-autonomous-selection-based-learning.md
   - kb/theory/credit-assignment-without-a-chain-rule-bounds-selection-based-learning.md
   - kb/theory/defining-improvement-for-open-ended-work.md
   - kb/theory/on-balance-judgment-with-an-llm.md
@@ -66,7 +66,7 @@ score—clearing four bars that ordinary agent memory misses:
 
 This is not a claim that fixed-weight selection can learn anything; it depends
 on a frozen base model already above the
-[competence floor needed to operate the loop](../theory/selection-based-learning-requires-five-base-llm-competences.md),
+[competence floor needed to operate the loop](../theory/base-llm-competences-for-autonomous-selection-based-learning.md),
 detailed below. If the bet holds above that floor, a fully automated loop can
 sit on the compute side of the Bitter Lesson, and retaining testable
 hypotheses alongside winning updates may buy sample efficiency under
@@ -220,7 +220,7 @@ revision, and whole-loop net gain.
 
 Closing this loop autonomously still depends on what the frozen weights supply
 up front. [Autonomous selection-based learning requires five base LLM
-competences](../theory/selection-based-learning-requires-five-base-llm-competences.md):
+competences](../theory/base-llm-competences-for-autonomous-selection-based-learning.md):
 following retained rules in operation under realistic context loads,
 diagnosing failures through traces and tools, synthesizing reusable candidates
 across text and code, making local comparative judgments without a scalar
@@ -350,7 +350,7 @@ these four bars yet. The bet and both conditional arguments remain untested.
   [Selection-based learning needs only a local comparison](../theory/selection-based-learning-needs-only-a-local-comparison.md)
   — the definition of the learning process and why costly search means
   evaluation compares only the candidates reached.
-- [Autonomous selection-based learning requires five base LLM competences](../theory/selection-based-learning-requires-five-base-llm-competences.md)
+- [Autonomous selection-based learning requires five base LLM competences](../theory/base-llm-competences-for-autonomous-selection-based-learning.md)
   and
   [Credit assignment without a chain rule bounds selection-based learning over an interdependent store](../theory/credit-assignment-without-a-chain-rule-bounds-selection-based-learning.md)
   — the base-model floor and the primary scaling bottleneck.
