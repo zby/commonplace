@@ -9,7 +9,7 @@ snapshot_sha256: 6cbf822d96da59de6d1ba50d74853400758ed7e5b53f141fb5c0cf0aeae72bf
 ingested: "2026-10-11"
 type: types/ingest-report.md
 domains: [harness-evolution, weight-training, failure-analysis, continual-learning]
-tags: [improvement-loop]
+tags: [improvement-loop, learning-theory, continual-learning]
 learning_claims: true
 ---
 

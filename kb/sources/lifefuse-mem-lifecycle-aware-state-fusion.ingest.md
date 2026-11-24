@@ -9,6 +9,7 @@ capture_scope: full-source
 genre: scientific-paper
 snapshot_sha256: 218bd5853bab8bc0df8d975128093ec7c0f0643ed07aa33162557dda17bb1eca
 domains: [agent-memory, memory-evaluation, continual-learning]
+tags: [learning-theory, continual-learning]
 learning_claims: true
 ---
 

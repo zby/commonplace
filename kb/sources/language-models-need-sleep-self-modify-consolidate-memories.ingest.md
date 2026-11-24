@@ -8,6 +8,7 @@ snapshot_sha256: dd35f9d8cb67c65f683986ebb95a6be36134467261a3d540638ce199068f59f
 ingested: "2026-07-31"
 type: types/ingest-report.md
 domains: [continual-learning, agent-memory, self-improving-systems, representational-form]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Language Models Need Sleep

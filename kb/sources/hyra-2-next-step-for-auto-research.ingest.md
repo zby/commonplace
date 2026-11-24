@@ -9,7 +9,7 @@ snapshot_sha256: 4ff965ab63ce537efeb1aa11b5bdd45691f6966da5707de9fad0d5642526b14
 ingested: "2026-11-02"
 type: types/ingest-report.md
 domains: [automated-research, research-harness, tool-building, research-memory]
-tags: [self-improving-systems, continual-learning, agent-memory]
+tags: [self-improving-systems, continual-learning, agent-memory, learning-theory]
 learning_claims: true
 ---
 

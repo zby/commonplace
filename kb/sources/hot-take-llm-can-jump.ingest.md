@@ -8,6 +8,7 @@ snapshot_sha256: 508b21024d9e7a49af1a1a2f77994e0a177210e96cb7bb27936b801c64cbc94
 ingested: "2026-08-20"
 type: types/ingest-report.md
 domains: [scientific-discovery, knowledge-reconstruction, AI-safety, continual-learning]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Hot Take: LLM can 'jump'

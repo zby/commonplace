@@ -8,6 +8,7 @@ snapshot_sha256: cc8d3d9f850fbdcbdfc3ecabcc4af7b8ba036bbcbfa05fa7e87de9038c0fc36
 ingested: "2026-08-21"
 type: types/ingest-report.md
 domains: [continual-learning, vision-language-models, model-editing, evaluation]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: DFA-MoE: Tackling Dual Forgetting in Vision-Language Continual Learning

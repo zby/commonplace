@@ -8,6 +8,7 @@ snapshot_sha256: acf89461f73c471e57109dfbee83f02a27db6291b32727b675ad21abe12a976
 ingested: "2026-07-31"
 type: types/ingest-report.md
 domains: [continual-learning, learning-theory, optimization, agent-memory]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Nested Learning

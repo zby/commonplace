@@ -8,6 +8,7 @@ snapshot_sha256: 223632eff5364818cda452976cc9b3164489d6673e606dc881e6b1d5484b3fd
 ingested: "2026-03-18"
 type: types/ingest-report.md
 domains: [autonomous-learning, continuous-learning, cognitive-architecture, meta-control]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Why AI systems don't learn and what to do about it

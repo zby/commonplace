@@ -8,6 +8,7 @@ snapshot_sha256: c2b0f06614596febacb3e152369474d78108c3406981243bab6c65280c15722
 ingested: "2026-03-23"
 type: types/ingest-report.md
 domains: [continuous-learning, agent-memory, context-engineering, learning-theory]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Continual Learning in Token Space

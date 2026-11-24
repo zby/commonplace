@@ -8,6 +8,7 @@ snapshot_sha256: 3dffe6c36dfe5553559d293f79031764fbf6152c48ca477584b441979590a48
 ingested: "2026-08-26"
 type: types/ingest-report.md
 domains: [continual-learning, reinforcement-learning, agent-architecture, planning]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: The Alberta Plan for AI Research

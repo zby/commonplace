@@ -2,7 +2,7 @@
 description: A standing "check past incidents" rule need not change as incidents accumulate; an earlier lesson applies when the reviewer recognizes the failure's structural feature, such as sources sharing an origin, which a lookup by source name would miss.
 type: types/note.md
 traits: [title-as-claim]
-tags: [continual-learning]
+tags: [learning-theory, continual-learning]
 ---
 
 # Storing past incidents does not ensure their lessons guide later reviews

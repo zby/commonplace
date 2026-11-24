@@ -8,6 +8,7 @@ snapshot_sha256: 1a966f721eb4242f034f4faef772abdd0237092457396e4457f8435b7eeb61a
 ingested: "2026-03-14"
 type: types/ingest-report.md
 domains: [reinforcement-learning, continuous-learning, agent-training, personalization]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: OpenClaw-RL: Train Any Agent Simply by Talking

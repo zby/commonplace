@@ -8,6 +8,7 @@ snapshot_sha256: 3d1f67ff8d98013a9ecb3469b3463630d35751e3213f974ca73c6f0ea30b999
 ingested: "2026-07-23"
 type: types/ingest-report.md
 domains: [self-evolving-agents, continual-learning, deploy-time-learning, agent-harness]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: The What & When of Self-Evolving Agents

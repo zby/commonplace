@@ -8,6 +8,7 @@ snapshot_sha256: a095f64403b8c1a74010290cbfa2433cfc0448e2e87fd1997b85275f6871cf3
 ingested: "2026-04-16"
 type: types/ingest-report.md
 domains: [learning-theory, continual-learning, evaluation, hallucination]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Into the Unknown: Self-Learning Large Language Models

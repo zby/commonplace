@@ -13,7 +13,7 @@ Work also qualifies when it substantively meets the inclusion condition of a dec
 
 ## Major child areas
 
-These child tags route major parts of the area. A few fundamentals carry only the parent tag: [Learning is not only about generality](../theory/learning-is-not-only-about-generality.md) (Simon's definition of learning), [LLM learning phases fall between human learning modes](../theory/llm-learning-phases-fall-between-human-learning-modes.md), and [in-context learning presupposes context engineering](../theory/in-context-learning-presupposes-context-engineering.md). Outside the notes collection, [trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) compares the external systems that learn from their own traces.
+These child tags route major parts of the area. A few fundamentals carry only the parent tag: [Learning is not only about generality](../theory/learning-is-not-only-about-generality.md) (Simon's definition of learning) and [LLM learning phases fall between human learning modes](../theory/llm-learning-phases-fall-between-human-learning-modes.md). Outside the notes collection, [trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) compares the external systems that learn from their own traces.
 
 - [continual-learning](./continual-learning-README.md) — learning across successive experiences, including changes selected in response to use
 - [constraining](./constraining-README.md) — narrowing the interpretation space, from conventions to deterministic code; codification, relaxing, and the decision heuristics

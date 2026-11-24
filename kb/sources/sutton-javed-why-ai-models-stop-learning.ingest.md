@@ -9,7 +9,7 @@ snapshot_sha256: f13f6462a3c7f93fe2092ac82783ab103f2dec7628b4b7ddab81a719ef00ec5
 ingested: "2026-08-26"
 type: types/ingest-report.md
 domains: [continual-learning, reinforcement-learning, representational-form, agent-architecture]
-tags: [continual-learning]
+tags: [continual-learning, learning-theory]
 ---
 
 # Ingest: Sutton and Javed on why AI models stop learning

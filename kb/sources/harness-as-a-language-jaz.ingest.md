@@ -10,6 +10,7 @@ snapshot_sha256: e5421e433ba0c6a06a1af7debee98a1419160d128edab016dfe6bb175d0eb4f
 ingested: "2026-09-26"
 type: types/ingest-report.md
 domains: [agent-harnesses, context-engineering, continual-learning]
+tags: [learning-theory, continual-learning]
 learning_claims: true
 ---
 

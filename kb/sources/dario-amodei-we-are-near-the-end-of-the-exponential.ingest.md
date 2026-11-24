@@ -8,6 +8,7 @@ snapshot_sha256: 518ce74f0f6aba4881fb50b2f8f8160cf130b9ac0909b7744ea5098be00152d
 ingested: "2026-03-12"
 type: types/ingest-report.md
 domains: [ai-scaling, automation-boundary, oracle-theory, continual-learning]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Dario Amodei — "We are near the end of the exponential"

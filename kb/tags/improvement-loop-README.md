@@ -7,7 +7,7 @@ type: types/tag-readme.md
 
 How improvement candidates are searched for, evaluated with the possibility of rejection, and retained so that later operation depends on them. Assign this tag to work on these functions, their coordination and failure, or their boundary with direct updates that adopt a change without a separate candidate-admission decision. The establishing note is [a proposal-selection improvement loop requires search, evaluation, and operative retention](../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). A recurring task loop alone is insufficient: the subject must be how a change becomes a candidate, is selected, or affects later operation. [Theory-builder](./theory-builder-README.md) covers the stated theories guiding the work and criticism of their content; work on how that criticism controls candidate search can carry both tags. A child of [self-improving-systems](./self-improving-systems-README.md).
 
-The distinction from [continual-learning](./continual-learning-README.md) is **how changes are selected** versus **how learning persists outside model weights**. Candidate search, rejection, backtracking, and acceptance belong here even when the retained form is unspecified. A durable artifact alone does not establish a proposal-selection loop. Assign both tags when the note develops both the selection process and learning through retained non-weight changes.
+The distinction from [continual-learning](./continual-learning-README.md) is **how changes are selected** versus **what a system learns across successive experiences**. Candidate search, rejection, backtracking, and acceptance belong here even when the retained form is unspecified. A durable artifact alone does not establish a proposal-selection loop. Assign both tags when the note develops both how a change is selected and what the system learns across experiences.
 
 ## Loop structure
 
@@ -55,4 +55,4 @@ Learning by this loop is [selection-based learning](../theory/definitions/select
 - [reflection](./reflection-README.md) — loops whose retained changes pass through a self-representation
 - [warranted-autonomy](./warranted-autonomy-README.md) — which evaluation and acceptance decisions a computational actor is warranted to take
 - [robust-comparison](./robust-comparison-README.md) — one way to evaluate a candidate
-- [continual-learning](./continual-learning-README.md) — learning through persistent non-weight changes; it can use proposal selection or direct updates
+- [continual-learning](./continual-learning-README.md) — learning across successive experiences can use either proposal selection or direct updates
