@@ -57,6 +57,16 @@ Excluding the first pass's candidates, searched tracked ingest descriptions and 
 
 The exact list now has 30 source ingests and 31 theory notes. Next audit `improvement-loop`: compare candidate admission and rejection with recurring execution that proposes no change. Start with ingests about harness optimization already reviewed for continual learning, without assuming that either tag implies the other.
 
+## Assignment audit: improvement loops in source ingests
+
+Reviewed all 11 existing source assignments and kept them. A separate acceptance test is not required for membership: AlphaZero explains what changed when the predecessor's match gate was removed; Soar explains when a new rule is installed and how it controls later search. Argyris belongs for a different reason: defensive routines prevent evidence of failure from prompting reconsideration of the governing policy. These are distinct reading routes, not claims that all three use proposal selection.
+
+Reviewed nine neighbors. Added AutoSaddler, Agent Optimizers Compound, and Harness Continual Learning for their patch or regression checks; JAZ and Long-Horizon Agents for how a correction enters later prompts, tools, or guards; Hyra for the evidence required to promote research lessons; and the text-optimization essay for its comparison of competing text revisions before adoption. In the Long-Horizon Agents case it is the move from repeated instructions to an executable worker-stop guard that matters, not the number of ticks. Hyra describes a promotion procedure but does not show a promoted entry improving a later decision.
+
+Left LibContinual and Effective Harnesses for Long-Running Agents without this tag. LibContinual compares learning methods under different evaluation protocols; the benchmark does not decide which update a learner keeps. The long-running coding harness checks whether an application feature is complete so the next session can continue; that is not a decision to change how later sessions work.
+
+The exact lookup now has 18 source ingests. All carry the declared parent `self-improving-systems` and its parent `learning-theory`. The next comparison is outside sources: check whether the existing theory assignments respect the same distinction between changing a work product and changing the procedure that produces it.
+
 ## Closure
 
 Close when the corrected maintenance instruction has been used, the audit findings have been repaired or explicitly deferred, and source tagging works for ongoing ingestion with a recorded disposition for the backlog. Record any proposed changes to which artifacts authors should tag and why. Verify that affected searches return the intended kinds of artifacts and that generated listings agree with exact membership queries and no instruction treats a curated head as exhaustive. Keep findings, newly discovered dependencies and unresolved decisions here while work is active; extract lasting rules into their owning contracts and instructions before removing the workshop and its active-list entry.

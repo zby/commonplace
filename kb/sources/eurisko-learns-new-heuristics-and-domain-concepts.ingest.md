@@ -12,7 +12,7 @@ occasion: "Which areas had an external objective and which did not; the reported
 learning_claims: true
 type: types/ingest-report.md
 domains: [self-improving-systems, learning-theory, objective-design, credit-assignment]
-tags: [improvement-loop]
+tags: [improvement-loop, learning-theory, self-improving-systems]
 ---
 
 # Ingest: EURISKO learns new heuristics and domain concepts

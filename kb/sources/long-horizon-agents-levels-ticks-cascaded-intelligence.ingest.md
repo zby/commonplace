@@ -9,7 +9,7 @@ snapshot_sha256: aa2dafb31cc28953ca50bb8b0622c1c9acde9657eb2a5fc920676db8aea3b06
 ingested: "2026-09-25"
 type: types/ingest-report.md
 domains: [agent-memory, context-engineering, learning-theory, agent-orchestration]
-tags: [learning-theory, continual-learning]
+tags: [learning-theory, continual-learning, self-improving-systems, improvement-loop]
 learning_claims: true
 ---
 

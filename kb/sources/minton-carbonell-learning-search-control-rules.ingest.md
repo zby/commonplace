@@ -10,7 +10,7 @@ ingested: "2026-11-21"
 occasion: "Which parts of deliberative learning, if any, have precedents in symbolic learning and its retention judgments?"
 type: types/ingest-report.md
 domains: [explanation-based-specialization, search-control-rules, prodigy]
-tags: [improvement-loop]
+tags: [improvement-loop, learning-theory, self-improving-systems]
 learning_claims: true
 ---
 

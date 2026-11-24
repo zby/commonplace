@@ -11,7 +11,7 @@ post_count: 1
 ingested: "2026-06-09"
 type: types/ingest-report.md
 domains: [continual-learning, context-engineering, text-optimization]
-tags: [learning-theory, continual-learning]
+tags: [learning-theory, continual-learning, self-improving-systems, improvement-loop]
 ---
 
 # Ingest: We Should Take Text Optimization More Seriously

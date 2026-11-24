@@ -10,7 +10,7 @@ ingested: "2026-11-21"
 occasion: "Which parts of deliberative learning, if any, have precedents in case-based reasoning and its retention judgments?"
 type: types/ingest-report.md
 domains: [case-based reasoning, case retention, failure memory, derivational reuse]
-tags: [improvement-loop]
+tags: [improvement-loop, learning-theory, self-improving-systems]
 learning_claims: true
 ---
 

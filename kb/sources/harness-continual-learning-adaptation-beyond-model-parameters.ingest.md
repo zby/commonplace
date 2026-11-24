@@ -8,7 +8,7 @@ snapshot_sha256: 624858252526be4bf0e438f4100efed1532c4c1e45c2d25bf4a68befb82708d
 ingested: "2026-08-21"
 type: types/ingest-report.md
 domains: [harness-learning, continual-learning, self-improvement, evaluation]
-tags: [learning-theory, continual-learning]
+tags: [learning-theory, continual-learning, self-improving-systems, improvement-loop]
 ---
 
 # Ingest: Harness Continual Learning: Continual Adaptation Beyond Model Parameters

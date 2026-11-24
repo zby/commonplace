@@ -9,7 +9,7 @@ snapshot_sha256: 1bf72c346fa260284db5ee5f5008657bae21605e90ee83d2aff8daed3f4c3da
 ingested: "2026-11-22"
 type: types/ingest-report.md
 domains: [alphazero, self-play-reinforcement-learning, monte-carlo-tree-search, computer-chess]
-tags: [improvement-loop, learning-theory]
+tags: [improvement-loop, learning-theory, self-improving-systems]
 learning_claims: true
 ---
 
