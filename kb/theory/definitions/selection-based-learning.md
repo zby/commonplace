@@ -18,7 +18,7 @@ This term was named "deliberative learning" until 2026-11-22 and
 
 [AlphaGo Zero](https://www.nature.com/articles/nature24270) illustrates the boundary. Each newly trained network played the current best one and replaced it only if it won by a margin of 55%. Its successor, [AlphaZero](../../sources/alphazero-chess-shogi-self-play.ingest.md), dropped that evaluation gate and updated a single network continually by gradient descent—moving from network-level selection to direct updates alone.
 
-That contrast divides learning in [Simon's sense](../learning-is-not-only-about-generality.md)—changes that alter what a system can do on later occasions, rather than one-off plans for the current task—into two modes. In a **direct update**, evidence determines the change directly and nothing is proposed or rejected. In **selection-based learning**, a **selection-based learner** operates through a [proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) with two requirements:
+That contrast divides learning in [Simon's sense](../learning-is-not-only-about-generality.md)—changes that alter what a system can do on later occasions, rather than one-off plans for the current task—into two modes. In a **direct update**, evidence determines the change directly and nothing is proposed or rejected. In **selection-based learning**, a **selection-based learner** changes through a [proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) with two requirements:
 
 - **Retained change.** The change alters something the learner keeps and draws on in later work. Where that retained content lives does not matter: a handbook, code, a team's working habits, and a model checkpoint all qualify, so a readable store is not required.
 - **Reject-capable evaluation.** Evaluation is causally distinct from proposing, though it need not be a separate stage or actor and may be automatic. Its verdict decides whether the change is made—or undone if already made—and rejection is its own event rather than the arrival of the next candidate.
@@ -48,7 +48,8 @@ Proposals may come from outside the boundary; selection is the step that must si
 
 - Citing the term as evidence that the system improved or corrects itself.
 - Restricting the term to readable stores or to prose.
-- Applying the term to a system because it reasons carefully about its work; it applies only to how retained changes are decided.
+- Applying the term to ordinary in-task action selection or replanning that does not alter what the system retains for later occasions.
+- Assuming the learner must perform the selection itself; external selection still makes the learning selection-based, though not self-improvement.
 - Omitting the system or the class of changes.
 
 ---

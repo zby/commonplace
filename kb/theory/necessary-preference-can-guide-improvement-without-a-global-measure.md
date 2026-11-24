@@ -32,7 +32,7 @@ Our working definition builds on that source in one formal choice and one domain
 Report one of six verdicts:
 
 - **Improvement.** Every compatible measure strictly favors the successor.
-- **Weakly better.** Every compatible measure scores the successor at least as high, some strictly favor it, and some score them equal.
+- **Weakly better.** Every compatible measure scores the successor at least as high, some strictly favor it, and some score them equal. No compatible measure favors the predecessor—including a clean Pareto win when some compatible measure assigns zero weight to the improved dimension—so this still supports selecting the successor while falling short of strict improvement under every measure.
 - **Tie.** Every compatible measure scores the versions equal.
 - **Weakly worse.** Every compatible measure scores the predecessor at least as high, some strictly favor it, and some score them equal.
 - **Loss.** Every compatible measure strictly favors the predecessor.
