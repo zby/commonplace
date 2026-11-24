@@ -8,6 +8,7 @@ snapshot_sha256: 731d645184bdbee2f192de9148a2c2874e6b99dfa0bfdc77f8b374b8b615bb4
 ingested: "2026-06-06"
 type: types/ingest-report.md
 domains: [learning-theory, discovery, verification, typed-artifacts]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Self-Revising Discovery Systems for Science

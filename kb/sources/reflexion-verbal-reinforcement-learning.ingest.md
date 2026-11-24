@@ -9,6 +9,7 @@ genre: scientific-paper
 snapshot_sha256: b45304d6caef46a415982249766ac935fc6e580c4f356a43cbbc14561d827d12
 type: types/ingest-report.md
 domains: [agent-memory, learning-theory, evaluation]
+tags: [learning-theory, continual-learning]
 learning_claims: true
 ---
 

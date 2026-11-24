@@ -8,6 +8,7 @@ snapshot_sha256: 60fee6c9992485013c19a88033f60187fddbc0eded68412ebea346b2c5d70a5
 ingested: "2026-05-08"
 type: types/ingest-report.md
 domains: [agent-memory, trace-learning, deploy-time-learning, web-agents]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Agent Workflow Memory

@@ -11,6 +11,7 @@ post_count: 1
 ingested: "2026-03-25"
 type: types/ingest-report.md
 domains: [context-engineering, memory-architecture, learning-theory]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Post by @deepfates — LLM "memory" as context stuffing

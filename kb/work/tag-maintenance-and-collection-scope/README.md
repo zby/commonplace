@@ -47,6 +47,16 @@ Reviewed 22 tracked ingests: those already tagged `continual-learning` and those
 
 Corrected the `improvement-loop` head's obsolete restriction of continual learning to non-weight updates. Restored the declared `learning-theory` parent on child members that lacked it. The exact query now returns 20 source ingests and 31 theory notes; all 51 also carry the parent. This was not a search of every ingest body. A next pass can look for descriptions of retention, transfer or forgetting across tasks in ingests that lack these domain terms. This assignment audit did not change the terminology-review backlog.
 
+### Search beyond the domain terms
+
+Excluding the first pass's candidates, searched tracked ingest descriptions and summaries for learning or adaptation across experiences, transfer to later tasks, loss of earlier tasks, and explicit mentions of continual or lifelong learning. Reviewed 15 matches and spot-checked three additional reports on workflow reuse or forgetting. Added 10 ingests; left eight without this tag. This is a bounded search, not an assertion that the rest of the corpus is irrelevant.
+
+- Agent Workflow Memory analyzes how an earlier successful trajectory becomes a workflow used on a later web task. Reflexion analyzes a narrower case: feedback changes the next attempt on the *same* task, but the evaluations do not establish cross-task transfer. Both answer a reader's question about what carries forward.
+- The web-agent long-context benchmark puts irrelevant prior tasks into context to measure distraction; it does not study learning from them. The Geometry of Forgetting explains retrieval interference rather than loss of a learned capability after an update. The terms suggested both candidates, not membership.
+- Other near misses left unchanged: Corral and Socratic Agents analyze scientific reasoning within an episode; the two Pathway reports address a benchmark and a formal architecture; the adaptive-forgetting report evaluates a retrieval budget; the multi-agent infrastructure essay uses possible future learning to motivate a prediction about orchestration.
+
+The exact list now has 30 source ingests and 31 theory notes. Next audit `improvement-loop`: compare candidate admission and rejection with recurring execution that proposes no change. Start with ingests about harness optimization already reviewed for continual learning, without assuming that either tag implies the other.
+
 ## Closure
 
 Close when the corrected maintenance instruction has been used, the audit findings have been repaired or explicitly deferred, and source tagging works for ongoing ingestion with a recorded disposition for the backlog. Record any proposed changes to which artifacts authors should tag and why. Verify that affected searches return the intended kinds of artifacts and that generated listings agree with exact membership queries and no instruction treats a curated head as exhaustive. Keep findings, newly discovered dependencies and unresolved decisions here while work is active; extract lasting rules into their owning contracts and instructions before removing the workshop and its active-list entry.

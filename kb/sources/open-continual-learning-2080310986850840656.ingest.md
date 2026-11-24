@@ -11,6 +11,7 @@ post_count: 1
 ingested: "2026-07-23"
 type: types/ingest-report.md
 domains: [learning-theory, deploy-time-learning, evaluation, agent-adaptation]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Open continual learning that you fully control

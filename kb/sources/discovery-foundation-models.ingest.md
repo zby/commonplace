@@ -10,6 +10,7 @@ snapshot_sha256: 48d78f867d461f6e1c6097f53071fa9d0f6782ff931d9538d8a177e9b3fa47f
 learning_claims: true
 type: types/ingest-report.md
 domains: [automated-science, learning-systems, agent-memory, evaluation]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: Discovery Foundation Models: Toward Open-Ended Discovery Intelligence

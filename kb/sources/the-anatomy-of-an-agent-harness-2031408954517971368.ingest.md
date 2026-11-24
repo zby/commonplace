@@ -11,6 +11,7 @@ post_count: 2
 ingested: "2026-03-12"
 type: types/ingest-report.md
 domains: [agent-systems, harness-engineering, context-engineering, model-harness-coevolution]
+tags: [learning-theory, continual-learning]
 ---
 
 # Ingest: The Anatomy of an Agent Harness
