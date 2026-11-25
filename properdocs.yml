@@ -965,6 +965,7 @@ plugins:
         'theory/an-objection-can-show-where-to-split-an-on-balance-judgment.md': 'theory/an-objection-can-show-where-to-split-a-comparison.md'
         'theory/constraining-during-deployment-is-continuous-learning.md': 'theory/constraining-during-deployment-can-produce-learning-outside-weights.md'
         'theory/continual-learning-requires-governing-behaviour-changing-writes.md': 'theory/fixed-review-rules-must-identify-when-incident-lessons-apply.md'
+        'theory/credit-assignment-without-a-chain-rule-bounds-selection-based-learning.md': 'theory/credit-assignment-without-a-chain-rule-is-a-debugging-problem.md'
         'theory/definitions/deliberative-learning-checks.md': 'theory/definitions/selection-based-learning-checks.md'
         'theory/definitions/deliberative-learning.md': 'theory/definitions/selection-based-learning.md'
         'theory/definitions/judgment-governed-self-improvement-checks.md': 'theory/definitions/selection-based-learning-checks.md'

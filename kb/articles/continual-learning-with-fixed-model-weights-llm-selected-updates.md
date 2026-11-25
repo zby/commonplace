@@ -9,7 +9,7 @@ source_notes:
   - kb/theory/definitions/selection-based-learning.md
   - kb/theory/selection-based-learning-needs-only-a-local-comparison.md
   - kb/theory/base-llm-competences-for-autonomous-selection-based-learning.md
-  - kb/theory/credit-assignment-without-a-chain-rule-bounds-selection-based-learning.md
+  - kb/theory/credit-assignment-without-a-chain-rule-is-a-debugging-problem.md
   - kb/theory/defining-improvement-for-open-ended-work.md
   - kb/theory/on-balance-judgment-with-an-llm.md
   - kb/theory/necessary-preference-can-guide-improvement-without-a-global-measure.md
@@ -257,7 +257,7 @@ fits the lesson
 [only if its learning outgrows that starting point](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
 Even then, scaling is not automatic. A key open challenge is
-[**credit assignment without a chain rule**](../theory/credit-assignment-without-a-chain-rule-bounds-selection-based-learning.md):
+[**credit assignment without a chain rule**](../theory/credit-assignment-without-a-chain-rule-is-a-debugging-problem.md):
 credit assignment by debugging is far less scalable than backpropagation
 across billions of coupled weights, yet coding agents already automate much of
 that debugging on large deterministic codebases. The open question is whether
@@ -354,7 +354,7 @@ these four bars yet. The bet and both conditional arguments remain untested.
   evaluation compares only the candidates reached.
 - [Harness code may offload much of a selection loop, leaving three base LLM competences](../theory/base-llm-competences-for-autonomous-selection-based-learning.md)
   and
-  [Credit assignment without a chain rule is a debugging problem over an interdependent store](../theory/credit-assignment-without-a-chain-rule-bounds-selection-based-learning.md)
+  [Credit assignment without a chain rule is a debugging problem over an interdependent store](../theory/credit-assignment-without-a-chain-rule-is-a-debugging-problem.md)
   — our working hypothesis on the base-model floor and how debugging governs credit assignment as the store grows.
 - [Defining Improvement for Open-Ended Work](../theory/defining-improvement-for-open-ended-work.md),
   [On-balance judgment with an LLM](../theory/on-balance-judgment-with-an-llm.md),
