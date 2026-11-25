@@ -5,7 +5,13 @@ type: types/tag-readme.md
 
 # Evaluation
 
-This tag gathers how claims, changes, and agent outputs are judged and tested: oracles and LLM judges, what an evaluation warrants, the difference between a claim's warrant and its fit in a working theory, experiment, ablation, and benchmark design, and evidence records from Commonplace's own review and rewrite runs. No single defining note anchors it; [warranted autonomy is bounded by oracle domain](../theory/warranted-autonomy-is-bounded-by-oracle-domain.md) states the constraint most members work under: an evaluation licenses action only over the candidates its oracle can assess. Members span notes, evidence records, reference docs and proposals, and system analyses. Nearby but different: [llm-reliability](./llm-reliability-README.md) covers why LLM output deviates from intent and how to correct it; a note belongs here when its question is what a check, judge, or experiment can establish. This head is selective; use a scoped tag search for full membership.
+Evaluation asks what a check, judge, or experiment establishes about a claim, change, or output. [LLM reliability](./llm-reliability-README.md) asks instead why an output deviates from intent and how to correct it.
+
+## Start with the question
+
+- **Does this candidate meet a requirement?** A pass or fail need not rank candidates. Passing the check does not establish that the requirement was right.
+- **How well did it perform on a stated measure?** Accuracy on a test set scores performance there, not the value of the whole system.
+- **Should we prefer this change to the current version?** [Selection-based learning](../theory/definitions/selection-based-learning.md) needs [a local comparison, not a global value function](../theory/selection-based-learning-needs-only-a-local-comparison.md). [Robust comparison](./robust-comparison-README.md) favors the change if no compatible measure favors the current version and at least one favors the change. If measures disagree on the direction, the comparison stays open.
 
 ## Oracles and judges
 
