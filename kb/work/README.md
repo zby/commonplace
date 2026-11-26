@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Remote KB access via GitHub and the rendered site](./remote-kb-access/README.md) — posed 2026-11-26: diagnose and improve how external agents and human readers consult Commonplace through GitHub or `https://zby.github.io/commonplace/` without installing or cloning it.
+
 - [Tag maintenance and collection scope](./tag-maintenance-and-collection-scope/README.md) — posed 2026-11-23: repair and run the tag audit, establish routine source tagging, and decide which collections each tag search should cover.
 
 - [Replaying operator rulings](./replaying-operator-rulings/README.md) — posed 2026-11-21: five definition experiments and two rounds on optional link discovery are complete; repeat the cases where workers independently proposed an accepted correction.
