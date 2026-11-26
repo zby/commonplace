@@ -64,3 +64,5 @@ Relevant Notes:
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — note scores are the composite of graph-topology and content-proxy signals this note catalogues
 - [collections and types](../reference/collections-and-types.md) — type as a scoring dimension depends on path-valued contracts being meaningful
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — note scoring is what makes automated curation tractable at scale
+- [Model upgrades obsolete notes by function rather than uniformly](./model-upgrades-obsolete-notes-by-function-rather-than-uniformly.md) — contrasts: shows that zero time-based recency decay on design notes does not rule out capability-driven obsolescence across model upgrades
+- [Discriminating examples may outlast principles across upgrades](./discriminating-examples-may-outlast-principles-across-upgrades.md) — contrasts: conjectures that preserved search work in discriminating examples can outlast standalone abstract principles across upgrades

@@ -16,3 +16,4 @@ That distinction is a reason to test what a better critic can do, not evidence t
 Relevant Notes:
 
 - [Scaling absorbs scaffolding at fixed task difficulty, not at the deployment frontier](../theory/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md) — see-also: distinguishes retiring a check on a familiar task from needing help on a harder one.
+- [Model upgrades obsolete notes by function rather than uniformly](../theory/model-upgrades-obsolete-notes-by-function-rather-than-uniformly.md) — see-also: generalizes this contrast between fixed-mistake checklists and open-ended criticism across KB note functions.
