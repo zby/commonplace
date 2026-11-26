@@ -55,6 +55,8 @@ commonplace-x-snapshot = "commonplace.cli.x_snapshot:main"
 dev = ["properdocs", "pytest", "ruff"]
 
 [tool.uv]
+# Keep the checkout's uv cache writable in workspace sandboxes.
+cache-dir = ".uv-cache"
 # Pin the resolution window here so uv.lock does not depend on each machine's user-level uv config.
 exclude-newer = "7 days"
 # Workjig is released alongside Commonplace, so its releases enter the lock without waiting out the window.
