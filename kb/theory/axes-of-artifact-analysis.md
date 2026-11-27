@@ -44,7 +44,7 @@ The natural-language/symbolic boundary is the one [codification](./definitions/c
 
 Storage substrate records where retained state persists: repo files, database rows, service-managed objects, graph stores, vector stores with attached records, prompt registries, runtime configuration, audit logs, or model-artifact stores. Substrate is operationally important because it determines permissions, deletion, versioning, rollback, deployment, and latency.
 
-Substrate is not representational form. A repository may contain natural-language workflows, symbolic validators, generated prompt views, route tables, and pointers to checkpoints. A vector store may package natural-language records together with distributed-parametric embeddings and ranking behavior. [Cognee](../agent-memory-systems/reviews/cognee.md) keeps natural-language records in a database-backed poly-store; the substrate changed, the natural-language form did not.
+Substrate is not representational form. A repository may contain natural-language workflows, symbolic validators, generated prompt views, route tables, and pointers to checkpoints. A vector store may package natural-language records together with distributed-parametric embeddings and ranking behavior. [Cognee](../agentic-system-analyses/retained/topoteretes--cognee/memory.md#mem-obj-graph-content) stores document chunks and entity descriptions in a graph, with indexed copies in vector storage. Their text remains natural language when supplied to a model.
 
 ## Lineage
 
@@ -123,5 +123,5 @@ Relevant Notes:
 - [Canonical files may defer a shared schema while database authority remains a separate commitment](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) - sharpens: centralized-schema timing, storage substrate, lineage, and authority are separate decisions
 - [inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) - grounds: readable scripts and other inspectable artifacts support review without requiring a human reviewer; symbolic membership alone does not ensure that inspection route
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) - contrasts: AgeMem is a distributed-parametric policy case that makes form and authority visible
-- [Cognee](../agent-memory-systems/reviews/cognee.md) - counterexample: database-backed natural-language artifacts show that files are not the only substrate
+- [Cognee](../agentic-system-analyses/retained/topoteretes--cognee/memory.md#mem-obj-graph-content) - counterexample: database-backed natural-language artifacts show that files are not the only substrate
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) - grounds: Simon's capacity-change test catches both advice-like and high-authority uses

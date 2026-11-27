@@ -43,7 +43,7 @@ Across several systems, the shared move is compression at the execution boundary
 
 - Sub-agents should expose only return values across frames, not internal conversations ([scoping note](./llm-context-is-composed-without-scoping.md))
 - When the caller does judgment-heavy selection before dispatch, the callee need not inherit the caller's search trace ([ad-hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md))
-- [Spacebot](../agent-memory-systems/reviews/spacebot.md) branches return only a scrubbed conclusion
+- [Spacebot](../agentic-system-analyses/retained/spacedriveapp--spacebot/runtime.md) branches start with a copy of channel history but return a conclusion, not their private transcript
 - [Slate](https://randomlabs.ai/blog/slate) workers return compressed episodes rather than full tactical traces
 - [Conversation vs. prompt refinement](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) is a local case: conversation preserves the trace in-band, refinement compresses it into a cleaner handoff artifact, and forking preserves a selected trace prefix for multiple children
 
@@ -82,7 +82,7 @@ Relevant Notes:
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: execution-boundary compression is selection plus reshaping targeted at the next stage's needs
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: return artifact is a design dimension, and this note argues traces should usually not be that artifact
 - [codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — tension: compressed trace artifacts may preserve more reusable learning signal than narrow result artifacts, even when they are less minimal as interfaces
-- [Spacebot](../agent-memory-systems/reviews/spacebot.md) — exemplifies: branches return scrubbed conclusions rather than full reasoning traces
+- [Spacebot](../agentic-system-analyses/retained/spacedriveapp--spacebot/runtime.md) — exemplifies: copying history into a branch does not require merging that branch’s transcript back into the channel
 - [Ingest: Slate: Moving Beyond ReAct and RLM](https://randomlabs.ai/blog/slate) — exemplifies: episodes are compressed return artifacts, not tactical transcripts
 
 Abstracted into:
