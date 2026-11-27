@@ -144,6 +144,9 @@ def test_complete_route_installs_frozen_environment_offline(command_origin, caps
     git(origin, "branch", "-M", "main")
     monkeypatch.chdir(origin)
     monkeypatch.setattr(preparation, "_install", PRODUCTION_INSTALL)
+    # Reuse the checkout's populated cache, not an empty worktree-relative cache.
+    cache_dir = subprocess.check_output(["uv", "cache", "dir"], cwd=ROOT, text=True).strip()
+    monkeypatch.setenv("UV_CACHE_DIR", str((ROOT / cache_dir).resolve()))
     monkeypatch.setenv("UV_OFFLINE", "1")
     scenario.write_text(json.dumps({"disposition": "blocked", "expected": {"boundary": 1}}))
     code, record, err = invoke(capsys, "analyse", IDENTITY, "--state", str(tmp_path / "real-install-controller"))
