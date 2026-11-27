@@ -6,7 +6,13 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Cross-harness project handoffs](./project-message-board/README.md) — posed 2026-11-27: test how tasks find pending decisions and reconsider blocked actions without assuming a shared board.
+
 - [Remote KB access via GitHub and the rendered site](./remote-kb-access/README.md) — posed 2026-11-26: diagnose and improve how external agents and human readers consult Commonplace through GitHub or `https://zby.github.io/commonplace/` without installing or cloning it.
+
+- [Note extraction trials](./note-extraction-trials/README.md) — compare historical note extractions with and without the experimental instruction.
+
+- [Experimental mutations](./experimental-mutations/README.md) — try opt-in changes to agent instructions before adopting or discarding them.
 
 - [Tag maintenance and collection scope](./tag-maintenance-and-collection-scope/README.md) — posed 2026-11-23: repair and run the tag audit, establish routine source tagging, and decide which collections each tag search should cover.
 
