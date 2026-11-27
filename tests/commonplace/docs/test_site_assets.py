@@ -56,3 +56,21 @@ def test_markdown_companions_follow_published_files(tmp_path: Path) -> None:
     assert not (site / "private.md").exists()
     assert not (site / "draft.md").exists()
     assert (site / "llms.txt").read_text() == "[Commonplace](https://example.org/project/index.md)\n"
+
+
+def test_llms_txt_lists_consultation_page_when_published(tmp_path: Path) -> None:
+    site = tmp_path / "site"
+    config = {"site_dir": str(site), "site_url": "https://example.org/project/"}
+    (tmp_path / "index.md").write_text("# Home\n", encoding="utf-8")
+    (tmp_path / "consult.md").write_text("# Consult\n", encoding="utf-8")
+    files = Files([
+        File("index.md", str(tmp_path), str(site), False),
+        File("consult.md", str(tmp_path), str(site), False),
+    ])
+
+    properdocs_site_assets.on_env(None, config, files)
+
+    assert (site / "llms.txt").read_text() == (
+        "[Commonplace](https://example.org/project/index.md)\n"
+        "[Consulting Commonplace for another agentic system](https://example.org/project/consult.md)\n"
+    )

@@ -55,6 +55,11 @@ def on_env(env, config, files):
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(page.content_bytes)
 
-    landing = config["site_url"].rstrip("/") + "/index.md"
-    (site / "llms.txt").write_text(f"[Commonplace]({landing})\n", encoding="utf-8")
+    base = config["site_url"].rstrip("/")
+    lines = [f"[Commonplace]({base}/index.md)"]
+    if (site / "consult.md").is_file():
+        lines.append(
+            f"[Consulting Commonplace for another agentic system]({base}/consult.md)"
+        )
+    (site / "llms.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return env

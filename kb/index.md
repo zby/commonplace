@@ -33,6 +33,7 @@ Commonplace packages the methodology running this site as an open-source tool fo
 
 ### Browse the KB
 
+- **[Consulting Commonplace for another system](./consult.md)** — start here if you (or an agent) are looking for transferable design advice, diagnostic lenses, or real-system comparisons for a separate project.
 - **[Topics (tags index)](./tags/README.md)** — the main access path for browsing the KB by topic; each tag head introduces the area, recommends where to start, and links to the complete membership list grouped by collection.
 - **[Theory questions](./theory/questions/README.md)** — recurring research questions treated as problem-first starting points beside individual claims.
 - **[Articles](./articles/README.md)** — standalone technical articles, drafts, and talks.
@@ -44,5 +45,5 @@ Pages under [`work/`](./work/README.md) record investigations. If you find a pro
 
 Commonplace is open source. Two ways to put it to work:
 
-- **Point your agent at this site** (`https://zby.github.io/commonplace/`) or the [GitHub repository](https://github.com/zby/commonplace) when designing agentic systems, context engineering, or memory architecture, so it can draw on the accumulated methodology directly without installing anything.
+- **Point your agent at [Consulting Commonplace](./consult.md)** (`https://zby.github.io/commonplace/consult.html`) or the [GitHub repository](https://github.com/zby/commonplace) when designing agentic systems, context engineering, or memory architecture, so it can draw on the accumulated methodology directly without installing anything.
 - **Install `llm-commonplace` in a project** to get the types, conventions, skills, validators, and commands for your own agent-operated knowledge base: see the [GitHub README](https://github.com/zby/commonplace) and [INSTALL.md](https://github.com/zby/commonplace/blob/main/INSTALL.md) for setup, [Getting started](./reference/getting-started.md) for a first worked session, and [Reference](./reference/README.md) or [installation architecture](./reference/architecture.md) for how the system fits together.
