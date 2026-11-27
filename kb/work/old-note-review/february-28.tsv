@@ -4,11 +4,11 @@ kb/notes/a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md	traced-
 kb/notes/agentic-systems-are-probabilistic-programs.md	traced-and-triaged	kb/theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md
 kb/notes/agentic-systems-learn-through-three-distinct-mechanisms.md	previously-retired	—
 kb/notes/agents-navigate-by-deciding-what-to-read-next.md	traced-and-triaged	kb/theory/agents-navigate-by-deciding-what-to-read-next.md
-kb/notes/agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md	untraced	—
-kb/notes/agent-statelessness-means-harness-should-inject-context-automatically.md	untraced	—
-kb/notes/alexander-patterns-and-knowledge-system-design.md	untraced	—
-kb/notes/automated-tests-for-text.md	untraced	—
-kb/notes/automating-kb-learning-is-an-open-problem.md	untraced	—
+kb/notes/agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md	traced-and-triaged	kb/theory/agent-statelessness-makes-routing-architectural-not-learned.md
+kb/notes/agent-statelessness-means-harness-should-inject-context-automatically.md	traced-and-triaged	kb/theory/agent-statelessness-means-the-context-engine-should-inject-context.md
+kb/notes/alexander-patterns-and-knowledge-system-design.md	traced-and-triaged	kb/theory/alexander-patterns-and-knowledge-system-design.md
+kb/notes/automated-tests-for-text.md	traced-and-triaged	kb/theory/automated-tests-for-text.md
+kb/notes/automating-kb-learning-is-an-open-problem.md	traced-and-triaged	kb/theory/questions/what-gaps-remain-in-our-learning-loop.md
 kb/notes/backlinks.md	untraced	—
 kb/notes/bitter-lesson-boundary.md	untraced	—
 kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md	untraced	—
