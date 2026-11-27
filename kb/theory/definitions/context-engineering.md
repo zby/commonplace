@@ -29,7 +29,7 @@ a provisional hypothesis becomes an evolving version of this lens.
 
 **Scoping** — isolating what each consumer sees. [Sub-agents as lexically scoped frames](../llm-context-is-composed-without-scoping.md) is the main local example: flat context has no scope, so architecture must impose it.
 
-**Maintenance** — keeping loaded context healthy over time. Compaction, observation masking, and the [workshop layer's](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) holistic-rewrite discipline prevent accumulated debris from [degrading reasoning](../context-efficiency-is-the-central-design-concern-in-agent-systems.md).
+**Maintenance** — keeping context useful as work proceeds. Compaction and observation masking limit what carries forward. When a reader needs the whole picture, [refreshing one coherent account](../evolving-understanding-needs-holistic-rewrite-not-composition.md) can spare them the work of reconciling outdated fragments.
 
 Reshaping recorded knowledge for a specific task and context budget — producing adapted or derived views, summaries, and handoff artifacts — is the main operation these components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery as a conditional batched select/call loop where symbolic non-call execution between barriers drives routing, loading, and scoping for each bounded LLM call.
 
@@ -74,5 +74,5 @@ Relevant Notes:
 - [frontloading spares execution context](../frontloading-spares-execution-context.md) — extends: interface and instruction design can move interpretive cost out of the live context window
 - [legal drafting solves the same problem as context engineering](../legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's centuries of methodology for the same problem
 - [in-context learning presupposes context engineering](../in-context-learning-presupposes-context-engineering.md) — extends: in-context learning only works when context engineering has selected the right knowledge; this makes context engineering a prerequisite, not just an optimization
-- [a functioning KB needs a workshop layer not just a library](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — extends: knowledge lifecycle and artifact shape are upstream determinants of what later becomes cheap to load
+- [Temporary work needs to be distinguishable from lasting references](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — extends: a relevant working copy can still be the wrong source to load for a later task.
 - [Agent-runtime analysis should separate scheduling, context assembly, and external state](../agent-runtime-analysis-should-separate-scheduling-context-state.md) — component view: per-call context assembly is the operational core inside the broader architectural discipline named here

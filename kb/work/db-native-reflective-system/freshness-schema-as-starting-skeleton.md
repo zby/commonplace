@@ -47,7 +47,7 @@ The pre-reframe note's second and third capabilities, both currently unmet by SQ
 
 ## Gap 5 — workshop/task lifecycle state
 
-Not a database problem specifically — [a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) already documents that Commonplace's task/workshop layer has *no* schema today even in the file-based system (no type, no validation, ad-hoc templates). But it's worth naming here because a DB-native design gets it closer to free: state machines, directional dependencies (`blocks`/`blocked-by`), and expiration are exactly the shape a relational schema handles well, and the note's own open question — "would validated state machines help agents, or just add ceremony?" — is more answerable once the storage substrate stops being the limiting factor. A DB-native design should include a `workshop_items` table (state, valid-transition enum, dependency edges to other items) as a genuine improvement over the file-based status quo, not just parity with it.
+Version history tells us what changed, not which unfinished tasks block others. One option for the proposed database is a `workshop_items` table for task state, with allowed transitions and dependency edges. The design question is which transitions need enforcement. [Keeping temporary work distinct from lasting references](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) does not by itself require a table.
 
 ## Gap 6 — reflective-system completeness
 

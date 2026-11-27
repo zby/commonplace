@@ -13,7 +13,7 @@ The KB keeps [authored files canonical while meanings and write rules remain uns
 
 **Scale without tooling.** A `notes/` directory with 30 files is browsable. With 300, it isn't. Splitting into `notes/`, `claw-design/`, `sources/`, `adr/` keeps each directory in the browsable range. This isn't infinite — at thousands of notes you'd need deeper nesting or actual search infrastructure — but it extends the file-substrate sweet spot considerably.
 
-**Local conventions per subsystem.** Some directories benefit from their own rules that don't need to generalise. Tasks have lifecycle subdirectories (`backlog/`, `active/`, `completed/`). Sources have an ingest pipeline. These are what the [workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) note calls "small, self-contained subsystems with their own conventions." Directories are natural boundaries for them.
+**Local conventions per subsystem.** A task queue can use folders for pending and completed tasks without imposing those states on every document. A working folder can also [keep temporary files out of suggestions for lasting references](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md). In both cases the path tells a reader or tool where the local rule applies.
 
 **Different metabolic rates.** Sources churn fast (new ones arrive, get ingested, some get pruned). ADRs are nearly permanent. Notes are somewhere in between. Separating by metabolic rate lets you apply different lifecycle expectations — a 200-file `sources/` directory is normal; 200 files in `adr/` would signal something wrong.
 
@@ -58,6 +58,5 @@ For now, the right default is: be reluctant to create new top-level directories.
 Relevant Notes:
 
 - [Canonical files may defer a shared schema while database authority remains a separate commitment](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — supplies the local canonical-file premise whose human navigation directories extend; it does not settle the substrate comparison
-- [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — local conventions per directory are proto-workshop subsystems
 - [collections and types](../reference/collections-and-types.md) — the path-valued type system that operates independently of arbitrary content subdirectories
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — routing decisions are part of the context loading problem

@@ -1,93 +1,14 @@
 ---
-description: "Explains workshop as the temporal counterpart to a permanent knowledge library: in-flight state, dependencies, expiry, and promotion bridges, with tasks as an early prototype"
+description: "A working copy can be accurate and relevant without being a good link target. Distinguishing it from a lasting reference lets the team discard it when the work ends."
 type: types/note.md
 traits: [title-as-claim]
 tags: []
 ---
 
-# A functioning knowledge base needs a workshop layer, not just a library
+# Temporary work needs to be distinguishable from lasting references
 
-The KB's [current type system](../reference/collections-and-types.md) includes durable shapes such as `note`, `structured-claim`, `definition`, and `adr` (architecture decision record: a design decision and its rationale). Documents can follow a structural-refinement path: a text gets promoted to a note, a note can adopt the structured-claim contract, and design work can resolve into an ADR. The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) animates this path: capture with zero friction, then refine in place. These types describe artifact contracts, not one global maturity or consumed-value lifecycle.
+A team choosing a supplier gathers price lists, drafts a comparison, and records questions it still needs to answer. These files help the team make one decision. That does not make them good places to send future readers. A copied price list may be accurate today, yet nobody has agreed to keep it current.
 
-This works well for **durable knowledge**. But a functioning knowledge base also needs to support **work in motion**. These documents have lifecycles, change state, and interact with each other. They eventually produce durable artifacts in the KB or actions on the outside world (drafted emails, responses to messages, code changes), or simply get discarded. The task system (`tasks/`) is the clearest example: it has state machines (from backlog through active to completed), directional dependencies (blocks/blocked-by), and expiration (completed tasks become irrelevant). None of this maps onto the existing type system.
+The distinction matters when people or tools search widely for related documents. A purchasing guide might link to the copied list precisely because it is relevant. Now the team cannot discard the copy without breaking the guide, and keeping it risks giving readers stale prices. Working files can draw freely on lasting references without becoming references themselves.
 
-## The library/workshop distinction
-
-**Library documents** accumulate value over time. A note becomes more useful as it gets connected, refined, and referenced. Deletion is a signal something went wrong.
-
-**Workshop documents** consume value over time. A task becomes less useful as it progresses — its value is transferred into code, decisions, or actions on the world. Completion and archival are success states.
-
-| Property | Library | Workshop |
-|----------|---------|----------|
-| Value trajectory | Accumulates | Consumed |
-| Lifecycle signal | Usually prose, links, placement, or a specialized type-local field | State machine with valid transitions |
-| Relationships | Both symmetric and directional (related, extends, contradicts) | Directional (blocks, depends-on, produces) |
-| Time sensitivity | Ages slowly, staleness is a bug | Urgency and staleness are features |
-| Success state | Referenced and connected | Completed or discarded |
-| End state | Remains in KB | Archived or deleted |
-
-## Scope
-
-The distinction is useful but not exhaustive. Some documents straddle both layers — a living checklist or runbook is used repeatedly during work (consumed like a workshop document) but also refined in place over time (accumulated like a library document). Task templates that pull in library content are another hybrid. The table captures the poles; many real documents sit somewhere between them.
-
-## Temporal document types beyond tasks
-
-Tasks aren't the only workshop documents. A knowledge base that supports real workflows would likely need:
-
-- **Decision threads** — the process that produces an ADR. Currently invisible: an ADR appears fully formed, but the discussion, alternatives weighed, and context gathered along the way are lost. Illustrative stages: proposed, discussing, then decided, producing an ADR.
-- **Experiments/probes** — hypothesis-driven work. "Does X actually improve Y?" Has a result that changes what happens next. Illustrative stages: hypothesis, running, then concluded, producing a note or nothing.
-- **Queues/inboxes** — items waiting for processing. Sources awaiting ingestion already work this way informally (files sit in `sources/` until someone runs `/ingest`). Illustrative stages: unprocessed, triaged, then handled.
-- **Reviews (periodic)** — the recurring tasks already model this. Illustrative stages: due, in progress, then reported, with recurrence.
-- **Collaborative threads** — multi-turn exchanges (human-agent or agent-agent) whose purpose is to reach a decision or produce an artifact, not to record what happened. Especially relevant in an agent-operated KB. Illustrative stages: opened, active, then resolved, producing a note, ADR, or action.
-- **Session logs** — what happened in a work session, what was learned, what's left unfinished. Currently not captured at all.
-
-## Bridges between the layers
-
-The relationship between library and workshop is **bidirectional**, and a useful decomposition distinguishes two bridge directions:
-
-**Extraction bridges** move durable insights out of temporal documents. An ADR is what's left after a decision thread concludes; a note might be what's extracted when a task completes; a source review is what a queue item becomes after processing. At the deterministic end, this is [spec mining](./spec-mining-as-codification.md): extracting rules and verifiers from observed workshop behavior. But extraction is broader — it also produces non-deterministic library artifacts like notes, ADR drafts, and judgment precedents. Concrete mechanisms might include:
-- A `/codify` operation that extracts learnings from a completed task into a note
-- Decision threads that automatically produce ADR drafts when they reach the "decided" state
-- Experiment conclusions that prompt for note creation
-- Session logs that flag insights for promotion
-
-**Composition bridges** make permanent knowledge available to temporal processes. A task's instructions might include standard prompts from the library; a decision thread references existing notes as evidence; an experiment's hypothesis builds on established claims. Concrete mechanisms might include:
-- Task templates that pull in relevant library content (standard prompts, established constraints)
-- Decision threads that automatically surface related notes and prior decisions
-- Experiments that reference the claims they're testing
-
-## Current state of the gap
-
-The task system is the only workshop-like subsystem, and it lives entirely outside the KB:
-
-- No document type in the classification hierarchy
-- No frontmatter schema (uses ad-hoc templates)
-- No `/validate` coverage
-- No `/connect` awareness
-- No backlink tracking between tasks and notes
-- Indexed for search, but that's the only integration
-
-This is fine for now — the system is primarily a knowledge base and the task system works adequately with its own conventions. But this note exists to mark the gap: when we want to build a knowledge base that supports real workflows (not just knowledge management), the workshop layer is where most of the new design work will be needed.
-
-## Open questions
-
-- Should workshop and library share a type system, or remain parallel hierarchies? The intuition is that we'll have **one big knowledge base and many smaller temporal subsystems**. Each temporal subsystem (tasks, decision threads, experiments, queues) has its own state machine, its own relationships, its own lifecycle — trying to unify them under one type hierarchy would be forced. What they share is that they all **depend on the library** (reference notes, include prompts, use established claims to make decisions), so they need to link into the KB. But their internal structure is diverse enough that local conventions per subsystem are likely the right default as more temporal types appear — what [why directories despite their costs](./why-directories-despite-their-costs.md) already argues for tasks.
-- How much formalism do workshop documents need? Tasks work with ad-hoc markdown templates. Would validated state machines help agents, or just add ceremony?
-- Is the three-space model ([knowledge / self / operational](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md)) the right framing? Workshop documents map roughly to the "operational space" — high churn, consolidation, graduation to knowledge. But the mapping to Endel Tulving's memory taxonomy from cognitive science may be decorative rather than load-bearing.
-- What's the minimum viable bridge? Probably `/codify` on task completion — extract learnings into a note, link back to the archived task for provenance.
-- Claws are agents that generally run on personal hardware, communicate through messaging, and act on instructions or scheduled tasks. For those retaining domain, user, or project context, [Claw learning is broader than retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) argues for action-guiding retained material (preferences, procedures, precedents, voice guides), not necessarily new document types. Workshop processes could produce and use those artifacts — should the workshop layer be designed with its contribution to action capacity as the success metric rather than retrieval?
-- Skills already have implicit [type signatures](./instructions-are-typed-callables.md) (`/ingest: source → source-review`). Could extraction bridges be formalised as skills with workshop-input, library-output signatures?
-
----
-
-Relevant Notes:
-
-- [Three-space agent memory maps to Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — contrasts: the operational space maps to the workshop layer; different metabolic rates for different memory types
-- [Why directories despite their costs](./why-directories-despite-their-costs.md) — extends: acknowledges tasks as a parallel subsystem; the question is whether more temporal types invalidate the "small subsystem" justification
-- [Collections and types](../reference/collections-and-types.md) — see-also: the durable artifact-contract model whose lifecycle boundary this note extends
-- [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — exemplifies: the extraction bridge is a specific instance of the broader automation challenge
-- [The wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — contrasts: refinement in place is specifically a library pattern; workshop documents don't refine toward permanence, they consume themselves
-- [Claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — extends: workshop processes could produce and use action-guiding retained material; this is a proposed transfer to workshop design, not a requirement for new document types
-- [Spec mining is codification's operational mechanism](./spec-mining-as-codification.md) — mechanism: the deterministic subset of extraction bridges mines repeated workshop behavior into rules and verifiers
-- [Constraining](./definitions/constraining.md) — defined-in: extraction bridges constrain an agent consuming their output only when retained choices narrow or rank its valid readings or behaviors, or settle a disputed validity boundary; retention alone is insufficient
-- [A compact, refreshable whole-picture narrative can replace infeasible fragment reconciliation](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — evidenced-by: bounds the workshop example to narratives serving current action during active evolution; the target also covers stable whole-picture knowledge
+A separate working folder is one option. A shared system can instead mark temporary files and exclude them from suggested links in lasting documents. Either way, the team can keep track of unfinished work on its own terms. When the work ends, the guide can point to the supplier for current prices, the decision record can preserve the dated figures that mattered, and the remaining files can be archived or discarded.

@@ -1,9 +1,9 @@
 historical_path	coverage	located_path_or_successor
-kb/notes/001-generate-topic-links-from-frontmatter.md	untraced	—
-kb/notes/a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md	untraced	—
-kb/notes/agentic-systems-are-probabilistic-programs.md	untraced	—
-kb/notes/agentic-systems-learn-through-three-distinct-mechanisms.md	untraced	—
-kb/notes/agents-navigate-by-deciding-what-to-read-next.md	untraced	—
+kb/notes/001-generate-topic-links-from-frontmatter.md	deleted-historical-adr	—
+kb/notes/a-functioning-claw-needs-a-workshop-layer-not-just-a-library.md	traced-and-triaged	kb/theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md
+kb/notes/agentic-systems-are-probabilistic-programs.md	traced-and-triaged	kb/theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md
+kb/notes/agentic-systems-learn-through-three-distinct-mechanisms.md	previously-retired	—
+kb/notes/agents-navigate-by-deciding-what-to-read-next.md	traced-and-triaged	kb/theory/agents-navigate-by-deciding-what-to-read-next.md
 kb/notes/agent-statelessness-makes-skill-layers-architectural-not-pedagogical.md	untraced	—
 kb/notes/agent-statelessness-means-harness-should-inject-context-automatically.md	untraced	—
 kb/notes/alexander-patterns-and-knowledge-system-design.md	untraced	—

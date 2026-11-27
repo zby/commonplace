@@ -1,5 +1,5 @@
 ---
-description: The library's purpose is to produce notes that can be co-loaded for combinatorial discovery — short atomic notes are a consequence of this goal; longer synthesized artifacts belong in workshops or derived instructions
+description: "Short notes let readers combine claims for new questions. A longer synthesis earns its place when readers need the reasoning as a whole."
 type: types/note.md
 tags: [learning-theory, discovery, context-engineering, document-system]
 ---
@@ -28,7 +28,7 @@ What's specific to our context is the bounded-context motivation: atomicity here
 
 **One claim, one note.** The title states the claim, the body supports it, the footer connects it. If a note has multiple `##` sections making independent claims, that's a signal to decompose.
 
-**Longer synthesized views belong in workshops or are generated.** Theory overviews, campaign understanding, multi-note summaries — these are *consumers* of library notes, not library notes themselves. They live in `kb/work/` as workshop artifacts with lifecycles, or are generated (like indexes). When the purpose is served, the workshop artifact expires but the library notes remain available for recombination.
+**A temporary synthesis can serve one task.** A campaign summary can bring several notes together for a decision. Once the decision is made, the summary can expire without taking its sources with it.
 
 ## Evidence
 
@@ -41,9 +41,9 @@ The structure emerged from the *juxtaposition* of independent perspectives. A si
 
 ## Tension with argument coherence
 
-Some arguments genuinely need space — the reasoning from premises to conclusion loses force when atomized. [Evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — when a consumer needs the whole picture, reconciling into a single narrative beats composing fragments.
+Some arguments genuinely need space: the reasoning from premises to conclusion loses force when split apart. When readers cannot reconcile the pieces within their available context, a [compact account kept current](./evolving-understanding-needs-holistic-rewrite-not-composition.md) lets them use the argument as a whole.
 
-The resolution: coherent narratives are workshop artifacts, not library artifacts. The library stores premises and conclusions as separate composable notes. The workshop assembles them into narratives for a specific purpose. When the narrative expires, the atomic notes remain.
+Length does not decide where a synthesis belongs. A briefing assembled for one decision is [temporary work](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md). An explanation worth maintaining for future readers can be a lasting reference, even when its argument takes several pages.
 
 ---
 
@@ -52,7 +52,6 @@ Relevant Notes:
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: bounded context makes co-loading capacity the scarce resource
 - [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — grounds: recognition is the expensive step, and it requires co-presence of multiple particulars
 - [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — extends: composability as one of three memory properties; short notes compose better
-- [a functioning KB needs a workshop layer not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: workshops are where longer synthesized views live
-- [evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — tension: some consumers need narrative coherence; resolved by placing narratives in workshops
+- [A compact, refreshable whole-picture narrative can replace infeasible fragment reconciliation](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — tension: when readers need a coherent whole, separate notes can make each reader repeat the same reconciliation work.
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: title-level scanning for breadth, full loading for depth
 - [A note is an atomic step relative to the check that reads it](./a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — contrasts: a second, independent size bound — one checkable inference sized to the checker's pass — that a single-claim note over many sources can fail
