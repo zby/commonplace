@@ -14,12 +14,12 @@ This tag gathers external systems that learn from their own agent traces: memory
 
 ## Representative systems
 
-- [HyperAgents](../agent-memory-systems/reviews/hyperagents.md) — benchmark feedback promotes executable changes to the harness itself
-- [auto-harness](../agent-memory-systems/reviews/auto-harness.md) — a benchmark-driven loop mines training traces and evolves the agent program
-- [Dynamic Cheatsheet](../agent-memory-systems/reviews/dynamic-cheatsheet.md) — test-time prompt memory curated by the model from its own solutions
-- [REM](../agent-memory-systems/reviews/REM.md) — episodic memory service built from trace-learning episodes with vector and graph retrieval
-- [Synapptic](../agent-memory-systems/reviews/synapptic.md) — mines transcripts into weighted user profiles
-- [memwiki](../agent-memory-systems/reviews/memwiki.md) — agent-maintained trace notes in a hot-cache wiki
+- [HyperAgents](../agentic-system-analyses/retained/facebookresearch--hyperagents/runtime.md#rt-rte-parent-selection) — scores help select a parent for the next executable revision; they do not decide whether a generation enters the archive
+- [auto-harness](../agentic-system-analyses/retained/neosigmaai--auto-harness/memory.md) — a coding agent gets diagnostic traces to guide program revisions; the analysis distinguishes requested edits from demonstrated improvements
+- [Dynamic Cheatsheet](../agentic-system-analyses/retained/suzgunmirac--dynamic-cheatsheet/memory.md) — the model curates a reference sheet from previous solutions; the caller supplies it on later queries
+- [REM](../agentic-system-analyses/retained/satyammistari--rem/memory.md) — vectors and temporal links select stored episodes; extracting a candidate fact does not mean it was saved
+- [Synapptic](../agentic-system-analyses/retained/appcuarium--synapptic/memory.md) — high-weight observations from earlier transcripts enter the prompt that extracts new observations
+- [memwiki](../agentic-system-analyses/retained/hereisswapnil--memwiki/memory.md) — the agent maintains Markdown and is instructed to read the hot cache before opening domain pages
 
 ## Related Tags
 

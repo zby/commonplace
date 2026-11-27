@@ -17,7 +17,7 @@ Every behavior-changing derivative needs source-of-truth rules. A library-derive
 
 This applies more strongly to high-authority behavior-changing derivatives than to ordinary summaries because drift can change behavior. [Always-loaded context mechanisms in agent harnesses](../always-loaded-context-mechanisms-in-agent-harnesses.md) shows that behavior-shaping context can live in many places: prompts, files, tool descriptions, capabilities, configs, skills, and memory. The more surfaces exist, the more explicit the lineage and authority model must be.
 
-[Synapptic](../../agent-memory-systems/reviews/synapptic.md) provides a concrete compiled-view pattern: the YAML profile is the durable source, while Claude memory, Cursor rules, Copilot instructions, `AGENTS.md`, and other assistant files are render targets with target-specific filtering. That is closer to the right lineage and authority model than treating every emitted prompt file as an independent memory.
+[Synapptic](../../agentic-system-analyses/retained/appcuarium--synapptic/runtime.md#rt-clm-target-filtering) illustrates how a compiled view can drift. It synthesizes instruction text from a profile and publishes saved text to assistant files. Its publication step computes how many entries a target-model filter would exclude, but does not regenerate the text. Changing a verdict in the profile therefore need not change what the assistant reads.
 
 ## Evaluation Questions
 

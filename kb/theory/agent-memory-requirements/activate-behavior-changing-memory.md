@@ -31,7 +31,7 @@ Neither candidate is a demonstrated activation technique. The first targets deli
 
 A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-authority behavior-shaping material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v3) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.
 
-[Synapptic](../../agent-memory-systems/reviews/synapptic.md) is the clearest reviewed system that treats activation as something to test rather than assume. It extracts behavioral guards from Claude Code sessions, runs WITH/WITHOUT ablations with an LLM judge, records per-model verdicts, and excludes guards marked redundant or harmful before compiling them into assistant-facing memory surfaces.
+Synapptic [tests responses with and without profile instructions](../../agentic-system-analyses/retained/appcuarium--synapptic/epistemic.md#epi-rte-benchmark-judgment) and records model-specific verdicts. Its default batch comparison tests a whole profile, not the contribution of each guard. Nor does an exclusion verdict by itself remove a guard from [text already published to an assistant](../../agentic-system-analyses/retained/appcuarium--synapptic/runtime.md#rt-clm-target-filtering). Test what the assistant actually receives.
 
 ## Evaluation Questions
 

@@ -53,7 +53,7 @@ Memory is always-loaded contextual state that accumulates across sessions — us
 - **Fully agent-managed** (Letta/MemGPT): the agent autonomously decides what to store, update, and delete using self-edit tools
 - **External pipeline** (Pi Self-Learning): a separate process analyzes session traces and updates memory; the agent doesn't control the write policy
 
-Synapptic is the strongest reviewed example of the external-pipeline pattern taken all the way to compiled always-loaded surfaces. It extracts and scores a canonical YAML profile from Claude Code session traces, then renders filtered variants into Claude Code, Cursor, Copilot, Gemini, Codex, Windsurf, Cline, Aider, and Continue.dev memory files. The important distinction is authority: the durable learned state is the profile, while each assistant-specific file is a compiled view.
+Synapptic extracts a profile from Claude Code session traces and synthesizes instruction text for publication to assistant-specific files. Filtering at synthesis time can change that text. Merely computing a filtered entry count during publication does not: the publisher uses the saved text. The profile is the source, but the published file determines which instructions are available to the assistant.
 
 These represent different trust models for who curates always-loaded state. The boundaries are not sharp — users can also write memory entries directly (e.g., editing MEMORY.md by hand), making memory indistinguishable from system prompt content except by the expectation that it will also accumulate agent-written entries over time.
 
@@ -88,4 +88,4 @@ Relevant Notes:
 - [AGENTS.md should be organized as a control plane](./agents-md-should-be-organized-as-a-control-plane.md) — extends: internal organization of the system prompt file surface
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — grounds: the partial evaluation principle behind configuration injection
 - [Agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context.md) — extends: proposes an "on reference" layer within the loading hierarchy that would dynamically inject definitions, ADRs, and indexes alongside loaded documents
-- [Synapptic](../agent-memory-systems/reviews/synapptic.md) — exemplifies: one canonical trace-extracted profile compiled into multiple assistant-specific always-loaded files
+- [Synapptic](../agentic-system-analyses/retained/appcuarium--synapptic/runtime.md#rt-clm-target-filtering) — exemplifies: publishing instructions derived from one profile to assistant-specific files
