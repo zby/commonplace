@@ -15,6 +15,8 @@ A robust comparison ranks one version of a system above another only when every 
 - [An objection can show where to split a comparison](../theory/an-objection-can-show-where-to-split-a-comparison.md) — how to examine a disputed comparison
 - [Reversibility can favor a change by limiting future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md) — why a change that can be corrected may be kept while the comparison is open
 
+For a worked example, the [interval-weight ingest](../sources/mustajoki-interval-smart-swing.ingest.md) shows how to test a choice without fixing each criterion's weight. A rival can be eliminated if it loses throughout the permissible range. The [Choquet model ingest](../sources/angilella-ordinal-regression-smaa-choquet.ingest.md) distinguishes a preference that holds for every compatible model from a ranking that is merely frequent in a sample.
+
 ## Related Tags
 
 - [evaluation](./evaluation-README.md) — the parent area: how claims, changes and outputs are judged

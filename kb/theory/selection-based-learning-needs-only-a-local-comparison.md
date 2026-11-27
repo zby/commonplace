@@ -2,7 +2,7 @@
 description: "Costly search reaches only a few candidate changes, so selection-based learning needs only a comparison among the alternatives at hand; a value function is one convenient way to supply it, not a requirement"
 type: types/note.md
 traits: [title-as-claim]
-tags: [self-improving-systems, learning-theory, improvement-loop]
+tags: [self-improving-systems, learning-theory, improvement-loop, evaluation, robust-comparison]
 ---
 
 # Selection-based learning needs only a local comparison

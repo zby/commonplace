@@ -10,7 +10,7 @@ type: types/ingest-report.md
 snapshot_sha256: c2f4adc693860e4b892e1ea124d1e2139ec468f3a83e4a56a6ca2589b0e870b7
 occasion: "What can Commonplace conclude when a comparison leaves trade-off weights open?"
 domains: [multicriteria decision analysis, interval weight ratios, pairwise dominance]
-tags: [robust-comparison]
+tags: [evaluation, robust-comparison]
 ---
 
 # Ingest: Decision Support by Interval SMART/SWING

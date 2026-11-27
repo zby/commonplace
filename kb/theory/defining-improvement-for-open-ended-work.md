@@ -1,6 +1,7 @@
 ---
 description: "What a usable definition of improvement for open-ended work needs to handle, drawn from editor, release, dependency, KB, and refund cases, before proposing a working definition."
 type: types/note.md
+tags: [evaluation]
 ---
 
 # Defining Improvement for Open-Ended Work

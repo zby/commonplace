@@ -11,7 +11,7 @@ ingested: "2026-11-21"
 occasion: "When can many uncertain effects reverse an improvement judgment?"
 type: types/ingest-report.md
 domains: [robust optimization, budgeted uncertainty, constraint violation]
-tags: [robust-comparison]
+tags: [evaluation, robust-comparison]
 ---
 
 # Ingest: The Price of Robustness

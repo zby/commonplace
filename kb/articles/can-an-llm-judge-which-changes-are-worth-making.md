@@ -1,6 +1,7 @@
 ---
 description: "Empirical conjecture: an LLM may judge which changes are worth making in open-ended work under necessary preference as a working definition; traces packet vs. tool-use setups and a three-arm diagnostic test"
 type: articles/types/article.md
+tags: [evaluation, robust-comparison]
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:

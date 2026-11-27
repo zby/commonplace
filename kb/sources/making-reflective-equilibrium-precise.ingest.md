@@ -12,7 +12,7 @@ occasion: "How can revisions of judgments and principles settle, and how much de
 type: types/ingest-report.md
 learning_claims: true
 domains: [reflective-equilibrium, belief-revision, dialectical-structures]
-tags: [robust-comparison]
+tags: [evaluation, robust-comparison]
 ---
 
 # Ingest: Making Reflective Equilibrium Precise

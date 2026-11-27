@@ -10,7 +10,7 @@ ingested: "2026-11-21"
 occasion: "How can a comparison handle both stochastic outcomes and imprecise inputs?"
 type: types/ingest-report.md
 domains: [imprecise probability, possibility distributions, random sets, risk analysis]
-tags: [robust-comparison]
+tags: [evaluation]
 ---
 
 # Ingest: Joint Propagation of Probability and Possibility in Risk Analysis
