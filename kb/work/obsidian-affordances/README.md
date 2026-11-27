@@ -22,8 +22,8 @@ There is currently no `.obsidian/` directory, no `.canvas` files, and no `.base`
 
 ## Current grounding
 
-- [Napkin](../../agent-memory-systems/reviews/napkin.md) — strongest source for Obsidian-compatible agent memory affordances
-- [LACP](../../agent-memory-systems/reviews/lacp.md) — strongest source for Obsidian-centered local ops and memory automation
+- [Napkin](../../agentic-system-analyses/retained/michaelliv--napkin/memory.md) — separates vault overview, bounded search results, and full note reads
+- [LACP](../../agentic-system-analyses/retained/0xnyk--lacp/memory.md) — distinguishes what a hook supplies at startup from what a later tool call retrieves
 - [A functioning knowledge base needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — workshop framing for temporary design work and promotion boundaries
 - [Short composable notes maximize combinatorial discovery](../../theory/short-composable-notes-maximize-combinatorial-discovery.md) — reminder that longer synthesized views belong in workshops, not in the library
 - [The wikiwiki principle: lowest-friction capture, then progressive refinement in place](../../theory/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — useful contrast because Obsidian inherits stronger refinement-in-place assumptions than commonplace does
