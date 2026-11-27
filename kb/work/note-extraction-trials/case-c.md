@@ -1,0 +1,21 @@
+# Case C: Does starting from the citation change an audit extraction?
+
+2026-11-27. Compare the original instruction (C1) with its citation-first revision (C2), not with an unprompted baseline. One fresh project worker per condition. Both get the same pre-extraction audit, intended citing proposal and commission; the instruction and owned output path differ. No later note or other writer's draft is authorized. Input isolation is by prompt and fresh conversation, not sandbox.
+
+Before reading either draft: check whether its proposed citation isolates what the audit demonstrates, whether the note inadvertently settles the proposal's open choice between a fourth component and a qualifier, and whether the author identifies a usable contrast rather than merely hedging. A distinction already explicit in the proposal is not new reasoning. Preserve null results. Independent comparison without the condition key; one pair cannot identify a general effect.
+
+## Result: no material difference in the citation
+
+Both [C1, original](./drafts/C1.md), and [C2, citation first](./drafts/C2.md), distinguish which notes qualify for a check from which invocation triggers it. Removing a review gate’s trait restriction *would* expand the target; validating a tagged member *did* start triggering checks on its head after a validator change. Neither draft turns the need to describe applicability into a requirement for a fourth inventory field. C2 gives a useful example of a qualifier; C1's proposed citation says what the two cases differ in without relying on the term “target cohort.”
+
+The independent reviewer found both distinctions already in the pinned sources. In particular, the **citing proposal itself** already gives the cases and says that they do not decide between a fourth component and a qualifier. This was therefore a test of preserving a known boundary, not discovering a hidden one. The revision added no evident benefit or harm in this pair. Keep it opt-in; if trying again, choose a case where the parent's intended use is identifiable but the disputed inference is not already spelled out. Do not infer which drafting steps were performed from the final text.
+
+Writer sessions: C1 `01a21daa-283c-75e4-9daa-6563e8021949`, C2 `01a21daa-2850-726c-9be5-4ca70c00db17`. Independent reviewer (no condition key): `01a21daa-c1c4-74b1-978b-56f6977dc703`.
+
+## C1
+
+Extract one standalone note about applicability from the six-path audit for the proposal on decomposing behavioral authority. It should supply the narrowest useful premise the proposal can cite. Read the audit and the proposal from Git revision 2766774bf79fafbcde32d4f3204616bd635de14a using git show REV:PATH: kb/reports/retained/six-commonplace-paths-establish-broad-addressability-not-completeness.md and kb/notes/proposals/revise-behavioral-authority-decomposition.md. Also read and apply kb/work/note-extraction-trials/instruction-as-tested.md. Authorized substantive inputs are limited to those three files; do not inspect other workshop files, other versions, history, other drafts, network or related artifacts. No delegation. Write only kb/work/note-extraction-trials/drafts/C1.md, plain Markdown, with the note followed by the exact sentence the proposal could use to cite it. Do not include a process report or edit the parent. Verify completion or return any missing input.
+
+## C2
+
+Extract one standalone note about applicability from the six-path audit for the proposal on decomposing behavioral authority. It should supply the narrowest useful premise the proposal can cite. Read the audit and the proposal from Git revision 2766774bf79fafbcde32d4f3204616bd635de14a using git show REV:PATH: kb/reports/retained/six-commonplace-paths-establish-broad-addressability-not-completeness.md and kb/notes/proposals/revise-behavioral-authority-decomposition.md. Also read and apply kb/work/experimental-mutations/check-what-a-note-extraction-adds.md. Authorized substantive inputs are limited to those three files; do not inspect other workshop files, other versions, history, other drafts, network or related artifacts. No delegation. Write only kb/work/note-extraction-trials/drafts/C2.md, plain Markdown, with the note followed by the exact sentence the proposal could use to cite it. Do not include a process report or edit the parent. Verify completion or return any missing input.

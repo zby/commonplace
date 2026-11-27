@@ -2,7 +2,7 @@
 
 Operator commission, 2026-11-25: try the opt-in [note extraction instruction](../experimental-mutations/check-what-a-note-extraction-adds.md) on historical cases and report what changes. The deliverable is a paired comparison, not a library edit or adoption decision. Close after reporting; retain useful observations for the mutation workshop.
 
-Completed: [results and next candidate comparison](./results.md).
+Completed: [first paired trial](./results.md) and [fresh comparison of the citation-first revision](./case-c.md).
 
 ## Cases and assignments (fixed before launch)
 
