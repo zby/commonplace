@@ -37,6 +37,16 @@ def on_files(files, config):
     return files
 
 
+def on_page_content(html, page, **kwargs):
+    """Keep workshop status in the readable HTML body, not the source companion."""
+    if page.file.src_uri.startswith("work/"):
+        return (
+            "<p><strong>Workshop material.</strong> This page records an investigation. "
+            "A proposal here is not, by itself, an adopted Commonplace decision.</p>\n" + html
+        )
+    return html
+
+
 def on_env(env, config, files):
     """Publish source bytes after page generation and publication filtering."""
     site = Path(config["site_dir"])

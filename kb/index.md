@@ -38,6 +38,8 @@ Commonplace packages the methodology running this site as an open-source tool fo
 - **[Articles](./articles/README.md)** — standalone technical articles, drafts, and talks.
 - **[Reference](./reference/README.md)** — shipped architecture, contracts, CLI commands, and ADRs.
 
+Pages under [`work/`](./work/README.md) record investigations. If you find a proposal there, check the [reference documentation](./reference/README.md) before describing it as an adopted Commonplace decision.
+
 ### Use it yourself
 
 Commonplace is open source. Two ways to put it to work:

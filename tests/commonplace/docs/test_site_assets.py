@@ -1,4 +1,5 @@
 from pathlib import Path
+from types import SimpleNamespace
 
 import yaml
 from properdocs.structure.files import File, Files, InclusionLevel
@@ -21,6 +22,16 @@ def test_site_asset_hook_matches_properdocs_config() -> None:
     assert set(properdocs_site_assets.SITE_ASSETS) == configured_assets
     for asset in properdocs_site_assets.SITE_ASSETS:
         assert (properdocs_site_assets.ASSETS_DIR / asset).is_file()
+
+
+def test_workshop_status_precedes_html_content_only_in_work_tree() -> None:
+    body = "<h1>A design question</h1>"
+    for uri in ("work/README.md", "work/example/nested/question.md", "work/example/dir-index.md"):
+        result = properdocs_site_assets.on_page_content(body, SimpleNamespace(file=SimpleNamespace(src_uri=uri)))
+        assert result.index("Workshop material.") < result.index(body)
+        assert "not, by itself, an adopted Commonplace decision" in result
+    for uri in ("workflow-state/README.md", "theory/work/question.md", "index.md"):
+        assert properdocs_site_assets.on_page_content(body, SimpleNamespace(file=SimpleNamespace(src_uri=uri))) == body
 
 
 def test_markdown_companions_follow_published_files(tmp_path: Path) -> None:
