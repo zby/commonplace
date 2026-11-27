@@ -37,7 +37,7 @@ def on_files(files, config):
     return files
 
 
-def on_page_content(html, page, **kwargs):
+def on_page_content(html, page, **_kwargs):
     """Keep workshop status in the readable HTML body, not the source companion."""
     if page.file.src_uri.startswith("work/"):
         return (

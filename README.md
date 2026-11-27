@@ -36,9 +36,11 @@ See [INSTALL.md](./INSTALL.md) for the full setup flow, [Getting started](./kb/r
 
 ### Consult the research with your agent
 
-You can ask an agent to consult this repository or the [rendered site](https://zby.github.io/commonplace/) without installing anything. For example:
+Point your agent to the [rendered site](https://zby.github.io/commonplace/) or directly to the [consultation guide](https://zby.github.io/commonplace/consult.html) ([`kb/consult.md`](./kb/consult.md)). For example:
 
-> Use https://github.com/zby/commonplace to advise the author of <project URL>, covering quick fixes and structural improvements.
+> Use https://zby.github.io/commonplace/ to advise the author of `<project URL>` on `<specific decision>`. Cite the Commonplace documents that inform your advice.
+
+No installation is needed to browse the site. For easier, more efficient full-text search, clone the repository with `git clone --depth 1 https://github.com/zby/commonplace.git` and search the Markdown locally with `rg`.
 
 Start with a concrete decision or failure in the target project. Use the [topic guides](./kb/tags/README.md) to find relevant [theory](./kb/theory/). Each guide links selected entries.
 

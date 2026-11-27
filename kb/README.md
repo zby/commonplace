@@ -1,5 +1,7 @@
 # KB Routing
 
+Browsing on GitHub? Start with the [rendered site](https://zby.github.io/commonplace/), the [site homepage](./index.md), the [consultation guide](./consult.md), or the [topic guides](./tags/README.md).
+
 This `kb/` tree is organized by filesystem contracts.
 
 A directory under `kb/` is a collection when it contains a local `COLLECTION.md`.
@@ -9,17 +11,18 @@ another collection is invalid and reported by validation.
 
 In this source repository, common collection roots include:
 
-- `kb/theory/`
-- `kb/notes/`
-- `kb/reference/`
-- `kb/instructions/`
-- `kb/tags/`
-- `kb/agent-memory-systems/`
-- `kb/agentic-systems/`
-- `kb/sources/`
-- `kb/articles/`
-- `kb/types/`
-- `kb/work/`
+- [`kb/theory/`](./theory/README.md)
+- [`kb/notes/`](./notes/README.md)
+- [`kb/reference/`](./reference/README.md)
+- [`kb/instructions/`](./instructions/README.md)
+- [`kb/tags/`](./tags/README.md)
+- [`kb/agent-memory-systems/`](./agent-memory-systems/README.md)
+- [`kb/agentic-systems/`](./agentic-systems/README.md)
+- [`kb/agentic-system-analyses/`](./agentic-system-analyses/README.md)
+- [`kb/sources/`](./sources/README.md)
+- [`kb/articles/`](./articles/README.md)
+- [`kb/types/`](./types/README.md)
+- [`kb/work/`](./work/README.md)
 
 In installed projects, shipped Commonplace library content may live under
 `kb/commonplace/<collection>/`. The `kb/commonplace/` directory is a namespace,
