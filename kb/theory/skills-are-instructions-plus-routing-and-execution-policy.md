@@ -48,7 +48,7 @@ The procedure itself is identical regardless of packaging:
 - **Directory signal** — both live in `kb/instructions/`; promotion to a skill adds a subdirectory, SKILL.md frontmatter, and a symlink into `.claude/skills/`
 - **Quality standard** — same execution-optimization requirements whether or not the procedure has routing
 
-Instructions are not notes. Notes are for reasoning — an agent building understanding. Instructions are for execution — an agent that needs to act. They get their own directory (`kb/instructions/`) because the directory tells the agent what kind of reading the document demands. [Ad hoc instruction notes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) are a further distinction: one-off, written for a specific situation, not expected to be reused. Instructions in `kb/instructions/` are reusable procedures extracted from repeated operations and shaped for execution. [Methodology notes](./agent-statelessness-makes-routing-architectural-not-learned.md) sit on the other side — they carry the reasoning from which instructions are worked out.
+Instructions are not notes. Notes are for reasoning — an agent building understanding. Instructions are for execution — an agent that needs to act. They get their own directory (`kb/instructions/`) because the directory tells the agent what kind of reading the document demands. [Ad hoc instruction notes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) are a further distinction: one-off, written for a specific situation, not expected to be reused. Instructions in `kb/instructions/` are reusable procedures extracted from repeated operations and shaped for execution. [Methodology notes](./skills-derive-from-methodology.md) sit on the other side — they carry the reasoning from which instructions are worked out.
 
 ## Cross-platform convergence and divergence
 
@@ -95,5 +95,4 @@ Relevant Notes:
 - [always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) — context: the discovery surfaces through which both are found
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — context: instructions sit on the constraining gradient between ad-hoc notes and skills
 - [ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — distinguishes: ad hoc notes are one-off; instructions are reusable execution-oriented procedures
-- [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — motivates: the source/compiled split applies to instructions the same way it applies to skills
 - [instructions are typed callables](./instructions-are-typed-callables.md) — extends: instructions, like skills, have implicit type signatures

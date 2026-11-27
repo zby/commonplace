@@ -87,5 +87,5 @@ Relevant Notes:
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: the loading hierarchy that establishes why always-loaded context must be slim
 - [AGENTS.md should be organized as a control plane](./agents-md-should-be-organized-as-a-control-plane.md) — extends: internal organization of the system prompt file surface
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — grounds: the partial evaluation principle behind configuration injection
-- [Agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context.md) — extends: proposes an "on reference" layer within the loading hierarchy that would dynamically inject definitions, ADRs, and indexes alongside loaded documents
+- [whether to supply a reference up front depends on the task](./agent-statelessness-means-the-context-engine-should-inject-context.md) — contrasts: task-specific loading can supply a rule when it affects a decision without adding it to every session.
 - [Synapptic](../agentic-system-analyses/retained/appcuarium--synapptic/runtime.md#rt-clm-target-filtering) — exemplifies: publishing instructions derived from one profile to assistant-specific files

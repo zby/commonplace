@@ -14,7 +14,7 @@ A knowledge system for LLM agents can't ignore how LLMs differ from humans, but 
 Knowledge systems don't start from scratch. They draw on existing traditions and materials:
 
 - **Design patterns** borrowed from human knowledge management — Zettelkasten, PKM, library science, Toulmin argumentation — all evolved under selection pressure from human cognition. They assume readers who internalize over time, who fill gaps from background knowledge, who develop intuition through practice.
-- **Source materials** ingested into the system — blog posts, papers, methodology descriptions — were written for human readers. Authors assume persistent memory across paragraphs, ability to cross-reference with prior knowledge, tolerance for ambiguity that will be resolved by understanding. An LLM reader gets the tokens but not these affordances.
+- **Source materials** often assume readers remember an earlier passage or know a convention from prior work. An agent reading only an excerpt may lack that background; a human new to the subject may lack it too.
 - **Methodology documentation** that informs system design — research on note-taking, argument structure, knowledge organization — reports findings about human cognitive processes that may or may not apply to LLM text processing.
 
 None of this means the materials are useless. It means each convention needs individual evaluation: *what specific problem does this convention solve, and does the LLM agent have the same problem?* The [failure-mode overlap argument](./human-writing-structures-transfer-to-llms-because-failure-modes.md) demonstrates this methodology — Toulmin structure works for LLMs not because of blind analogy but because LLMs exhibit the specific human-like failures that the structure prevents.
@@ -33,8 +33,8 @@ These readers need different things from the same document:
 | Need | Human reader | LLM agent reader |
 |------|-------------|-----------------|
 | Reasoning | Wants to understand *why* — context, trade-offs, alternatives considered | Needs enough reasoning to handle edge cases, but excess reasoning wastes context |
-| Completeness | Can fill gaps from background knowledge and experience | Cannot fill gaps — if it's not in the loaded context, it doesn't exist |
-| Persistence | Remembers this document next time they encounter the topic | Starts fresh every session — the document must be self-sufficient |
+| Completeness | May recognize a missing premise from experience | May infer a missing premise or look it up; a project-specific rule needs an accessible source |
+| Persistence | A returning reader may remember an earlier task | Earlier work helps only if something retained from it is used on this task |
 | Navigation and access | Usually skims or searches sublinearly with interactive tools | Often loads whole artifacts linearly; can also read sublinearly when given a query or search interface |
 | Nuance | Appreciates hedging, qualification, open questions | May perform worse with excessive hedging (reduced instruction clarity) |
 
@@ -42,13 +42,13 @@ The navigation row states a default access mode, not an invariant difference bet
 
 The tension is genuine: a document optimized for human understanding (rich reasoning, extensive context, open-ended exploration) may be suboptimal for LLM execution (needs clarity, completeness, directness). A document optimized for LLM execution (imperative, complete, no ambiguity) may be opaque to human maintainers (why does it say this? what's the reasoning?).
 
-The KB's primary response is **tier separation** — methodology notes for reasoning, skills for execution. Since [agent statelessness makes skill layers architectural, not pedagogical](./agent-statelessness-makes-routing-architectural-not-learned.md), these tiers serve genuinely different consumers, not different stages of the same learner. A complementary response is **context injection** — the context engine [automatically providing referenced context](./agent-statelessness-means-the-context-engine-should-inject-context.md) (definitions, ADRs) that a human reader would carry from prior sessions but an LLM agent cannot. Tier separation addresses the writing problem (who is the primary reader?); context injection addresses the loading problem (what must be present for the agent to reason correctly?).
+Commonplace separates explanations from procedures so a reader can consult the reasoning without loading it on every routine task. That is a writing choice. What to load is a separate decision: [whether to supply a reference up front depends on the task](./agent-statelessness-means-the-context-engine-should-inject-context.md). A reviewer deciding whether to approve a release may need the approval rule in view; an editor correcting a typo in the same checklist does not.
 
-But neither eliminates the tension — they manage it. A methodology note might be loaded by an agent doing a design task. A skill description is read by humans deciding whether to invoke it. Within each tier, the question remains: who is the primary reader?
+The separation does not eliminate the tension. A methodology note might be loaded by an agent doing a design task. A skill description is read by humans deciding whether to invoke it. Within each tier, the question remains: who is the primary reader?
 
 ## What goes wrong without this awareness
 
-**Naive anthropomorphism:** Treating the agent as a "junior colleague who'll learn" or a "student who needs training" bakes in assumptions about internalization, intuition development, and graceful degradation that don't apply. This leads to under-investing in skill completeness ("the agent will figure it out"), under-investing in routing tables ("it'll know where to look"), and treating methodology as sufficient without compilation into skills.
+**Assuming experience carries over.** A colleague may remember where they found a rule yesterday. By contrast, [a fresh session cannot rely on an earlier lookup](./agent-statelessness-makes-routing-architectural-not-learned.md) unless the system kept and uses something from it. Check whether the rule can be found from the task itself before relying on familiarity.
 
 **Naive mechanism-ism:** Treating the agent as "just a text processor" and ignoring human knowledge management traditions is equally wrong. Many human conventions *do* transfer — just not because the mechanisms are the same. [Model-resolved indirection adds interpretation work to LLM execution](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md), while indirection can burden humans through cognitive load. Both cases can favor resolving stable bindings before consumption, but for different reasons. The right approach evaluates each convention's specific arguments for transfer.
 
@@ -58,7 +58,7 @@ But neither eliminates the tension — they manage it. A methodology note might 
 
 The operational principle: **evaluate each human convention individually, checking whether its specific arguments transfer to LLM agents, rather than either wholesale adopting or wholesale rejecting human-oriented designs.** This is more work than either naive position, but it's the only approach that captures the genuine partial overlap between human and LLM cognitive properties.
 
-The specific differences that matter most are developed elsewhere: [agent statelessness](./agent-statelessness-makes-routing-architectural-not-learned.md) (no persistent state, no graceful degradation, routing replaces intuition), [model-resolved indirection](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) (model-facing references add interpretation work), and [failure-mode overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) (some human structures transfer, but each argument needs independent verification). This note adds the dual-audience observation: even where a convention transfers, the document embodying it may need to serve readers with conflicting needs.
+Even where a convention transfers, a document explaining it to a maintainer and one directing its use during a task may need different levels of detail.
 
 ---
 
@@ -66,11 +66,9 @@ Relevant Notes:
 
 - [human writing structures transfer to LLMs because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — exemplifies: the methodology of evaluating each human convention's specific arguments for LLM transfer
 - [Source-adoption policy](../reference/source-adoption-policy.md) — see-also: the adoption filter this note motivates; the policy says *how* to filter, this note says *why* filtering is necessary
-- [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — extends: the most consequential specific difference; routing infrastructure is the primary mechanism for managing dual audiences
 - [Model-resolved indirection adds interpretation work to LLM execution](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — example: model-side binding work and human cognitive load can both favor resolving stable bindings before consumption, for different reasons
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — addresses the loading side of the dual-audience problem; this note identifies the writing side as a separate concern
 - [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — context: the persistent adaptation path retained artifacts provide; agent statelessness reframes in-context as "loading" not "learning"
-- [agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context.md) — complementary response: tier separation addresses writing for different audiences; context injection addresses loading what the agent can't carry from prior sessions
 - [Context Engineering for AI Agents in OSS](https://arxiv.org/pdf/2510.21413) — validates: empirical study of 466 OSS projects finds developers explicitly distinguish "README files for humans" from "AI context files for AI agents" — the dual-audience split observed at scale with no established conventions for resolving it
 - [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — extends: "codebase optimized for Codex's legibility first" is the extreme endpoint of dual-audience design — human readability as secondary to agent readability
 - [ADR 011 — notes must be accessible to external readers](../reference/adr/011-notes-must-be-accessible-to-external-readers.md) — extends: GitHub Pages introduced a third audience (external readers with no KB context), requiring inline glosses for KB vocabulary

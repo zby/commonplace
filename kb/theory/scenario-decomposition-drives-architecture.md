@@ -55,15 +55,15 @@ The decomposition reveals a layered structure that matches the [instruction spec
 
 **The escalation path motivates keeping methodology separate from content.** If methodology were mixed into the content tree, every search would return both user notes and framework notes. The agent would have to filter constantly. Keeping them separate means the common-case search scope is clean, and the escalation is explicit — the agent decides it needs deeper reasoning and goes looking for it.
 
-**The escalation path must be discoverable.** An agent can only escalate if it knows that methodology exists and where to find it. This is the job of whatever the agent loads on every session — typically a control-plane file. The file is already always loaded, so adding "for why things work this way, search the methodology source" costs nothing extra. No other mechanism is needed; provenance links embedded in every skill would be redundant with what the control-plane file already provides, and harder to maintain.
+**The escalation path must be discoverable.** A shared instruction can tell readers where to search for the reasoning behind a procedure. If a particular step has an easily missed exception, a cue at that step may be more useful than a general reminder at startup.
 
 **The "connect to existing knowledge" step is the least optimised.** It appears at the end of both write-a-note and ingest-a-source, but is usually modelled as a separate skill invocation rather than an integral part of the write flow. The decomposition makes the gap visible even when individual operations look efficient.
 
-## Escalation discoverability is a statelessness problem
+## Recognizing an exception and finding help are different steps
 
-The hardest gap the decomposition exposes is escalation discoverability. In any system where operational instructions have been [worked out from deeper methodology](./theory-and-methodology-form-a-two-layer-execution-system.md), the agent has no signal that it's in a case the procedures don't cover. Since [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md), there's no "something feels off" intuition — the agent follows the procedure and may produce a suboptimal result without ever realising that deeper reasoning would have helped.
+Suppose a procedure tells the agent to choose a template by document type, but two templates fit the request. Seeing both matches can be enough to recognize the exception. What happens next is a different question: can the agent find the rule for choosing between them? Since [a fresh session cannot rely on an earlier lookup](./agent-statelessness-makes-routing-architectural-not-learned.md), test the scenario without supplying the location of that rule.
 
-The control-plane file can tell the agent the escalation path exists, but it cannot guarantee the agent recognises an edge case. This is a design problem, not a training problem, and it falls out of the decomposition because the decomposition makes the procedure–methodology boundary explicit for every step.
+If the agent chooses the first match without noticing the second, clarify when the procedure applies. If it notices the conflict but cannot resolve it, improve the route to the deciding rule. A better link addresses the second failure, not necessarily the first.
 
 ## What the method is good for
 
@@ -84,6 +84,5 @@ Relevant Notes:
 - [Always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) — extends: different always-loaded surfaces have different affordances and map onto different scenario patterns
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — foundation: the "find related notes" step works well precisely because navigation hints (descriptions, titles) are optimised for agent read/skip decisions
 - [skills derive from methodology](./skills-derive-from-methodology.md) — grounds: the escalation path is the coverage gap in action — when the procedure doesn't cover the case, the agent needs the source
-- [agent statelessness makes routing architectural](./agent-statelessness-makes-routing-architectural-not-learned.md) — constrains: the agent has no intuition for when it's in a gap case, making escalation discoverability a design problem rather than a training problem
 - [Ingest: ATAM: Method for Architecture Evaluation](../sources/kazman-2000-atam-architecture-evaluation.ingest.md) — evidenced-by: qualifies the method with established precedent for scenarios as the unit that turns vague quality goals into checkable requirements, used there to evaluate an architecture rather than derive one
 - [Current-task fit alone does not warrant costly structural entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — contrasts: deriving structure from current scenarios is right, but hardening it on present fit alone is unwarranted — permanence needs an enduring constraint, transfer evidence, or coordination value

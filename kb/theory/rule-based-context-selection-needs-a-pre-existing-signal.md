@@ -21,7 +21,7 @@ The bound is on selection, not presence: a bounded superset can hold the right i
 
 - [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: the activation gap this sharpens into a constraint on rule-based selection
 
-- [agent statelessness means the context engine should inject context](./agent-statelessness-means-the-context-engine-should-inject-context.md) — contrasts: its open “how to identify what to inject” question; exact push needs an upstream signal
+- [whether to supply a reference up front depends on the task](./agent-statelessness-means-the-context-engine-should-inject-context.md) — example: opening a checklist identifies the document but does not distinguish a release decision from a spelling correction.
 
 - [codification](./definitions/codification.md) — defined-in: rule-based selection is the codified regime whose reach this bounds
 

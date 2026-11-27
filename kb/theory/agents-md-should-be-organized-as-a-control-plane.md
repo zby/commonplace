@@ -130,7 +130,7 @@ If most answers are "no", place it elsewhere.
 Relevant Notes:
 
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: matches instruction specificity to loading frequency, the primary placement rule used here
-- [agent-statelessness-makes-routing-architectural-not-learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds why always-loaded routing is permanent infrastructure, not optional convenience
+- [a fresh session cannot rely on an earlier lookup](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: test whether a newcomer can find the instructions without already knowing their location.
 - [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md) — exemplifies exclusion: periodic operations should be external to routing docs
 - [maintenance operations catalogue](./maintenance-operations-catalogue-should-stage-stable-procedures.md) — operational extension: where externally triggered operations are staged before becoming reusable instructions
 - [capability-placement-should-follow-autonomy-readiness](./capability-placement-should-follow-autonomy-readiness.md) — isolates the separate decision rule for where capabilities belong (skills vs instructions vs notes)

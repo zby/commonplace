@@ -39,7 +39,7 @@ Code is strong on both axes. Unstructured knowledge work is weak on inspectabili
 Relevant Notes:
 
 - [the-boundary-of-automation-is-the-boundary-of-verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — tension: code automates because it is verifiable; a KB improves augmentation because it is inspectable; these are independent axes
-- [agent-statelessness-means-the-context-engine-should-inject-context-automatically](./agent-statelessness-means-the-context-engine-should-inject-context.md) — complements: that note addresses orientation through context-engine injection; this note argues that artifact structure (inspectability) is the prerequisite that makes injection useful
+- [whether to supply a reference up front depends on the task](./agent-statelessness-means-the-context-engine-should-inject-context.md) — complements: even when supporting material is easy to retrieve, the task determines whether showing it is useful.
 - [knowledge-storage-does-not-imply-contextual-activation](./knowledge-storage-does-not-imply-contextual-activation.md) — contrasts: inspectability makes recovery possible, while routing and activation determine whether stored knowledge changes action
 - [A vibe-noting trace shows persistence enables revision, not certification](./evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md) — evidenced-by: one Commonplace episode preserves the seed, candidate, review corrections, and later full-pass rewrite behind this note's weak claim
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — exemplifies: vibe-noting is the KB-specific augmentation case of the broader readable-artifact loop
