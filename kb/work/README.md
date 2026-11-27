@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Which old notes still earn their place?](./old-note-review/README.md) — posed 2026-11-27: trace the oldest notes, check their present use and placement, and distinguish material worth moving from material worth retiring.
+
 - [Cross-harness project handoffs](./project-message-board/README.md) — posed 2026-11-27: test how tasks find pending decisions and reconsider blocked actions without assuming a shared board.
 
 - [Remote KB access via GitHub and the rendered site](./remote-kb-access/README.md) — posed 2026-11-26: diagnose and improve how external agents and human readers consult Commonplace through GitHub or `https://zby.github.io/commonplace/` without installing or cloning it.
