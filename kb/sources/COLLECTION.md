@@ -143,7 +143,7 @@ Scan `kb/theory/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syst
 - Transferable claims about KB methodology → `kb/theory/`
 - Descriptions of the commonplace system → `kb/reference/`
 - Procedures and how-to guidance → `kb/instructions/`
-- External agent-memory system reviews → `kb/agent-memory-systems/`
-- External agentic-system and harness analyses → `kb/agentic-systems/`
+- Authored reviews and comparisons of external systems, including memory systems → [Agentic Systems](../agentic-systems/README.md)
+- Workflow analyses of external systems → [agentic-system analyses](../agentic-system-analyses/README.md). Cite the frozen memory survey when it is the evidence used; do not send new reviews there.
 - Work-in-progress on a source → `kb/work/`
 - Report outputs → choose `kb/workflow-state/data/current/` for run records or `kb/reports/retained/` for citable reports

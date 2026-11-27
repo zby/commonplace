@@ -117,6 +117,6 @@ not decide placement.
 - Bounded datasets, experiments, traces, or casebooks whose intended contribution states what they establish about the design space and the limit of that inference → `kb/theory/evidence/`
 - Evidence whose bounded inference concerns only Commonplace's own choices or their measured effects, such as the evidence behind an ADR → `kb/reports/retained/`, as an evidence note beside its raw records
 - Procedures and how-to guidance → `kb/instructions/`
-- Descriptions of external systems → `kb/agent-memory-systems/reviews/` for memory/context-engineering systems, or `kb/agentic-systems/reviews/` for whole agentic systems and harnesses
+- Descriptions of external systems, including memory and context engineering → [Agentic Systems](../agentic-systems/README.md) for authored reviews and comparisons; [agentic-system analyses](../agentic-system-analyses/README.md) for workflow analyses. The frozen memory survey is not a destination for new reviews.
 - Work in progress → `kb/work/` (workshops)
 - Report outputs and operational evidence → choose `kb/workflow-state/data/current/` for run records or `kb/reports/retained/` for citable reports

@@ -163,7 +163,7 @@ Use `kb/theory/questions/` for recurring theoretical questions treated as first-
 
 - Unadopted system designs → `kb/reference/proposals/` (`design-proposal` type), unless recast as an existential claim per above
 - Records of what Commonplace selected, and descriptions of the current or historical state those selections produced → `kb/reference/`
-- Descriptions of a specific system's contract, interface, or current construction → `kb/reference/` for Commonplace, or `kb/agent-memory-systems/` and `kb/agentic-systems/` for external systems
+- Descriptions of a specific system's contract, interface, or current construction → `kb/reference/` for Commonplace, or [Agentic Systems](../agentic-systems/README.md) for external reviews and comparisons. Workflow analyses belong in [agentic-system analyses](../agentic-system-analyses/README.md), including analyses of memory systems
 - Procedures and how-to guidance → `kb/instructions/`
 - Raw captures without frontmatter → `text` type, any collection
 - Work in progress → `kb/work/` (workshops)
