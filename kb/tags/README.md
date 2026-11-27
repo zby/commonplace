@@ -49,11 +49,6 @@ Recurring theoretical questions in [kb/theory/questions/](../theory/questions/RE
 - [How do we value notes?](../theory/questions/how-do-we-value-notes.md) — judging which KB notes earn retention as autonomous production grows and models upgrade
 - [How do we fight bloat in agent-produced systems?](../theory/questions/how-do-we-fight-bloat-in-agent-produced-systems.md) — controlling code, prose, and structural bloat in mixed natural-language and code systems
 
-## Workshop Layer
-
-- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion
-- [evolving-understanding-needs-holistic-rewrite-not-composition](../theory/evolving-understanding-needs-holistic-rewrite-not-composition.md) — when a consumer needs the whole evolving picture, rewrite it as a single narrative rather than composing notes
-
 ## Gaps
 
 - [automating-kb-learning-is-an-open-problem](../theory/automating-kb-learning-is-an-open-problem.md) — the open problem is automating judgment-heavy mutations (connections, groupings, synthesis)
