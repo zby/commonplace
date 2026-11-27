@@ -34,4 +34,6 @@ On October 10 a coordinator asked another Pi agent where worker traces were reta
 
 ## What to collect next
 
+For each new case, distinguish the step someone could take before the exchange from the action that had to wait. After the reply, record what could actually happen, for whom. Seek a refusal, a changed plan or an additional blocker as well as a successful handoff: a reply is evidence for reconsideration, not proof that the proposed action is ready.
+
 The missing witness is a reply arriving while the addressed task has **no active session**, followed by a demonstrably late or lost action. At the next natural occurrence, record the action that was waiting, who alone could supply the missing input, where the answer appeared, who or what noticed it, and what happened before the next ordinary check. If someone had to relay it, distinguish pointing to an existing answer from making a new decision. Include cases where waiting until the next session cost nothing. A post timestamp or an `open` flag alone does not show a missed delivery; a staged replay tests mechanics but does not establish a real deadline.
