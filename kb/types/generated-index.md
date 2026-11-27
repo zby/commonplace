@@ -14,7 +14,7 @@ Since ADR 026 the `generated-index` type covers **build-time generated pages onl
 The ProperDocs hook materializes index-typed pages at build time:
 
 - `index_source: directory` — per-collection `dir-index.md` virtual pages, a complete inventory of every file with title, description, and type. These exist only in the published site; `dir-index.md` is gitignored.
-- The hook also appends the generated member listing to each tag head on the site; that listing is driven by the head's filename and the tagged artifacts grouped by collection, not by this type.
+- The hook also links each tag head on the site to a generated member page; that listing is driven by the head's filename and the tagged artifacts grouped by collection, not by this type.
 
 In a checkout, search collection descriptions with `rg` to find candidates. To enumerate a tag's members, use the [tag membership check](./tag-readme.md#checking-exact-membership).
 

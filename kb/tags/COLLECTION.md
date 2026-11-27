@@ -12,7 +12,7 @@ One head per tag: `kb/tags/<tag>-README.md`, type
 A head introduces what the tag gathers, in the words a reader would search
 for, names the defining note when the tag has one, and picks entries with a
 phrase saying why each matters. It is the page a tag link leads to on the
-published site, where the build appends the full member listing
+published site, where the build links to a separate `<tag>-members.md` listing with counts by collection
 ([ADR 025](../reference/adr/025-complete-generated-indexes-are-build-time-only.md)).
 
 Every tag in use has a head. Validation reports a tag on an eligible artifact whose head does not exist; write the head or drop the

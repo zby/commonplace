@@ -35,7 +35,7 @@ Target: `$ARGUMENTS` — one artifact path or artifact name. If none provided, a
 
    This is the only linking-rules surface. There is no compiled topology and no separate vocabulary doc to consult.
 5. Use the project’s `AGENTS.md` goals to decide whether a candidate is in scope; the collection contract decides whether its label is authorised. In a forked invocation, rely on inherited goals only if the runtime supplied them. Otherwise read the project’s goals before applying the scope check.
-6. Use repo-local discovery only: curated indexes, scoped `rg`, and link following. Do not call external semantic-search tools or MCP search services; connect must work in Codex without external search state. Complete generated listings (`dir-index.md`, tag tails) are build-time site artifacts and do not exist in the repo (ADR 025).
+6. Use repo-local discovery only: curated indexes, scoped `rg`, and link following. Do not call external semantic-search tools or MCP search services; connect must work in Codex without external search state. Complete generated listings (`dir-index.md`, `<tag>-members.md`) are build-time site artifacts and do not exist in the repo (ADR 025).
 
 ## Discovery — per destination
 

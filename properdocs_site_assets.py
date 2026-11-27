@@ -48,7 +48,7 @@ def on_page_content(html, page, **kwargs):
 
 
 def on_env(env, config, files):
-    """Publish source bytes after page generation and publication filtering."""
+    """Publish the build's Markdown, including generated navigation but not HTML decorations."""
     site = Path(config["site_dir"])
     for page in files.documentation_pages():
         target = site / page.src_uri

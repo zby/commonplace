@@ -4,7 +4,9 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
+from properdocs.config import load_config
 from properdocs.structure.files import File, Files, InclusionLevel
+from properdocs.structure.pages import Page
 
 from commonplace.docs import properdocs_hooks
 
@@ -54,7 +56,7 @@ def test_on_page_markdown_renders_user_verification_and_specialized_status(tmp_p
     assert "**User verified:** yes" in result
 
 
-def test_on_page_markdown_appends_exact_tail_grouped_by_collection(tmp_path: Path) -> None:
+def test_on_files_detaches_tag_members_in_both_site_formats(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
     reference = tmp_path / "kb" / "reference"
     write(notes / "COLLECTION.md", "# Notes collection\n")
@@ -94,66 +96,41 @@ tags: [kb-design]
 # Curated note
 """,
     )
-    page = SimpleNamespace(
-        meta={"type": "types/tag-readme.md"},
-        file=SimpleNamespace(abs_src_path=str(readme)),
-    )
-    curated_body = "# kb-design\n\n## Notes\n\n- [Curated](../notes/curated.md) — placed\n"
-    properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
+    from properdocs_site_assets import on_env
 
-    result = properdocs_hooks.on_page_markdown(
-        curated_body,
-        page,
-        config={"docs_dir": str(tmp_path / "kb")},
-    )
-
-    assert "## Tagged artifacts by collection <!-- generated -->" in result
-    assert "- [Tagged note](../notes/tagged.md) - Tagged note" in result
-    assert "- [Reference doc](../reference/doc.md) - Reference doc" in result
-    notes_group, reference_group = result.split("### notes\n")[1].split("### reference\n")
+    readme.write_text(readme.read_text() + "\n[Curated note](../notes/curated.md)\n")
+    head(notes, "stray")
+    empty = head(tags, "empty")
+    docs = tmp_path / "kb"
+    cfg = write(tmp_path / "properdocs.yml", "site_name: Test\ndocs_dir: kb\nplugins: []\n"
+                "theme: {name: null, custom_dir: .}\nuse_directory_urls: false\nsite_url: https://example.org/project/\n")
+    config = load_config(config_file=str(cfg))
+    config.plugins._current_plugin = None
+    files = Files([File(p.relative_to(docs).as_posix(), str(docs), config.site_dir, False)
+                   for p in docs.rglob("*.md")])
+    properdocs_hooks.on_files(files, config)
+    on_env(None, config, files)
+    site = Path(config.site_dir) / "tags"
+    guide = (site / readme.name).read_text()
+    assert "[All 3 tagged artifacts](./kb-design-members.md) — 2 notes, 1 reference" in guide
+    assert "tagged.md" not in guide and guide.startswith(readme.read_text())
+    assert "members.md" not in readme.read_text()
+    assert "members.md" not in (site.parent / "notes/stray-README.md").read_text()
+    assert not (site / "stray-members.md").exists()
+    listing = (site / "kb-design-members.md").read_text()
+    assert "[Back to the kb-design guide](./kb-design-README.md)" in listing
+    assert "[notes](#notes)" in listing
+    notes_group, reference_group = listing.split("## notes\n")[1].split("## reference\n")
     assert "curated.md" in notes_group and "tagged.md" in notes_group
     assert "doc.md" in reference_group
-    assert result.count("curated.md") == 2
-
-
-def test_on_page_markdown_ignores_a_head_left_outside_the_tag_collection(tmp_path: Path) -> None:
-    notes = tmp_path / "kb" / "notes"
-    write(notes / "COLLECTION.md", "# Notes collection\n")
-    tag_space(tmp_path)
-    stray = write(
-        notes / "kb-design-README.md",
-        """---
-description: "Curated head for kb-design"
-type: types/tag-readme.md
----
-
-# kb-design
-""",
-    )
-    write(
-        notes / "tagged.md",
-        """---
-description: Tagged note
-type: types/note.md
-tags: [kb-design]
----
-
-# Tagged note
-""",
-    )
-    page = SimpleNamespace(
-        meta={"type": "types/tag-readme.md"},
-        file=SimpleNamespace(abs_src_path=str(stray)),
-    )
-    properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
-
-    result = properdocs_hooks.on_page_markdown(
-        "# kb-design\n\nOrientation.\n",
-        page,
-        config={"docs_dir": str(tmp_path / "kb")},
-    )
-
-    assert "Tagged artifacts by collection" not in result
+    assert "[All 0 tagged artifacts](./empty-members.md)" in (site / empty.name).read_text()
+    assert "No tagged artifacts." in (site / "empty-members.md").read_text()
+    for uri, href in ((readme.name, "kb-design-members.html"), ("kb-design-members.md", readme.stem + ".html")):
+        page = Page(None, files.get_file_from_path("tags/" + uri), config)
+        page.read_source(config)
+        page.markdown = properdocs_hooks.on_page_markdown(page.markdown, page, config, files=files)
+        page.render(config, files)
+        assert f'href="{href}"' in page.content
 
 
 def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Path) -> None:
@@ -192,14 +169,7 @@ def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Pat
 
     properdocs_hooks.on_files(files, config)
     generated = files.get_file_from_path("sources/dir-index.md")
-    readme_page = SimpleNamespace(
-        meta={},
-        file=SimpleNamespace(abs_src_path=str(readme)),
-    )
-    rendered_readme = properdocs_hooks.on_page_markdown(
-        "# Sources\n\nBody\n",
-        readme_page,
-    )
+    rendered_readme = files.get_file_from_path("sources/README.md").content_string
 
     assert generated is not None
     assert generated.inclusion is InclusionLevel.INCLUDED
@@ -257,8 +227,7 @@ def test_site_current_list_matches_comparison_population(tmp_path: Path, tmp_lib
     assert row["analysis_run"] in listing.content_string
     assert "[Example System](retained/example-system/overview.md)" in listing.content_string
     assert not (readme.parent / "current-analyses.md").exists()
-    page = SimpleNamespace(meta={}, file=SimpleNamespace(abs_src_path=str(readme)))
-    assert "current-analyses.md" in properdocs_hooks.on_page_markdown("# Analyses\n", page)
+    assert "current-analyses.md" in files.get_file_from_path("agentic-system-analyses/README.md").content_string
 
 
 def test_on_config_groups_agentic_systems_and_hides_unlisted_collections(tmp_path: Path) -> None:
@@ -302,7 +271,8 @@ def test_lens_listing_links_each_current_member(tmp_path: Path, tmp_library) -> 
         use_directory_urls = False
         plugins = SimpleNamespace(_current_plugin="test")
     config = Config(docs_dir=str(docs_dir))
-    files = Files([])
+    uri = readme.relative_to(docs_dir).as_posix()
+    files = Files([File(uri, str(docs_dir), config.site_dir, False)])
     properdocs_hooks.on_files(files, config)
 
     listing = files.get_file_from_path("agentic-systems/comparisons/memory/systems.md").content_string
@@ -310,8 +280,7 @@ def test_lens_listing_links_each_current_member(tmp_path: Path, tmp_library) -> 
     assert f"]({member}memory.md)" in listing
     assert f"[profile]({member}memory-profile.md)" in listing
     assert files.get_file_from_path("agentic-systems/comparisons/runtime/systems.md") is None
-    page = SimpleNamespace(meta={}, file=SimpleNamespace(abs_src_path=str(readme)))
-    assert "[Current analyses](./systems.md)" in properdocs_hooks.on_page_markdown("# Memory lens\n", page)
+    assert "[Current analyses](./systems.md)" in files.get_file_from_path(uri).content_string
 
 
 @pytest.mark.parametrize("collection", ["reports", "work", "agentic-systems"])

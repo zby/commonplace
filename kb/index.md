@@ -33,7 +33,7 @@ Commonplace packages the methodology running this site as an open-source tool fo
 
 ### Browse the KB
 
-- **[Topics (tags index)](./tags/README.md)** — the main access path for browsing the KB by topic; each tag head introduces the area, recommends where to start, and lists every tagged artifact grouped by collection.
+- **[Topics (tags index)](./tags/README.md)** — the main access path for browsing the KB by topic; each tag head introduces the area, recommends where to start, and links to the complete membership list grouped by collection.
 - **[Theory questions](./theory/questions/README.md)** — recurring research questions treated as problem-first starting points beside individual claims.
 - **[Articles](./articles/README.md)** — standalone technical articles, drafts, and talks.
 - **[Reference](./reference/README.md)** — shipped architecture, contracts, CLI commands, and ADRs.

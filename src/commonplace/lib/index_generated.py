@@ -143,26 +143,33 @@ def collect_tag_space(root: Path) -> TagSpace:
     return TagSpace(catalog.collections, catalog.heads, dict(by_tag))
 
 
-def generated_section_for_head(
-    head: Path, *, tag_space: TagSpace, published: Callable[[Path], bool] | None = None
-) -> str | None:
-    """Render every member, including editorial picks, grouped by its KB collection."""
-    entries = tag_space.notes_by_tag.get(tag_for_head(head), [])
-    if not entries:
-        return None
-    kb = head.resolve().parent.parent
+def tag_members_page(
+    tag: str, *, tag_space: TagSpace, published: Callable[[Path], bool]
+) -> tuple[str, str]:
+    """Return the head's navigation line and its complete, collection-grouped sibling."""
+    head = tag_space.heads[tag]
+    entries = tag_space.notes_by_tag.get(tag, [])
+    kb = head.parent.parent
     groups: dict[str, list[Entry]] = defaultdict(list)
     for entry in entries:
         groups[entry[0].relative_to(kb).parts[0]].append(entry)
-    lines = ["## Tagged artifacts by collection <!-- generated -->"]
-    for collection, members in sorted(groups.items()):
-        lines.extend(["", f"### {collection}", ""])
-        for path, title, desc in sorted(members, key=lambda e: (e[1].casefold(), e[0])):
-            if published is None or published(path):
-                label = (
-                    f"[{title}]({Path(os.path.relpath(path, head.parent)).as_posix()})"
-                )
+    preferred = ("theory", "articles", "notes", "agentic-systems", "agentic-system-analyses",
+                 "reference", "instructions", "sources", "agent-memory-systems")
+    order = [name for name in preferred if name in groups] + sorted(groups.keys() - set(preferred))
+    link = f"[All {len(entries)} tagged artifacts](./{tag}-members.md)"
+    if order:
+        link += " — " + ", ".join(f"{len(groups[name])} {name}" for name in order)
+    lines = [f"# {tag}: tagged artifacts", "", f"[Back to the {tag} guide](./{head.name})", ""]
+    if order:
+        lines.append(" · ".join(f"[{name}](#{name})" for name in order))
+    else:
+        lines.append("No tagged artifacts.")
+    for collection in order:
+        lines.extend(["", f"## {collection}", ""])
+        for path, title, desc in sorted(groups[collection], key=lambda e: (e[1].casefold(), e[0])):
+            if published(path):
+                label = f"[{title}]({Path(os.path.relpath(path, head.parent)).as_posix()})"
             else:
                 label = f"{title} (`{path.relative_to(kb).as_posix()}`)"
             lines.append(f"- {label}" + (f" - {desc}" if desc else ""))
-    return "\n".join(lines) + "\n"
+    return link + " *(generated at build time)*", "\n".join(lines) + "\n"

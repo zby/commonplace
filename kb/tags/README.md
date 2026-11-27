@@ -1,6 +1,6 @@
 # Tags
 
-Browse the KB by topic. Each tag has one head here, `<tag>-README.md`, that says what the tag gathers and picks its load-bearing entries; the published site appends the full member listing grouped by collection. See [COLLECTION.md](./COLLECTION.md) for membership boundaries and how to write a head.
+Browse the KB by topic. Each tag has one head here, `<tag>-README.md`, that says what the tag gathers and picks its load-bearing entries; the published site links each head to a separate, complete listing grouped by collection. See [COLLECTION.md](./COLLECTION.md) for membership boundaries and how to write a head.
 
 For current-state documentation about the live Commonplace system rather than transferable theory, start at [../reference/README.md](../reference/README.md).
 

@@ -1,11 +1,4 @@
-"""ProperDocs hooks: metadata badge, collection nav, build-time generated listings.
-
-Complete generated listings (per-collection dir-index pages and per-tag
-generated tails) are materialized here at build time for the published site;
-they are never committed (ADR 025). Agents use curated heads plus scoped rg.
-Tag pages are the heads in kb/tags/ (ADR 089); a tail lists every member
-grouped by collection.
-"""
+"""ProperDocs hooks: metadata badges, collection navigation and generated listings."""
 
 import os
 import re
@@ -18,6 +11,7 @@ from properdocs.structure.files import File, InclusionLevel
 from commonplace.docs.site_links import install as install_site_links
 from commonplace.lib import index_directory, index_generated
 from commonplace.lib.index_directory import UNPUBLISHED_COLLECTIONS
+from commonplace.lib.note_parser import find_markdown_links, parse_document
 from commonplace.lib.project_paths import VALIDATION_IGNORE_MARKER
 
 # Across the KB, validation-ignore markers also exclude subtrees from the
@@ -38,10 +32,6 @@ LENS_ROOT = Path("agentic-systems/comparisons")
 LENSES = {"runtime": "Runtime", "memory": "Memory", "epistemic": "Epistemic", "workflow": "Workflow"}
 # Extra members a lens list links beside its own member.
 LENS_COMPANIONS = {"memory": {"memory-profile": "Profile"}}
-
-# Directories that received a virtual dir-index page in on_files, so
-# on_page_markdown can link each collection README to its full listing.
-_generated_index_dirs: set[Path] = set()
 
 
 def on_config(config):
@@ -142,14 +132,13 @@ def _replace_generated(files, config, src_uri: str, content: str) -> None:
 # redirects too, rather than a warning and no redirect file at post-build.
 @event_priority(50)
 def on_files(files, config):
-    """Add per-collection dir-index pages as build-time virtual files.
+    """Generate directory, analysis and tag listings and link the published guides to them.
 
     Content comes from the same lib generation the retired
     commonplace-refresh-indexes command used, but stays in memory: the pages
     exist only in the built site. A stale on-disk dir-index.md (gitignored
     leftover) is replaced by the generated version.
     """
-    _generated_index_dirs.clear()
     _exclude_marked_subtrees(files, Path(config["docs_dir"]).resolve())
     docs_dir = Path(config["docs_dir"]).resolve()
     root = docs_dir.parent
@@ -175,7 +164,7 @@ def on_files(files, config):
                 inclusion=InclusionLevel.INCLUDED,
             )
         )
-        _generated_index_dirs.add(output_path.parent)
+        _link_from_readme(files, src_uri, "Complete file listing")
 
         # A directory URL resolves through index.html.  Authored README.md
         # already occupies that slot when present; otherwise expose the same
@@ -211,11 +200,25 @@ def on_files(files, config):
         if len(lines) == 4:
             lines += ["", "No current analyses. Regeneration is separately commissioned."]
         _replace_generated(files, config, "agentic-system-analyses/current-analyses.md", "\n".join(lines) + "\n")
+        _link_from_readme(files, "agentic-system-analyses/current-analyses.md", "Current analyses")
         for lens in LENSES:
             lens_dir = docs_dir / LENS_ROOT / lens
             if (lens_dir / "README.md").exists():
                 _replace_generated(files, config, (LENS_ROOT / lens / "systems.md").as_posix(),
                                    _lens_listing(lens, analyses, lens_dir.resolve()))
+                _link_from_readme(files, (LENS_ROOT / lens / "systems.md").as_posix(), "Current analyses")
+
+    space = _tag_space(root)
+    for tag, head in space.heads.items():
+        if head.parent != docs_dir / "tags" or head not in published_paths:
+            continue
+        source = files.get_file_from_path(head.relative_to(docs_dir).as_posix())
+        document, _ = parse_document(source.content_string)
+        if document is None or (document.frontmatter or {}).get("type") != index_generated.TAG_README_TYPE:
+            continue
+        link, listing = index_generated.tag_members_page(tag, tag_space=space, published=published_paths.__contains__)
+        _replace_generated(files, config, f"tags/{tag}-members.md", listing)
+        _append_navigation(source, link)
     # Generated files must obey the same boundary as authored pages/assets.
     _exclude_marked_subtrees(files, docs_dir)
     return files
@@ -249,48 +252,18 @@ def _root_for(config) -> Path | None:
     return Path(config["docs_dir"]).resolve().parent
 
 
-def _is_head(page_path: Path, meta: dict, root: Path) -> bool:
-    return (
-        meta.get("type") == index_generated.TAG_README_TYPE
-        and page_path.resolve().parent == index_generated.tags_collection(root).resolve()
-        and index_generated.tag_for_head(page_path) is not None
-    )
+def _append_navigation(source: File, link: str) -> None:
+    """Augment the build's Markdown input, shared by HTML and the .md companion."""
+    source.content_bytes += f"\n\n{link}\n".encode()
 
 
-def _append_generated_tail(markdown: str, page, config, files) -> str:
-    """Append the generated member listing to a tag head at build time."""
-    meta = page.meta or {}
-    root = _root_for(config)
-    if root is None or page.file.abs_src_path is None:
-        return markdown
-    page_path = Path(page.file.abs_src_path)
-    if not _is_head(page_path, meta, root):
-        return markdown
-
-    def published(path: Path) -> bool:
-        file = files.get_file_from_path(path.relative_to(root / "kb").as_posix())
-        return file is not None and file.inclusion.is_included()
-
-    section = index_generated.generated_section_for_head(
-        page_path, tag_space=_tag_space(root), published=published if files is not None else None
-    )
-    if not section:
-        return markdown
-    return markdown.rstrip("\n") + "\n\n" + section
-
-
-def _append_full_listing_link(markdown: str, page) -> str:
-    """Link a collection README to its build-time dir-index sibling."""
-    abs_src_path = page.file.abs_src_path
-    if abs_src_path is None:  # generated virtual file
-        return markdown
-    page_path = Path(abs_src_path)
-    if page_path.name != "README.md" or page_path.parent not in _generated_index_dirs:
-        return markdown
-    return (
-        markdown.rstrip("\n")
-        + "\n\n---\n\n[Complete file listing](./dir-index.md) *(generated at build time)*\n"
-    )
+def _link_from_readme(files, listing_uri: str, label: str) -> None:
+    target = Path(listing_uri)
+    readme = files.get_file_from_path(target.with_name("README.md").as_posix())
+    if readme is not None and readme.inclusion.is_included():
+        href = f"./{target.name}"
+        if not {href, target.name}.intersection(find_markdown_links(readme.content_string)):
+            _append_navigation(readme, f"[{label}]({href}) *(generated at build time)*")
 
 
 def _tag_link(tag: str, note_dir: Path, root: Path | None) -> str:
@@ -305,17 +278,6 @@ def _tag_link(tag: str, note_dir: Path, root: Path | None) -> str:
 def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
     install_site_links(page, config, kwargs.get("files"))
     meta = page.meta or {}
-
-    if meta:
-        markdown = _append_generated_tail(markdown, page, config, kwargs.get("files"))
-    markdown = _append_full_listing_link(markdown, page)
-    if page.file.abs_src_path is not None:
-        path = Path(page.file.abs_src_path)
-        if path.name == "README.md" and path.parent.name == "agentic-system-analyses":
-            markdown += "\n\n[Current analyses](./current-analyses.md) *(generated at build time)*\n"
-        if path.name == "README.md" and path.parent.name in LENSES and path.parent.parent.name == LENS_ROOT.name:
-            markdown += "\n\n[Current analyses](./systems.md) *(generated at build time)*\n"
-
 
     status = meta.get("status")
     user_verified = meta.get("user-verified") is True
@@ -333,7 +295,8 @@ def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
         parts.append("**User verified:** yes")
 
     if tags:
-        note_dir = Path(page.file.abs_src_path).parent
+        source = page.file.abs_src_path or Path(config["docs_dir"]) / page.file.src_uri
+        note_dir = Path(source).parent
         root = _root_for(config)
         parts.append(
             "**Tags:** " + ", ".join(_tag_link(tag, note_dir, root) for tag in tags)

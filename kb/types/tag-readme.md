@@ -28,7 +28,7 @@ Use the [membership boundaries](../tags/COLLECTION.md#membership-by-collection) 
 
 ### Checking exact membership
 
-On the published site, the generated listing includes every member, even one recommended above. In a Commonplace checkout, run this from the repository root, replacing `evaluation` with the tag name:
+On the published site, follow the head’s counted link to `<tag>-members.md` (or its HTML equivalent). That listing includes every member, even one recommended above. In a Commonplace checkout, run this from the repository root, replacing `evaluation` with the tag name:
 
 ```bash
 uv run python - evaluation <<'PY'

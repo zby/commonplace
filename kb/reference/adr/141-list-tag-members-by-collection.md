@@ -17,7 +17,7 @@ A source ingest and a theory note can both address the same topic. The former pa
 
 ## Decision
 
-Discover top-level collections by their `COLLECTION.md`. On each shared tag head, append all eligible artifacts carrying that tag, grouped by collection. Include artifacts already recommended by the [selective head](./140-tag-heads-are-selective.md); the generated list alone answers the exact membership question. An eligible tag assignment needs a head, including an assignment on a source analysis. A collection's contract still decides what may be tagged. Do not infer endorsement or permission to add tags from membership.
+Discover top-level collections by their `COLLECTION.md`. Keep each published tag head selective. In both HTML and Markdown, link to a generated sibling named `<tag>-members.md` in Markdown and `<tag>-members.html` in HTML. Show the total and per-collection counts before the reader follows the link. The sibling lists all eligible artifacts carrying that tag, grouped by collection, and links back to the head. Include artifacts already recommended by the [selective head](./140-tag-heads-are-selective.md); the generated list alone answers the exact membership question. An eligible tag assignment needs a head, including an assignment on a source analysis. A collection's contract still decides what may be tagged. Do not infer endorsement or permission to add tags from membership.
 
 Never traverse `kb/workflow-state/` or `kb/sources/.snapshots/` to collect tags. Run data and captured originals are not authored tag assignments. This applies even when both directories are populated in a local checkout. The [tag collection contract](../../tags/COLLECTION.md#membership-by-collection) defines the other exclusions.
 

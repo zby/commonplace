@@ -7,7 +7,7 @@ import pytest
 
 from commonplace.lib.index_generated import (
     collect_tag_space,
-    generated_section_for_head,
+    tag_members_page,
 )
 from tests.commonplace.validation_helpers import write
 
@@ -21,7 +21,7 @@ def test_collector_never_enters_workflow_state_or_source_snapshots(
     tagged = "---\ntags: [topic, topic]\n---\n\n# Example\n"
     member = write(kb / "sources/source.ingest.md", tagged)
     other = write(kb / "new-collection/example.md", tagged)
-    head = write(kb / "tags/topic-README.md", "# Topic\n")
+    write(kb / "tags/topic-README.md", "# Topic\n")
     private = {kb / "workflow-state", kb / "sources/.snapshots"}
     for directory in private:
         write(directory / "nested/private.md", tagged)
@@ -35,9 +35,9 @@ def test_collector_never_enters_workflow_state_or_source_snapshots(
     space = collect_tag_space(tmp_path)
     assert [p for p, _, _ in space.notes_by_tag["topic"]] == [other, member]
     assert all(not space.is_member_candidate(p / "nested/private.md") for p in private)
-    listing = generated_section_for_head(head, tag_space=space)
-    assert "### sources" in listing and "### new-collection" in listing
-    assert "private" not in listing
-    site = generated_section_for_head(head, tag_space=space, published=lambda p: p == member)
+    link, site = tag_members_page("topic", tag_space=space, published=lambda p: p == member)
+    assert link.startswith("[All 2 tagged artifacts](./topic-members.md) — 1 sources, 1 new-collection")
+    assert site.index("## sources") < site.index("## new-collection")
+    assert "private" not in site
     assert "[Example](../sources/source.ingest.md)" in site
     assert "Example (`new-collection/example.md`)" in site
