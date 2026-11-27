@@ -35,7 +35,7 @@ slug for the source title or central claim.
 
 ## Topic search tags
 
-Tracked ingests and source reviews may carry tags in frontmatter. Reuse existing KB tag names, read their heads, and apply their substantive inclusion conditions. Tag the source's contribution as analyzed in the report, not incidental mentions. A tag asserts topical relevance, not endorsement or incorporation into Commonplace theory.
+Tracked ingests and source reviews may carry tags in frontmatter. Reuse existing KB tag names, read their heads, and apply their substantive inclusion conditions. Tag the source's contribution as analyzed in the report, not incidental mentions. A tag asserts topical relevance, not endorsement or incorporation into Commonplace theory. When backfilling older reports, start with a topic lookup that missed a useful source. Use `domains` to find candidates, not to generate tag assignments.
 
 Tagged source analyses appear under `sources` in the generated member list. Validation checks for a head, not assignment fit. Curated heads do not replace source discovery. The collector never enters `kb/sources/.snapshots/`. Keep `domains` for source-specific search terms, and do not copy tags from or add them to immutable snapshots.
 
