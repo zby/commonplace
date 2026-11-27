@@ -115,6 +115,9 @@ source:
 """)
     text = r"""# Analysis
 
+> pattern = r"(?<![a-z0-9])"
+> --- `src/score.py`
+
 > [first](guide.md)
 > --- `docs/README.md`
 
@@ -134,6 +137,7 @@ source:
 [author link](missing.md)
 """
     html = render(cfg, "agentic-system-analyses/retained/example/memory.md", text)
+    assert '(?&lt;![a-z0-9])' in html
     assert f'href="https://github.com/upstream/system/blob/{REVISION}/docs/guide.md"' in html
     assert f'href="https://github.com/upstream/system/blob/{REVISION}/src/engine.py?view=1#L2"' in html
     assert 'unsafe (<code>../../../outside.md</code>)' in html

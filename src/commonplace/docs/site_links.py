@@ -152,6 +152,13 @@ class _QuoteScopes(Preprocessor):
                 continue
             end = citation.line - 1  # Attribution's one-based original source line.
             start = end - len(citation.quote.split("\n"))
+            # A quoted regex lookbehind before a character class contains
+            # '<!['. Older HTMLParser versions mistake it for a declaration
+            # during ProperDocs's raw-anchor scan. Protect the literal '<'
+            # in the rendered quote only; leave the retained evidence intact.
+            for pos in range(start, end):
+                if "(?<![" in lines[pos]:
+                    lines[pos] = lines[pos].replace("(?<![", "(?" + self.md.htmlStash.store("&lt;") + "![")
             begin_marker, end_marker = f"CP{nonce}BEGIN{index}", f"CP{nonce}END{index}"
             context.markers[begin_marker] = (end_marker, base)
             context.ends.add(end_marker)

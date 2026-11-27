@@ -1,4 +1,4 @@
-"""ProperDocs hook: inject local-only site assets into the build.
+"""ProperDocs hooks: publish local site assets and Markdown companions.
 
 Rendering-side assets (e.g. the tablesort init script) are not knowledge-base
 content, so they live here under properdocs-assets/ rather than under docs_dir (kb/).
@@ -35,3 +35,16 @@ def on_files(files, config):
             )
         )
     return files
+
+
+def on_env(env, config, files):
+    """Publish source bytes after page generation and publication filtering."""
+    site = Path(config["site_dir"])
+    for page in files.documentation_pages():
+        target = site / page.src_uri
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(page.content_bytes)
+
+    landing = config["site_url"].rstrip("/") + "/index.md"
+    (site / "llms.txt").write_text(f"[Commonplace]({landing})\n", encoding="utf-8")
+    return env

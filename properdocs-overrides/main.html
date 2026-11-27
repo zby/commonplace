@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  {% if page and page.file.inclusion.is_included() %}<link rel="alternate" type="text/markdown" href="{{ page.file.src_uri|urlencode|url }}">{% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if page and page.file.inclusion.is_included() %}<p><a href="{{ page.file.src_uri|urlencode|url }}">View as Markdown</a></p>{% endif %}
+  {{ super() }}
+{% endblock %}
