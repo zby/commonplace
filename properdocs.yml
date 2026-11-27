@@ -558,6 +558,8 @@ plugins:
         'notes/history-has-one-chance-to-become-checkable.md': 'theory/history-has-one-chance-to-become-checkable.md'
         'notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md': 'theory/program-theory-sustains-search-under-delayed-feedback.md'
         'notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md': 'theory/holding-the-client-fixed-exports-the-least-warrantable-decisions.md'
+        'notes/how-do-we-fight-bloat-in-agent-produced-systems.md': 'theory/questions/how-do-we-fight-bloat-in-agent-produced-systems.md'
+        'notes/how-do-we-value-notes.md': 'theory/questions/how-do-we-value-notes.md'
         'notes/human-analogies-suggest-functions-not-component-boundaries.md': 'theory/human-analogies-suggest-functions-not-component-boundaries.md'
         'notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md': 'theory/human-llm-differences-are-load-bearing-for-knowledge-system-design.md'
         'notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md': 'theory/opposed-recompute-factors-do-not-decide-documentation-segmentation.md'
