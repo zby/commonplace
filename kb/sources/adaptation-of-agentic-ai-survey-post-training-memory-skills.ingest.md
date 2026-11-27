@@ -33,7 +33,7 @@ The wider cluster the report found is intact. The source **compares with** [Depl
 
 The source also **compares with** the later [Agentic Reasoning for Large Language Models](./agentic-reasoning-for-llms-survey.ingest.md) ingest on where adaptation happens. That survey shares two authors with this one and repeats the framing by optimization locus, but it treats memory as a self-evolution substrate rather than as a tool, and its multi-agent memory section reports governed write mechanisms that its general update rule has no step for.
 
-The report's main non-actionable maintenance signal: [research/adaptation-agentic-ai-analysis.md](../theory/research/adaptation-agentic-ai-analysis.md) is an extended analysis of this exact paper but cites only a bare external arXiv URL with no link to the local snapshot or ingest report, breaking local lineage tracking. It also carries thin frontmatter (only `type:`). Mentioned here as context; the citation/frontmatter fix belongs to a maintenance pass, not this ingest.
+The report's main non-actionable maintenance signal: `research/adaptation-agentic-ai-analysis.md` (since retired) is an extended analysis of this exact paper but cites only a bare external arXiv URL with no link to the local snapshot or ingest report, breaking local lineage tracking. It also carries thin frontmatter (only `type:`). Mentioned here as context; the citation/frontmatter fix belongs to a maintenance pass, not this ingest.
 
 ## Extractable Value
 

@@ -31,7 +31,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-This source is a compact design sketch that provides practitioner framing for [Deployed systems can learn from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md): it describes task behavior being improved through surrounding artifacts and feedback, not merely through knowledge accumulation or weight updates. Its four-stage sequence is also a concrete pressure-to-surface example for [Adaptation signals choose pressure; artifact analysis chooses the retained surface](../theory/research/adaptation-agentic-ai-analysis.md), although the post leaves the retained artifact and its authority path unspecified.
+This source is a compact design sketch that provides practitioner framing for [Deployed systems can learn from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md): it describes task behavior being improved through surrounding artifacts and feedback, not merely through knowledge accumulation or weight updates. Its four-stage sequence is also a concrete pressure-to-surface example for [Axes of artifact analysis](../theory/axes-of-artifact-analysis.md), although the post leaves the retained artifact and its authority path unspecified.
 
 ## Extractable Value
 

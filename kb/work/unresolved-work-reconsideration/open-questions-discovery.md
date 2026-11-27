@@ -131,7 +131,6 @@ rg -ni '^#{1,6}[[:space:]]+.*open questions' kb/theory --glob '*.md' | sort
 - [theory/reflection-buys-addressability.md](../../theory/reflection-buys-addressability.md) — line 67: `## Open Questions`
 - [theory/reflection-makes-retained-lessons-second-order.md](../../theory/reflection-makes-retained-lessons-second-order.md) — line 39: `## Open Questions`
 - [theory/reflective-coverage-is-graded-across-representational-forms.md](../../theory/reflective-coverage-is-graded-across-representational-forms.md) — line 81: `## Open Questions`
-- [theory/research/adaptation-agentic-ai-analysis.md](../../theory/research/adaptation-agentic-ai-analysis.md) — line 91: `## Open questions`
 - [theory/retained-theories-may-improve-sample-efficiency.md](../../theory/retained-theories-may-improve-sample-efficiency.md) — line 215: `## Open Questions`
 - [theory/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md](../../theory/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md) — line 89: `## Open Questions`
 - [theory/revising-an-improvement-objective-is-licensed-from-outside-it.md](../../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md) — line 49: `## Open Questions`

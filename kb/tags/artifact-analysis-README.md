@@ -38,7 +38,6 @@ type: types/tag-readme.md
 - [Content kind, lineage, and authority](../theory/artifact-classification-separates-content-kind-lineage-and-authority.md) — separate region-level classification from whole-artifact contracts
 - [Superseded choices and beliefs](../theory/superseded-choices-are-retained-superseded-beliefs-are-not.md) — content kind determines retention and rewrite obligations
 - [Local materialization](../theory/local-materialization-should-outperform-distant-declarations.md) — conjectures benefits of generated local views over distant declarations
-- [Adaptation signals and retained surfaces](../theory/research/adaptation-agentic-ai-analysis.md) — update pressure does not select form or authority
 - [Consumption channels deliver force](../theory/a-consumption-channel-delivers-force-without-the-history-that.md) — channel position can confer authority without earned provenance
 - [Six Commonplace paths](../reports/retained/six-commonplace-paths-establish-broad-addressability-not-completeness.md) — broad authority-path coverage leaves completeness open
 - [Fixed triple, changed use](../theory/evidence/consumer-channel-and-force-can-stay-fixed-while-the-governed-use.md) — consumer, channel and force do not identify a path without its applicability
