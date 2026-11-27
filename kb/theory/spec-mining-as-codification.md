@@ -45,7 +45,7 @@ The Codex team's report on runtime engineering ([Lopopolo, 2026](https://openai.
 ## Open questions
 
 - What's the right threshold for codifying a mined pattern? Too early and you lock in a proxy theory; too late and you miss easy reliability wins.
-- Can spec mining be automated? LLMs could propose candidate rules from failure clusters, then validation suites confirm or reject them. The [automating KB learning](./automating-kb-learning-is-an-open-problem.md) note explores a related version: the "boiling cauldron" mutations (extract, relink, synthesise) are spec mining applied to knowledge structure rather than system behavior.
+- Can spec mining be automated? LLMs could propose candidate rules from failure clusters, then validation suites confirm or reject them. The [automating KB learning](./questions/what-gaps-remain-in-our-learning-loop.md) note explores a related version: the "boiling cauldron" mutations (extract, relink, synthesise) are spec mining applied to knowledge structure rather than system behavior.
 
 ---
 

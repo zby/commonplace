@@ -19,7 +19,7 @@ Reference facts and relationships are not the only retained material that can im
 
 ## Existing mutations can learn different content
 
-The [KB learning loop](./automating-kb-learning-is-an-open-problem.md) proposes extracting, synthesising, reformulating, regrouping, and retiring artifacts. Those operations can already express preference codification, procedure capture, and precedent consolidation. What changes is not necessarily the mutation vocabulary, but which candidates are proposed and what evidence licenses their promotion.
+The [KB learning loop](./questions/what-gaps-remain-in-our-learning-loop.md) proposes extracting, synthesising, reformulating, regrouping, and retiring artifacts. Those operations can already express preference codification, procedure capture, and precedent consolidation. What changes is not necessarily the mutation vocabulary, but which candidates are proposed and what evidence licenses their promotion.
 
 For example, repeated user choices may suggest a preference, while successful traces may suggest a procedure. Neither should become authoritative merely because it appeared once or correlated with success: [choosing what to learn requires both validity and learning-value gates](./choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md).
 

@@ -40,7 +40,7 @@ The [quality signals brainstorm](./quality-signals-for-kb-evaluation.md) propose
 
 ## Relationship to the boiling cauldron
 
-The [automating KB learning](./automating-kb-learning-is-an-open-problem.md) note lists "Synthesise" as one of seven boiling cauldron mutations. This note narrows the problem: generation is not the bottleneck. The unsolved piece is building an oracle that can evaluate synthesis candidates cheaply enough to run at scale without human review of every proposal. Until then, synthesis remains human-triggered — which is fine for a small KB but limits scale.
+The [automating KB learning](./questions/what-gaps-remain-in-our-learning-loop.md) note lists "Synthesise" as one of seven boiling cauldron mutations. This note narrows the problem: generation is not the bottleneck. The unsolved piece is building an oracle that can evaluate synthesis candidates cheaply enough to run at scale without human review of every proposal. Until then, synthesis remains human-triggered — which is fine for a small KB but limits scale.
 
 ## Open questions
 
@@ -53,7 +53,7 @@ The [automating KB learning](./automating-kb-learning-is-an-open-problem.md) not
 Relevant Notes:
 
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: synthesis is an instance of the general principle; generation outpaces verification, so automation stalls
-- [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — narrows: that note lists seven mutations; this note develops why one of them (synthesis) has a specific bottleneck distinct from the others
+- [automating KB learning is an open problem](./questions/what-gaps-remain-in-our-learning-loop.md) — narrows: that note lists seven mutations; this note develops why one of them (synthesis) has a specific bottleneck distinct from the others
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — parallels: same oracle-dependency pattern in a different domain (memory management vs synthesis), same conclusion that the bottleneck is the oracle not the mechanism
 - [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidenced-by: automatic capture is common while complete lifecycle curation is rare; the extraction-versus-synthesis contrast remains this note's working diagnosis
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — potential solution: composite oracle from weak signals, untested for synthesis evaluation specifically

@@ -35,7 +35,7 @@ Naive deep search stays at level 1. The `/connect` skill already operates at lev
 - **Synthesis opportunities** — two results that together imply something neither says alone
 - **New queries** — gap/synthesis analysis generates new search queries the original user couldn't have formulated
 
-This is the [boiling cauldron](./automating-kb-learning-is-an-open-problem.md) loop applied to search: propose mutations, evaluate, iterate.
+This is the [boiling cauldron](./questions/what-gaps-remain-in-our-learning-loop.md) loop applied to search: propose mutations, evaluate, iterate.
 
 **Phase 4: Bridge to KB.** Only after the search graph is internally coherent, connect it to the existing KB. This is where the KB's structural understanding elevates raw results.
 
@@ -70,7 +70,7 @@ Even single-pass "search, snapshot, connect, bridge, report" would validate whet
 - What's the right granularity for snapshotting? Full pages vs. extracted passages?
 - Should the temporary workspace use the same document types as the KB, or a lighter format? Since [skills are typed callables](./instructions-are-typed-callables.md), deep search's type signature would be something like `query + context → research-report + source-reviews` — a compound output that chains multiple existing skill signatures.
 - How does the iteration budget interact with the two learning mechanisms — is this [constraining](./definitions/constraining.md) (constraining search), derivation (extracting a procedure from exploration), or something else?
-- Can the extract/connect/review cycle be validated through enriched search before investing in the full [boiling cauldron](./automating-kb-learning-is-an-open-problem.md)?
+- Can the extract/connect/review cycle be validated through enriched search before investing in the full [boiling cauldron](./questions/what-gaps-remain-in-our-learning-loop.md)?
 - How should the process handle search results that *contradict* existing KB content? The two value propositions are both additive (connect results to each other, connect to KB). Contradiction detection is a different operation — it challenges the KB rather than extending it.
 
 ---
@@ -78,7 +78,7 @@ Even single-pass "search, snapshot, connect, bridge, report" would validate whet
 Relevant Notes:
 
 - [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — provides the recognition-cost grading that distinguishes this from naive search
-- [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — the boiling cauldron concept maps directly to the iterative search loop
+- [automating KB learning is an open problem](./questions/what-gaps-remain-in-our-learning-loop.md) — the boiling cauldron concept maps directly to the iterative search loop
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — deep search results are workshop material needing extraction bridges
 - [linking-theory](./linking-theory.md) — link quality criteria inform how inter-result connections should be expressed
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — centrality metrics for pruning search result graphs

@@ -33,7 +33,7 @@ Evaluate a retained change with the other rules it will encounter. Record the co
 
 The capacity-change account in [learning is not only about generality](./learning-is-not-only-about-generality.md) does not require weight updates. Here, deployment evidence drives a proposed constraint, evaluation selects it, and operative retention changes later behavior, which makes it [selection-based learning](./definitions/selection-based-learning.md). The relevant capacity belongs to the deployed system, including its instructions, tools and checks.
 
-This claim concerns that evaluated adaptation loop. An arbitrary durable edit is not evidence of improvement, and not all adaptation constrains behavior: new evidence can instead justify reopening a commitment. [Automating the judgment-heavy parts](./automating-kb-learning-is-an-open-problem.md) includes deciding what to commit, how to evaluate it and when to reconsider it.
+This claim concerns that evaluated adaptation loop. An arbitrary durable edit is not evidence of improvement, and not all adaptation constrains behavior: new evidence can instead justify reopening a commitment. [Automating the judgment-heavy parts](./questions/what-gaps-remain-in-our-learning-loop.md) includes deciding what to commit, how to evaluate it and when to reconsider it.
 
 ## Scope
 
@@ -49,4 +49,4 @@ Relevant Notes:
 - [Learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: capacity change can concern reliability, speed or cost
 - [The verifiability gradient](./verifiability-gradient.md) — mechanism: compares checks for particular requirements without ranking artifact forms
 - [Selection-based learning](./definitions/selection-based-learning.md) — defined-in: the kind of learning an evaluated, retained constraint is a case of
-- [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — extends: develops the automation problem for selecting and evaluating retained changes
+- [Automating KB learning is an open problem](./questions/what-gaps-remain-in-our-learning-loop.md) — extends: develops the automation problem for selecting and evaluating retained changes

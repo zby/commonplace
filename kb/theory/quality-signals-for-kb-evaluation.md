@@ -11,7 +11,7 @@ tags: [kb-maintenance, observability, curation, evaluation]
 
 Brainstorming: what signals — structural, semantic, or hybrid — could serve as soft oracles for KB quality? No single signal is reliable, but many weak signals combined might provide enough guidance to drive a learning loop without waiting for usage data.
 
-The analogy: AlphaZero learns by self-play against a perfect verifier. It "is provided with perfect knowledge of the game rules" ([AlphaZero preprint](../sources/alphazero-chess-shogi-self-play.ingest.md), verbatim), and the rules score every finished game to give the outcome its network is trained to predict. KBs don't have such a verifier. But we don't need a perfect verifier to learn — we need a signal that's better than random. Can we manufacture one from a basket of imperfect signals? Framed on the [oracle-strength spectrum](./oracle-strength-spectrum.md), the question is whether combining many no-oracle or weak-oracle signals can manufacture a usable soft oracle — hardening the guidance available to the [learning loop](./automating-kb-learning-is-an-open-problem.md) without requiring the usage data it currently lacks.
+The analogy: AlphaZero learns by self-play against a perfect verifier. It "is provided with perfect knowledge of the game rules" ([AlphaZero preprint](../sources/alphazero-chess-shogi-self-play.ingest.md), verbatim), and the rules score every finished game to give the outcome its network is trained to predict. KBs don't have such a verifier. But we don't need a perfect verifier to learn — we need a signal that's better than random. Can we manufacture one from a basket of imperfect signals? Framed on the [oracle-strength spectrum](./oracle-strength-spectrum.md), the question is whether combining many no-oracle or weak-oracle signals can manufacture a usable soft oracle — hardening the guidance available to the [learning loop](./questions/what-gaps-remain-in-our-learning-loop.md) without requiring the usage data it currently lacks.
 
 ## Static signals (measurable at any point)
 
@@ -66,7 +66,7 @@ Testable by: run all signals on the current KB, identify the notes each signal f
 
 ## What could drive a learning loop
 
-If the composite signal is good enough, the boiling cauldron from [the KB learning loop](./automating-kb-learning-is-an-open-problem.md) could work:
+If the composite signal is good enough, the boiling cauldron from [the KB learning loop](./questions/what-gaps-remain-in-our-learning-loop.md) could work:
 1. Propose a mutation (extract, split, synthesise, relink, regroup)
 2. Measure composite quality score before and after
 3. Accept mutations that improve the score, reject those that don't
@@ -142,7 +142,7 @@ This suggests the quality signals above need a *negative* signal specifically fo
 
 Relevant Notes:
 
-- [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the problem this note addresses: the learning loop needs quality gates, and this note proposes the composite signal that could serve as one
+- [automating-kb-learning-is-an-open-problem](./questions/what-gaps-remain-in-our-learning-loop.md) — the problem this note addresses: the learning loop needs quality gates, and this note proposes the composite signal that could serve as one
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds the framing: each quality signal is a weak oracle, and the composite is an oracle-hardening strategy (manufacturing a soft oracle from many no-oracle signals)
 - [text-testing-framework](./text-testing-framework.md) — the test pyramid (deterministic / LLM rubric / corpus) maps onto the signal categories here; the framework provides the concrete testing infrastructure these signals would feed
 - [automated-tests-for-text](./automated-tests-for-text.md) — the condensed observation that text can be tested like software; this note extends that by asking which tests, combined, could drive automated improvement

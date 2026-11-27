@@ -51,6 +51,6 @@ Recurring theoretical questions in [kb/theory/questions/](../theory/questions/RE
 
 ## Gaps
 
-- [automating-kb-learning-is-an-open-problem](../theory/automating-kb-learning-is-an-open-problem.md) — the open problem is automating judgment-heavy mutations (connections, groupings, synthesis)
+- [automating-kb-learning-is-an-open-problem](../theory/questions/what-gaps-remain-in-our-learning-loop.md) — the open problem is automating judgment-heavy mutations (connections, groupings, synthesis)
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — learning must improve action capacity, not just retrieval
 - [brainstorming-how-to-enrich-web-search](../theory/brainstorming-how-to-enrich-web-search.md) — enriching web search by temporarily expanding the corpus and applying connection methodology

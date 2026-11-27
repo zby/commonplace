@@ -38,7 +38,7 @@ The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling m
 
 - [sift-kg](../agent-memory-systems/reviews/sift-kg.md) (extends) — Both are LLM-driven document-to-knowledge-graph pipelines with explicit stage boundaries, but they make opposite schema bets: sift-kg discovers schemas from corpus samples, Cognee requires custom Pydantic schemas upfront. This contrast sharpens the schema-discovery-vs-schema-definition axis. Strongest unlinked connection found.
 
-- [automating-kb-learning-is-an-open-problem](../theory/automating-kb-learning-is-an-open-problem.md) (exemplifies) — Cognee's cognify automates narrow-scope operations (classification, chunking, entity extraction, summarization) but the memify gap concretely marks the boundary between automatable and open.
+- [automating-kb-learning-is-an-open-problem](../theory/questions/what-gaps-remain-in-our-learning-loop.md) (exemplifies) — Cognee's cognify automates narrow-scope operations (classification, chunking, entity extraction, summarization) but the memify gap concretely marks the boundary between automatable and open.
 
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (exemplifies) — Pipeline is an explicit context efficiency trade-off: invest multiple LLM calls at ingestion to produce structured knowledge cheaply queryable at retrieval time.
 
@@ -67,7 +67,7 @@ Based on the comparative review now being written, the focus is on what remains 
 
 2. **Custom Pydantic schemas as a borrowable pattern for structured note extraction.** Cognee's typed graph models (e.g., `ScientificPaper` with specific fields) control what entities and relationships the LLM extracts. This is a concrete mechanism that could inform how commonplace's `/ingest` skill structures its extraction — defining Pydantic-style schemas for what to extract from different source types. [experiment]
 
-3. **The memify gap as evidence for the automation boundary thesis.** Cognee's memify phase promises pruning, reweighting, and strengthening of memory structures, but ships only rule associations. Even a well-funded team with explicit enrichment goals hits the same wall that [automating-kb-learning-is-an-open-problem](../theory/automating-kb-learning-is-an-open-problem.md) predicts. This data point is captured in the comparative review's curation dimension but could strengthen the automation boundary note directly. [quick-win]
+3. **The memify gap as evidence for the automation boundary thesis.** Cognee's memify phase promises pruning, reweighting, and strengthening of memory structures, but ships only rule associations. Even a well-funded team with explicit enrichment goals hits the same wall that [automating-kb-learning-is-an-open-problem](../theory/questions/what-gaps-remain-in-our-learning-loop.md) predicts. This data point is captured in the comparative review's curation dimension but could strengthen the automation boundary note directly. [quick-win]
 
 4. **Pipeline-first composability vs agent-driven memory management as a concrete trade-off.** Cognee's `run_pipeline(tasks)` model is the purest example of treating memory construction as a data engineering problem rather than an agent reasoning problem. The comparative review covers this under agency models, but the trade-off — predictability and debuggability vs contextual sensitivity — deserves explicit naming. [just-a-reference]
 

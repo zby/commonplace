@@ -58,7 +58,7 @@ False-positive generation is caught by machinery already running in the loop, at
 - The claim is scoped to the proposal-selection subtype of [self-improvement](./definitions/self-improving-system.md) — the architecture that has an acceptance step at all. A direct evidence-driven update pathway (gradient, reward, viability) adopts every update, so its failure surface is the adequacy of the objective and the update rule, not a gate's false positives.
 - The claim assumes evaluation is the terminal filter. If a system adds monitoring or rollback downstream, that is not a counterexample — it is more evaluation, and it inherits the same bound.
 - It holds whether evaluation runs before a candidate becomes operative or after. Post-hoc evaluation changes when the bad change is caught, not whether an unfiltered acceptance is retained.
-- It ranks *what to automate first* under a fixed oracle. It does not say search is easy: [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md), and the judgment-heavy parts of search remain hard for their own reasons.
+- It ranks *what to automate first* under a fixed oracle. It does not say search is easy: [automating KB learning is an open problem](./questions/what-gaps-remain-in-our-learning-loop.md), and the judgment-heavy parts of search remain hard for their own reasons.
 
 ---
 
@@ -68,4 +68,4 @@ Relevant Notes:
 - [Self-improving system](./definitions/self-improving-system.md) — extends: tells the autonomy gradient which function to climb first, and why the other must be bought
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why evaluation is the bounded function and its errors are the permanent ones
 - [Maintenance capacity must match harmful-artifact inflow](./maintenance-capacity-must-match-harmful-artifact-inflow.md) — evidenced-by: the capacity failure that automated search produces when evaluation cannot neutralize the harmful candidates it admits
-- [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — contrasts: search is the safer function to automate, which does not make it the easy one
+- [Automating KB learning is an open problem](./questions/what-gaps-remain-in-our-learning-loop.md) — contrasts: search is the safer function to automate, which does not make it the easy one

@@ -43,7 +43,7 @@ The corpus count is corroboration of an asymmetric capability distribution, not 
 
 ## Open Questions
 
-- Which signals show that a structural element has outlived its question, and what rule should make that signal trigger review or retirement rather than passive accumulation? [Operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) develops signals for the narrower case of a brittle proxy component, but not for structural obsolescence in general. [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) places retirement among the judgment-heavy mutations whose oracle remains unresolved.
+- Which signals show that a structural element has outlived its question, and what rule should make that signal trigger review or retirement rather than passive accumulation? [Operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) develops signals for the narrower case of a brittle proxy component, but not for structural obsolescence in general. [Automating KB learning is an open problem](./questions/what-gaps-remain-in-our-learning-loop.md) places retirement among the judgment-heavy mutations whose oracle remains unresolved.
 - Which observable measures distinguish harmless structural variety from overlap that is already imposing routing, maintenance, or migration cost?
 
 ---

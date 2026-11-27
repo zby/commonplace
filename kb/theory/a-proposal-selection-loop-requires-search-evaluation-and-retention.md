@@ -34,7 +34,7 @@ Search range and evaluation strength are independent limits:
 
 > Evaluation cannot select a candidate that search never reaches.
 
-A strong verifier can improve judgments within a narrow generator's range, but it cannot expand that range. [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) gives one concrete search space—extract, split, synthesize, relink, regroup, reformulate, retire—whose judgment-heavy parts remain substantially human-driven.
+A strong verifier can improve judgments within a narrow generator's range, but it cannot expand that range. [Automating KB learning is an open problem](./questions/what-gaps-remain-in-our-learning-loop.md) gives one concrete search space—extract, split, synthesize, relink, regroup, reformulate, retire—whose judgment-heavy parts remain substantially human-driven.
 
 ## Evaluation determines which changes may remain operative
 

@@ -45,7 +45,7 @@ Five genuine note connections, all in the KB's learning-theory cluster, plus one
 
 - **[llm-learning-phases-fall-between-human-learning-modes](../theory/llm-learning-phases-fall-between-human-learning-modes.md) creates a methodological tension,** warning that the paper's cognitive-science analogies are suggestive but not structurally reliable.
 
-- **[automating-kb-learning-is-an-open-problem](../theory/automating-kb-learning-is-an-open-problem.md) sharpens why the paper remains conceptual:** the hard part is not naming a meta-control layer but manufacturing oracles for the learning operations it would need to automate.
+- **[automating-kb-learning-is-an-open-problem](../theory/questions/what-gaps-remain-in-our-learning-loop.md) sharpens why the paper remains conceptual:** the hard part is not naming a meta-control layer but manufacturing oracles for the learning operations it would need to automate.
 
 ## Extractable Value
 
@@ -67,7 +67,7 @@ A versioned prompt, test, or routing rule gives a deployed system somewhere othe
 
 The cognitive-science framing does rhetorical rather than explanatory work. [llm-learning-phases-fall-between-human-learning-modes](../theory/llm-learning-phases-fall-between-human-learning-modes.md) makes the relevant objection: human and animal learning modes do not map cleanly onto LLM phases, so analogies to development, somatic signals, or child learning can illuminate possibilities without licensing structural inference. The paper's strongest claims survive after removing the biological framing — systems need a control layer for routing information and objectives — which suggests the analogy is ornamental.
 
-System M is under-specified enough to risk unfalsifiability. It must select inputs, modulate rewards, switch between learning and inference, manage memory, and coordinate Systems A and B — but the paper does not say what signals make these choices correct, how those signals are learned, or what failure would look like. [automating-kb-learning-is-an-open-problem](../theory/automating-kb-learning-is-an-open-problem.md) is the relevant note: naming a control plane is much easier than building the oracle that tells it what to do.
+System M is under-specified enough to risk unfalsifiability. It must select inputs, modulate rewards, switch between learning and inference, manage memory, and coordinate Systems A and B — but the paper does not say what signals make these choices correct, how those signals are learned, or what failure would look like. [automating-kb-learning-is-an-open-problem](../theory/questions/what-gaps-remain-in-our-learning-loop.md) is the relevant note: naming a control plane is much easier than building the oracle that tells it what to do.
 
 The paper also omits comparison against partial implementations. It does not engage systems that revise their own instructions after use, live RL systems like [OpenClaw-RL](./openclaw-rl-train-any-agent-simply-by-talking.ingest.md), or trace-learning systems that already learn from experience on narrower substrates. Without those comparisons, the paper cannot tell us whether its integrated architecture is necessary — only that it would be desirable if it worked.
 

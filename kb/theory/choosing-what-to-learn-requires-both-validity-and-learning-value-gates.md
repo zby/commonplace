@@ -21,13 +21,13 @@ A **learning-value gate** asks whether promoting the candidate would improve the
 
 For KB learning, the same split should govern note, link, and synthesis promotion. A proposed note can be faithful but redundant. A proposed link can be plausible but not navigationally useful. A proposed synthesis can be valid but too narrow to change future answers.
 
-This refines [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md). The open problem is not one generic oracle for "should we learn this?" It is at least two oracles: one for groundedness and one for value relative to the current system's gaps. A single score can combine them for ranking, but the underlying checks should remain separate so failures are diagnosable.
+This refines [automating KB learning is an open problem](./questions/what-gaps-remain-in-our-learning-loop.md). The open problem is not one generic oracle for "should we learn this?" It is at least two oracles: one for groundedness and one for value relative to the current system's gaps. A single score can combine them for ranking, but the underlying checks should remain separate so failures are diagnosable.
 
 ---
 
 Relevant Notes:
 
-- [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — extends: gives the boiling-cauldron promotion loop a diagnosable acceptance interface, separating contamination control from clutter control
+- [automating KB learning is an open problem](./questions/what-gaps-remain-in-our-learning-loop.md) — extends: gives the boiling-cauldron promotion loop a diagnosable acceptance interface, separating contamination control from clutter control
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: both gates require oracles, but their oracle targets differ
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — parallels: learned curation policies work only when the promotion signal is well defined
 - [Self-training Large Language Models through Knowledge Detection](../sources/self-training-large-language-models-through-knowledge-detection.ingest.md) — evidenced-by: paper-level account of consistency filtering and knowledge filtering as separate stages

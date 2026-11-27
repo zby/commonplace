@@ -33,7 +33,7 @@ But five sources — theory, market economics, supply-side capability prediction
 
 If this holds, the leverage point for expanding automation is not better models but better oracles. The engineering priority becomes: invest in verification infrastructure before capability. [Spec mining](./spec-mining-as-codification.md) manufactures oracles. [Error correction](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) amplifies weak ones. The path to automating any task starts with the question: *can we build a verifier?*
 
-This applies to KB curation directly. [Automating KB learning](./automating-kb-learning-is-an-open-problem.md) stalls on judgment-heavy mutations (synthesis, connection quality, what to skip) — exactly the operations where oracle construction is hardest. The bottleneck is not that agents can't generate candidate mutations; it's that no one can cheaply verify whether a proposed mutation improves the KB.
+This applies to KB curation directly. [Automating KB learning](./questions/what-gaps-remain-in-our-learning-loop.md) stalls on judgment-heavy mutations (synthesis, connection quality, what to skip) — exactly the operations where oracle construction is hardest. The bottleneck is not that agents can't generate candidate mutations; it's that no one can cheaply verify whether a proposed mutation improves the KB.
 
 ## Caveats
 
@@ -50,7 +50,7 @@ Relevant Notes:
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: the theoretical gradient this note claims is a general principle; provides the vocabulary (hard/soft/interactive/delayed/no oracle)
 - [the-augmentation-automation-boundary-is-discrimination-not-accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — foundation: identifies the mechanism (per-instance discrimination, not aggregate accuracy) that explains why the boundary exists
-- [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — exemplifies: KB curation stalls at the same boundary — judgment-heavy mutations lack oracles
+- [automating-kb-learning-is-an-open-problem](./questions/what-gaps-remain-in-our-learning-loop.md) — exemplifies: KB curation stalls at the same boundary — judgment-heavy mutations lack oracles
 - [evaluation-automation-is-phase-gated-by-comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — refines: inside one optimization loop, verifier construction is itself staged (comprehension -> specification -> generalization)
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — enables: the manufacturing step for building oracles where none exist
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: amplifying weak oracles into useful ones

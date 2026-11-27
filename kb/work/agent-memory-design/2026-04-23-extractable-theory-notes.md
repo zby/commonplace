@@ -226,14 +226,14 @@ Existing overlaps:
 
 - Decision-record practices sometimes include "alternatives considered," but many durable artifacts do not.
 - [Ephemeral computation prevents accumulation](../../theory/ephemeral-computation-prevents-accumulation.md) gives the broader anti-ephemerality premise.
-- [Automating KB learning is an open problem](../../theory/automating-kb-learning-is-an-open-problem.md) supplies the promotion difficulty.
+- [Automating KB learning is an open problem](../../theory/questions/what-gaps-remain-in-our-learning-loop.md) supplies the promotion difficulty.
 - [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) grounds the split between knowledge record and system-definition companion cue.
 - [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) grounds why failed attempts need a promotion standard rather than automatic graduation.
 
 Suggested links:
 
 - `grounds`: [Ephemeral computation prevents accumulation](../../theory/ephemeral-computation-prevents-accumulation.md)
-- `extends`: [Automating KB learning is an open problem](../../theory/automating-kb-learning-is-an-open-problem.md)
+- `extends`: [Automating KB learning is an open problem](../../theory/questions/what-gaps-remain-in-our-learning-loop.md)
 - `grounds`: [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md)
 - `grounds`: [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md)
 - `see-also`: [Designing a Memory System for LLM-Based Agents](../../theory/designing-agent-memory-systems.md)
@@ -325,7 +325,7 @@ Suggested links:
 - `grounds`: [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md)
 - `evidence`: [Trace-learning techniques in related systems](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md)
 - `grounds`: [Memory management policy is learnable but oracle-dependent](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md)
-- `extends`: [Automating KB learning is an open problem](../../theory/automating-kb-learning-is-an-open-problem.md)
+- `extends`: [Automating KB learning is an open problem](../../theory/questions/what-gaps-remain-in-our-learning-loop.md)
 
 ### Graduation should wait until retrieval cost exceeds maintenance cost
 
