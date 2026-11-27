@@ -85,7 +85,7 @@ limited to one hop at a time. Against
 it substitutes recorded version keys for timestamps and adds non-transitive
 flagging, a design choice no KB note discusses. It is the code-side baseline
 that [LLM recompute cost shifts the store-vs-recompute balance](../theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md)
-argues LLM costs shift. [CocoIndex](../agent-memory-systems/reviews/cocoindex.md)
+argues LLM costs shift. [CocoIndex](../agentic-system-analyses/retained/cocoindex-io--cocoindex/memory.md)
 is the nearest system comparison: both key recomputation on fingerprints of
 code and inputs, but CocoIndex applies minimal updates to declared target
 state while Dagster leaves re-materialization to an operator or automation
@@ -136,4 +136,4 @@ Relevant Notes:
 - [Source changes should surface downstream review targets](../theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) — is-evidence-for: a deployed forward query that records consumed input versions and surfaces affected downstream assets, one hop at a time
 - [Link graph plus timestamps enables make-like staleness detection](../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — compares-with: on the staleness-signal axis; recorded version keys and non-transitive flagging instead of timestamps
 - [LLM recompute cost shifts the store-vs-recompute balance](../theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md) — compares-with: on the store-vs-recompute axis; Dagster is the deterministic, cost-justified caching baseline
-- [CocoIndex](../agent-memory-systems/reviews/cocoindex.md) — compares-with: on incremental materialization of derived stores keyed on code and input fingerprints
+- [CocoIndex](../agentic-system-analyses/retained/cocoindex-io--cocoindex/memory.md) — compares-with: on incremental materialization of derived stores keyed on code and input fingerprints
