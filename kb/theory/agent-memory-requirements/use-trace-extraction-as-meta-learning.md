@@ -15,11 +15,11 @@ Without an explicit signal-quality distinction, automated or semi-automated extr
 
 ## Readable-Artifact And Distributed-Parametric Learning
 
-This requirement mainly describes readable memory artifacts because they can be inspected, diffed, promoted, and rolled back. Systems such as [AgeMem](../../agent-memory-systems/lightweight/agemem.md) show a different path: traces train a distributed-parametric policy for Add/Update/Delete/Retrieve/Summary/Filter actions. That path belongs where the oracle is strong enough to justify learned memory-management policy; it should not be smuggled in as ordinary artifact promotion.
+This requirement mainly describes readable memory artifacts because they can be inspected, diffed, promoted, and rolled back. The [AgeMem paper](../../agentic-system-analyses/retained/2601-01885v1/memory.md) describes a different path: scored experience trains a distributed-parametric policy for Add/Update/Delete/Retrieve/Summary/Filter actions. That path belongs where the oracle is strong enough to justify learned memory-management policy; it should not be smuggled in as ordinary artifact promotion.
 
 ## Memory Evolution
 
-Extraction needs an evolution operation, not only creation. New memory may update, split, merge, re-tag, or contextualize nearby old memory. The comparative review flags [A-MEM's evolution step](../../agent-memory-systems/agentic-memory-systems-comparative-review.md) because new notes update neighboring notes' context and tags, while [Hindsight](../../agent-memory-systems/reviews/hindsight.md) and [Cludebot](../../agent-memory-systems/reviews/cludebot.md) show CRUD and dream-cycle variants. The requirement is not that every system automate this immediately; it is that the architecture leave room for old memory to be revised by new evidence instead of only appending candidates.
+Extraction needs an evolution operation, not only creation. New memory may update, split, merge, re-tag, or contextualize nearby old memory. The comparative review flags [A-MEM's evolution step](../../agent-memory-systems/agentic-memory-systems-comparative-review.md) because new notes update neighboring notes' context and tags, while [Hindsight](../../agentic-system-analyses/retained/vectorize-io--hindsight/memory.md#mem-rte-observation-consolidation) revises derived observations with source IDs. [Cludebot](../../agentic-system-analyses/retained/sebbsssss--cludebot/memory.md#mem-rte-dream-compaction) illustrates a different choice: its main dream cycle can mark original memories as compacted without deleting them. The requirement is not that every system automate this immediately; it is that the architecture leave room for old memory to be revised by new evidence instead of only appending candidates.
 
 ## Methods
 

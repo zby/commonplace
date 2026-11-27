@@ -75,7 +75,7 @@ The requirements above define whether a memory system improves contextual compet
 - Portable degradation: if the specialized harness disappears, markdown, git, static sites, and ordinary scripts can still keep the memory inspectable.
 - Inspectable generated surfaces: generated indexes, reports, and compiled views are easier to trust when they are rebuildable, diffable, and tied to visible source artifacts.
 
-When a memory system must serve many agent clients, packaged surfaces can become architectural rather than cosmetic. [ByteRover](../agent-memory-systems/reviews/byterover-cli.md) ships CLI, daemon, MCP, hooks, rules, skills, connectors, and version-control surfaces around one substrate, while [Hindsight](../agent-memory-systems/reviews/hindsight.md) invests in many framework integrations.
+When a memory system must serve many agent clients, packaged surfaces can become architectural rather than cosmetic. [ByteRover](../agentic-system-analyses/retained/campfirein--byterover-cli/runtime.md#rt-rte-topic-admission) exposes the same topic writer through the CLI and MCP, but only the CLI manages a correction attempt after invalid input. [Hindsight](../agentic-system-analyses/retained/vectorize-io--hindsight/runtime.md#rt-rte-provider-round) uses a Claude Code adapter to collect proposed retrieval calls; Hindsight still executes them. A client interface can change who retries a write or who executes a read without changing where the memory lives.
 
 ## Partial Memory Subsystems
 

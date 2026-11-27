@@ -11,7 +11,7 @@ Different consumers need different memory surfaces. Those surfaces should meet e
 
 No single surface satisfies that spread. Search is useful for question answering. Navigation is useful when the reader must follow articulated relationships. Triggered activation is useful when the agent would not know to ask. Trace replay is useful when a summary is under suspicion. Active work artifacts are useful when the task is not yet finished.
 
-Retrieval surfaces should also be allowed to say "the evidence is weak." Returning a best match is not the same as returning sufficient evidence. [Cludebot](../../agent-memory-systems/reviews/cludebot.md) makes this explicit with an experimental confidence gate that scores coverage, top result strength, diversity, and agreement, then tells the caller when the memory context should be treated as weak.
+Retrieval surfaces should also be allowed to say "the evidence is weak." Returning a best match is not the same as returning sufficient evidence. [Cludebot](../../agentic-system-analyses/retained/sebbsssss--cludebot/epistemic.md#epi-rte-confidence-consumption) exposes that distinction differently to two consumers. Its response service can ask the model to hedge; its MCP client receives a score and a sufficiency flag. Neither route forces the caller to abstain.
 
 ## Methods
 

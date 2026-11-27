@@ -49,7 +49,7 @@ No single type wins all four. A system needs a mix.
 
 ## One system can mix pointer types
 
-OpenViking illustrates why the categories are not competing architectures. Its [code-grounded review](../agent-memory-systems/reviews/openviking.md) records generated L0 abstracts and L1 overviews over L2 content. Those are fixed views once retained. The same system's `find` and `search` tools return query-ranked results with URIs, abstracts, and scores, while hierarchical retrieval can use vector search, score propagation, and reranking. Those are query-time pointers under this note's definition.
+OpenViking illustrates why the categories are not competing architectures. Its [historical review](../agent-memory-systems/reviews/openviking.md) records generated L0 abstracts and L1 overviews over L2 content. Those are fixed views once retained. In the [current analysis of session search](../agentic-system-analyses/retained/volcengine--openviking/runtime.md#rt-rte-session-search), the retriever searches the vector index for each query and can rerank candidate abstracts. It does not descend the directory tree. Direct `find` skips model reranking. Those are query-time pointers under this note's definition.
 
 Commonplace's titles and descriptions illustrate fixed pointers, while its link phrases illustrate crafted pointers. The comparison establishes that a system can combine categories at different stages. It does not establish which mix produces better navigation outcomes, nor does the OpenViking review establish a per-link prose equivalent to Commonplace's context phrases.
 
@@ -73,5 +73,4 @@ Relevant Notes:
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the cost spectrum is a context efficiency trade-off
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — exemplifies: fixed and query-time pointers instantiate its broader split between a precomputed fast path and live work for the current case
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the tier structure defines the resolution gradient; query-time computation could fill gaps dynamically
-- [OpenViking](../agent-memory-systems/reviews/openviking.md) — evidenced-by: the code-grounded review shows one system combining fixed L0/L1 sidecars with ranked and reranked query-time selection
 - [Advantages of Query Biased Summaries in Information Retrieval](../sources/tombros-sanderson-query-biased-summaries.ingest.md) — evidenced-by: query-biased summaries improved human relevance judgments against a static-summary baseline, without establishing the agent-facing taxonomy or cost model

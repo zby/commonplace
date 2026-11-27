@@ -15,7 +15,7 @@ Text-heavy traces are often cheap to retain: prompts, model outputs, tool calls,
 
 ## Session Lifecycle
 
-Session lifecycle is part of this requirement, not just an implementation detail. A realistic system needs a boundary where live work becomes durable evidence: commit, checkpoint, archive, retry, or abandon. [OpenViking](../../agent-memory-systems/reviews/openviking.md) is the strongest reviewed example: `commit_async` snapshots a live session, archives it, records a task, and runs extraction in the background. [WUPHF](../../agent-memory-systems/reviews/wuphf.md) makes the same pressure visible from the other side by treating fresh sessions as the runtime default and rebuilding continuity through broker-selected memory.
+Session lifecycle is part of this requirement, not just an implementation detail. A realistic system needs a boundary where live work becomes durable evidence: commit, checkpoint, archive, retry, or abandon. [OpenViking](../../agentic-system-analyses/retained/volcengine--openviking/runtime.md#rt-rte-session-commit) returns a task ID and archive URI when it accepts a session commit. Extraction runs later: acceptance means the evidence was queued, not that it has already become reusable memory. [WUPHF](../../agentic-system-analyses/retained/nex-crm--wuphf/memory.md#mem-rte-memory-brief) illustrates the read side: a fresh turn can receive a selected memory brief rather than the preceding conversation.
 
 ## Methods
 
