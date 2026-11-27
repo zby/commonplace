@@ -61,7 +61,6 @@ extra_javascript:
   - javascripts/tablesort-init.js
   - javascripts/giscus-comments.js
 plugins:
-  - search
   - redirects:
       redirect_maps:
         'agent-memory-systems/landscape.md': 'agent-memory-systems/README.md'
