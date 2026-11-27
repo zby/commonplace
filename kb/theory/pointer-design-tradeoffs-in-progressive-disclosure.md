@@ -33,7 +33,7 @@ Each phrase leverages the surrounding argument the agent already has loaded — 
 
 If context-specificity were the only axis, the answer would be simple: compute the most specific pointer you can afford. As inference gets cheaper, query-time computation replaces fixed pointers. Problem solved.
 
-But [agent statelessness](./agent-statelessness-makes-routing-architectural-not-learned.md) complicates this. Agents start cold every session. Routing is permanent architecture, not scaffolding they outgrow. And the [degradation cliff](./agent-statelessness-makes-routing-architectural-not-learned.md) is unforgiving: when routing is unavailable, the agent doesn't slow down — it falls into generic LLM behavior, confidently executing without the KB's methodology.
+A query-specific snippet does no work if the search service is down. That removes one route, not necessarily the document: even [an agent starting without memory of an earlier lookup](./agent-statelessness-makes-routing-architectural-not-learned.md) may find it through an index or a link. To test whether the missing route matters, start with the task description and check whether the agent still finds the document before it acts.
 
 Fixed pointers are highly available. They are retained with the artifact, have the same content on every read, and need no query-time pipeline. That does not make them accurate: a fixed description can remain confidently available after its target changes. Query-time pointers have the opposite exposure. Their existence depends on retrieval or inference running, and their accuracy depends on those mechanisms selecting and characterizing the target well. Crafted link phrases are available only where an author supplied them; when present, their accuracy still depends on the author's judgment and on later target drift.
 
@@ -60,16 +60,15 @@ Commonplace's titles and descriptions illustrate fixed pointers, while its link 
 | Availability | Retained with artifact | Only if pipeline runs | Only at authored link sites |
 | Quality ceiling | Generic | Query-specific | Argument-specific |
 | Scales to global ops | Yes | Yes (at cost) | No |
-| Failure mode | Stale if source changes | Bad retrieval/rerank/inference → cliff | Absent or weak |
+| Failure mode | Stale if source changes | Missing result or misleading ranking | Absent or weak |
 
-The practical path: invest in crafted link phrases for local navigation (the common agent case), and use `/validate` to pressure notes toward available fixed descriptions for global operations. Check their accuracy separately. Watch query-time computation as inference costs drop — but treat it as supplementary to architectural routing, not a replacement.
+For local navigation, put the reason to follow a link where the reader encounters it. For search across the collection, check that fixed descriptions exist and still describe their targets. If a task depends on a query-time pointer, test the fallback with that service unavailable.
 
 ---
 
 Relevant Notes:
 
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: navigation repeatedly presents follow-or-skip decisions that pointers help an agent make
-- [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: routing must survive cold starts, and unavailable routing can expose the degradation cliff
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the cost spectrum is a context efficiency trade-off
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — exemplifies: fixed and query-time pointers instantiate its broader split between a precomputed fast path and live work for the current case
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the tier structure defines the resolution gradient; query-time computation could fill gaps dynamically

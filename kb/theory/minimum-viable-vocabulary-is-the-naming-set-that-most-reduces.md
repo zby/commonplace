@@ -24,7 +24,7 @@ Together, the two mechanisms ground the optimization claim: naming provides the 
 ## Open Questions
 
 - Does the pedagogical literature on threshold concepts (Meyer & Land) provide selection criteria that map onto extraction cost? Their criteria — transformative, irreversible, integrative, bounded, troublesome — sound like properties of names that unlock large amounts of previously inaccessible structure, which is what extraction cost reduction measures.
-- Is there a meaningful difference between minimum viable vocabulary for humans (who retain vocabulary across sessions) and for agents (who need it injected each session)? The agent case maps directly to [context injection](./agent-statelessness-means-the-context-engine-should-inject-context.md) — the vocabulary must be loaded, not learned.
+- Which terms does a reader need before starting the task, and which can be looked up when encountered? For an agent, [supplying a definition up front or leaving a link](./agent-statelessness-means-the-context-engine-should-inject-context.md) is a separate choice from deciding which terms are worth naming.
 
 ---
 
@@ -37,4 +37,3 @@ Relevant Notes:
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: MVV is a concrete instance of deterministic transformation that makes structure accessible to bounded observers
 - [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — mechanism: naming amortizes recognition cost; MVV packages pre-named structures for reuse by newcomers
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — enables: MVV is knowledge compressed to fit context constraints when full domain methodology won't fit
-- [agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context.md) — extends: for agents, MVV must be injected each session rather than retained
