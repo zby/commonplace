@@ -14,3 +14,4 @@ Placement rules live in [`kb/theory/COLLECTION.md`](../COLLECTION.md#question-pl
 
 - [How do we value notes?](./how-do-we-value-notes.md) — judging which KB notes earn retention as autonomous production grows and models upgrade
 - [How do we fight bloat in agent-produced systems?](./how-do-we-fight-bloat-in-agent-produced-systems.md) — controlling code, prose, and structural bloat in mixed natural-language and code systems
+- [What gaps remain in our learning loop?](./what-gaps-remain-in-our-learning-loop.md) — open gaps between Commonplace's human-assisted selection-based learning loop and an autonomous fixed-weight loop

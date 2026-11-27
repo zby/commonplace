@@ -48,9 +48,9 @@ Recurring theoretical questions in [kb/theory/questions/](../theory/questions/RE
 
 - [How do we value notes?](../theory/questions/how-do-we-value-notes.md) — judging which KB notes earn retention as autonomous production grows and models upgrade
 - [How do we fight bloat in agent-produced systems?](../theory/questions/how-do-we-fight-bloat-in-agent-produced-systems.md) — controlling code, prose, and structural bloat in mixed natural-language and code systems
+- [What gaps remain in our learning loop?](../theory/questions/what-gaps-remain-in-our-learning-loop.md) — open gaps between Commonplace's human-assisted selection-based learning loop and an autonomous fixed-weight loop
 
 ## Gaps
 
-- [automating-kb-learning-is-an-open-problem](../theory/questions/what-gaps-remain-in-our-learning-loop.md) — the open problem is automating judgment-heavy mutations (connections, groupings, synthesis)
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — learning must improve action capacity, not just retrieval
 - [brainstorming-how-to-enrich-web-search](../theory/brainstorming-how-to-enrich-web-search.md) — enriching web search by temporarily expanding the corpus and applying connection methodology

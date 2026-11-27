@@ -32,7 +32,7 @@ Assign the tag when learning across experiences, or a mechanism or limit of that
 
 - [Storing past incidents does not ensure their lessons guide later reviews](../theory/fixed-review-rules-must-identify-when-incident-lessons-apply.md) — the shared-source citation example separates finding a past incident from recognizing the same failure under new source names
 - [Learning inside a fixed decomposition inherits its mistakes](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — optimization cannot repair distinctions outside the decomposition's update space
-- [Automating KB learning is an open problem](../theory/questions/what-gaps-remain-in-our-learning-loop.md) — the KB learns through manual improvement; automating judgment-heavy mutations lacks oracles
+- [What gaps remain in our learning loop?](../theory/questions/what-gaps-remain-in-our-learning-loop.md) — open gaps between Commonplace's human-assisted selection-based learning loop and an autonomous fixed-weight loop
 
 ## The Bitter Lesson defense
 
