@@ -7,7 +7,7 @@ tags: [method-guided-action]
 
 # Source-adoption policy
 
-Commonplace draws its design from programming-language theory, cognitive science, HCI, legal drafting, and direct observation of its own use. Any source is admissible — the [related-systems](../agent-memory-systems/README.md) reviews exist to widen the input surface — but the *adoption gate* differs by source. This document records the policy the framework applies and the rationale it states for each gate; the policy is a working stance, not an established theory of cross-domain transfer.
+Commonplace draws its design from programming-language theory, cognitive science, HCI, legal drafting, and direct observation of its own use. Any source is admissible — the [Agentic Systems](../agentic-systems/README.md) reviews exist to widen the input surface — but the *adoption gate* differs by source. This document records the policy the framework applies and the rationale it states for each gate; the policy is a working stance, not an established theory of cross-domain transfer.
 
 ## The programming fast pass
 

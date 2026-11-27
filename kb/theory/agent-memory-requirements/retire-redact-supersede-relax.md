@@ -23,7 +23,7 @@ Append-only capture is useful for provenance. Indexes, extracted observations, a
 
 ## Temporal Memory
 
-Some domains also need queryable temporal memory, not only lifecycle labels. Supersession answers "what is current?"; temporal memory answers "what was true then?" Graphiti's bi-temporal edge model, summarized in the [comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md), is the clearest reviewed case: validity and invalidation timestamps support point-in-time queries and temporal contradiction handling. Flat files can approximate this with provenance, dated decisions, and git history, but systems that need temporal recall should treat time as a query dimension.
+Some domains also need queryable temporal memory, not only lifecycle labels. Supersession answers "what is current?"; temporal memory answers "what was true then?" [Graphiti](../../agentic-system-analyses/retained/getzep--graphiti/memory.md#mem-clm-withdrawal-scope) can mark an edge invalid without deleting it. A caller can query by date, but the inspected basic search does not filter to current facts by default. Recording when a fact ceased to apply is useful only if the reader selects the right time. Flat files can approximate this with provenance, dated decisions, and git history, but systems that need temporal recall should treat time as a query dimension.
 
 ## Related Systems
 
