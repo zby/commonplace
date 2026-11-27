@@ -53,4 +53,4 @@ The new corpus section is useful but not a controlled validation. The corpus is 
 
 ## Recommended Next Action
 
-Update [agentic-memory-systems-comparative-review.md](../agent-memory-systems/agentic-memory-systems-comparative-review.md), in the "Storage predicts little by itself" section, with the within-files/repo breakdown from the paper: among 98 file/repo systems, 53 enforce, 37 include distributed-parametric parts, 39 are pull-only, and 70 have trace-extracted lineage. That promotes the new evidence to the living matrix synthesis without treating the self-authored paper as independent evidence.
+If a current comparison tests whether storage predicts enforcement, form, read-back, or lineage, recompute the breakdown for its own population. The paper’s breakdown belongs to its 98 file/repo systems: 53 enforce, 37 include distributed-parametric parts, 39 are pull-only, and 70 have trace-extracted lineage. Do not copy those counts into the current matrix or revise the [frozen comparison](../agent-memory-systems/agentic-memory-systems-comparative-review.md) as if it were still growing.

@@ -21,7 +21,7 @@ And wrapping around all three: memory serves [action capacity](./claw-learning-l
 
 ## The comparative review already shows this
 
-The comparative review's [current axes](../agent-memory-systems/agentic-memory-systems-comparative-review.md) span all three decomposed problems. Storage substrate is the storage problem. Lineage, write agency, trace-learning, and curation operations are the learning problem: who decides what to remember, from what evidence, and through which mutation operations. Read-back direction and signal are the retrieval/activation problem: whether remembered material is pulled, pushed, or targeted for the current task. The review is not really a "memory systems" comparison; it is a comparison of how systems manage knowledge persistence, activation, and learning, viewed through the memory lens.
+The historical comparative review's [axes](../agent-memory-systems/agentic-memory-systems-comparative-review.md) span all three decomposed problems. Storage substrate is the storage problem. Lineage, write agency, trace-learning, and curation operations are the learning problem: who decides what to remember, from what evidence, and through which mutation operations. Read-back direction and signal are the retrieval/activation problem: whether remembered material is pulled, pushed, or targeted for the current task. The review is not really a "memory systems" comparison; it is a comparison of how systems manage knowledge persistence, activation, and learning, viewed through the memory lens.
 
 The systems themselves confirm the decomposition by specializing differently:
 
@@ -45,7 +45,7 @@ Memory is not a fourth component alongside these three. It is an aspect of all t
 
 ## What this means for reviewing systems
 
-The [related-systems index](../agent-memory-systems/README.md) contains 70+ systems reviewed with a consistent format. The current review template captures enough raw material to support crosscutting analysis — the comparative review already demonstrated this. No template change is needed to accommodate this observation.
+The [historical survey](../agent-memory-systems/README.md) used a common format that already let readers compare storage, retrieval, and learning. For current system analyses, start at [Agentic Systems](../agentic-systems/README.md).
 
 What changes is interpretation. When reviewing a system that calls itself a "memory system," the review should assess which subproblem(s) it actually addresses:
 
@@ -62,7 +62,7 @@ Relevant Notes:
 
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: context scarcity is why retrieval/activation is the hard problem, not storage
 - [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: the activation gap is what makes memory a context engineering problem
-- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidenced-by: the current matrix axes span storage, retrieval/activation, and learning; the agency trilemma exists because the subproblems trade off against each other
+- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidenced-by: the historical matrix axes span storage, retrieval/activation, and learning; the agency trilemma exists because the subproblems trade off against each other
 - [Agent-runtime analysis should separate scheduling, context assembly, and external state](./agent-runtime-analysis-should-separate-scheduling-context-state.md) — grounds: the three-concern separation assigns memory's subproblems to different concerns, predicting that memory is crosscutting
 - [learning theory index](../tags/learning-theory-README.md) — grounds: extraction, promotion, and graduation are instances of accumulation, constraining, condensing, and discovery
 - [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — extends: memory serves contextual competence across five action modes, not just question-answering
