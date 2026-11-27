@@ -1,0 +1,178 @@
+archive_target	distinct_linking_files	sources_in_theory_notes_articles_tags_reference_instructions_types_or_agentic_systems	linking_files
+kb/agent-memory-systems/COLLECTION.md	2	0	kb/work/lifecycle-management/README.md; kb/work/lineage-mechanisms/normalized-directional-lineage-relations.md
+kb/agent-memory-systems/README.md	14	9	kb/agentic-systems/README.md; kb/agentic-systems/methods.md; kb/reference/source-adoption-policy.md; kb/sources/arrmlet-tracecraft.ingest.md; kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md; kb/sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md; kb/tags/agent-memory-README.md; kb/tags/trace-learning-README.md; kb/theory/README.md; kb/theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md; kb/theory/designing-agent-memory-systems.md; kb/theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md; kb/work/agent-runtime-design/README.md; kb/work/lens-directories/README.md
+kb/agent-memory-systems/agentic-memory-systems-comparative-review.md	37	12	kb/sources/a-mem-agentic-memory-for-llm-agents.ingest.md; kb/sources/adaptation-of-agentic-ai-survey-post-training-memory-skills.ingest.md; kb/sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md; kb/sources/autonomous-agent-context-memory-2088234998654472340.ingest.md; kb/sources/coding-agents-are-effective-long-context-processors.ingest.md; kb/sources/cognee-knowledge-engine.ingest.md; kb/sources/databricks-memory-scaling-ai-agents.ingest.md; kb/sources/everything-you-need-to-know-about-llm-memory.ingest.md; kb/sources/externalization-in-llm-agents-unified-review.ingest.md; kb/sources/from-harness-lock-in-to-portable-context-layer.ingest.md; kb/sources/from-human-memory-to-ai-memory-survey-llm-memory-mechanisms.ingest.md; kb/sources/graphiti-temporal-knowledge-graph.ingest.md; kb/sources/letta-memgpt-stateful-agents.ingest.md; kb/sources/mem0-memory-layer.ingest.md; kb/sources/memory-intelligence-agent.ingest.md; kb/sources/multi-agent-memory-computer-architecture-perspective.ingest.md; kb/sources/novel-memory-forgetting-techniques-autonomous-ai-agents.ingest.md; kb/sources/psychology-solves-ai-memory-identity-construction-2025307030651.ingest.md; kb/sources/the-geometry-of-forgetting.ingest.md; kb/sources/the-price-of-meaning-why-every-semantic-memory-system-forgets.ingest.md; kb/sources/three-dimensions-agent-memory-store-2054246434506199529.ingest.md; kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md; kb/sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md; kb/tags/agent-memory-README.md; kb/theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md; kb/theory/agent-memory-requirements/make-authority-explicit.md; kb/theory/agent-memory-requirements/retire-redact-supersede-relax.md; kb/theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md; kb/theory/automated-synthesis-is-missing-good-oracles.md; kb/theory/cheap-adoption-and-weak-retirement-accumulate-cost.md; kb/theory/memory-design-adds-operational-axes-to-artifact-analysis.md; kb/theory/open-domain-memory-retention-needs-a-declared-output-spec.md; kb/theory/promotion-selects-for-unreliable-activation-and-the-regress-ends-only.md; kb/theory/rule-based-context-selection-needs-a-pre-existing-signal.md; kb/theory/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md; kb/work/agent-memory-design/2026-04-23-critique.md; kb/work/agent-memory-design/2026-04-23-grounding-report.md
+kb/agent-memory-systems/lightweight/IsaacCLupus_mnemosyn_spec.md	0	0	
+kb/agent-memory-systems/lightweight/README.md	0	0	
+kb/agent-memory-systems/lightweight/agemem.md	2	1	kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md; kb/theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md
+kb/agent-memory-systems/lightweight/fintool.md	1	0	kb/work/linking-contract-consistency/evidence-direction-review.md
+kb/agent-memory-systems/lightweight/incremental-self-improvement.md	1	0	kb/sources/goedel-machines-schmidhuber.ingest.md
+kb/agent-memory-systems/lightweight/nams.md	0	0	
+kb/agent-memory-systems/lightweight/sig.md	0	0	
+kb/agent-memory-systems/lightweight/trajectory-informed-memory-generation.md	2	2	kb/theory/automated-synthesis-is-missing-good-oracles.md; kb/theory/structure-inference-needs-capture-at-the-decision-surface.md
+kb/agent-memory-systems/review-framework-design.md	2	1	kb/sources/lane-1990-design-spaces-and-rules.ingest.md; kb/tags/agent-memory-README.md
+kb/agent-memory-systems/reviews/AI-Context-OS.md	0	0	
+kb/agent-memory-systems/reviews/Agent-S.md	0	0	
+kb/agent-memory-systems/reviews/AgentFly.md	1	1	kb/theory/memory-management-policy-is-learnable-but-oracle-dependent.md
+kb/agent-memory-systems/reviews/AriGraph.md	0	0	
+kb/agent-memory-systems/reviews/Auto-claude-code-research-in-sleep.md	0	0	
+kb/agent-memory-systems/reviews/AutoSci.md	0	0	
+kb/agent-memory-systems/reviews/Awesome-Agent-Memory.md	0	0	
+kb/agent-memory-systems/reviews/CORAL.md	1	0	kb/sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md
+kb/agent-memory-systems/reviews/Closure-SDK.md	0	0	
+kb/agent-memory-systems/reviews/HippoRAG.md	0	0	
+kb/agent-memory-systems/reviews/KBLaM.md	4	1	kb/sources/intern-s2-mobius-arxiv-v1.ingest.md; kb/sources/intern-s2-mobius-decoupled-knowledge-and-reasoning.ingest.md; kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md; kb/theory/parametric-reproduction-cannot-replace-an-authoritative-record.md
+kb/agent-memory-systems/reviews/Kompl.md	0	0	
+kb/agent-memory-systems/reviews/LLM-WIKI-MCP.md	0	0	
+kb/agent-memory-systems/reviews/LLM-Wiki-v3.md	0	0	
+kb/agent-memory-systems/reviews/MehmetGoekce--llm-wiki.md	1	0	kb/sources/claude-obsidian-second-brain-guide-2068306794116501544.ingest.md
+kb/agent-memory-systems/reviews/Memori.md	0	0	
+kb/agent-memory-systems/reviews/MemoryOS.md	0	0	
+kb/agent-memory-systems/reviews/MiroShark.md	0	0	
+kb/agent-memory-systems/reviews/OS-Copilot.md	0	0	
+kb/agent-memory-systems/reviews/OpenSage.md	0	0	
+kb/agent-memory-systems/reviews/Pratiyush--llm-wiki.md	0	0	
+kb/agent-memory-systems/reviews/REM.md	2	1	kb/tags/trace-learning-README.md; kb/work/agent-memory-design/2026-04-23-critique.md
+kb/agent-memory-systems/reviews/ReframeWeb.md	0	0	
+kb/agent-memory-systems/reviews/Self-Training-LLM.md	2	1	kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md; kb/theory/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md
+kb/agent-memory-systems/reviews/SkillRL.md	0	0	
+kb/agent-memory-systems/reviews/SkillWeaver.md	1	0	kb/sources/skillrl-evolving-agents-recursive-skill-augmented-rl.ingest.md
+kb/agent-memory-systems/reviews/SkillX.md	1	0	kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md
+kb/agent-memory-systems/reviews/TheKnowledge.md	0	0	
+kb/agent-memory-systems/reviews/VLM-wiki.md	0	0	
+kb/agent-memory-systems/reviews/WeKnora.md	0	0	
+kb/agent-memory-systems/reviews/Zikkaron.md	0	0	
+kb/agent-memory-systems/reviews/a-mem.md	0	0	
+kb/agent-memory-systems/reviews/ace.md	0	0	
+kb/agent-memory-systems/reviews/agent-r.md	1	1	kb/theory/parametric-reproduction-cannot-replace-an-authoritative-record.md
+kb/agent-memory-systems/reviews/agent-skills-for-context-engineering.md	6	0	kb/sources/does-an-llm-keep-the-same-judgment-when-you-swap-the-answer.ingest.md; kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy.ingest.md; kb/sources/koylanai-personal-brain-os.ingest.md; kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md; kb/sources/position-bias.ingest.md; kb/work/commonplace-nearest-constructions/landscape.md
+kb/agent-memory-systems/reviews/agent-workflow-memory.md	5	2	kb/sources/agent-workflow-memory.ingest.md; kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md; kb/sources/on-the-fragility-of-self-improving-agents.ingest.md; kb/theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md; kb/theory/memory-design-adds-operational-axes-to-artifact-analysis.md
+kb/agent-memory-systems/reviews/agentic-harness-engineering.md	10	1	kb/sources/asi-bench-at-the-dawn-of-artificial-superintelligence.ingest.md; kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md; kb/sources/harness-engineering-for-self-improvement.ingest.md; kb/sources/harness-evolution-ceiling-weight-training.ingest.md; kb/sources/harness-handbook-making-evolving-agent-harnesses-readable.ingest.md; kb/sources/harnesscompass-guiding-automatic-harness-evolution.ingest.md; kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md; kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md; kb/theory/diagnostic-richness-constrains-outer-loop-learning-quality.md; kb/work/commonplace-nearest-constructions/landscape.md
+kb/agent-memory-systems/reviews/agentic-local-brain.md	0	0	
+kb/agent-memory-systems/reviews/ai-memex-cli.md	0	0	
+kb/agent-memory-systems/reviews/ai-research-os-workshop.md	3	0	kb/work/commonplace-nearest-constructions/landscape.md; kb/work/epistemic-architectures/README.md; kb/work/epistemic-architectures/ai-research-os-reading.md
+kb/agent-memory-systems/reviews/amazon-science--SAGE.md	1	0	kb/sources/skillrl-evolving-agents-recursive-skill-augmented-rl.ingest.md
+kb/agent-memory-systems/reviews/archie.md	1	0	kb/work/agent-memory-design/2026-04-23-extractable-theory-notes.md
+kb/agent-memory-systems/reviews/arscontexta.md	5	4	kb/reference/source-adoption-policy.md; kb/theory/link-strength-is-encoded-in-position-and-prose.md; kb/theory/title-as-claim-enables-traversal-as-reasoning.md; kb/theory/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md; kb/work/commonplace-nearest-constructions/landscape.md
+kb/agent-memory-systems/reviews/atlas.md	0	0	
+kb/agent-memory-systems/reviews/atomic.md	0	0	
+kb/agent-memory-systems/reviews/auto-harness.md	2	1	kb/sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md; kb/tags/trace-learning-README.md
+kb/agent-memory-systems/reviews/autocontext.md	2	1	kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy.ingest.md; kb/theory/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md
+kb/agent-memory-systems/reviews/basic-memory.md	0	0	
+kb/agent-memory-systems/reviews/beever-atlas.md	0	0	
+kb/agent-memory-systems/reviews/binder.md	0	0	
+kb/agent-memory-systems/reviews/browzy-ai.md	0	0	
+kb/agent-memory-systems/reviews/byterover-cli.md	1	1	kb/theory/designing-agent-memory-systems.md
+kb/agent-memory-systems/reviews/cass_memory_system.md	0	0	
+kb/agent-memory-systems/reviews/claude-context-guard.md	1	0	kb/sources/effective-harnesses-for-long-running-agents.ingest.md
+kb/agent-memory-systems/reviews/claude-obsidian.md	1	0	kb/sources/claude-obsidian-second-brain-guide-2068306794116501544.ingest.md
+kb/agent-memory-systems/reviews/claude-workstream-kit.md	2	1	kb/sources/effective-harnesses-for-long-running-agents.ingest.md; kb/theory/active-work-state-is-not-retrospective-memory-or-chat-history.md
+kb/agent-memory-systems/reviews/clawvault.md	1	0	kb/sources/simon-willison-karpathy-claws.ingest.md
+kb/agent-memory-systems/reviews/cludebot.md	3	3	kb/theory/agent-memory-requirements/serve-multiple-consumers.md; kb/theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md; kb/theory/automating-kb-learning-is-an-open-problem.md
+kb/agent-memory-systems/reviews/cobusgreyling--llm-wiki.md	0	0	
+kb/agent-memory-systems/reviews/cobusgreyling--llm-wiki.replaced.2026-07-06.md	0	0	
+kb/agent-memory-systems/reviews/cocoindex.md	2	0	kb/sources/dagster-asset-versioning-and-caching.ingest.md; kb/sources/how-we-built-our-knowledge-base-2077822555159945507.ingest.md
+kb/agent-memory-systems/reviews/cognee.md	1	1	kb/theory/axes-of-artifact-analysis.md
+kb/agent-memory-systems/reviews/compound-engineering-plugin.md	0	0	
+kb/agent-memory-systems/reviews/context-constitution.md	0	0	
+kb/agent-memory-systems/reviews/continuity.md	0	0	
+kb/agent-memory-systems/reviews/cortex.md	0	0	
+kb/agent-memory-systems/reviews/cq.md	1	1	kb/theory/agent-memory-requirements/make-authority-explicit.md
+kb/agent-memory-systems/reviews/crewai-memory.md	0	0	
+kb/agent-memory-systems/reviews/decapod.md	0	0	
+kb/agent-memory-systems/reviews/deja-vu.md	0	0	
+kb/agent-memory-systems/reviews/dense-mem.md	0	0	
+kb/agent-memory-systems/reviews/docmason.md	0	0	
+kb/agent-memory-systems/reviews/dynamic-cheatsheet.md	4	2	kb/articles/which-existing-self-improving-systems-are-theory-builders.md; kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md; kb/sources/machine-studying.ingest.md; kb/tags/trace-learning-README.md
+kb/agent-memory-systems/reviews/echel.md	1	0	kb/sources/building-a-repo-centric-modular-agent-stack-2085784422339768686.ingest.md
+kb/agent-memory-systems/reviews/echoes-vault-opencode.md	0	0	
+kb/agent-memory-systems/reviews/echowiki.md	0	0	
+kb/agent-memory-systems/reviews/echowiki.replaced.2026-07-06.2.md	0	0	
+kb/agent-memory-systems/reviews/echowiki.replaced.2026-07-06.3.md	0	0	
+kb/agent-memory-systems/reviews/echowiki.replaced.2026-07-06.md	0	0	
+kb/agent-memory-systems/reviews/eidetic.md	0	0	
+kb/agent-memory-systems/reviews/engraph.md	0	0	
+kb/agent-memory-systems/reviews/equipa.md	0	0	
+kb/agent-memory-systems/reviews/exo.md	4	2	kb/agentic-systems/README.md; kb/agentic-systems/reviews/exo.md; kb/work/commonplace-nearest-constructions/landscape.md; kb/work/explanatory-theories-deployment-time-learning/exo-evidence.md
+kb/agent-memory-systems/reviews/exocomp.md	0	0	
+kb/agent-memory-systems/reviews/expel.md	0	0	
+kb/agent-memory-systems/reviews/funes.md	0	0	
+kb/agent-memory-systems/reviews/g-memory.md	0	0	
+kb/agent-memory-systems/reviews/gbrain.md	0	0	
+kb/agent-memory-systems/reviews/getsentry-skills.md	1	0	kb/sources/skill-synthesis-materializing-knowledge-as-skills-2032179291031.ingest.md
+kb/agent-memory-systems/reviews/gnosis.md	0	0	
+kb/agent-memory-systems/reviews/graphiti.md	2	0	kb/sources/graphiti-temporal-knowledge-graph.ingest.md; kb/sources/palantir-ontology-vs-decision-traces.ingest.md
+kb/agent-memory-systems/reviews/halo.md	1	1	kb/theory/diagnostic-richness-constrains-outer-loop-learning-quality.md
+kb/agent-memory-systems/reviews/hermes-agent.md	1	0	kb/work/error-catching/systematisation.md
+kb/agent-memory-systems/reviews/hindsight.md	4	3	kb/sources/multi-agent-memory-computer-architecture-perspective.ingest.md; kb/theory/agent-memory-requirements/make-authority-explicit.md; kb/theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md; kb/theory/designing-agent-memory-systems.md
+kb/agent-memory-systems/reviews/hyalo.md	0	0	
+kb/agent-memory-systems/reviews/hyperagents.md	7	4	kb/articles/which-existing-self-improving-systems-are-theory-builders.md; kb/sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md; kb/sources/hyperagents.ingest.md; kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md; kb/tags/trace-learning-README.md; kb/theory/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md; kb/theory/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md
+kb/agent-memory-systems/reviews/interview-doc-agent.md	0	0	
+kb/agent-memory-systems/reviews/kenhuangus--llm-wiki.md	0	0	
+kb/agent-memory-systems/reviews/kgai.md	1	0	kb/sources/graphiti-temporal-knowledge-graph.ingest.md
+kb/agent-memory-systems/reviews/lacp.md	1	0	kb/work/obsidian-affordances/README.md
+kb/agent-memory-systems/reviews/letta.md	0	0	
+kb/agent-memory-systems/reviews/link.md	0	0	
+kb/agent-memory-systems/reviews/llm-context-base.md	0	0	
+kb/agent-memory-systems/reviews/llm-project-wiki.md	0	0	
+kb/agent-memory-systems/reviews/llm-wiki-coordination.md	0	0	
+kb/agent-memory-systems/reviews/llm-wiki.md	1	0	kb/sources/from-harness-lock-in-to-portable-context-layer.ingest.md
+kb/agent-memory-systems/reviews/llmwiki-marimo.md	0	0	
+kb/agent-memory-systems/reviews/mem0.md	0	0	
+kb/agent-memory-systems/reviews/memex.md	0	0	
+kb/agent-memory-systems/reviews/mempalace.md	0	0	
+kb/agent-memory-systems/reviews/memwiki.md	1	1	kb/tags/trace-learning-README.md
+kb/agent-memory-systems/reviews/mentisdb.md	0	0	
+kb/agent-memory-systems/reviews/meta-harness.md	8	3	kb/sources/avo-agentic-variation-operators-autonomous-evolutionary-search.ingest.md; kb/sources/harness-engineering-for-self-improvement.ingest.md; kb/sources/toward-measuring-recursive-self-improvement-2090411367819809047.ingest.md; kb/theory/diagnostic-richness-constrains-outer-loop-learning-quality.md; kb/theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md; kb/theory/treat-continual-learning-as-representational-form-coevolution.md; kb/work/agent-memory-design/2026-04-23-meta-harness-rework-note.md; kb/work/commonplace-nearest-constructions/landscape.md
+kb/agent-memory-systems/reviews/nao.md	0	0	
+kb/agent-memory-systems/reviews/napkin.md	3	0	kb/sources/claude-obsidian-second-brain-guide-2068306794116501544.ingest.md; kb/sources/llm-knowledge-bases-something-i-m-finding-very-useful.ingest.md; kb/work/obsidian-affordances/README.md
+kb/agent-memory-systems/reviews/nuggets.md	0	0	
+kb/agent-memory-systems/reviews/o-o.md	0	0	
+kb/agent-memory-systems/reviews/okf-harness.md	1	0	kb/sources/from-harness-lock-in-to-portable-context-layer.ingest.md
+kb/agent-memory-systems/reviews/openclerk.md	0	0	
+kb/agent-memory-systems/reviews/openviking.md	5	4	kb/sources/coding-agents-are-effective-long-context-processors.ingest.md; kb/theory/agent-memory-requirements/make-authority-explicit.md; kb/theory/agent-memory-requirements/preserve-evidence-without-loading-history.md; kb/theory/index-completeness-does-not-determine-editorial-orientation.md; kb/theory/pointer-design-tradeoffs-in-progressive-disclosure.md
+kb/agent-memory-systems/reviews/openwiki.md	1	0	kb/sources/building-self-correcting-memory-in-openwiki-2092280107033616451.ingest.md
+kb/agent-memory-systems/reviews/operational-ontology-framework.md	0	0	
+kb/agent-memory-systems/reviews/origin.md	0	0	
+kb/agent-memory-systems/reviews/pal.md	1	1	kb/agentic-systems/reviews/agno-agentos.md
+kb/agent-memory-systems/reviews/phantom.md	0	0	
+kb/agent-memory-systems/reviews/pi-self-learning.md	1	1	kb/theory/automating-kb-learning-is-an-open-problem.md
+kb/agent-memory-systems/reviews/playground.md	0	0	
+kb/agent-memory-systems/reviews/pond.md	1	1	kb/agentic-systems/reviews-archive/pond.md
+kb/agent-memory-systems/reviews/quicky-wiki.md	0	0	
+kb/agent-memory-systems/reviews/reasoning-bank.md	1	0	kb/sources/on-the-fragility-of-self-improving-agents.ingest.md
+kb/agent-memory-systems/reviews/reflexion.md	0	0	
+kb/agent-memory-systems/reviews/sage-wiki.md	0	0	
+kb/agent-memory-systems/reviews/sage.md	3	1	kb/sources/multi-agent-memory-computer-architecture-perspective.ingest.md; kb/theory/agent-memory-requirements/make-authority-explicit.md; kb/work/validation/README.md
+kb/agent-memory-systems/reviews/scroll.md	1	1	kb/theory/context-operation-interface-bounds-context-policy.md
+kb/agent-memory-systems/reviews/secure-llm-wiki.md	0	0	
+kb/agent-memory-systems/reviews/semiont.md	0	0	
+kb/agent-memory-systems/reviews/sift-kg.md	2	1	kb/sources/cognee-knowledge-engine.ingest.md; kb/theory/agent-memory-requirements/import-external-knowledge.md
+kb/agent-memory-systems/reviews/siftly.md	0	0	
+kb/agent-memory-systems/reviews/signetai.md	0	0	
+kb/agent-memory-systems/reviews/skillnote.md	0	0	
+kb/agent-memory-systems/reviews/smriti-mcp.md	0	0	
+kb/agent-memory-systems/reviews/spacebot.md	3	1	kb/sources/slate-moving-beyond-react-and-rlm.ingest.md; kb/sources/spacedriveapp-spacebot-ai-agent.ingest.md; kb/theory/session-history-should-not-be-the-default-next-context.md
+kb/agent-memory-systems/reviews/sparks.md	1	1	kb/theory/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md
+kb/agent-memory-systems/reviews/stash.md	0	0	
+kb/agent-memory-systems/reviews/supermemory.md	0	0	
+kb/agent-memory-systems/reviews/swamp.md	1	1	kb/agentic-systems/reviews/swamp.md
+kb/agent-memory-systems/reviews/synapptic.md	6	4	kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md; kb/tags/trace-learning-README.md; kb/theory/agent-memory-requirements/activate-behavior-changing-memory.md; kb/theory/agent-memory-requirements/keep-compiled-views-aligned.md; kb/theory/always-loaded-context-mechanisms-in-agent-harnesses.md; kb/work/agent-memory-design/2026-04-23-critique.md
+kb/agent-memory-systems/reviews/synthadoc.md	0	0	
+kb/agent-memory-systems/reviews/synto.md	0	0	
+kb/agent-memory-systems/reviews/tendril.md	3	1	kb/sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md; kb/theory/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md; kb/work/agent-runtime-design/dynamic-extension-mechanism-pilot.md
+kb/agent-memory-systems/reviews/thalo.md	1	1	kb/reference/source-adoption-policy.md
+kb/agent-memory-systems/reviews/theafh--ai-modules.md	1	1	kb/theory/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md
+kb/agent-memory-systems/reviews/tolaria.md	0	0	
+kb/agent-memory-systems/reviews/tracecraft.md	3	2	kb/sources/agora-git-as-shared-memory-for-collective-autoresearch.ingest.md; kb/theory/agent-orchestration-needs-coordination-guarantees-not-just.md; kb/theory/agent-orchestration-occupies-a-multi-dimensional-design-space.md
+kb/agent-memory-systems/reviews/virtual-context.md	3	1	kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md; kb/sources/context-as-an-environment.ingest.md; kb/theory/context-operation-interface-bounds-context-policy.md
+kb/agent-memory-systems/reviews/voiden.md	0	0	
+kb/agent-memory-systems/reviews/voyager.md	7	2	kb/articles/which-existing-self-improving-systems-are-theory-builders.md; kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md; kb/sources/memento-skills-let-agents-design-agents.ingest.md; kb/sources/recursive-self-improvement.ingest.md; kb/sources/spade-self-play-in-adaptive-synthetic-executable-environments.ingest.md; kb/theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md; kb/work/commonplace-nearest-constructions/landscape.md
+kb/agent-memory-systems/reviews/wuphf.md	2	2	kb/theory/agent-memory-requirements/make-authority-explicit.md; kb/theory/agent-memory-requirements/preserve-evidence-without-loading-history.md
+kb/agent-memory-systems/reviews/xMemory.md	1	0	kb/sources/databricks-memory-scaling-ai-agents.ingest.md
+kb/agent-memory-systems/systems-table.md	2	1	kb/sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md; kb/tags/agent-memory-README.md
+kb/agent-memory-systems/systems.csv	0	0	
+kb/agent-memory-systems/thalo-type-comparison.md	4	3	kb/sources/purdue-owl-toulmin-argument.ingest.md; kb/theory/alexander-patterns-and-knowledge-system-design.md; kb/theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md; kb/theory/deterministic-validation-should-be-a-script.md
+kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md	28	8	kb/sources/adaptation-of-agentic-ai-survey-post-training-memory-skills.ingest.md; kb/sources/agent-workflow-memory.ingest.md; kb/sources/chunking-in-soar-general-learning-mechanism.ingest.md; kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md; kb/sources/externalization-in-llm-agents-unified-review.ingest.md; kb/sources/how-warp-builds-self-improving-agents-on-claude.ingest.md; kb/sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md; kb/sources/memory-intelligence-agent.ingest.md; kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md; kb/sources/minton-utility-of-ebl-aaai88.ingest.md; kb/sources/next-generation-agentic-reinforcement-learning-systems.ingest.md; kb/sources/pilot-live-self-improvement-long-horizon-agents.ingest.md; kb/sources/reason-wide-not-deep-distilled-skills.ingest.md; kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md; kb/sources/we-should-take-text-optimization-more-seriously.ingest.md; kb/tags/learning-theory-README.md; kb/tags/trace-learning-README.md; kb/theory/abstract-an-experience-only-when-you-can-state-the-boundary.md; kb/theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md; kb/theory/automating-kb-learning-is-an-open-problem.md; kb/theory/axes-of-artifact-analysis.md; kb/theory/designing-agent-memory-systems.md; kb/theory/diagnostic-richness-constrains-outer-loop-learning-quality.md; kb/work/agent-memory-design/2026-04-23-critique.md; kb/work/agent-memory-design/2026-04-23-extractable-theory-notes.md; kb/work/agent-memory-design/2026-04-23-grounding-report.md; kb/work/commonplace-nearest-constructions/landscape.md; kb/work/explanatory-theories-deployment-time-learning/exo-evidence.md
+kb/agent-memory-systems/types/agent-memory-system-review.md	10	5	kb/reference/adr/023-quote-anchored-citations-for-code-grounded-reviews.md; kb/sources/agent-text-at-scale.ingest.md; kb/sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md; kb/tags/trace-learning-README.md; kb/theory/false-positive-generation-is-filtered-before-retention.md; kb/theory/knowledge-storage-does-not-imply-contextual-activation.md; kb/theory/prompt-ablation-converts-human-insight-to-deployable-framing.md; kb/work/agent-curiosity-and-structural-coherence/README.md; kb/work/agent-runtime-design/README.md; kb/work/extensible-controlled-vocabularies/README.md
+kb/agent-memory-systems/types/agent-memory-system-review.schema.yaml	1	0	kb/work/extensible-controlled-vocabularies/README.md

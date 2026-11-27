@@ -40,10 +40,11 @@ This tag gathers what agents retain across sessions and how that retention becom
 
 ## Memory-System Comparisons
 
+For current analyses and comparisons, start at [Agentic Systems](../agentic-systems/README.md). The following links describe the frozen memory-system survey:
+
 - [Agentic memory systems: comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — cross-system findings from the code-grounded reviews: storage choices, read-back, trace learning, and how rarely lifecycle curation appears
 - [Systems table](../agent-memory-systems/systems-table.md) — one row per reviewed memory system across storage, read-back, targeting, trace learning, and enforcement
 - [Review framework design](../agent-memory-systems/review-framework-design.md) — why the comparison matrix has the columns it has
-- The full catalogue of reviewed systems is the [agent-memory-systems index](../agent-memory-systems/README.md)
 
 ## Related Tags
 

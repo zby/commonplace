@@ -8,6 +8,10 @@ Commonplace's discovery architecture ([ADR 025](../../reference/adr/025-complete
 
 See [initial-analysis.md](./initial-analysis.md) for the baseline inventory of current files, observed GitHub/site friction points, and candidate improvements split by consumer (external agents, human web readers, and GitHub browsers).
 
+## Frozen memory survey: what still links there?
+
+The [inbound-link inventory](./legacy-memory-inbound-links.tsv) records the checkout at `7721cc141`, before changing the entry links. Of 175 tracked Markdown pages in the survey, 76 received a relative Markdown link from a tracked Markdown file outside the collection. Of those, 49 were linked from theory, notes, articles, tags, reference, instructions, types, or agentic systems. Each row lists the distinct referring files; the CSV and schema have rows too, outside the page count. The scan uses Commonplace’s authored inline-link parser, not web traffic or a search for all path mentions. A zero does not rule out dependencies inside the archive, published redirects, code, or external citations.
+
 ## Scope and boundaries
 
 - Keep one authoritative source of truth in authored Markdown; prefer build-time materializations over committed generated files ([ADR 025](../../reference/adr/025-complete-generated-indexes-are-build-time-only.md), [design for the first-time human, except on access cost](../../theory/design-for-the-first-time-human-except-on-access-cost.md)).

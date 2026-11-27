@@ -27,5 +27,5 @@ A claim earns a note when it changes how someone would build or operate a knowle
 
 - Current-state docs about the shipped Commonplace system — architecture, type system, ADRs → [kb/reference/](../reference/README.md)
 - Procedures, skills, review gates, how-to guidance → [kb/instructions/](../instructions/README.md)
-- Reviews of external agent-memory and knowledge systems → [kb/agent-memory-systems/](../agent-memory-systems/README.md)
+- Current reviews and comparisons of external agent systems, including memory systems → [Agentic Systems](../agentic-systems/README.md)
 - In-flight drafts, investigations, and migration plans → [kb/work/](../work/README.md)
