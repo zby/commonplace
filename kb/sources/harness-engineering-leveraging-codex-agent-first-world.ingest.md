@@ -41,7 +41,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 2. **[methodology-enforcement-is-constraining](../theory/methodology-enforcement-is-constraining.md)** — exemplifies: The three harness pillars map directly onto the constraining gradient (instructions -> structural tests -> automated cleanup agents). "Every mistake is a harness bug" is the maturation trajectory stated as design philosophy.
 
-3. **[deploy-time-learning-the-missing-middle](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md)** — exemplifies: "Good harnesses compound" is deploy-time learning in practitioner language. Each constraint is a repo artifact that makes future work more reliable.
+3. **[learning from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md)** — exemplifies: "Good harnesses compound" describes the effect of keeping constraints that help later tasks. Each constraint is a repo artifact that makes future work more reliable.
 
 4. **[inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies: 1M lines of agent-generated code that is repo-hosted, CI-gated, PR-reviewed, and maintained by background agents is the inspectable substrate thesis at production scale.
 
@@ -69,7 +69,7 @@ The `/connect` discovery validated all 7 connections from the original ingest an
 
 **Companion source**: [Harness Engineering Is Cybernetics (ingest)](harness-engineering-is-cybernetics-2030416758138634583.ingest.md) — an X thread reframing harness engineering as cybernetics (sensors, actuators, feedback loops). Together the two sources provide practice (Lopopolo) and theory (cybernetics framing) for the same phenomenon.
 
-**Convergence pattern**: Lopopolo's "harness engineering" is essentially our constraining + deploy-time learning + context efficiency + codification framework, arrived at independently from practice rather than theory. The convergence across 14 connections is strong evidence that the theoretical framework captures something real.
+**Convergence pattern**: Lopopolo's "harness engineering" is essentially our constraining + learning through retained harness changes + context efficiency + codification framework, arrived at independently from practice rather than theory. The convergence across 14 connections is strong evidence that the theoretical framework captures something real.
 
 ## Extractable Value
 

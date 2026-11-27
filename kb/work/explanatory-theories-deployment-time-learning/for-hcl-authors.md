@@ -2,7 +2,7 @@
 
 > **Status:** Exploratory note from the Commonplace project. We have not contacted the HCL authors, and no response or endorsement is implied. The proposed treatment is ours; HCL does not claim or test it.
 
-Harness Continual Learning (HCL) makes three useful mechanisms explicit around a frozen model. An optimizer proposes isolated harness changes, an evaluator can reject them, and atomic commitment makes an accepted state operative in later tasks. HCL's controlled benchmark streams are not deployment-time learning, but these mechanisms offer a concrete substrate for studying how evidence becomes a governed behavioral change. Our [HCL reading](./hcl-reading.md) separates that contribution from the proposed extension. The [source analysis](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) records the supporting evidence.
+Harness Continual Learning (HCL) makes three useful mechanisms explicit around a frozen model. An optimizer proposes isolated harness changes, an evaluator can reject them, and atomic commitment makes an accepted state operative in later tasks. HCL studies learning on controlled benchmark streams rather than in a deployed service, but these mechanisms offer a concrete substrate for studying how evidence becomes a governed behavioral change. Our [HCL reading](./hcl-reading.md) separates that contribution from the proposed extension. The [source analysis](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) records the supporting evidence.
 
 ## One extension: require a working theory before proposal
 

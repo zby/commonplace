@@ -51,7 +51,7 @@ The defensible verdict is therefore: the public code is sufficient to study the 
 
 ## Reading against first-principles design-space analysis
 
-Autogenesis supports a broader reading than “an agent learns its prompt.” Its strongest idea is that symbolic system-definition artifacts can share a lifecycle without sharing an implementation or optimizer. That is a deploy-time learning substrate: behavior-changing code and natural-language artifacts become addressable variables with lineage, evaluation hooks, and rollback.
+Autogenesis supports a broader reading than “an agent learns its prompt.” Its strongest idea is that symbolic system-definition artifacts can share a lifecycle without sharing an implementation or optimizer. Both code and natural-language instructions can therefore be revised during use. For either kind of change, the system can track its origin, evaluate it, and roll it back.
 
 But its resource taxonomy also demonstrates why classification should be treated as a proposed design decomposition, not as first principles. The paper folds MCP and skills into Tool and foregrounds five resource types. Current code separately names skills, connectors, and workflows because the rewrite found operational differences worth separate managers and artifact contracts. The later implementation did not merely add instances within the original five cells; it revised the axes and boundaries by which the cells are formed.
 

@@ -92,7 +92,7 @@ The tag-README case joins the two sides: work performed on the write path makes 
 | Generated views versus source of truth | Appears inside the tag-README redesign | Mention only what the worked sequence requires |
 | Self-hosting | Closes the observed loop from operational strain to changed future behavior | Include for four minutes; avoid reflection theory and compounding claims |
 | External fluency critiques, automatic review applications, and the 148-system survey | Corroborating or adjacent material | Cut from the main narrative; retain for Q&A |
-| Deploy-time learning, activation versus storage, and error-correction asymmetry | Deeper theoretical explanations | Keep in speaker notes and linked material; do not name on stage |
+| Learning from use, activation versus storage, and error-correction asymmetry | Deeper theoretical explanations | Keep in speaker notes and linked material; do not name on stage |
 
 This selection keeps the presentation from becoming "20 cool things in Commonplace."
 
@@ -123,7 +123,7 @@ Do not explain the whole theory behind each design choice. In particular:
 - Do not catalogue failure concepts. Demonstrate the failure, then name reverse compression.
 - Do not tour types, schemas, validators, and generated indexes. Trace one promise as it acquires deterministic consequences.
 - Do not teach the feasibility-versus-cost model of context. State that loaded material competes with the task, then show task-scoped loading.
-- Do not introduce deploy-time learning, computational reflection, or the autonomous-compounding theory.
+- Do not introduce learning from use, computational reflection, or the autonomous-compounding theory.
 - Do not use the agent-memory survey as supporting spectacle. It is another talk.
 
 The audience takeaway: "I can apply these patterns to my own LLM knowledge system next week." For the subset who notice the patterns imply a deeper theory of persistent LLM systems, Commonplace itself is the rabbit hole. This balance fits the DSW CFP: a concrete case study full of implementation lessons, where the deeper theoretical work is what makes the lessons unusually coherent.

@@ -49,7 +49,7 @@ The connect report also flags a **synthesis opportunity**: this docs capture plu
 
 5. **Concrete runtime constraints as design parameters.** 1,000 agents/run, 16 concurrent, no mid-run user input ("for sign-off between stages, run each stage as its own workflow"), no direct filesystem/shell from the script (agents act; the script coordinates), resume-within-session via cached agent results. These are specific bounds a methodology note on bounded-context orchestration could cite when discussing real coordination guarantees and stage boundaries. Context-bound to this product, but precise. [just-a-reference]
 
-6. **`ultracode` as an automatic-orchestration effort level.** `/effort ultracode` makes Claude plan a workflow for every substantive task (one to understand, one to change, one to verify). A data point on deploy-time vs runtime decisions about when to codify orchestration — relevant to `deploy-time-learning-is-the-missing-middle` and the authorship axis of the RLM/persistence cluster. [just-a-reference]
+6. **`ultracode` as an automatic-orchestration effort level.** `/effort ultracode` makes Claude plan a workflow for every substantive task (one to understand, one to change, one to verify). A data point on deploy-time vs runtime decisions about when to codify orchestration — relevant to [learning with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) and the authorship axis of the RLM/persistence cluster. [just-a-reference]
 
 ## Limitations (our opinion)
 

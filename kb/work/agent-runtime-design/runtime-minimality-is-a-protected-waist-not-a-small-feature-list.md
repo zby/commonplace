@@ -71,7 +71,7 @@ This is the same logic as capability-based approval. Generated code may choose *
 | Durable project capability | Model, builder, or human | Cross-session | Test, review, version, and explicitly admit; support rollback and retirement |
 | Runtime or policy extension | Runtime maintainer, builder, or model | Deployment lifetime | Trusted installation outside ordinary run authority |
 
-The first two are dynamic execution. The third is deploy-time learning or capability promotion. The fourth changes the protected substrate itself. A system may support all four, but it should never let a run-local program cross into the later horizons implicitly.
+The first two are dynamic execution. The third admits a capability for reuse across sessions. The fourth changes the protected substrate itself. A system may support all four, but it should never let a run-local program cross into the later horizons implicitly.
 
 The horizon table alone does not identify self-modification. A human-written plugin can be durable without being self-generated. An RLM program can be self-generated without surviving the run. For this workshop, runtime self-modification needs both properties: a process inside the declared system boundary generates the concrete change, and the accepted change remains operative for later runs or sessions. It must also target the runtime's own [behavior-determining organization](../../theory/definitions/behavior-determining-organization.md) rather than merely produce an external work product.
 

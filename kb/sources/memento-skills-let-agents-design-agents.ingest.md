@@ -1,5 +1,5 @@
 ---
-description: "Memento-Skills supplies empirical evidence for frozen-LLM deploy-time learning through routed, rewritten executable skill memory, with transfer bounded by domain alignment"
+description: "Memento-Skills supplies empirical evidence for learning with a frozen LLM by routing tasks to executable skills and revising those skills, with transfer bounded by domain alignment"
 source: https://arxiv.org/pdf/2603.18743
 captured: "2026-07-28"
 capture: pdf-read

@@ -34,7 +34,7 @@ The connect report (`kb/reports/cache/connect/sources/agent-workflow-memory.conn
 
 1. **Abstract workflows beat concrete exemplars on Mind2Web** -- AWM improves over Synapse by +5.0 element accuracy and +4.0 step success, supporting the high-reach claim that trace distillation can improve transfer by changing shape, not merely shortening history. [just-a-reference]
 
-2. **Online induction is strongest when train-test distribution gaps widen** -- AWMonline beats AWMoffline on Mind2Web cross-domain step success (35.5 vs 32.6), giving concrete evidence for deploy-time learning: current-environment traces can be more valuable than stale training workflows when the environment shifts. [just-a-reference]
+2. **Online induction is strongest when train-test distribution gaps widen** -- AWMonline beats AWMoffline on Mind2Web cross-domain step success (35.5 vs 32.6), showing why it matters when the workflows are learned: current-environment traces can be more valuable than stale training workflows when the environment shifts. [just-a-reference]
 
 3. **The simpler account is surprisingly strong** -- rule-based induction on WebArena matches LM induction on success rate (35.6 vs 35.5) and only costs 0.4 more steps, suggesting much of AWM's gain may come from deduplication, invalid-action filtering, and reusable action skeletons rather than sophisticated semantic workflow induction. [experiment]
 

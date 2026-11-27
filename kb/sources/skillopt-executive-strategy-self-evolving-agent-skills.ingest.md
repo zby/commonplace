@@ -1,5 +1,5 @@
 ---
-description: "SkillOpt paper showing validation-gated text-space optimization of compact agent skills as readable deploy-time learning around frozen models"
+description: "SkillOpt paper showing validation-gated text-space optimization of compact agent skills for use with frozen models on later tasks"
 source: https://arxiv.org/html/2605.23904v2
 captured: "2026-05-28"
 capture: web-fetch

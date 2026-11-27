@@ -48,7 +48,7 @@ The closest source neighbors are the earlier [Mismanaged Geniuses Hypothesis](th
 
 1. **RLM performance is governed by decomposition-policy acquisition, not only scheduler substrate** -- The article strengthens the design-space note's decomposition-policy dimension: free-form RLM, typed RLM, prompt-steered RLM, and trained RLM differ in how the policy for choosing decompositions is acquired. [quick-win]
 
-2. **Trace-extracted prompt tips are a practical intermediate substrate** -- The reported loop is lightweight deploy-time learning without durable governance: inspect trajectories, distill process guidance, inject it into the next RLM run. It is weaker than tested artifact promotion but stronger than ad hoc prompting, and it bridges MGH's "steer while generating trajectories, then remove priors" strategy. [experiment]
+2. **Trace-extracted prompt tips are a practical intermediate substrate** -- The reported loop is learning through prompt revisions without durable governance: inspect trajectories, distill process guidance, inject it into the next RLM run. It is weaker than tested artifact promotion but stronger than ad hoc prompting, and it bridges MGH's "steer while generating trajectories, then remove priors" strategy. [experiment]
 
 3. **Graph-structured decomposition needs answer checking, not just sub-agent launch** -- The failures were cases where the model launched or attempted sub-solves but did not verify the returned sub-answer or chose brute-force search. This is a concrete warning for any scheduler that treats sub-agent decomposition as sufficient. [quick-win]
 

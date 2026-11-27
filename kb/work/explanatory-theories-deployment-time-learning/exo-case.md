@@ -10,7 +10,7 @@ These mechanisms make Exo a promising substrate for three reasons. First, a theo
 
 These properties do not establish that Exo already implements theory-mediated self-improvement. Existing memory facts, skills, self-update reasons, environment history, and source code are not automatically system theories. The inspected system does not require an explicit theory to mediate a self-change or govern a theory lifecycle. Nor does it demonstrate that a retained change was beneficial or trace one improvement's benefit into a later improvement episode.
 
-The distinctions matter. **Deployment-time learning** names the setting in which operational evidence drives retained change. **Theory-mediated learning** names an update mechanism in which a scoped, criticizable theory guides a decision. **Reflective self-improvement** names the architecture in which the system changes itself through a causally connected self-representation. Their intersection is **theory-mediated self-improvement**; when its evidence comes from operation, deployment time is the setting.
+The distinctions matter. **Deployment** is the setting when evidence from operation drives a retained change. **Theory-mediated learning** names an update mechanism in which a scoped, criticizable theory guides a decision. **Reflective self-improvement** names the architecture in which the system changes itself through a causally connected self-representation. Their intersection is **theory-mediated self-improvement**; when its evidence comes from operation, deployment time is the setting.
 
 ## The retained-theory treatment
 

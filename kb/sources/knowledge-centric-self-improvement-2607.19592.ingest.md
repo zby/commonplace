@@ -87,7 +87,7 @@ Two structural claims classify the protocol as well. For [moving the interpretat
 
 ## Extractable Value
 
-1. **External knowledge can be the persistent improvement substrate.** The protocol keeps agents stateless across tasks while retaining typed attempts, forum posts, and distilled bundles; this is a concrete positive case for the KB's claim that deploy-time learning can live in inspectable artifacts rather than model weights or a continuously specialized agent. [quick-win]
+1. **External knowledge can be the persistent improvement substrate.** The protocol keeps agents stateless across tasks while retaining typed attempts, forum posts, and distilled bundles; this is a concrete positive case for the KB's claim that lessons from use can persist in inspectable artifacts rather than model weights or a continuously specialized agent. [quick-win]
 
 2. **The curation loop has three distinct abstraction and selection stages.** Task-level discussion preserves local evidence and disagreement, cross-task discussion tests recurrence and transfer, and distillation writes the reusable artifact. This gives automated KB learning an explicit architecture rather than a generic “summarize the trace” operation. [deep-dive]
 

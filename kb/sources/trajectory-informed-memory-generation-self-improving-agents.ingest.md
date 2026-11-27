@@ -52,7 +52,7 @@ The `/connect` discovery identified 8 genuine connections. The paper lands squar
 
 4. **Tip consolidation via LLM-based merging as proto-synthesis** — the paper's consolidation step (clustering semantically similar tips, then LLM-merging them) is the closest any surveyed system comes to automated synthesis. Worth tracking as a potential mechanism for the "boiling cauldron." [deep-dive]
 
-5. **Difficulty-3 tasks show the largest gains (+28.5 pp SGC)** — complex multi-step tasks benefit disproportionately from accumulated operational knowledge. This suggests memory systems' value is non-linear with task complexity, which has implications for when deploy-time learning investments pay off. [just-a-reference]
+5. **Difficulty-3 tasks show the largest gains (+28.5 pp SGC)** — complex multi-step tasks benefit disproportionately from accumulated operational knowledge. This suggests memory systems' value is non-linear with task complexity, which has implications for when generating memories from earlier trajectories is worth the cost. [just-a-reference]
 
 6. **The inspectability advantage over AgeMem is concrete** — both systems learn from trajectories with similar oracle requirements, but this paper's output is diffable, searchable, and composable. This is a direct data point for the [inspectable-artifact](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) argument, and the paper shows no performance penalty for inspectability. [quick-win]
 

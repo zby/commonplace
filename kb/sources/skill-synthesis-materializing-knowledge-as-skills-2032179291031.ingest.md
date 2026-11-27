@@ -34,7 +34,7 @@ The `/connect` discovery found 6 strong connections, all in the **exemplifies** 
 
 1. **[Skills derive from methodology](../theory/skills-derive-from-methodology.md)** — qualifies. Cramer's skills are abstracted from external domain artifacts (OWASP guidance and commit history), not worked out from retained methodology. The resulting rules generalize beyond the artifacts that prompted them, so they enter the discovery lifecycle as conjectures and earn authority through testing. The process skips theory-building and goes straight from domain artifacts to operational instructions. Without a theory layer, the skill has no reasoned basis for adapting when it encounters cases the source material did not cover.
 
-2. **[deploy-time-learning-the-missing-middle](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md)** — exemplifies. The two-iteration refinement loop is deploy-time learning in action. "Skills are just files in a repo" is the deploy-time learning thesis in practitioner language. The skill is a durable, inspectable, versioned repo artifact.
+2. **[learning from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md)** — exemplifies. The two iterations revise the skill that later runs use. "Skills are just files in a repo" identifies where the change can be inspected and versioned.
 
 3. **[spec-mining-as-codification](../theory/spec-mining-as-codification.md)** — exemplifies. Mining commit history and past security patches for IDOR patterns, then encoding them as a detection skill, maps directly to the spec mining workflow: observe behavior, identify regularities, extract rules, re-run with constraints.
 
@@ -52,7 +52,7 @@ One synthesis opportunity flagged: skills abstracted from external domain artifa
 
 2. **Source material selection matters more than prompt engineering.** Cramer's key insight is that feeding the right source material (trustworthy, domain-specific) produces dramatically better skills than prompting for generic capability. The accuracy improvement comes from input selection, not output tuning. For evidence-to-rule abstraction, the "what to extract" question depends heavily on "what to feed in." [just-a-reference]
 
-3. **Quantified false-positive reduction across iterations.** Two refinement iterations took the system from noisy to 8/17 validated (47% precision). This is rare — most practitioner reports don't quantify the improvement trajectory. Could inform thinking about expected iteration counts for deploy-time learning. [just-a-reference]
+3. **Quantified false-positive reduction across iterations.** Two refinement iterations took the system from noisy to 8/17 validated (47% precision). This is rare — most practitioner reports don't quantify the improvement trajectory. Could inform thinking about how many revisions a comparable skill might need. [just-a-reference]
 
 4. **Skill distribution as package management (`npx skills add`).** Skills as installable packages from a repo. This is a concrete implementation of skill portability that our KB hasn't explored. Can a skill abstracted from one organization's domain artifacts transfer to another organization? [experiment] — worth tracking but not directly actionable for our methodology.
 

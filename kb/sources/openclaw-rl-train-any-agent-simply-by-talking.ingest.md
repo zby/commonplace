@@ -41,7 +41,7 @@ OpenClaw-RL introduces a framework that treats "next-state signals" — user rep
 
 ## Connections Found
 
-The `/connect` discovery identified 7 genuine connections and rejected 10 candidates. The paper lands at the intersection of the KB's learning theory, oracle strength, and deploy-time learning neighborhoods, but in a way that creates productive tension rather than simple alignment.
+The `/connect` discovery identified 7 genuine connections and rejected 10 candidates. The paper lands at the intersection of learning from interaction and assessing the feedback used for training, but in a way that creates productive tension rather than simple alignment.
 
 **Key connections:**
 
@@ -83,7 +83,7 @@ The `/connect` discovery identified 7 genuine connections and rejected 10 candid
 
 **Personalization experiments are shallow.** "Learns natural writing style within 36 interactions" and "develops friendlier feedback within 24 interactions" are striking claims, but the evaluation is thin. What does "learns writing style" mean quantitatively? Is it measured by human judgment, automated metrics, or self-evaluation? How robust is the learned style — does it persist under distribution shift, or does it degrade when the user's behavior changes? The paper provides counts of interactions but not rigorous evaluation of personalization quality.
 
-**No comparison to artifact-based alternatives.** The paper does not compare against simpler deploy-time learning approaches: prompt optimization, few-shot example accumulation, or the tip-extraction pipeline from the [trajectory-informed memory paper](trajectory-informed-memory-generation-self-improving-agents.ingest.md). Given that the trajectory-informed paper achieves +14.3 pp on AppWorld through inspectable tips, the question of whether OpenClaw-RL's opaque weight updates actually outperform inspectable alternatives on comparable tasks is unanswered. The "simpler account" check: could much of the gain come from any form of accumulated experience, regardless of whether it's encoded in weights or artifacts?
+**No comparison to artifact-based alternatives.** The paper does not compare against simpler ways to learn from use without updating weights: prompt optimization, few-shot example accumulation, or the tip-extraction pipeline from the [trajectory-informed memory paper](trajectory-informed-memory-generation-self-improving-agents.ingest.md). Given that the trajectory-informed paper achieves +14.3 pp on AppWorld through inspectable tips, the question of whether OpenClaw-RL's opaque weight updates actually outperform inspectable alternatives on comparable tasks is unanswered. The "simpler account" check: could much of the gain come from any form of accumulated experience, regardless of whether it's encoded in weights or artifacts?
 
 **"Simultaneously personalizes and improves" claim is underspecified.** The paper presents joint personalization and general improvement as a feature, but does not test for interference. Does personalization to one user's writing style degrade performance for other users? Does general task improvement conflict with user-specific adaptation? Multi-objective RL literature suggests these objectives can trade off; the paper assumes they compose cleanly without evidence.
 
