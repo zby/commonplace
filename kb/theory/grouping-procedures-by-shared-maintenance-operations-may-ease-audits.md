@@ -2,7 +2,7 @@
 description: "Skeleton conjecture: whether persistent procedure groupings reduce audit effort beyond assembling the relevant set on demand remains untested."
 type: types/note.md
 traits: [title-as-claim]
-tags: []
+tags: [kb-maintenance, curation]
 brief: grouping-procedures-by-shared-maintenance-operations-may-ease-audits.brief.md
 ---
 

@@ -2,7 +2,7 @@
 description: A Claw learning loop must target contextual competence (execution, classification, planning, communication), not just retrieval accuracy — question-answering is one mode among many
 type: types/note.md
 traits: [title-as-claim]
-tags: []
+tags: [learning-theory, continual-learning, agent-memory]
 ---
 
 # Claw learning loops must improve action capacity, not just retrieval

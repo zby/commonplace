@@ -5,6 +5,7 @@ traits:
   - title-as-claim
   - has-comparison
   - has-external-sources
+tags: [document-system, prose-readability, kb-maintenance]
 ---
 
 # Unresolved revision choices put dependent polish at risk of rework

@@ -2,6 +2,7 @@
 description: "When comparing commutes, pooling fares and parking fees while keeping punctuality separate distinguishes a gain from a trade-off that neither route wins."
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
+tags: [evaluation, robust-comparison]
 ---
 
 # A dominance cone can allow some offsets but not others

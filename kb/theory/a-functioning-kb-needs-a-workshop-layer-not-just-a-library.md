@@ -2,7 +2,7 @@
 description: "A working copy can be accurate and relevant without being a good link target. Distinguishing it from a lasting reference lets the team discard it when the work ends."
 type: types/note.md
 traits: [title-as-claim]
-tags: []
+tags: [architecture, document-system]
 ---
 
 # Temporary work needs to be distinguishable from lasting references

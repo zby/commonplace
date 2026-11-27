@@ -2,7 +2,7 @@
 description: Deriving architectural requirements by decomposing concrete user stories into step-by-step context needs — not from abstract read/write operations but from what the agent actually has to load at each stage
 type: types/note.md
 traits: []
-tags: []
+tags: [architecture, context-engineering]
 ---
 
 # Scenario decomposition drives architecture

@@ -2,7 +2,7 @@
 description: Skills and tasks are typed callables — they accept document types as input and produce types as output, and should declare their signatures like functions declare parameter types.
 type: types/note.md
 traits: [title-as-claim]
-tags: []
+tags: [computational-model, document-system, type-system]
 ---
 
 # Instructions are typed callables with document type signatures

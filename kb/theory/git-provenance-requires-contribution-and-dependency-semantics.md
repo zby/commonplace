@@ -2,6 +2,7 @@
 type: types/note.md
 description: "Choose among Git parents, provenance records within commits, and external records by the dependency semantics and historical access the work requires."
 traits: [title-as-claim, has-comparison, has-external-sources]
+tags: [architecture, artifact-analysis, learning-theory]
 ---
 
 # Git-backed provenance depends on explicit contribution and dependency semantics

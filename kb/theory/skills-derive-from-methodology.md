@@ -2,7 +2,7 @@
 description: The methodology→skill relationship can preserve natural-language form and a live methodology fallback; derivation tracks content dependence, separately from codification or constraining
 type: theory/types/structured-claim.md
 traits: [has-comparison, title-as-claim]
-tags: []
+tags: [method-guided-action, artifact-analysis, learning-theory]
 ---
 
 # Skills derive from methodology

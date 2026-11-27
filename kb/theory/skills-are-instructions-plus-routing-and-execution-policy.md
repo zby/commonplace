@@ -2,7 +2,7 @@
 description: Skills add structured discovery, user-facing invocation, and declarative execution policy (tool permissions, model override, context isolation) beyond the shared procedure
 type: types/note.md
 traits: [title-as-claim]
-tags: []
+tags: [architecture, computational-model, context-engineering]
 ---
 
 # Skills are instructions plus routing and execution policy

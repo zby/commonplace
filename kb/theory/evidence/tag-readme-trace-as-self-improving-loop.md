@@ -2,6 +2,7 @@
 description: "Maps the ADR-026 tag-readme trace onto the search/evaluation/retention loop, showing which half of each step runs in code and which stays human"
 type: types/note.md
 traits: [has-implementation]
+tags: [self-improving-systems, improvement-loop, reflection, learning-theory]
 ---
 
 # The tag-readme trace read as a self-improving loop

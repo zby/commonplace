@@ -2,7 +2,7 @@
 description: "A successor can improve a declared production dimension while disabling the machinery that would produce another revision; such a successor fails a non-regression requirement only when the revision capability is included in the checked scope"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: []
+tags: [self-improving-systems, improvement-loop, software-factory, learning-theory]
 ---
 
 # An improvement can close the path to further improvement

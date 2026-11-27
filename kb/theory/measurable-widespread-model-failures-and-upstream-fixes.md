@@ -2,6 +2,7 @@
 description: "When to discount the lifetime of agent instructions that compensate for general model weaknesses, and an experiment to test which published failures persist across releases."
 type: types/note.md
 traits: [title-as-claim]
+tags: [kb-maintenance, curation]
 ---
 
 # Measurable, widespread model failures are candidates for upstream fixes

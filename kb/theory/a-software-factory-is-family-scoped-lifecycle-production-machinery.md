@@ -6,6 +6,7 @@ traits:
   - has-comparison
   - has-external-sources
   - synthesis
+tags: [software-factory, self-improving-systems, learning-theory]
 ---
 
 # A software factory is family-scoped lifecycle production machinery

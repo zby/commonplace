@@ -2,6 +2,7 @@
 type: types/note.md
 description: "Distinguish a stricter acceptance policy from another correctness check when conjunctive lower-bound gates use fixed nondecreasing transforms of the same probability."
 traits: [title-as-claim, has-external-sources]
+tags: [evaluation, llm-reliability, learning-theory]
 ---
 
 # Thresholding fixed monotone transforms of one probability does not add an independent check

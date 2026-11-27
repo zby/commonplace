@@ -2,6 +2,7 @@
 description: "A conjectural grouping of judgment-specialized language models explains reusable semantic components, distinct execution paths and what KB designers must compare before delegating a bounded decision."
 type: types/note.md
 traits: [title-as-claim, synthesis, has-comparison, has-external-sources]
+tags: [evaluation, architecture, llm-reliability, learning-theory]
 ---
 
 # Language models for bounded judgments form an emerging category

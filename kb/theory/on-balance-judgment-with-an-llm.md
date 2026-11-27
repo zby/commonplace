@@ -2,6 +2,7 @@
 description: "How to elicit and test an LLM’s judgment: trace rival remedies for misleading directions, then compare options when the obstacle is a genuine trade-off."
 type: types/note.md
 traits: [has-comparison]
+tags: [evaluation, robust-comparison]
 ---
 
 # On-balance judgment with an LLM

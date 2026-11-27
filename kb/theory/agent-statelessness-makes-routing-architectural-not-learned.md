@@ -2,7 +2,7 @@
 description: "Because each session starts without learned navigation intuition, skills, type templates, routing tables, names, and activation triggers remain permanent architecture rather than temporary scaffolding"
 type: types/note.md
 traits: [has-comparison, title-as-claim]
-tags: []
+tags: [architecture, context-engineering]
 ---
 
 # Agent statelessness makes routing architectural, not learned

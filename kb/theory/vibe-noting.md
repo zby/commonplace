@@ -2,7 +2,7 @@
 description: Linked, maintained knowledge artifacts let LLM agents recover reasoning across sessions, improving augmentation even when weak verification still blocks automation
 type: types/note.md
 traits: []
-tags: []
+tags: [agent-memory, continual-learning, learning-theory]
 ---
 
 # Vibe-noting

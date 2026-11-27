@@ -2,7 +2,7 @@
 description: "Design exploration for enriching web search by reusing /connect's dual discovery and articulation testing on results, building a temporary research graph before bridging to KB"
 type: types/note.md
 traits: [has-comparison]
-tags: []
+tags: [context-engineering, links]
 ---
 
 # Brainstorming how to enrich web search

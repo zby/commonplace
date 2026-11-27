@@ -2,7 +2,7 @@
 description: Frontloading can specialize instructions for known inputs; the partial-evaluation comparison requires preservation of meaning, which shared text alone does not establish
 type: types/note.md
 traits: []
-tags: []
+tags: [computational-model, context-engineering]
 ---
 
 # Frontloading can specialize instructions around known inputs

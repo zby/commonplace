@@ -3,7 +3,7 @@ description: "Compare ways to handle unfinished agent workflows after code chang
 type: types/note.md
 traits:
   - has-comparison
-tags: []
+tags: [architecture, computational-model]
 ---
 
 # Workflow compatibility across implementation changes

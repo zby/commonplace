@@ -2,7 +2,7 @@
 description: Three tiers — skills (autonomous-ready), instructions (reusable-but-steered), methodology notes (exploratory) — keep AGENTS.md free of capability inventories with a clear promotion path
 type: types/note.md
 traits: [title-as-claim]
-tags: []
+tags: [architecture, context-engineering, method-guided-action]
 ---
 
 # Capability placement should follow autonomy readiness

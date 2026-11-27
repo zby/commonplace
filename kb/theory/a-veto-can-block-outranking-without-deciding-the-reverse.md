@@ -2,6 +2,7 @@
 description: "Two commutes differ in cost, travel time, and punctuality. A worked comparison distinguishes a veto on lost punctuality from a minimum service level."
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
+tags: [evaluation, robust-comparison]
 ---
 
 # A veto can block outranking without deciding the reverse
