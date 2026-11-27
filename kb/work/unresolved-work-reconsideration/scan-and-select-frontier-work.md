@@ -1,13 +1,15 @@
 ---
-description: "Use to scan theory and reference for possible work, select up to ten comparatively straightforward useful next steps, and retain enough evidence to reconsider the selection later."
+description: "Use to scan theory and reference for actionable work, select up to ten comparatively straightforward useful next steps, and retain enough evidence to reconsider the selection later."
 type: types/instruction.md
 ---
 
 # Scan the unresolved frontier and select straightforward next steps
 
-Help an agent choose useful work it can advance now, while leaving harder items
-on the [unresolved frontier](../../reference/definitions/unresolved-frontier.md)
-available for later reconsideration.
+Help an agent choose useful work it can advance now from the
+[unresolved frontier](../../reference/definitions/unresolved-frontier.md)—work
+actionable now by some available actor or process—while leaving harder
+actionable items and currently blocked candidates available for later
+reconsideration.
 
 ## Commission
 

@@ -1,64 +1,53 @@
 ---
-description: "Definition — the unresolved frontier is Commonplace's discoverable field of possible further work, including open problems, pending choices, unfinished tasks and recurring work that may need attention."
+description: "Definition — the unresolved frontier is the work that is actionable now by some currently available actor or process."
 type: types/definition.md
 ---
 
 # Unresolved frontier
 
-The **unresolved frontier** is Commonplace's discoverable field of possible
-further work: matters that may deserve investigation, decision, completion or
-renewed attention. The term gives agents and operators a common search target
-when choosing what to do next, without requiring every candidate to share a
-kind, priority or lifecycle.
+The **unresolved frontier** is the work that is actionable now: work some
+currently available actor or process can do with the available context, tools
+and resources, and that may merit attention. It covers investigations,
+decisions, repairs, unfinished tasks and recurring work, giving agents and
+operators one name for candidate next work regardless of kind or priority.
 
 ## Scope
 
-Open questions, observations in a log, pending proposals, vocabulary choices,
-workshop residuals and reviews that may be due can all expose this frontier.
-These are examples, not an exhaustive classification. An approach need not be
-known, and an item's eventual value need not be predictable, for it to be
-worth keeping discoverable.
+Examples include open questions with a live line of inquiry, log observations,
+undecided proposals, vocabulary choices, unfinished workshop work and due
+reviews. Work belongs here when an available actor or process—a human operator,
+a configured LLM agent, an automated script or workflow, or a combination of
+them—can take a workable step on it now. The final answer or eventual payoff
+need not be known in advance. For LLM-based work, availability depends on the
+configured agent (model and version, reasoning effort, prompts, context and
+tools), not the model name alone.
 
-The frontier is distributed across artifacts and work surfaces; it is not one
-ledger or a claim to enumerate all possible work. One artifact can expose
-several items, and several artifacts can concern the same item. A search match
-is a candidate whose currency and usefulness still need checking.
-
-“Unresolved” concerns further work, not only unanswered theoretical questions.
-Completing an investigation or adopting a convention can remove its immediate
-work without making the result immune to criticism. Under the
-[epistemic stance](../epistemic-stance.md), closure is relative to a purpose;
-new evidence, criticism or circumstances may make renewed attention useful.
-
-## Possible for whom?
-
-“Possible further work” means work that some available actor or combination of
-actors can reasonably undertake with the available context, tools and
-resources. Work that requires a future model is an extrapolation; that
-dependency must be explicit.
-
-Actors include human operators, LLM-based agents and, in future, decision
-models. Feasibility claims need to identify the relevant actor and conditions.
-For LLM-based work, this means the configured agent: model and version,
-reasoning effort, prompts, context and tools—not just the model name.
+“Unresolved” covers any open work, not only unanswered questions. Completing a
+task or adopting a convention ends that work without making the result immune
+to criticism; under the [epistemic stance](../epistemic-stance.md), new
+evidence or changed circumstances can bring a matter back onto the frontier.
 
 ## Exclusions
 
-- Not just the boundary of problems beyond current agent capability: easy
-  repairs belong as well as hard investigations.
-- Not every live artifact, nor every claim merely because it is fallible.
-  There must be some identifiable possible work or reason to reconsider it.
-- Not a priority queue, an execution mandate or a certification that every
-  listed item remains open. Inclusion alone authorizes no action.
-- Bare “frontier” in existing texts can name a search surface or a capability
-  boundary; this compound names the possible-work field defined here.
+- Work that no currently available actor or process can do now—for example,
+  work waiting on a future capability, unavailable evidence or tools, or a
+  blocking decision.
+- Live artifacts or fallible claims with no concrete work to do on them now.
+- Any structure that records or indexes it: the frontier is the currently
+  actionable work itself, not the files, ledger or view used to track
+  candidates (which may also hold blocked or stale items).
+- Priority or authorization: being on the frontier means work is actionable,
+  not ranked first or approved to run.
+- Bare “frontier” used only for the edge of agent capability: routine repairs
+  and recurring checks belong alongside hard investigations.
 
 ## Misuse Cases
 
-- Excluding a useful pending review merely because its procedure is routine.
-- Requiring a new ledger entry before work can be discovered or proposed.
-- Treating work beyond one agent's capabilities as beyond every actor's
-  capabilities, or treating a model name alone as a sufficient capability claim.
-- Treating an old question as current without checking its source and later work.
-- Treating an item's removal as proof of final truth, or its retention as a
-  requirement to work on it now.
+- Calling blocked or future-capability work part of the unresolved frontier.
+- Excluding routine work, such as a due review or automated check, because it
+  is not a hard problem.
+- Treating work beyond one agent's capabilities as outside the frontier when
+  another actor or process can do it, or citing a bare model name as a
+  capability claim.
+- Treating work leaving the frontier as proof of final truth, or treating its
+  presence on the frontier as permission or a mandate to act.

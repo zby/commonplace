@@ -5,8 +5,8 @@ type: types/instruction.md
 
 # Find the next straightforward useful task
 
-Find one useful task on the [unresolved frontier](../reference/definitions/unresolved-frontier.md)—the discoverable field of
-possible further work—whose need, scope, approach and verification are clear
+Find one useful task on the [unresolved frontier](../reference/definitions/unresolved-frontier.md)—work
+actionable now—whose need, scope, approach and verification are clear
 enough for an agent to carry out without inventing a solution to a hard problem.
 
 ## Invocation and authority

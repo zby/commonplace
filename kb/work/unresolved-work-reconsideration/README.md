@@ -31,10 +31,13 @@ required for every invocation. Do not require a complete inventory or a ranking
 model before an agent can select straightforward work.
 
 The [unresolved frontier](../../reference/definitions/unresolved-frontier.md)
-is the discoverable field of possible further work, including recurring work
-that may need attention. The operator directed that we register this broad
-term without prematurely separating research from maintenance. The useful unit
-is a possible piece of work, not a file. One workshop may contain several items;
+is work that is actionable now by some currently available actor or process,
+including recurring work that may need attention. The operator initially
+directed registering this broad term without prematurely separating research
+from maintenance, and later narrowed it to work actionable now (excluding
+currently blocked or future-capability work, though recorded candidates remain
+reconsiderable when unlocked). The useful unit
+is a piece of work, not a file. One workshop may contain several items;
 one item may appear on several surfaces. Keep source pointers
 and preserve the source's authority rather than copying every item into a second
 manually maintained queue. The possible question ledger remains a proposal, not
@@ -66,8 +69,8 @@ not retire its source artifact. These distinctions must survive any shared view.
 
 ## Candidate distinctions, not adopted classes
 
-The following may help later selection or evaluation, but none partitions the
-frontier or determines membership:
+The following may help later selection or evaluation, though none is an adopted
+classification schema:
 
 - An unanswered question versus a known operation awaiting execution.
 - One-off work versus recurring work, such as reviews.
