@@ -1,5 +1,5 @@
 ---
-description: "Lead article: the bet that autonomous selection-based learning over text, hypotheses, and code can clear four continual-learning bars with fixed weights without a single score, plus its base-model floor, Bitter Lesson scaling, and hypothesis payoffs"
+description: "Can selection-based learning over text, hypotheses, and code clear four continual-learning bars with fixed weights and no single score? Covers base-model demands, Bitter Lesson scaling, and hypothesis payoffs."
 type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -65,9 +65,8 @@ score—clearing four bars that ordinary agent memory misses:
    initially wrote into the harness.
 
 This is not a claim that fixed-weight selection can learn anything; it depends
-on a frozen base model already above the
-[competence floor needed to operate the loop](../theory/base-llm-competences-for-autonomous-selection-based-learning.md),
-detailed below. If the bet holds above that floor, a fully automated loop can
+on whether the frozen model can [make the decisions the rest of the loop leaves to it](../theory/base-llm-competences-for-autonomous-selection-based-learning.md).
+If the bet holds, a fully automated loop can
 sit on the compute side of the Bitter Lesson, and retaining testable
 hypotheses alongside winning updates may buy sample efficiency under
 structured shifts plus bounded, testable explanations of what the system
@@ -195,7 +194,7 @@ what it excludes—it has revised how it judges future updates. That is
 [double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md),
 the capability required whenever a fixed check starts misleading the loop.
 
-## Testing the bet and its base-model floor
+## Testing the bet and identifying what the base model must supply
 
 Testing the four bars does not require a benchmark against hypothetical
 continual weight training for open-ended work. Each bar is directly testable
@@ -218,17 +217,15 @@ three-arm diagnostic test—while
 sets out the comparisons for admission, targeted correction, criterion
 revision, and whole-loop net gain.
 
-Closing this loop autonomously still depends on what the frozen weights supply
-up front. Harness code can handle much of the loop's machinery—enforcing
-codified validators, capturing traces, replaying past cases, tracking bloat,
-and executing rollbacks—but our working hypothesis is that
-[three irreducible semantic competences remain on the frozen base LLM](../theory/base-llm-competences-for-autonomous-selection-based-learning.md):
-interpreting unformalized text into action, diagnosing novel failures and
-synthesizing candidate fixes in text or code, and judging unformalized
-trade-offs while recognizing missing evidence. Below that competence floor,
-edits to prompts or tools cannot substitute for capabilities the loop itself
-needs; weight training still builds the base learner. Above that floor, the
-two arguments below are conditional on the bet holding.
+A harness that can try every available patch within budget and recognize a
+repair can fix a failure without diagnosing it. If none of those patches
+can work, the model may need to diagnose the failure and propose a different
+repair. The same distinction applies to interpreting a new prose instruction
+or judging a trade-off no encoded rule settles. [What the base model must
+supply](../theory/base-llm-competences-for-autonomous-selection-based-learning.md)
+depends on which decisions the loop must make and which it can handle without
+the model. Meeting those demands does not establish that the loop can keep
+improving. The two arguments below are conditional on that bet holding.
 
 ## First argument: the loop can sit on the compute side of the Bitter Lesson
 
@@ -352,10 +349,10 @@ these four bars yet. The bet and both conditional arguments remain untested.
   [Selection-based learning needs only a local comparison](../theory/selection-based-learning-needs-only-a-local-comparison.md)
   — the definition of the learning process and why costly search means
   evaluation compares only the candidates reached.
-- [Harness code may offload much of a selection loop, leaving three base LLM competences](../theory/base-llm-competences-for-autonomous-selection-based-learning.md)
+- [What a fixed-weight selection loop still needs from its base model](../theory/base-llm-competences-for-autonomous-selection-based-learning.md)
   and
   [Credit assignment without a chain rule is a debugging problem over an interdependent store](../theory/credit-assignment-without-a-chain-rule-is-a-debugging-problem.md)
-  — our working hypothesis on the base-model floor and how debugging governs credit assignment as the store grows.
+  — what work falls to the base model and how debugging governs credit assignment as the store grows.
 - [Defining Improvement for Open-Ended Work](../theory/defining-improvement-for-open-ended-work.md),
   [On-balance judgment with an LLM](../theory/on-balance-judgment-with-an-llm.md),
   and

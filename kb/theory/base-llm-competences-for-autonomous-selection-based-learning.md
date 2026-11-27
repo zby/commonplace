@@ -1,49 +1,34 @@
 ---
-description: "Working hypothesis: harness code can supply much of an autonomous selection-based learning loop, leaving three conjectured semantic competences on the frozen base LLM"
+description: "Use a procedure-maintenance decision to distinguish when a fixed-weight selection loop needs its base LLM to interpret an instruction, diagnose a failure, or judge a trade-off."
 type: types/note.md
-traits: [title-as-claim]
 tags: [self-improving-systems, improvement-loop, continual-learning, learning-theory]
 ---
 
-# Harness code may offload much of a selection loop, leaving three base LLM competences
+# What a fixed-weight selection loop still needs from its base model
 
-**Working hypothesis.** Holding model weights fixed while updating a store of procedures, hypotheses, and code does not remove dependence on the base model's weights. Yet an autonomous [selection-based learning](./definitions/selection-based-learning.md) loop does not need the frozen LLM to perform every loop function on its own. Following [scheduler–LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md), harness code can take over much of the loop's machinery:
+A fixed-weight LLM can change how it works by revising the procedures, hypotheses, and code it uses on later tasks. In [selection-based learning](./definitions/selection-based-learning.md), a proposed change takes effect only if an evaluation accepts it. Neither proposing nor selecting necessarily requires an LLM. Code can enumerate patches, run a decisive test, retain a passing patch, and roll it back if a regression appears.
 
-- **Enforcement and context assembly:** running codified validators and schemas, routing and loading the relevant artifacts, and enforcing token budgets.
-- **Evidence capture and replay:** recording which artifacts loaded during a run, annotating telemetry coverage gaps, replaying past cases, and running targeted ablations or bisects.
-- **Store bookkeeping:** tracking unused or stale entries, flagging rising failure rates, scheduling periodic reviews, and executing rollbacks.
+What, then, must the base model contribute? Consider a system that maintains its own procedures. Its harness can record which procedure ran, replay a failing case, and enforce a context budget. Assume the frozen LLM is the only component available to interpret new prose, and no person intervenes during a decision. Three kinds of work can then fall to the model.
 
-Because an LLM that writes code can also build new harness tools for those jobs, the frozen model does not need to keep track of budgets, traces, or regression suites in its head. Harness code can relocate mechanical and structural work, yet [semantic work can be relocated without being eliminated](./semantic-work-can-be-relocated-but-not-eliminated.md). In open-ended work where new failure modes, commitments, and remedies keep arriving, our working hypothesis is that three irreducible semantic competences remain on the frozen base LLM:
+**1. Interpret a procedure when its application has not been encoded.** Suppose a procedure says, “Keep enough evidence for another maintainer to reconstruct why the change was accepted.” The harness can load that sentence and cap the record at 2,000 tokens. Neither operation determines which evidence matters in this case. If the maintainer needs to know why a passing alternative was rejected, a record of the winning test alone is insufficient. Once a rule specifies which comparison to retain, the harness can execute it. The model is needed where the instruction still has to be interpreted, not every time the rule runs.
 
-1. **Interpreting unformalized text into action.** The model must read natural-language procedures, hypotheses, and constraints that have not yet been codified into code and let them govern its behavior under realistic context loads ([operative change](./definitions/operative-change.md)).
-2. **Diagnosing novel failures and synthesizing candidates across text and code.** It must turn an unanticipated failure and its trace into a causal diagnosis and propose novel remedies—new procedures, testable hypotheses, checks, or executable harness code ([diagnostic richness](./diagnostic-richness-constrains-outer-loop-learning-quality.md)).
-3. **Judging unformalized trade-offs and recognizing missing evidence.** It must weigh competing consequences against stated commitments where no fixed check settles the choice, keep genuinely contested or under-evidenced comparisons open, and recognize when an existing check is misleading ([on-balance judgment with an LLM](./on-balance-judgment-with-an-llm.md)).
+**2. Diagnose a failure when diagnosis makes a repair reachable.** Suppose replay shows that the comparison is missing. If the harness can try every available logging configuration and a check recognizes an adequate record, the loop can fix the omission without explaining it. But suppose every configuration records only the accepted candidate. Searching those configurations for longer cannot recover a rejected candidate’s result. A model that traces the omission to the point where the alternatives are discarded can propose a different repair: capture the comparison *before* selection. The value of diagnosis here is specific. It identifies a candidate outside the current search. Diagnosis is not a logical prerequisite for every successful update.
 
-Under this split, store-level maintenance and [criterion revision](./definitions/single-loop-and-double-loop-learning.md) do not require a separate model competence. Detecting bloat, stale entries, or rising regressions belongs to harness code; spotting semantic conflicts between prose rules, refactoring them into a cleaner abstraction, or proposing a revised check reduces to competences 2 and 3 applied to the store and its criteria.
+**3. Judge a trade-off when the checks do not settle it.** Suppose one repair retains the comparison but exceeds the normal context budget; another stays within budget but omits the reason for rejection. If the budget is a hard limit, the harness can rule out the first repair. If it is a default that may yield to an audit requirement, the decision turns on the commitments that apply to this case. A model may be able to justify an exception or propose a shorter record that satisfies both. If the available evidence does not show what the maintainer needs to reconstruct, the warranted verdict may be to retain neither patch. Recognizing missing evidence is different from supplying it.
 
-These three competences can fail independently and sit at different capability thresholds. A model may follow clear prose procedures while still misdiagnosing noisy traces or overclaiming certainty on incomplete records. Separating them lets a human-assisted bootstrap identify which competence currently binds: people temporarily supply the missing semantic step while transfer tests check each kind of decision on its own.
-
-A bounded empirical illustration of a base-model floor appears in [Harness Evolution Hits a Ceiling](../sources/harness-evolution-ceiling-weight-training.ingest.md), where the three weakest tested models produced no held-out gains under the same harness-evolution loop that improved stronger models. Even within one benchmark and loop, an inadequate base model can block outer-loop learning before the store itself saturates.
+The same distinctions apply when the proposed change is to the store or to a check itself. Code can flag two procedures that always load together; that does not establish that one can replace the other. A model can propose a less costly audit check and judge it against the unchanged requirement that decisions remain reconstructible. Changing *that requirement* is a different decision. Authority to revise a check does not confer authority to discard the commitment it serves.
 
 ## Scope
 
-- This split is a **working hypothesis**, not an established impossibility result. Any sub-task shown to be reliably offloadable to harness code moves out of the LLM column, and concrete bottlenecks discovered in practice can add to it.
-- Clearing these competences is proposed as necessary for operating the loop autonomously, not sufficient for sustained continual learning.
+These are distinctions among jobs, not evidence for three independent model faculties. One inference can serve more than one job: understanding why a comparison matters may both explain a failure and support a repair. Nor does a weakness of the model that executes tasks establish a weakness of the model that selects changes; they need not be the same model.
 
-## Open Questions
-
-- Which of the three competences binds first on current frontier models in real software and knowledge-base maintenance?
-- How far can better harness interfaces—such as structured replay harnesses, dependency graphs, and explicit coverage annotations—lower the base-model floor required for competences 2 and 3?
+**The design question is therefore conditional:** for the changes this loop is expected to make, which decisions can its rules settle, which repairs can its search reach, and when may it decline to act? What remains is a concrete demand on the base LLM only if the loop must handle it autonomously and no other component can supply it. Meeting that demand makes those decisions possible; it does not guarantee sustained improvement.
 
 ---
 
 Relevant Notes:
 
-- [Selection-based learning](./definitions/selection-based-learning.md) — defined-in: the loop whose autonomous operation sets these prerequisites
-- [Scheduler–LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: why bookkeeping, replay, and enforceable checks belong in harness code while semantic interpretation stays on the model
-- [Semantic work can be relocated, not eliminated](./semantic-work-can-be-relocated-but-not-eliminated.md) — grounds: why harness offloading narrows the base-LLM floor without eliminating it
-- [On-balance judgment with an LLM](./on-balance-judgment-with-an-llm.md) — extends: develops competence 3 and how to test an LLM selector
-- [Single-loop and double-loop learning](./definitions/single-loop-and-double-loop-learning.md) — defined-in: criterion revision, treated here as competences 2 and 3 applied to working checks
-- [Operative change](./definitions/operative-change.md) — defined-in: why loading a prose procedure without behavioral dependence fails competence 1
-- [Diagnostic richness constrains outer-loop learning quality](./diagnostic-richness-constrains-outer-loop-learning-quality.md) — extends: how the harness's evidence interface interacts with competence 2
-- [Harness Evolution Hits a Ceiling](../sources/harness-evolution-ceiling-weight-training.ingest.md) — evidenced-by: weak-model lines produced no held-out harness gains under a loop that lifted stronger models (bounded to one benchmark and loop)
+- [Selection-based learning](./definitions/selection-based-learning.md) — defined-in: why a loop with an automatic test can still learn by selection
+- [Semantic work can be relocated, not eliminated](./semantic-work-can-be-relocated-but-not-eliminated.md) — grounds: why a demand on the loop need not be a demand on its base model
+- [Diagnostic richness constrains outer-loop learning quality](./diagnostic-richness-constrains-outer-loop-learning-quality.md) — grounds: which failure distinctions a proposer can recover from a trace
+- [On-balance judgment with an LLM](./on-balance-judgment-with-an-llm.md) — extends: how to compare candidates when no encoded rule settles their trade-off
