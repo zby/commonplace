@@ -1,6 +1,7 @@
 ---
 type: types/note.md
 description: "Standing query on judging which KB notes earn retention as autonomous production grows and models upgrade, beyond repo and collection goals."
+tags: [kb-maintenance, curation, evaluation]
 ---
 
 # How do we value notes?

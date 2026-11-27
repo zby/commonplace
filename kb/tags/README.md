@@ -42,6 +42,13 @@ For current-state documentation about the live Commonplace system rather than tr
 - [Trace-learning](./trace-learning-README.md) — external systems that learn from their own agent traces through a raw-to-distilled loop
 - [Related systems](../agentic-systems/README.md) — current external-system analyses and memory comparisons; the legacy memory survey remains historical
 
+## Starting Questions
+
+Recurring theoretical questions in [kb/theory/questions/](../theory/questions/README.md) organize tentative answers across tags around a shared problem situation:
+
+- [How do we value notes?](../theory/questions/how-do-we-value-notes.md) — judging which KB notes earn retention as autonomous production grows and models upgrade
+- [How do we fight bloat in agent-produced systems?](../theory/questions/how-do-we-fight-bloat-in-agent-produced-systems.md) — controlling code, prose, and structural bloat in mixed natural-language and code systems
+
 ## Workshop Layer
 
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion

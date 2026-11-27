@@ -6,8 +6,14 @@ The central thread is [continual learning](./deployed-systems-can-learn-from-fee
 
 ## Navigation
 
-- [tags index](../tags/README.md) — the top-level hub in `kb/tags/` linking every tag head (foundations, evaluation, learning theory, links, and the rest), plus the workshop layer and open gaps.
+Start with **[tags](../tags/README.md)** to browse by topic (the main access path across the KB; each tag head recommends where to start and lists every member by collection), or start from a recurring problem in **[questions/](./questions/README.md)**. The build-time complete file listing linked at the bottom is an A–Z fallback rather than the primary browse view.
+
+- [tags index](../tags/README.md) — primary topical browse path in `kb/tags/` linking every tag head (self-improving systems, learning theory, context engineering, evaluation, KB maintenance, and the rest).
+- [questions/](./questions/README.md) — recurring theoretical questions treated as first-class thinking starting points beside claims.
 - `definitions/` — transferable vocabulary such as constraining, codification, and discovery lifecycle, one term per file. Selected Commonplace vocabulary lives in reference definitions instead.
+- `evidence/` — bounded datasets, experiments, trace cohorts, and comparative casebooks.
+- [proposals/](./proposals/README.md) — finished theory waiting on an adoption decision.
+- [agent-memory-requirements/](./agent-memory-requirements/README.md) — concrete agent-memory requirements inventory.
 
 ## How to read these notes
 

@@ -1,6 +1,7 @@
 ---
 type: types/note.md
 description: "Standing query on controlling code, prose, and structural bloat in mixed natural-language and code systems produced by agents, where software anti-bloat advice falls short."
+tags: [kb-maintenance, curation, context-engineering, document-system]
 ---
 
 # How do we fight bloat in agent-produced systems?

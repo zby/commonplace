@@ -93,7 +93,7 @@ Add the `title-as-claim` trait when using one, so review gates check the promise
 
 Exception: notes with the `synthesis` trait weave multiple cited claims into a single argument and are cited as a unit. Component claims that need to stand as citable premises should be extracted into their own notes.
 
-Exceptions to claim titles: multi-claim specs, definitions, indexes, and exploratory drafts not ready to assert.
+Exceptions to claim titles: multi-claim specs, definitions, indexes, standing questions, and exploratory drafts not ready to assert.
 
 ## Outbound links
 
@@ -154,6 +154,10 @@ Use `kb/theory/evidence/` when a note's primary contribution is what a bounded d
 ## Proposal placement
 
 Use `kb/theory/proposals/` for finished theory the KB has not decided to import into its vocabulary: frameworks, distinctions, terms, and changes to adopted definitions. Placement follows adoption state, not doubt about the content; a conjecture that needs no new vocabulary is an ordinary note that states its conjectural force. Every artifact under `proposals/` carries the collection-local [`theory-proposal`](./types/theory-proposal.md) type, which states what a proposal must contain and how it is adopted or deleted ([ADR 084](../reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)). Other notes may point to a proposal but do not cite it as a premise or use its terms as settled vocabulary.
+
+## Question placement
+
+Use `kb/theory/questions/` for recurring theoretical questions treated as first-class thinking starting points beside claims ([ADR 142](../reference/adr/142-questions-are-first-class-objects-in-kb-theory-questions.md)). A question belongs here when it frames a cross-cutting problem situation — stakes, current tentative answers linking into the KB, and what remains unsettled — rather than a single-note gap (keep that in the note's `## Open Questions`), a short static reply for a recognizable occasion (`kb/notes/`), an active investigation (`kb/work/`), or finished unadopted theory awaiting adoption (`kb/theory/proposals/`). Questions currently use `type: types/note.md` (a dedicated type spec is deferred while the format stabilizes); they are exempt from claim-title and claim-modality rules while remaining subject to this collection's linking and source-grounding limits.
 
 ## What does NOT belong here
 

@@ -25,6 +25,8 @@ How the KB's indexes, tag heads, and body of notes stay usable as it grows: what
 
 ## Growth and retirement
 
+- [How do we value notes?](../theory/questions/how-do-we-value-notes.md) — standing query on selecting which notes earn retention and maintenance cost as autonomous production grows and models upgrade
+- [How do we fight bloat in agent-produced systems?](../theory/questions/how-do-we-fight-bloat-in-agent-produced-systems.md) — standing query on controlling code, prose, and structural bloat where software anti-bloat advice falls short
 - [Maintenance capacity must match harmful-artifact inflow](../theory/maintenance-capacity-must-match-harmful-artifact-inflow.md) — quality holds only while prevention, detection, and repair keep pace with risk-weighted inflow
 - [Cheap adoption and weak retirement accumulate cost](../theory/cheap-adoption-and-weak-retirement-accumulate-cost.md) — cheap structural additions become debt when retiring them lacks an equally operative path
 

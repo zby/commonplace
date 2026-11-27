@@ -31,6 +31,13 @@ Commonplace packages the methodology running this site as an open-source tool fo
 - **Explicit doctrine paired with deterministic code.** Skills and prose instructions guide model judgment; Python commands enforce repeatable operations and bookkeeping ([scheduler–LLM separation](./theory/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)).
 - **Separated review and editing.** `commonplace-review` runs headless criteria against notes and never edits them; `commonplace-revise` is the only review/editing workflow that writes a note ([Review and editing system](./reference/README-REVIEW-SYSTEM.md)).
 
+### Browse the KB
+
+- **[Topics (tags index)](./tags/README.md)** — the main access path for browsing the KB by topic; each tag head introduces the area, recommends where to start, and lists every tagged artifact grouped by collection.
+- **[Theory questions](./theory/questions/README.md)** — recurring research questions treated as problem-first starting points beside individual claims.
+- **[Articles](./articles/README.md)** — standalone technical articles, drafts, and talks.
+- **[Reference](./reference/README.md)** — shipped architecture, contracts, CLI commands, and ADRs.
+
 ### Use it yourself
 
 Commonplace is open source. Two ways to put it to work:
