@@ -16,11 +16,11 @@ import re
 from hashlib import sha256
 from pathlib import Path
 
+from commonplace.headless.profiles import WORKER_PROFILES
 from commonplace.lib.agentic_analysis import run_ids
 from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
-    WORKER_PROFILES,
     analysis_layout,
     resolve_worker_profile,
     source_slug,

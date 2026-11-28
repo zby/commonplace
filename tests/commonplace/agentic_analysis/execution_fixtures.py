@@ -116,6 +116,8 @@ def prepared_template(tmp_path_factory) -> PreparedTemplate:
         "kb/agentic-system-analyses/instructions/analyse-agentic-system",
     ):
         shutil.copytree(ROOT / relative, repo / relative)
+    (repo / "kb/instructions").mkdir(exist_ok=True)
+    shutil.copy2(ROOT / "kb/instructions/worker-profiles.yaml", repo / "kb/instructions")
     for contract in (ROOT / "kb/agentic-system-analyses/instructions").glob("agentic-analysis-*.md"):
         shutil.copy2(contract, repo / "kb/agentic-system-analyses/instructions" / contract.name)
     shutil.copy2(ROOT / "kb/agentic-system-analyses/COLLECTION.md", repo / "kb/agentic-system-analyses/COLLECTION.md")

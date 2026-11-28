@@ -1,0 +1,43 @@
+# All headless workflows use these names. Add a model here once, without flags.
+profiles:
+  opus: {harness: claude-code, launch-model: opus, effort: medium}
+  sonnet: {harness: claude-code, launch-model: sonnet, effort: medium}
+  haiku: {harness: claude-code, launch-model: haiku, effort: medium}
+  codex-sol: {harness: codex, launch-model: gpt-6.2-sol, effort: medium}
+  codex-luna: {harness: codex, launch-model: gpt-6-luna, effort: medium}
+  pi-sol: {harness: pi, launch-model: gpt-6.2-sol, effort: medium}
+  pi-ultramarine: {harness: pi, launch-model: paperinstruments/ultramarine-1-flash, effort: "off"}
+  pi-luna: {harness: pi, launch-model: gpt-6-luna, effort: medium}
+  pi-luna-low: {harness: pi, launch-model: gpt-6-luna, effort: low}
+  neon: {harness: antigravity, launch-model: gemini-4-neon, effort: high}
+
+# Grants belong to the workflow and harness, not the model. No entry means no launch.
+# Analysis additionally enforces its unattended settings in code.
+workflows:
+  analysis:
+    harnesses: {claude-code: {}, codex: {}, pi: {}}
+  task:
+    default: sonnet
+    harnesses:
+      claude-code:
+        permission-mode: acceptEdits
+        allowed-tools: "Read,Grep,Glob,Edit,Write,Bash(git log:*),Bash(git status:*),Bash(git diff:*),Bash(git add:*),Bash(git commit:*)"
+      codex: {sandbox: workspace-write}
+  review:
+    default: opus
+    effort: {simple: sonnet, judgment: opus}
+    harnesses:
+      claude-code:
+        allowed-tools: "Read,Grep,Glob,Edit(kb/workflow-state/data/current/review/runs/**),Write(kb/workflow-state/data/current/review/runs/**)"
+        disallowed-tools: "Bash,NotebookEdit"
+      codex: {sandbox: workspace-write}
+      antigravity: {mode: accept-edits, sandbox: true}
+      pi: {tools: "read,grep,find,ls,write"}
+  sub-worker:
+    harnesses:
+      claude-code:
+        tools: "Read,Grep,Glob,Write"
+        allowed-tools: "Read,Grep,Glob,Write(kb/workflow-state/data/current/sub-worker/**)"
+        disallowed-tools: "Bash,Edit,NotebookEdit,Agent,Task"
+      codex: {sandbox: workspace-write}
+      pi: {tools: "read,grep,find,ls,write"}

@@ -89,7 +89,7 @@ def test_real_registry_fixture_selector_uses_claude_code(tmp_path, monkeypatch, 
     # Keep the real registry identity and adapter name; replace only its process
     # implementation so this production-selection test cannot call a model.
     monkeypatch.setitem(HARNESSES, "claude-code", fake["fake"])
-    profile = root / "kb/instructions/review-profiles.yaml"
+    profile = root / "kb/instructions/worker-profiles.yaml"
     profile.write_text(profile.read_text().replace("harness: fake", "harness: claude-code"))
     repo = root, HARNESSES, log
     code, report, _ = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose/body-gate")

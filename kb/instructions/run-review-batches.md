@@ -13,7 +13,7 @@ A result is fresh while the hashes it records still match the note's watched par
 
 - **Notes** — files or directories. A directory means its reviewable notes, not recursively; it skips indexes, collection contracts and type specs. Name files in a validation-ignored directory one by one.
 - **Criteria** — catalog gate ids (`prose/source-residue`), bundle names (`prose`), the lenses `type` and `collection` (or `type/<name>`, `collection/<path>`), and opt-in criteria: individual compression checks (`compression/core-claim-obscured`, `compression/branch-bloat`, `compression/detail-overhang`, `compression/marginal-value-redundancy`; bare `compression` is refused) and the report criteria (`critique`, `friction`, `premises`, `compression-synthesis`, `role`). Without `--criteria`, a review covers every bundle plus `type` and `collection`; opt-in criteria are never included unless named. `compression-synthesis` and `role` run alone on one note with unassessed freshness (`status` refuses them; read output with `show RUN`).
-- **Profile** — optional; a worker profile from the library's `instructions/review-profiles.yaml`. Without `--profile` the file's `default` is used.
+- **Profile** — optional; a worker profile from the library's `instructions/worker-profiles.yaml`. Without `--profile` the review workflow's `default` is used.
 
 ## Steps
 

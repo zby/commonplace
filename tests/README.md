@@ -58,7 +58,7 @@ All suite paths below are relative to `tests/commonplace/`.
 | `src/commonplace/headless/` | `headless/`, `agentic_analysis/` (the workflow runs on it; its end-to-end tests are slow), `review_workflows/` |
 | `lib/tasks.py`, `cli/task.py` | `headless/` (the task launcher runs on the fake harness there); `review_workflows/` for `load_profile` |
 | `lib/agentic_analysis/`, `cli/analysis.py`, analysis plan, instructions, roles, schemas | `agentic_analysis/` (include the slow workflow tests for behavior changes); also `comparison/`, `validation/`, or `docs/` when their inputs/contracts change |
-| `lib/review_workflows/`, `cli/review_workflows.py`, `kb/instructions/review-profiles.yaml` | `review_workflows/`, which runs on `src/commonplace/headless/` (so a `headless/` change also selects it); also `relocation/`, whose tests pin that a move leaves result files alone |
+| `lib/review_workflows/`, `cli/review_workflows.py`, `kb/instructions/worker-profiles.yaml` | `review_workflows/`, which runs on `src/commonplace/headless/` (so a `headless/` change also selects it); also `relocation/`, whose tests pin that a move leaves result files alone |
 | `lib/validation.py`, `lifecycle_validation.py`, validation CLIs | `validation/`, `sources/`, `agentic_analysis/`, `installation/`, `review_workflows/` (validation consumers; edit operations and the revise workflow validate edited text); include relevant slow analysis tests |
 | `lib/quote_*.py`, `snapshot.py`, `source_identity.py`, snapshot/source/quote CLIs, `scripts/sync_x_likes.py` | `sources/`; also `validation/` and `agentic_analysis/` for shared quote, snapshot, or source-identity changes |
 | `lib/relocation.py`, relocation CLIs | `relocation/` |

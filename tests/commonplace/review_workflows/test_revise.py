@@ -145,7 +145,7 @@ else:
     outputs["candidate"].write_text(revised, newline="\n", encoding="utf-8")
     result("changed", changes=[f"{name} applied"])
 '''
-PROFILES = ("default: s\neffort: {simple: s, judgment: j}\nprofiles:\n"
+PROFILES = ("workflows: {review: {default: s, effort: {simple: s, judgment: j}, harnesses: {fake: {}}}}\nprofiles:\n"
             "  s: {harness: fake, launch-model: small, effort: low}\n"
             "  j: {harness: fake, launch-model: big, effort: high}\n")
 NOTE = ("---\ndescription: A note about alpha that is long enough to describe what it is for\n"
@@ -166,7 +166,7 @@ def repo(tmp_path, monkeypatch):
              for rel in (*NOTE_TYPE_SPECS, "kb/workflow-state/.gitignore")}
     files |= {f"kb/instructions/simplification-passes/{p.name}": p.read_text(encoding="utf-8") for p in PASSES.glob("*.md")}
     files |= {rel: (REPO_ROOT / rel).read_text(encoding="utf-8") for rel in (*EDIT_TYPES, FIX)}
-    files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n"}
+    files |= {"kb/instructions/worker-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n"}
     for rel, text in files.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
         (root / rel).write_text(text, encoding="utf-8", newline="\n")

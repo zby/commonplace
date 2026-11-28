@@ -18,7 +18,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-from commonplace.lib.tasks import launch, load_profile, load_runbook, report_dict
+from commonplace.headless.profiles import WORKER_PROFILES, load_profile
+from commonplace.lib.library import library_root
+from commonplace.lib.tasks import launch, load_runbook, report_dict
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -30,14 +32,14 @@ def main(argv: list[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     run = commands.add_parser("run", help="run one task unattended in this checkout and check its commit")
     run.add_argument("name", help="the runbook kb/tasks/<name>.md")
-    run.add_argument("--profile", help="worker profile from kb/tasks/profiles.yaml (default: its `default`)")
+    run.add_argument("--profile", help="worker profile from the shared roster (default: the task workflow's default)")
     run.add_argument("--timeout", type=float, help="seconds a launch may take")
     arguments = parser.parse_args(argv)
     try:
         root = Path(subprocess.run(["git", "rev-parse", "--show-toplevel"], check=True, capture_output=True,
                                    text=True).stdout.strip())
-        report = launch(root, load_runbook(root, arguments.name), load_profile(root, arguments.profile),
-                        timeout=arguments.timeout)
+        profile = load_profile(library_root(root) / WORKER_PROFILES, arguments.profile, "task")
+        report = launch(root, load_runbook(root, arguments.name), profile, timeout=arguments.timeout)
     except (ValueError, subprocess.CalledProcessError) as error:
         print(f"commonplace-task: {error}", file=sys.stderr)
         return 2

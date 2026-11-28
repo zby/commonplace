@@ -36,10 +36,8 @@ For a model available on the caller's harness, use the native sub-agent.
 the paths it owns. The worker would edit but not commit. The caller would
 inspect the diff and integrate it. `commonplace-task` already demonstrates a
 headless worker editing in the checkout, but its runbook and commit check do
-not establish who made each edit in a dirty tree. An explicit write flag
-with separate launch flags per model would avoid duplicating profile names;
-separate read and write profiles would match the existing task and review
-rosters. Neither choice determines how to isolate the edits.
+not establish who made each edit in a dirty tree. The shared model roster would stay unchanged. A write grant would need
+its own selection rule; the model name alone cannot authorize edits.
 
 **Use a harness extension instead.** If a writing assignment needs ongoing
 conversation, a one-shot handoff may be the wrong interface. An extension
@@ -61,5 +59,5 @@ unavailable on the calling harness and returning suggested edits is
 insufficient. Before granting writes, decide how the caller can distinguish
 the worker's changes from concurrent edits, what happens on a partial or
 out-of-scope edit, and what further exception to ADR 086 is warranted.
-Until then no write mode, shared profile roster or migration of
+Until then no write mode or migration of
 `commonplace-task` is required.

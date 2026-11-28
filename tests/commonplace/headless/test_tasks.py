@@ -13,7 +13,8 @@ import sys
 import pytest
 
 from commonplace.headless.harness import Harness
-from commonplace.lib.tasks import launch, load_profile, load_runbook
+from commonplace.headless.profiles import WORKER_PROFILES, load_profile
+from commonplace.lib.tasks import launch, load_runbook
 
 FAKE = r"""
 import re, subprocess, sys
@@ -54,7 +55,7 @@ Record findings in `kb/tasks/demo-log.md`.
 with the subject `Run recurring task demo`.
 """
 
-PROFILES = """default: fake
+PROFILES = """workflows: {task: {default: fake, harnesses: {fake: {}, claude-code: {}}}}
 profiles:
   fake: {harness: fake, launch-model: m, effort: low}
 """
@@ -72,9 +73,10 @@ def repo(tmp_path):
     git(root, "config", "user.email", "t@example.com")
     git(root, "config", "user.name", "t")
     (root / "kb/tasks/demo-log.md").write_text("# Demo log\n")
-    (root / "kb/tasks/profiles.yaml").write_text(PROFILES)
+    (root / "kb/instructions").mkdir()
+    (root / "kb/instructions/worker-profiles.yaml").write_text(PROFILES)
     (root / "other.md").write_text("someone else's uncommitted work\n")
-    git(root, "add", "kb/tasks/demo-log.md", "kb/tasks/profiles.yaml")
+    git(root, "add", "kb/tasks/demo-log.md", "kb/instructions/worker-profiles.yaml")
     git(root, "commit", "-q", "-m", "seed")
     script = tmp_path / "fake.py"
     script.write_text(FAKE)
@@ -88,7 +90,7 @@ def run_demo(repo, marker=""):
     (root / "kb/tasks/demo.md").write_text(RUNBOOK.format(marker=marker))
     git(root, "add", "kb/tasks/demo.md")
     git(root, "commit", "-q", "-m", "add runbook")
-    return launch(root, load_runbook(root, "demo"), load_profile(root, None), timeout=20,
+    return launch(root, load_runbook(root, "demo"), load_profile(root / "kb" / WORKER_PROFILES, None, "task"), timeout=20,
                   harnesses=harnesses, stamp="t1")
 
 

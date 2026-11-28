@@ -95,6 +95,7 @@ from commonplace.headless.jobs import (
     input_ref,
     output_ref,
 )
+from commonplace.headless.profiles import WORKER_PROFILES
 from commonplace.lib.library import library_root
 from commonplace.lib.project_paths import (
     VALIDATION_IGNORE_MARKER,
@@ -109,7 +110,7 @@ from commonplace.lib.review_workflows import (
 
 STATE = Path("kb/workflow-state/data/current/review")
 RUNS = STATE / "runs" / "v2"
-PROFILES_REL = "instructions/review-profiles.yaml"
+PROFILES_REL = WORKER_PROFILES
 ATTEMPTS = 3
 """Attempts per call, counting rejected reviews and launches that returned no answer."""
 GROUPINGS = ("pair", "bundle")
@@ -143,7 +144,7 @@ def finding_decisions(root: Path, wanted: list[Pair]) -> dict[str, str]:
 
 
 def profiles() -> Path:
-    """The review worker profiles: the library's instructions/review-profiles.yaml."""
+    """The installed library's shared worker roster."""
     return library_root() / PROFILES_REL
 
 

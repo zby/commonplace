@@ -282,7 +282,7 @@ judgment; worker prompts name inputs, not additional criteria.
    with `--plan` runs as a new run.
 2. Step 2 runs each listed pass as one run of the edit route, the same one
    `commonplace-revise try` uses, on the profile from
-   `instructions/review-profiles.yaml` that its `effort` selects. Code checks
+   `instructions/worker-profiles.yaml` that `workflows.review.effort` selects. Code checks
    the edit result and the revised text (title, type, brief declaration and
    H1 kept; no new validation failure; link targets and quoted spans kept),
    and the next pass works on that text. Each run's result and candidate are

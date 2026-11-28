@@ -46,6 +46,7 @@ from commonplace.headless.jobs import (
     input_ref,
     output_ref,
 )
+from commonplace.headless.profiles import load_profile
 from commonplace.lib import frontmatter
 from commonplace.lib.library import (
     LIBRARY_IDENTITY_PREFIX,
@@ -55,7 +56,6 @@ from commonplace.lib.library import (
 )
 from commonplace.lib.quote_matching import match_quote, normalize_text
 from commonplace.lib.review_workflows import edits, gates, observations, result_contract
-from commonplace.lib.tasks import load_profile
 from commonplace.lib.validation import ValidationRun
 
 TYPE = "types/edit-operation.md"
@@ -134,15 +134,15 @@ def load(root: Path, raw: str) -> Operation:
     return parse(found, artifact_file(root, found).read_text(encoding="utf-8"))
 
 
-def effort_profiles(root: Path, overrides: dict[str, str | None]) -> dict[str, Profile]:
+def effort_profiles(overrides: dict[str, str | None]) -> dict[str, Profile]:
     """The profile per effort: the profile file's `effort` mapping, with the operator's names in its place."""
     config = yaml.safe_load(gates.profiles().read_text(encoding="utf-8"))
-    mapping = config.get("effort") or {}
+    mapping = config["workflows"]["review"].get("effort") or {}
     chosen = {effort: overrides.get(effort) or mapping.get(effort) for effort in EFFORTS}
     missing = [effort for effort, name in chosen.items() if not name]
     if missing:
         raise ValueError(f"no profile for effort {', '.join(missing)} in {gates.PROFILES_REL}")
-    return {effort: load_profile(root, name, gates.profiles()) for effort, name in chosen.items()}
+    return {effort: load_profile(gates.profiles(), name, "review") for effort, name in chosen.items()}
 
 
 # --- The answers ---------------------------------------------------------------------------

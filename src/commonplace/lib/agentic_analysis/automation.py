@@ -19,8 +19,8 @@ from collections import Counter
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from pathlib import Path
 
+from commonplace.headless.profiles import WORKER_PROFILES
 from commonplace.lib.agentic_analysis.analyses import (
-    WORKER_PROFILES,
     resolve_worker_profile,
 )
 from commonplace.lib.agentic_analysis.durable import lease, save

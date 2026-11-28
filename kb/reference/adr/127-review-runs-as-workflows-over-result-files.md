@@ -194,7 +194,7 @@ The operativity path: the `commonplace-review` command and its library
 modules enforce result files, freshness, the checkout bounds and packets in
 code. `commonplace-status --review` reads the result files. The review-system
 guide, the full-pass and disposition instructions and the fix procedure bind
-agents operating review. `kb/instructions/review-profiles.yaml` sets what a
+agents operating review. `kb/instructions/worker-profiles.yaml` sets what a
 worker may do. A review gate's `watches:` now decides which edits stale its
 pairs, so gate authors set staleness.
 

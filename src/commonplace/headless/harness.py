@@ -1,7 +1,7 @@
 """Worker profiles as Workjig command workers for the harnesses' headless modes.
 
 A worker profile names a harness, a launch model and an effort, as in
-kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml.
+kb/instructions/worker-profiles.yaml.
 `Harness.worker()` turns a profile into a `workjig.CommandWorker`: the
 harness's print-mode command with its machine-readable output, so Workjig
 classifies the launch from the harness's terminal event. `model_used()` reads

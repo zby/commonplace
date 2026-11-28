@@ -18,11 +18,11 @@ from commonplace.headless.jobs import (
     input_ref,
     output_ref,
 )
+from commonplace.headless.profiles import WORKER_PROFILES, load_profile
+from commonplace.lib.library import library_root
 from commonplace.lib.review_workflows.gates import changed_paths, checkout_state
-from commonplace.lib.tasks import load_profile
 
 STATE = Path("kb/workflow-state/data/current/sub-worker")
-PROFILES = Path("kb/instructions/sub-worker-profiles.yaml")
 FRAME = (f"Read {input_ref('brief')}. Another agent requested this read-only check. Nobody will "
          f"answer questions. Write your answer to {output_ref('answer')} or write the named problem "
          "file if blocked. Inspect only sources needed for the brief. Do not edit any other file, commit, "
@@ -65,15 +65,15 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     run = parser.add_subparsers(dest="command", required=True).add_parser("run")
     run.add_argument("--brief", required=True, type=Path, help="public-safe text brief (retained with the answer)")
-    run.add_argument("--profile", required=True, help=f"named profile in {PROFILES}")
+    run.add_argument("--profile", required=True, help=f"named profile in the library's {WORKER_PROFILES}")
     run.add_argument("--timeout", type=float, help="positive per-launch timeout in seconds")
     args = parser.parse_args(argv)
     try:
         if args.timeout is not None and not (math.isfinite(args.timeout) and args.timeout > 0):
             raise ValueError("timeout must be finite and positive")
         root = Path(subprocess.check_output(["git", "rev-parse", "--show-toplevel"], text=True).strip())
-        report = launch(root, args.brief.read_text(encoding="utf-8"), load_profile(root, args.profile, PROFILES),
-                        args.timeout)
+        profile = load_profile(library_root(root) / WORKER_PROFILES, args.profile, "sub-worker")
+        report = launch(root, args.brief.read_text(encoding="utf-8"), profile, args.timeout)
     except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError, yaml.YAMLError) as error:
         report = {"status": "setup-error", "problem": str(error)}
     print(json.dumps(report, indent=2))

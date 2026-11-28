@@ -559,10 +559,9 @@ def test_analysis_refuses_an_unusable_worker_profile_before_launching(workflow):
     missing = Harness("no-such-command-xyz", {}, lambda profile, d: ({}, None))
     with pytest.raises(ValueError, match="no-such-command-xyz"):
         Analysis(run_dir, timeout=60, max_workers=3, harnesses={"pi": missing})
-    profiles = (workflow.prepared.repo / "kb/agentic-system-analyses/instructions/analyse-agentic-system"
-                / "worker-profiles.yaml")
+    profiles = workflow.prepared.repo / "kb/instructions/worker-profiles.yaml"
     data = yaml.safe_load(profiles.read_text())
-    data["profiles"]["pi-luna"]["flags"] = {"approve": False}
+    data["workflows"]["analysis"]["harnesses"]["pi"] = {"approve": False}
     profiles.write_text(yaml.safe_dump(data))
     with pytest.raises(ValueError, match="unattended"):
         new()

@@ -50,7 +50,7 @@ for review in re.findall(r"^- (review[^:]*\.md): ", frame, re.MULTILINE):
     Path(listed(review)).write_text(result, encoding="utf-8", newline="\n")
 """
 
-PROFILES = """default: fake
+PROFILES = """workflows: {review: {default: fake, harnesses: {fake: {}, claude-code: {}}}}
 profiles:
   fake: {harness: fake, launch-model: m, effort: low}
 """
@@ -66,7 +66,7 @@ def note(title: str, body: str, description: str = "A note") -> str:
 
 
 FILES = {
-    "kb/instructions/review-profiles.yaml": PROFILES,
+    "kb/instructions/worker-profiles.yaml": PROFILES,
     "kb/instructions/review-gates/prose/body-gate.md": gate("body-gate", "body"),
     "kb/instructions/review-gates/prose/description-gate.md": gate("description-gate", "description"),
     "kb/instructions/critique-note.md": "# Critique\n\nWrite a critique.\n",

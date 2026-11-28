@@ -230,6 +230,7 @@ from workjig import RecordError
 
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss, run_lock
+from commonplace.headless.profiles import load_profile
 from commonplace.lib import answers, frontmatter
 from commonplace.lib.review_workflows import (
     criteria,
@@ -245,7 +246,6 @@ from commonplace.lib.review_workflows import (
     revise,
     rewrite,
 )
-from commonplace.lib.tasks import load_profile
 
 SWEEP = "sweep.json"
 """The run's profile and options: what a resumed gate sweep reuses, and a record of what any other run used."""
@@ -513,17 +513,17 @@ def _run_dir(root: Path, resume: Path | None) -> Path:
     return gates.new_run_dir(root / gates.RUNS)
 
 
-def _profile(root: Path, run_dir: Path, name: str | None, resumed: bool) -> Profile:
+def _profile(run_dir: Path, name: str | None, resumed: bool) -> Profile:
     """The run's profile, recorded when it opens; a resumed run keeps it."""
     if resumed:
         recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8"))
         if "profile" not in recorded:
             raise ValueError(f"the run was opened by the {recorded.get('workflow')} workflow")
         profile = Profile(**recorded["profile"])
-        if name is not None and load_profile(root, name, gates.profiles()) != profile:
+        if name is not None and load_profile(gates.profiles(), name, "review") != profile:
             raise ValueError(f"the run was opened with another profile: {profile}")
         return profile
-    profile = load_profile(root, name, gates.profiles())
+    profile = load_profile(gates.profiles(), name, "review")
     (run_dir / SWEEP).write_text(json.dumps({"format": observations.VERSION, "profile": asdict(profile)}, indent=2),
                                  encoding="utf-8")
     return profile
@@ -564,7 +564,7 @@ def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     if not arguments.notes:
         raise ValueError("ordinary reviews need at least one target")
     run_dir = _run_dir(root, arguments.resume)
-    profile = _profile(root, run_dir, arguments.profile, arguments.resume is not None)
+    profile = _profile(run_dir, arguments.profile, arguments.resume is not None)
     selection = {"notes": arguments.notes, "criteria": arguments.criteria,
                  "criterion-file": arguments.criterion_file,
                  "all-gates": not arguments.criteria and not arguments.criterion_file, "inputs": arguments.input}
@@ -608,8 +608,8 @@ def _edit(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     source = observations.safe_path(root, arguments.text) if arguments.text else root / note
     text = source.read_bytes().decode("utf-8")
     roles = _inputs(root, arguments.input)
-    profile = (load_profile(root, arguments.profile, gates.profiles()) if arguments.profile
-               else edit_operations.effort_profiles(root, {})[operation.effort])
+    profile = (load_profile(gates.profiles(), arguments.profile, "review") if arguments.profile
+               else edit_operations.effort_profiles({})[operation.effort])
     run_dir = _run_dir(root, None)
     observations.atomic_json(run_dir / SWEEP, {
         "format": observations.VERSION, "workflow": "edit", "profile": asdict(profile),
@@ -658,10 +658,10 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
         raise ValueError("fixed-plan execution takes purpose and must-keep from the plan; edit the --plan input, "
                          "or give them with --pass or --finding")
     names = {effort: getattr(arguments, f"profile_{effort}") for effort in edit_operations.EFFORTS}
-    profiles = edit_operations.effort_profiles(root, names)
+    profiles = edit_operations.effort_profiles(names)
     if arguments.profile_review is not None and mode != "full":
         raise ValueError("--profile-review is only valid with the full pass")
-    review = load_profile(root, arguments.profile_review, gates.profiles()) if mode == "full" else None
+    review = load_profile(gates.profiles(), arguments.profile_review, "review") if mode == "full" else None
     run_dir = edits.new_run_dir(root, "revise", artifact)
     observations.atomic_json(run_dir / SWEEP, {
         "format": observations.VERSION, "workflow": "revise", "mode": mode, "purpose": arguments.purpose,
@@ -684,8 +684,8 @@ def _rewrite(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     rewrite.read_commission(root, artifact, arguments.commission.read_text(encoding="utf-8"),
                             brief="brief" in edits.capture_brief(root, artifact,
                                                                  (root / artifact).read_text(encoding="utf-8")))
-    profile = (load_profile(root, arguments.profile, gates.profiles()) if arguments.profile is not None
-               else edit_operations.effort_profiles(root, {})["judgment"])
+    profile = (load_profile(gates.profiles(), arguments.profile, "review") if arguments.profile is not None
+               else edit_operations.effort_profiles({})["judgment"])
     run_dir = edits.new_run_dir(root, rewrite.WORKFLOW, artifact)
     observations.atomic_json(run_dir / SWEEP, {"format": observations.VERSION, "workflow": rewrite.WORKFLOW,
                                                "profile": asdict(profile)})

@@ -144,7 +144,7 @@ def _parser() -> argparse.ArgumentParser:
     run.add_argument("--source-identity")
     run.add_argument("--source", help="the caller's description of the source; data, not instructions")
     run.add_argument("--source-revision")
-    run.add_argument("--worker-profile", help=f"worker profile from the method's worker-profiles.yaml "
+    run.add_argument("--worker-profile", help=f"worker profile from the pinned KB's instructions/worker-profiles.yaml "
                      f"(new-run default: {DEFAULT_WORKER_PROFILE})")
     run.add_argument("--timeout", type=float, default=3 * 3600, help="seconds per worker launch")
     run.add_argument("--max-workers", type=int, default=3, help="workers running at once")

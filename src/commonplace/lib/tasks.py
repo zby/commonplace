@@ -17,13 +17,10 @@ import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-import yaml
-
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import Run, output_ref
 
 TASKS = Path("kb/tasks")
-PROFILES = TASKS / "profiles.yaml"
 STATE = Path("kb/workflow-state/data/current/tasks")
 RESULT = "result"
 
@@ -93,17 +90,6 @@ def load_runbook(root: Path, name: str) -> Runbook:
     if not scope:
         raise ValueError("the write scope lists no path")
     return Runbook(name, path, scope, subject.group(1))
-
-
-def load_profile(root: Path, name: str | None, profiles: Path = PROFILES) -> Profile:
-    """The profile `name`, or the file's `default`, from `profiles` (relative to `root`)."""
-    config = yaml.safe_load((root / profiles).read_text(encoding="utf-8"))
-    chosen = config["default"] if name is None else name
-    try:
-        entry = config["profiles"][chosen]
-    except KeyError:
-        raise ValueError(f"no profile {chosen!r} in {profiles.as_posix()}") from None
-    return Profile.from_yaml_entry(entry)
 
 
 def _git(root: Path, *args: str) -> str:

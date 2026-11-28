@@ -26,7 +26,7 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared_template as prepared_template,  # noqa: PLC0414 - session baseline registration
 )
 
-WORKER_PROFILES = "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml"
+WORKER_PROFILES = "kb/instructions/worker-profiles.yaml"
 
 
 def open_directly(prepared, parameters=PARAMETERS, *, name=RUN_ID, library=None):

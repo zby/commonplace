@@ -165,7 +165,7 @@ def repo(tmp_path, monkeypatch):
     files = {rel: (REPO_ROOT / rel).read_text(encoding="utf-8") for rel in (*NOTE_TYPE_SPECS, *EDIT_TYPES)}
     files |= {f"kb/{rewrite_module.INSTRUCTIONS_DIR}/{path.name}": path.read_text(encoding="utf-8") for path in INSTRUCTIONS.glob("*.md")}
     files |= {rel: REVIEW_FILES[rel] for rel in (ROLE_REL, "kb/workflow-state/COLLECTION.md")}
-    files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n",
+    files |= {"kb/instructions/worker-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n",
               SOURCE: "# Alpha ingest\n\nAlpha holds when the condition is met.\n",
               "kb/sources/.gitignore": ".snapshots/\n", SNAPSHOT: SNAPSHOT_TEXT,
               NOTE_PATH: NOTE.format(words="")}

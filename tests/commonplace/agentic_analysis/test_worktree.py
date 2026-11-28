@@ -38,8 +38,8 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
         iso.RUNTIME_MARKER: "# committed runtime\n",
         "note.md": "Committed note\n",
         "kb/instructions/worker/SKILL.md": "Committed skill\n",
-        "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml":
-            "profiles:\n  pi-luna: {harness: pi, launch-model: gpt-6-luna, effort: medium}\n",
+        "kb/instructions/worker-profiles.yaml":
+            "workflows: {analysis: {harnesses: {pi: {}}}}\nprofiles:\n  pi-luna: {harness: pi, launch-model: gpt-6-luna, effort: medium}\n",
     }
     for name, content in files.items():
         path = root / name

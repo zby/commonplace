@@ -10,8 +10,7 @@ from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urlsplit
 
-import yaml
-
+from commonplace.headless.profiles import resolve_profile
 from commonplace.lib.directory_artifact import DirectoryArtifact
 from commonplace.lib.directory_layout import Layout, parse_layout
 
@@ -127,24 +126,10 @@ def load_analysis(directory: Path, *, run: ValidationRun) -> Analysis:
     return from_artifact(artifact)
 
 
-WORKER_PROFILES = "agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml"
-"""Library-relative path of the named worker identities a run chooses from."""
-
-
 def resolve_worker_profile(data: bytes, name: str) -> dict[str, str]:
-    """Resolve a worker profile by name to its identity: harness, launch model and effort."""
-    parsed = yaml.safe_load(data)
-    profiles = parsed.get("profiles") if isinstance(parsed, dict) else None
-    if not isinstance(profiles, dict) or not profiles:
-        raise ValueError("worker profiles need a nonempty profiles mapping")
-    if name not in profiles:
-        raise ValueError(f"unknown worker profile {name!r}; choose one of {', '.join(sorted(profiles))}")
-    profile = profiles[name]
-    fields = ("harness", "launch-model", "effort")
-    if (not isinstance(profile, dict) or set(profile) - {"flags"} != set(fields)
-            or any(not isinstance(profile[field], str) or not profile[field].strip() for field in fields)):
-        raise ValueError(f"worker profile {name} needs a harness, launch-model and effort, and at most flags")
-    return {"profile": name, **{field: profile[field] for field in fields}}
+    """The granted analysis identity, without launch flags, for the opening record."""
+    chosen, profile = resolve_profile(data, name, "analysis")
+    return {"profile": chosen, "harness": profile.harness, "launch-model": profile.launch_model, "effort": profile.effort}
 
 
 def source_slug(identity: str, system: str) -> str:

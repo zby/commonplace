@@ -68,10 +68,7 @@ from commonplace.headless.jobs import (
     input_ref,
     output_ref,
 )
-from commonplace.lib.agentic_analysis.analyses import (
-    WORKER_PROFILES,
-    resolve_worker_profile,
-)
+from commonplace.headless.profiles import WORKER_PROFILES, resolve_profile
 from commonplace.lib.agentic_analysis.audit import advisory_audit
 from commonplace.lib.agentic_analysis.checks import (
     Candidate,
@@ -148,15 +145,13 @@ class Problem(Stopped):
         self.role, self.text = role, text
 
 
-def require_flags(entry: dict, name: str) -> dict:
-    """A profile's extra flags: a mapping that leaves the unattended settings alone."""
-    flags = entry.get("flags", {})
-    if not isinstance(flags, dict):
-        raise ValueError(f"worker profile {name}: flags must be a mapping")  # noqa: TRY004 - a profile error
-    overridden = sorted(set(flags) & set(UNATTENDED.get(entry.get("harness"), {})))
+def unattended_profile(profile: Profile) -> Profile:
+    """Combine the analysis grant with required unattended settings; never override those settings."""
+    required = UNATTENDED.get(profile.harness, {})
+    overridden = sorted(profile.flags.keys() & required.keys())
     if overridden:
-        raise ValueError(f"worker profile {name}: flags may not override the unattended settings {overridden}")
-    return flags
+        raise ValueError(f"analysis {profile.harness} flags may not override the unattended settings {overridden}")
+    return Profile(profile.harness, profile.launch_model, profile.effort, {**required, **profile.flags})
 
 
 def require_harness(profile: Profile, harnesses: Mapping) -> None:
@@ -278,10 +273,8 @@ class Analysis:
         self.layout = self.method.layout
         self.criteria = self.method.criteria()
         self.profiles = (self.library / WORKER_PROFILES).read_bytes()
-        worker = resolve_worker_profile(self.profiles, self.parameters["worker-profile"])
-        entry = yaml.safe_load(self.profiles)["profiles"][worker["profile"]]
-        profile = Profile.from_yaml_entry({**entry, "flags": {**UNATTENDED.get(entry["harness"], {}),
-                                                              **require_flags(entry, worker["profile"])}})
+        _, profile = resolve_profile(self.profiles, self.parameters["worker-profile"], "analysis")
+        profile = unattended_profile(profile)
         require_harness(profile, harnesses)
         self.run = Run(self.run_dir, self.worktree, profile, timeout=timeout, harnesses=harnesses,
                        sleep=sleep, max_workers=max_workers)

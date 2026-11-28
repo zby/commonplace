@@ -89,7 +89,7 @@ else:
     outputs["candidate"].write_bytes(candidate.encode())
     result("changed", changes=["tightened the closing sentence"], **({"removed-links": removed} if removed else {}))
 '''
-PROFILES = ("default: s\neffort: {simple: s, judgment: j}\nprofiles:\n"
+PROFILES = ("workflows: {review: {default: s, effort: {simple: s, judgment: j}, harnesses: {fake: {}}}}\nprofiles:\n"
             "  s: {harness: fake, launch-model: small, effort: low}\n"
             "  j: {harness: fake, launch-model: big, effort: high}\n")
 NOTE = ("---\ndescription: A note about alpha that is long enough to describe what it is for\n"
@@ -107,7 +107,7 @@ LIBRARY = ("kb/types/edit-result.md", "kb/types/edit-result.schema.yaml", "kb/ty
 def repo(tmp_path, monkeypatch):
     root = tmp_path / "repo"
     files = {rel: (REPO_ROOT / rel).read_text(encoding="utf-8") for rel in (*NOTE_TYPE_SPECS, *LIBRARY)}
-    files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n",
+    files |= {"kb/instructions/worker-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n",
               NOTE_PATH: NOTE.format(words=""),
               "kb/notes/beta.md": NOTE.format(words="").replace("# Alpha", "# Beta")}
     for rel, text in files.items():
