@@ -120,10 +120,20 @@ commonplace-sub-worker run --profile NAME --brief PATH
 - **A writing worker does not commit.** It edits files. The calling agent
   reads the diff, integrates and commits. Delegation does not expand
   authority, and the parent keeps integration.
-- **The command reports checkout changes in both modes.** It compares
-  `git status` before and after the call. In read mode any change is a
-  violation. In write mode the list is the result. On harnesses that cannot
-  enforce read-only, this report is the actual check.
+- **The command checks the checkout; neither agent runs Git checks.** A
+  worker asked to review a draft may have permission to edit it but no
+  commission to do so. The command uses the review workflow's checkout
+  guard before launch and after the worker stops, even on failure. It
+  compares HEAD, Git status and the contents of paths listed by Git,
+  excluding the run directory. This catches a second edit to an already
+  modified draft that a status-only comparison would miss.
+- **Only an unexpected change needs attention.** In read mode, an unchanged
+  checkout adds no step for the caller. If the guard detects a change, the
+  command returns a non-success result naming what changed instead of
+  releasing findings for automatic integration. It does not revert anything:
+  another session may have made the edit. The guard detects differences,
+  not writes to ignored files or edits undone before the worker stops. In
+  write mode, the command reports the observed changes for the caller's review.
 - **Result.** The command prints JSON: call status, output paths or the
   worker's problem text, the model the harness recorded, the run directory
   and the checkout changes. Exit codes separate an answer from a problem
@@ -149,8 +159,12 @@ The records have three consequences.
   returns. Deleting a run loses the brief, the worker's answer and the
   record of which model gave it; nothing else reads it, so removal is safe
   once no open work cites it.
-- **Runs accumulate.** Each verification adds a directory, and nothing
-  prunes them. This is accepted until the volume is observed.
+- **No per-run curation.** The state repository is separate so routine run
+  records can accumulate without cluttering the main repository. Most runs
+  need never be read again. Keep them by default; neither the operator nor
+  the calling agent has to select useful runs for publication or prune the
+  rest. The publication boundary is set before launch: use the command only
+  for work whose brief, inputs and resulting answer may all be public.
 
 The command adds an entry point over existing code, not a new runtime.
 `commonplace-task` is the feasibility witness: it is the same call plus
@@ -178,7 +192,9 @@ steps.
 2. **Run.** One read-mode call. The worker returns numbered findings, each
    with a location, the problem and a suggested fix, or states that it found
    none.
-3. **Integrate.** The agent gives each finding one of three outcomes.
+3. **Integrate.** Verification does not expand the caller's commission: on
+   a review-only request, report the findings without editing; when already
+   commissioned to edit, give each finding one of three outcomes.
    *Apply*: the finding is local, checkable against the file or its source,
    and changes no direction. *Decline*: the agent checked it and it is wrong
    or not worth the change; the agent records a one-line reason. *Escalate*:
@@ -281,11 +297,6 @@ worker-dependent skills such as `cp-skill-ingest` and
   profile per model. Separate profiles match the three existing files.
 - **Profile file.** The command adds a fourth profile file. A shared model
   roster for all four would remove the duplication; nothing yet requires it.
-- **Record location.** The design puts runs in the published state tree,
-  like the other Workjig-based commands. An unpublished scratch root would
-  keep briefs private and need no README row. It would lose the backup and
-  put the command's records outside the collection that holds every other
-  workflow's.
 - **Relation to `commonplace-task`.** The task command could later be built
   on this one. Nothing requires that now.
 
@@ -294,8 +305,8 @@ worker-dependent skills such as `cp-skill-ingest` and
 - **Command.** It is consumed by an agent, through a shell call that the
   operator or a skill step directs. No consumer exists yet; the verify skill
   must be built.
-- **Verify skill.** It is consumed by the calling agent, which applies,
-  declines or escalates each finding. Applied findings change the artifact
+- **Verify skill.** On a review-only request the caller reports findings;
+  on an editing task it applies, declines or escalates each finding. Applied findings change the artifact
   without operator review of each one, so the force is more than advisory
   for detail findings. The oracle is a model judgment filtered by the
   calling agent's own check. Its warrant comes from decorrelation and from
@@ -309,10 +320,11 @@ worker-dependent skills such as `cp-skill-ingest` and
 - An operator decision that adds the cross-harness exception to ADR 086's
   worker amendment, and registration of the term "sub-worker".
 - The command built over `Run.ask`, with fake-harness tests for each exit
-  class and for the checkout-change report, as the existing headless suites
-  do.
+  class. Checkout-guard tests cover an unchanged dirty draft, an edit to
+  that draft during a read-mode call, and a change left by a failed worker.
+  Only the unchanged draft permits a normal read-mode answer.
 - A row for `sub-worker/` in the state repository's README, and the
-  publication rule for briefs stated in the verify skill.
+  public-input-and-output rule stated in the verify skill.
 - A route for the long shell call under each calling harness's tool timeout,
   such as a background call.
 - Operator-directed use as the trial. Adoption is cheap to reverse, so a
