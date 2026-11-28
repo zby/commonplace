@@ -23,6 +23,8 @@ Some shortcuts miss the cause; others cost too much as the store grows. Appendin
 
 Scaling credit assignment therefore turns on making the retained store **debuggable**—separating cheap suspect narrowing from targeted causal checks, just as software engineering does. Execution traces recording which instructions, retrieved notes, and scripts actually loaded narrow suspects from the whole store to the active slice. Where interactions across modules are weak enough for the failure under investigation, [local inspection may suffice](./near-decomposability-may-make-local-inspection-affordable.md). Explicit dependency links suggest where to look first; missing links do not rule out interactions. When rules rest on an explicit [addressable theory](./definitions/addressable-theory.md) with stated predictions, a failed prediction points to candidate premises to check, though it rarely isolates a single faulty one.
 
+First ask whether the failure implicates a stored instruction at all. Suppose an agent retrieves the release checklist, requests the approval it calls for, and receives “permission denied” from the approval service. The release stopped, but the agent took the prescribed step. Check whether the denial was expected. On this evidence alone, there is no reason to rewrite the checklist.
+
 Compare the same case with and without a suspect entry. If outcomes vary, repeat both conditions. If two edits may interact, test them separately and together. Settled rules expressed as deterministic scripts can instead be traced and tested as ordinary code. Whether an automated debugger can keep those comparisons affordable as a mixed store grows remains open.
 
 ## Scope
