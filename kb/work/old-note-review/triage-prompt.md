@@ -57,29 +57,31 @@ Apply these checks in order to a live note, starting from its role in the whole 
      - Living map of open problems or framework gaps wearing a `title-as-claim` → **relocate to `kb/theory/questions/`** ([ADR 142](../../reference/adr/142-questions-are-first-class-objects-in-kb-theory-questions.md)).
      - Useful comparison, analogy, or worked example without a general proof → **move to `kb/notes/`**.
      - Current-state Commonplace architecture/contract description → **move to `kb/reference/`**.
-3. **Overclaim and scaffolding test.** Old notes frequently bury a crisp, defensible insight under inflated necessity claims, obsolete metaphors, or feature/gap sketches.
+3. **Overclaim, scaffolding, and reader-update test.** Old notes frequently bury a crisp, defensible insight under inflated necessity claims, obsolete metaphors, or feature/gap sketches—and even previously rewritten, well-hedged notes can carry long generic restatements.
    - Test the headline against obvious counterexamples (e.g. does a missing index entry actually make a note unreachable, or can search still find it? does a boundary actually require a separate directory?).
    - Separate the minimal claim that actually holds from obsolete scaffolding (old terminology like *claw* or *harness*, task-state-machine sketches, feature wishlists, or "not built yet" inventories).
+   - **Check warranted reader update against strong-model priors.** Ask which paragraphs actually change a strong reader's decision beyond textbook/weight-resident knowledge and neighboring notes ([warranted reader update](../../theory/warranted-reader-update-is-the-objective-of-substantive-writing.md), [function-specific obsolescence on model upgrades](../../theory/model-upgrades-obsolete-notes-by-function-rather-than-uniformly.md)). Do not assign `keep-unchanged` merely because a prior rewrite removed obvious errors if half the note is generic framing that should be compressed to its Commonplace-specific core.
 4. **Duplication and stronger-explanation test.**
    - Compare the note's surviving core against every neighbor you read in Step 1.4.
    - Distinguish **redundant/superseded** (another note states the same mechanism better or more cleanly) from **complementary** (e.g. one note explains *when* a cue helps while another explains *where* to place it). State the exact evidence that separates keeping from replacing.
 5. **Currency and grounding test.**
    - Check factual statements about Commonplace ("we haven't built any of this yet", missing validators, old paths, links into frozen `kb/agent-memory-systems/` or superseded drafts).
    - Check external attributions (authors, papers, named patterns). If a load-bearing claim attributes a structure or result to an external work without a tracked ingest/quote or verified passage, **do not pass it on faith**—flag verification as a prerequisite.
+   - **Audit footer `evidenced-by` sources.** Per [kb/theory/COLLECTION.md](../../theory/COLLECTION.md#source-grounding), every source cited as evidence must be hosted in a body sentence, not left footer-only (`commonplace-validate` checks the 5-unquoted-source cap, not body hosting). Check that every footer source still bears on the *current* claim rather than surviving as a fossil from an earlier rewrite; unhosted or off-topic footer sources require at least `targeted-update`.
 6. **Dependent-premise impact test.**
    - For every live dependent found in Step 1.3, check whether it relies on:
      - the **surviving core** (must be preserved during any rewrite), or
-     - a **weakened, overclaimed, or retired premise** (must be explicitly flagged for argument repair—never resolve this with a blind link redirect).
+     - a **weakened, overclaimed, or retired premise**—including a premise retired by an *earlier* rewrite of this note—which must be explicitly flagged for argument repair rather than resolved by a blind redirect or buried under `keep-unchanged`.
 
 ## Step 3 — Assign exactly one verdict
 
-Choose the single primary disposition that fits the evidence:
+Choose the single primary disposition that fits the evidence (append `+ dependent-repairs` whenever live citers still import a retired or weakened claim, even if the target note itself stays unchanged):
 
 | Verdict | When to choose it | Required follow-up if approved |
 |---|---|---|
 | **`already-gone`** | Historical path was previously deleted, retired, or an old deleted ADR; no live file remains. | Record deletion commit and reason; do not recommend retiring again or restoring. |
-| **`keep-unchanged`** | Clear reader and decision; claims hold and are properly bounded; distinct from neighbors; placed in the right collection; no stale factual claims. | None. |
-| **`targeted-update`** | Right home and sound core claim, but specific sections have stale current-state claims, minor category/scope bugs, or outdated links. | List the exact passages to fix in place. |
+| **`keep-unchanged`** | Clear reader and decision; claims hold, are properly bounded, and earn their length beyond model priors; distinct from neighbors; right collection; no stale factual claims or unhosted footer `evidenced-by` sources. | None on the note itself; if earlier rewrites left stale citers, add `+ dependent-repairs` and list them. |
+| **`targeted-update`** | Right home and sound core claim, but specific sections have stale current-state claims, minor category/scope bugs, generic padding to trim, unhosted/off-topic footer sources, or outdated links. | List the exact passages or footer entries to fix in place, plus any dependent repairs. |
 | **`rebuild-in-place`** | Genuine transferable insight survives, but the current text overclaims, conflates distinct concepts, or carries obsolete scaffolding. | State the narrowed claim to keep, what to cut, whether the filename still matches (use `commonplace-relocate-note` in its own commit if renamed), and which live dependents need citation/premise repair. |
 | **`relocate-and-recast`** | Surviving value belongs in another collection or form (`kb/reference/proposals/`, `kb/theory/questions/`, `kb/notes/`, or `kb/reference/`). | Name destination, new form/title, what to keep vs. cut, and dependent repairs. |
 | **`merge-or-retire-duplicate`** | Subsumed by an existing stronger note, skill, or reference doc (verified by reading its text). | Name the exact successor(s), any unique detail to extract first, dependent premise repairs, and retire via [retire-artifact.md](../../instructions/retire-artifact.md). |
@@ -93,7 +95,7 @@ Return one concise record per note (matching the workshop log style—no filler)
 ```markdown
 ### `<historical-or-live-path>` -> `<current-live-path | deleted>`
 - **Lineage:** <commit(s) tracing rename/move/rewrite/deletion, or `unchanged since YYYY-MM-DD`>
-- **Verdict:** `<one verdict from Step 3>` (priority: `high | normal | low`)
+- **Verdict:** `<one verdict from Step 3>[+ dependent-repairs]` (priority: `high | normal | low`)
 - **KB role & goal fit:** <what role this plays for the KB goal and its collection goal, naming the concrete reader and decision—or `none`>
 - **Relevance to current gaps:** <which gap(s) in `what-gaps-remain-in-our-learning-loop.md` or sibling standing questions this bears on, or `none`>
 - **Evidence & reasoning:** <2–5 crisp sentences covering the decisive tests: claim validity, collection fit, comparison with named neighbors/successors, and stale or unverified points>
