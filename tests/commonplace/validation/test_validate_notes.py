@@ -122,6 +122,7 @@ def configure_snapshot_repo(tmp_path: Path) -> None:
 def configure_sources_collection(tmp_path: Path) -> Path:
     sources = tmp_path / "kb" / "sources"
     write(sources / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Sources\n")
+    write(sources / "README.md", "# Source guides\n")
     return sources
 
 
@@ -130,7 +131,6 @@ def configure_orphan_snapshot_sources(
 ) -> None:
     """A sources collection with one text file and one uncatalogued snapshot."""
     sources = configure_sources_collection(tmp_path)
-    write(sources / "scratch.md", "Visible source work.\n")
     write(sources / ".snapshots" / "orphan.md", "uncatalogued bytes\n")
     monkeypatch.chdir(tmp_path)
 
@@ -826,7 +826,7 @@ def test_validation_json_is_compact_and_structured(
     assert payload["analysed_artifacts"] == [
         {
             "failures": 0,
-            "path": "kb/sources/scratch.md",
+            "path": "kb/sources/README.md",
             "type": "text",
             "warnings": 0,
         }

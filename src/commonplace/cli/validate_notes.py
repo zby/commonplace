@@ -51,6 +51,7 @@ class ResolvedValidationTarget:
     paths: tuple[Path, ...]
     collection: Path | None = None
     ignored_dirs: tuple[Path, ...] = ()
+    full_collection: bool = False
 
 
 @dataclass(frozen=True)
@@ -110,9 +111,11 @@ class ValidationReport:
 
 def _collection_target(collection: Path) -> ResolvedValidationTarget:
     resolved = collection.resolve()
+    full_collection = is_collection_dir(resolved)
     return ResolvedValidationTarget(
+        full_collection=full_collection,
         paths=tuple(
-            list_collection_validation_paths(resolved) if is_collection_dir(resolved)
+            list_collection_validation_paths(resolved) if full_collection
             else list_directory_validation_paths(resolved)
         ),
         collection=resolved,
@@ -813,7 +816,7 @@ def main(argv: list[str] | None = None) -> int:
         print(str(exc), file=sys.stderr)
         return 1
 
-    if not target.paths:
+    if not target.paths and (not target.full_collection or target.collection in target.ignored_dirs):
         print("No notes matched target.", file=sys.stderr)
         return 1
 
@@ -821,6 +824,7 @@ def main(argv: list[str] | None = None) -> int:
         target.paths,
         repo_root=repo_root,
         collection=target.collection,
+        full_collection=target.full_collection,
     )
     report = build_validation_report(
         target_arg=f"explicit files ({len(target.paths)})" if batch else args.target,

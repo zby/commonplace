@@ -132,6 +132,7 @@ def load_notes_validation_status(repo_root: Path, collection: str) -> CheckStatu
         paths,
         repo_root=repo_root,
         collection=collection,
+        full_collection=True,
     )
     failures = sum(len(outcome.results[path].fails) for path in outcome.paths)
     failures += len(outcome.collection_structure)

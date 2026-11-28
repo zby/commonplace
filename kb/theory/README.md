@@ -10,8 +10,8 @@ Start with **[tags](../tags/README.md)** to browse by topic (the main access pat
 
 - [tags index](../tags/README.md) — primary topical browse path in `kb/tags/` linking every tag head (self-improving systems, learning theory, context engineering, evaluation, KB maintenance, and the rest).
 - [questions/](./questions/README.md) — recurring theoretical questions treated as first-class thinking starting points beside claims.
-- `definitions/` — transferable vocabulary such as constraining, codification, and discovery lifecycle, one term per file. Selected Commonplace vocabulary lives in reference definitions instead.
-- `evidence/` — bounded datasets, experiments, trace cohorts, and comparative casebooks.
+- [definitions/](./definitions/README.md) — transferable vocabulary such as constraining, codification, and discovery lifecycle, one term per file. Selected Commonplace vocabulary lives in reference definitions instead.
+- [evidence/](./evidence/README.md) — bounded datasets, experiments, trace cohorts, and comparative casebooks.
 - [proposals/](./proposals/README.md) — finished theory waiting on an adoption decision.
 - [agent-memory-requirements/](./agent-memory-requirements/README.md) — concrete agent-memory requirements inventory.
 

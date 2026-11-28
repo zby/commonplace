@@ -51,6 +51,7 @@ from commonplace.lib.project_paths import (
     is_type_definition_content,
     iter_validation_markdown_files,
     kb_root,
+    walk_validation,
 )
 from commonplace.lib.quote_grounding import SnapshotPin, resolve_citations
 from commonplace.lib.quote_matching import (
@@ -2112,13 +2113,21 @@ def run_validation(
     *,
     repo_root: Path,
     collection: Path | None = None,
+    full_collection: bool = False,
 ) -> ValidationRunResults:
     """Evaluate one validation target with shared parsing and indexes."""
-    return ValidationRun(
+    outcome = ValidationRun(
         repo_root=repo_root,
         paths=paths,
         collection=collection,
     ).evaluate()
+    if full_collection and collection is not None:
+        outcome.collection_warnings.extend(
+            (directory, "missing README.md: add a landing page to link to this directory")
+            for directory, _ in walk_validation(collection)
+            if not (directory / "README.md").is_file()
+        )
+    return outcome
 
 
 def validate_draft_in_role(

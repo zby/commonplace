@@ -48,6 +48,8 @@ With two or more explicit `.md` paths, the command validates each distinct file 
 
 ## Explicit collection and date scopes
 
+Validating a whole collection warns once for each visible directory without a `README.md`, including the collection root. A README gives authors a file to link to in both the shipped library and the published site. File, subdirectory, and date-filtered checks do not issue this warning.
+
 Collection names and paths use generic target resolution, without a privileged
 Notes or Theory collection. `today` and `recent` require
 `--collection NAME_OR_PATH`. They enumerate that collection's validation

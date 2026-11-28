@@ -49,6 +49,26 @@ def test_recent_requires_explicit_scope_and_preserves_validation_boundaries(
     assert target.ignored_dirs == (root / "captured",)
 
 
+def test_full_collection_warns_for_each_visible_directory_without_readme(tmp_path, monkeypatch, capsys):
+    root = tmp_path / "kb/claims"
+    write(root / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n# Contract\n")
+    (root / "group/empty").mkdir(parents=True)
+    write(root / "captured/.commonplace-validation-ignore", "")
+    write(root / ".hidden/note.md")
+    monkeypatch.chdir(tmp_path)
+
+    def missing(*args):
+        assert main([*args, "--json"]) == 0
+        return [d["subject"] for d in json.loads(capsys.readouterr().out)["diagnostics"]
+                if d["id"] == "validation.collection-warning.missing-readme-md" and d["severity"] == "warning"]
+
+    assert missing("claims") == ["kb/claims", "kb/claims/group", "kb/claims/group/empty"]
+    write(root / "group/README.md")
+    assert missing("kb/claims") == ["kb/claims", "kb/claims/group/empty"]
+    for args in [("kb/claims/group",), ("kb/claims/group/README.md",), ("recent", "--collection", "claims")]:
+        assert not missing(*args)
+
+
 def test_collection_option_is_rejected_for_nonrecent_targets(tmp_path: Path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     for target in ("landings", "redirects", "lifecycle", "types", "claims"):

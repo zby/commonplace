@@ -48,6 +48,7 @@ def write(path: Path, content: str) -> Path:
 
 def project(root: Path) -> None:
     write(root / "kb/notes/COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes\n")
+    write(root / "kb/notes/README.md", "# Notes\n")
     write(root / "kb/notes/example.md", "# Example\n")
     write(root / "kb/work/README.md", "# Work\n")
 

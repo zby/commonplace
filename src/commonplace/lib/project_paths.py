@@ -148,12 +148,18 @@ def validation_ignored_dirs(collection: Path) -> list[Path]:
     return ignored
 
 
-def iter_validation_markdown_files(collection: Path) -> Iterator[Path]:
-    """Yield Markdown files in a collection's validation-visible subtrees."""
+def walk_validation(collection: Path) -> Iterator[tuple[Path, list[str]]]:
+    """Yield each validation-visible directory and its filenames."""
     for current, dirnames, filenames in walk_visible(collection):
         if VALIDATION_IGNORE_MARKER in filenames:
             dirnames.clear()
             continue
+        yield current, filenames
+
+
+def iter_validation_markdown_files(collection: Path) -> Iterator[Path]:
+    """Yield Markdown files in a collection's validation-visible subtrees."""
+    for current, filenames in walk_validation(collection):
         for filename in filenames:
             if filename.endswith(".md") and not filename.startswith("."):
                 yield current / filename
