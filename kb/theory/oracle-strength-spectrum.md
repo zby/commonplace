@@ -1,5 +1,5 @@
 ---
-description: Exploratory framework — oracle strength, how cheaply correctness can be verified, as the gradient underlying the exact-spec/proxy-theory distinction, with an oracle-hardening pipeline
+description: "Oracle strength concerns the cost and reliability of checking a specified result. It does not tell us whether that result is a good target."
 type: types/note.md
 traits: []
 tags: [llm-reliability, evaluation, constraining, learning-theory]
@@ -7,11 +7,11 @@ tags: [llm-reliability, evaluation, constraining, learning-theory]
 
 # Oracle strength spectrum
 
-The [fixed-artifact distinction](./exact-implementation-does-not-validate-a-requirement.md) separates exact specs (the spec is the problem) from proxy theories (the spec is a theory about a larger capability). This note proposes that the distinction is better understood as a gradient of **oracle strength** — how cheaply and reliably you can check whether output is correct — and explores what that would imply for engineering priorities. The framework is speculative; the individual hypotheses need testing.
+An **oracle** is a way to judge a result. Its strength concerns how cheaply and reliably it can answer a particular question. A parser can tell exactly whether a report is valid JSON without telling whether its advice is sound: [meeting a requirement does not establish that it serves the objective](./exact-implementation-does-not-validate-a-requirement.md). The spectrum below concerns available checks, not kinds of artifacts.
 
 ## The spectrum
 
-- **Hard oracle:** exact, cheap, deterministic check. Unit tests, type checks, cryptographic verification. The arithmetic regime.
+- **Hard oracle:** a cheap, reliable check of a specified property, such as a type check.
 - **Soft oracle:** proxy score that correlates but isn't the real thing. BLEU, helpfulness rubrics, heuristic checks, consistency scores.
 - **Interactive oracle:** you can ask for feedback. User edits, thumbs up/down, preference pairs.
 - **Delayed oracle:** you only know later. Did the user churn? Did the bug surface? Did the decision pay off?
@@ -21,7 +21,7 @@ The bitter lesson is strongest at the hard-oracle end, where there's a clear tra
 
 ## The engineering move: harden the oracle
 
-If the boundary is a gradient, the core engineering challenge becomes: move components toward the hard-oracle end. Convert no-oracle into some-oracle, then tighten. This is [codification](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) applied to *the objective itself*, not just to the implementation.
+Where unreliable feedback limits progress, improve the check for the named requirement. Separately test whether meeting that requirement helps the user.
 
 The priority follows: invest in telemetry and eval harnesses *before* investing in capability, because verification quality is the bottleneck, not generation quality. The [Rabanser et al. reliability study](https://arxiv.org/pdf/2602.16666) offers suggestive evidence: across 14 models and 18 months of releases, capability gains yielded only small reliability improvements. If this pattern holds broadly — and it may not, since such findings are sensitive to the specific models and benchmarks used — it confirms that generation and verification improve on independent tracks, with verification lagging.
 
@@ -38,9 +38,9 @@ Oracle hardening decomposes into three steps, each with its own methods and fail
 
 **Amplify.** A mined spec doesn't need to be a perfect verifier. [Error correction](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) works whenever the oracle has discriminative power (TPR > FPR) and checks are decorrelated — the cost scales with 1/(TPR−FPR)², so even a weak spec is useful. This sets the manufacturing bar low: you need above-chance discrimination, not certainty. One reason external manufacturing matters: Rabanser et al. find that model self-assessment improves in calibration (aggregate confidence alignment) but not reliably in discrimination (per-instance separation of correct from incorrect). If models struggle to achieve TPR > FPR through introspection alone — a finding that may shift as models evolve — then spec mining's externally constructed checks become the primary source of discriminative oracles.
 
-**Monitor.** [Relaxing signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) detect when a hardened oracle encodes a vision feature rather than a genuine spec — brittleness under paraphrase, isolation-vs-integration gaps, sensitivity to distribution shift. These indicate the oracle is softer than it appears and the component may need to move back toward the learned regime.
+**Monitor.** When local scores improve but outcomes do not, [look for competing explanations](./operational-signals-that-a-component-is-a-relaxing-candidate.md). The check may still measure its local target reliably; it may be the target that no longer serves the objective.
 
-The steps have different failure modes: manufacturing without amplification gives a single fragile check; amplification without manufacturing leaves you voting over noise; either without monitoring risks locking in a vision feature as if it were arithmetic.
+A precise check of the wrong property remains misleading however many times it is run.
 
 ## Artifact filtering depends on this
 
@@ -50,7 +50,7 @@ Using artifact checks as a [selection gate](./selecting-an-llm-output-fixes-a-re
 
 This framework remains conjectural because it bundles several speculative claims under a coherent narrative. To strengthen it, extract each claim and find adequate support — literature, external sources, worked examples, or direct argument:
 
-1. **Oracle strength is a gradient underlying the exact-spec/proxy-theory distinction** — the core reframing. Currently asserted by analogy to the Karpathy verifiability framing. Needs independent support, e.g. from reinforcement learning literature on reward shaping or verification complexity theory.
+1. **Does improving a local check improve task outcomes?** Compare outcomes before and after changing the check while keeping the requirement fixed. Revising the requirement is a different intervention.
 2. **"Harden the oracle" is the primary engineering move** — plausible prescription but no practitioner evidence. Cases where teams invested in eval infrastructure before capability (or failed by not doing so) would ground this.
 3. **The manufacture/amplify/monitor decomposition** — invented here. Each step has grounding (spec mining, error correction, relaxing signals) but the claim that these three compose into a complete pipeline is unverified. Are there missing steps?
 4. **Capability gains and reliability gains track independently** — leaning on Rabanser et al., which the note already hedges. Needs either stronger empirical evidence or a theoretical argument for why they decouple.
@@ -69,12 +69,12 @@ Each extracted claim should link back here as its origin.
 
 Relevant Notes:
 
-- [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — foundation: the binary distinction this note refines into a gradient
+- [Exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md) — grounds: local conformance and fitness for purpose need different checks.
 - [the verifiability gradient](./verifiability-gradient.md) — contrasts: correctness signals, reset conditions and retry costs must be assessed separately
 - [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — frames where on the system-adaptation timescale the gradient operates
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the manufacturing step: extracting deterministic checks from observed behavior
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the amplification step: boosting weak oracles through decorrelated repetition
-- [relaxing-signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — the monitoring step: detecting when a hardened oracle encodes a vision feature
+- [Operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — extends: monitoring identifies mismatches worth investigating.
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — decomposes "which oracle to harden" into four independently targetable dimensions
 - [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — extends: artifact checks can filter candidates only when the oracle discriminates within the required decision horizon and budget
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — concrete oracle-hardening instance: manufacturing a composite soft oracle from many no-oracle/weak-oracle signals

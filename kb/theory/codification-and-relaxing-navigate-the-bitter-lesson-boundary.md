@@ -28,7 +28,7 @@ The trajectory runs in both directions, and can repeat at different levels of th
 
 In this case codification extracts a regularity and commits it to code. The bet is that what you extracted is genuinely part of the spec — load-bearing behavior that the system needs — rather than an accidental pattern that happens to hold on observed data. That is the same property [one case-level conjecture offers as the diagnosis of a structured method's loss under scaling](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md), seen from the author's side rather than the survivor's: a codification that commits an accident asserts a scope that nothing assessed, and relaxing is what happens to it later. That scale in fact selects on this property is conjectural, not established.
 
-In the arithmetic regime, the bet is safe: the spec IS the problem, and the solution is algorithmically determined. In the vision-feature regime, the bet is risky: the spec is a theory, and scale may reveal a better path. Most practical codification happens in the blurry zone between them, where you can't tell which regime you're in.
+For a fixed numerical contract, a replacement must still give the required answer; the contract does not dictate the algorithm. If that answer only serves as a feature in a broader task, whether to keep computing it depends on its contribution to that task.
 
 The vision researchers made this bet at maximum disadvantage. They formalized subproblems — edge detection, corner detection — without a working "seeing" system to extract from. They were betting that theorized components would compose into the target capability, with no evidence of successful composition.
 
@@ -38,7 +38,7 @@ But it's still a bet. A mined spec might capture an accidental regularity — a 
 
 Two formal results help bound when codification bets are safe. The epiplexity framework ([Finzi et al., 2026](https://arxiv.org/html/2601.03220v1)) separates information into time-bounded entropy (irreducible randomness) and epiplexity (learnable structure within computational bounds). High-epiplexity regularities are genuinely structural — codifying them is safer because they reflect real patterns, not artefacts of the observer's computational budget. Low-epiplexity patterns that appear regular may be accidents visible only at current scale.
 
-The induction bias results ([Ebrahimi et al., 2026](https://arxiv.org/pdf/2602.18333)) provide evidence from the other direction: for calculator-class state tracking, architectural induction bias (step-by-step decomposition) is a permanent advantage, not a temporary one that scale dissolves. Transformers show sharing factor κ ≈ 1 or κ < 1 across all supervision formats — they learn length-specific solutions in isolation, with training diversity actively hurting (κ = 0.28 for CoT). This means codification bets in the arithmetic regime are not merely safe-for-now; the step-by-step structure that codification encodes is the kind of regularity that persists under scaling.
+[Ebrahimi et al.](../sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md) report that, under outcome supervision on their modular-addition tasks, recurrent architectures reached convergence with “orders of magnitude fewer training samples.” That comparison favors a particular structure within the tested setting. It does not establish a permanent advantage under scaling or show that the subtask is worth retaining for another objective.
 
 ## Working heuristics
 
@@ -46,18 +46,18 @@ The induction bias results ([Ebrahimi et al., 2026](https://arxiv.org/pdf/2602.1
 
 2. **Prefer specs that describe what over how.** The more a codified artifact encodes a theory of how something works (rather than what it should produce), the more likely it is a relaxing candidate. "This endpoint returns X given Y" survives longer than "always process requests in three stages."
 
-3. **Watch for composition failure as a relaxing signal.** If codified conventions don't compose into better systems, that's the signal to relax — replace the rigid decomposition with a more general one.
+3. **Investigate composition failure before relaxing a rule.** Check whether the components met their requirements on the failing case and passed the right outputs to each other. Consider another decomposition when the requirements themselves exclude a better solution.
 
 ---
 
 Sources:
 - Finzi et al. (2026). [From entropy to epiplexity](https://arxiv.org/html/2601.03220v1) — formal framework distinguishing learnable structure from observer-relative artefacts; grounds when codification targets real patterns.
-- Ebrahimi et al. (2026). [On the "induction bias" in sequence models](https://arxiv.org/pdf/2602.18333) — 190K training runs showing architectural induction bias is permanent for calculator-class tasks; codification bets in the arithmetic regime persist under scaling.
+- [Induction bias in sequence models](../sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md) — evidence for the bounded state-tracking comparison above.
 
 Relevant Notes:
 
 - [Unsupported proxy scope may explain a structured method's loss under scaling](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — grounds: the case-level diagnosis this note reads from the author's side; it conjectures what may determine the outcome without establishing it or restoring the foresight this note denies
-- [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — foundation: the exact-spec/proxy-theory distinction this note operationalizes
+- [Exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md) — grounds: local conformance and fitness for purpose need different checks.
 - [the verifiability gradient](./verifiability-gradient.md) — grounds: available checks guide whether to extract a rule into a script or validator
 - [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — grounds: the trade-off code-extraction codification can enact
 - [spec mining as codification](./spec-mining-as-codification.md) — the bottom-up extraction method that avoids the vision-feature failure mode

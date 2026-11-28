@@ -1,5 +1,5 @@
 ---
-description: "Operational signals for when a component likely encodes a brittle proxy theory rather than an exact specification and should be relaxed instead of codified harder"
+description: "How to investigate a rule when local checks pass but outcomes deteriorate, without mistaking an integration defect for a bad requirement."
 type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining, llm-reliability]
@@ -7,25 +7,25 @@ tags: [learning-theory, constraining, llm-reliability]
 
 # Operational signals that a component is a relaxing candidate
 
-The [fixed-artifact distinction](./exact-implementation-does-not-validate-a-requirement.md) says some codified components are exact-spec artifacts while others are proxy theories. That note offers confidence signals, but running systems need more operational tests for detecting proxy-theory components before full composition failure. The signals below shift confidence — they detect *badly-fitting* theories, not the theory/spec distinction itself, since a well-regularised learned component can pass all five early signals yet still encode a proxy theory.
+A component may do exactly what its specification requires and still restrict useful behavior: [meeting a requirement does not establish that it serves the objective](./exact-implementation-does-not-validate-a-requirement.md). The signals below suggest where to investigate. They do not by themselves tell us to replace the component.
 
-## Signals that a component encodes theory, not specification
+## Signals that a requirement may not fit its use
 
 **Brittleness under paraphrase or reordering.** If the component breaks when inputs are rephrased, reordered, or padded with irrelevant content, it's relying on surface patterns rather than capturing the underlying structure. Metamorphic tests can detect this systematically. Rabanser et al.'s [agent reliability study](https://arxiv.org/pdf/2602.16666) operationalises a related signal as R_prompt — prompt robustness — and finds it is the key differentiator among robustness sub-dimensions: models handle genuine faults gracefully yet remain vulnerable to surface-level instruction rephrasings. [Ma et al.'s PromptSE framework](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) tests prompt sensitivity with semantically equivalent emotion/personality variants of HumanEval tasks across 14 models (14,760 variants). This measures sensitivity to surface form under fixed functional requirements; it does not determine whether the cause is a badly-fitting theory or limited model capacity. In the pinned [Mazur position-bias benchmark](../sources/position-bias.ingest.md), 27 judge models evaluated 193 sibling-edit story pairs in both display orders, and the median model changed its canonical winner in 44.8% of decisive swapped-order pairs. This measures the signal on the evaluator, not the task-solver. None of these sources connect the brittleness signal to the fixed-artifact distinction, but we interpret the findings as evidence that paraphrase brittleness is a measurable and prevalent signal — exactly what you'd expect if many agent components encode theories about input format rather than specifications of meaning.
 
-**Isolation-vs-integration gap.** The component performs well on unit tests but fails in integration. This was exactly the vision-features pattern: each feature (edge detection, corner detection) worked in isolation, but they didn't compose into "seeing." A growing gap between unit and integration performance is a relaxing signal. Note that composition failure has multiple causes — interface mismatches, protocol errors, environmental dependencies — so this signal is not conclusive on its own. It's strongest when the component's unit tests pass cleanly (ruling out implementation bugs) yet integration still degrades.
+**Isolation-vs-integration gap.** If unit tests pass but integration fails, trace the value across the interface. A correct result ignored by its consumer points to a handoff defect, not necessarily a bad rule. Passing the tested cases does not exclude an implementation bug on other inputs.
 
-**Process constraints rather than outcome constraints.** The component encodes "always do steps A, B, C" rather than "output must satisfy property X." Process constraints are theories about how to achieve an outcome; outcome constraints are closer to specifications. The more process-heavy, the more likely it's a relaxing candidate.
+**Process constraints rather than outcome constraints.** If a rule requires a particular sequence, ask whether that sequence is itself obligatory or merely the current way to obtain a result. Only in the latter case is an alternative sequence that works evidence for relaxing the rule.
 
-**Hard to specify failure conditions.** If you can't articulate what a failure of this component would look like *before* seeing one, the spec is probably a theory. Arithmetic failures are obvious (wrong number); vision-feature failures are only obvious in retrospect.
+**Hard to specify failure conditions.** Name an outcome that would count against the rule. If none is identifiable, its benefit will be hard to assess even if every step is easy to verify.
 
 **High sensitivity to distribution shift.** If the component works on training/development data but degrades on slightly different inputs, it has overfit to a particular theory of what inputs look like.
 
-**Composition failure** (late-stage). The five signals above are early-detection — you can test for them before the system fails in production. Composition failure is the late-stage confirmation: individually sound components that don't compose into the target capability are the strongest evidence that their specs are theories, not definitions. This was the [vision researchers' experience](./exact-implementation-does-not-validate-a-requirement.md) — each feature worked alone, but the pieces didn't add up to "seeing." The distinction matters because composition failure is expensive to discover (you need to build and integrate) while the early signals are cheaper to test.
+**Composition failure** (late-stage). After checking implementation, interfaces and operating conditions, compare alternative requirements on the same task. If relaxing the rule improves the outcome, that is evidence against enforcing it in those conditions.
 
 ## Using the signals
 
-These aren't binary tests. They're indicators that shift your confidence about where a component sits on the [oracle strength spectrum](./oracle-strength-spectrum.md).
+These signals guide investigation; they are not a score for correctness or a measure of how expensive the local check is.
 
 When signals fire:
 - Keep the component in a **replaceable slot** — clean interface, swappable implementation.
@@ -33,7 +33,7 @@ When signals fire:
 - Maintain **alternative candidates** (different decompositions, learned replacements) so relaxing is cheap when the time comes.
 
 When signals don't fire:
-- The component is likely closer to exact-spec territory. Codify harder — [spec mining](./spec-mining-as-codification.md) provides the operational mechanism for extracting deterministic verifiers from observed behavior. More tests, stricter contracts, deterministic implementation where possible.
+- No signal is not evidence that stricter rules would improve outcomes. Add tests for known local requirements; assess any proposed restriction on the cases it would exclude.
 
 ## Open questions
 
@@ -44,7 +44,7 @@ When signals don't fire:
 
 Relevant Notes:
 
-- [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — foundation: the exact-spec/proxy-theory distinction these signals operationalize
+- [Exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md) — grounds: local conformance and fitness for purpose need different checks.
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — extends: signals shift confidence about where a component sits on the oracle strength gradient
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — complement: spec mining is the action when signals don't fire (codify harder); relaxing signals detect when to reverse it
 - [codification-and-relaxing-navigate-the-bitter-lesson-boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — operationalizes: these signals are the detection mechanism for the codify/relax cycle

@@ -83,7 +83,7 @@ Relevant Notes:
 - [progressive constraining commits only after patterns stabilize](../progressive-constraining-commits-only-after-patterns-stabilize.md) — extends: when to commit, and why one-shot commitment freezes an arbitrary reading
 - [constraining and extraction both trade generality for reliability](../constraining-and-extraction-both-trade-generality-for-reliability.md) — extends: the trade that makes constraining a design decision
 - [codification and relaxing navigate the bitter-lesson boundary](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: when to relax
-- [fixed artifacts split into exact specs and proxy theories](../exact-implementation-does-not-validate-a-requirement.md) — extends: when a constraint can be hardened confidently and when relaxing may be needed
+- [Exact implementation does not validate a requirement against its objective](../exact-implementation-does-not-validate-a-requirement.md) — grounds: local conformance and fitness for purpose need different checks.
 - [the verifiability gradient](../verifiability-gradient.md) — extends: the checks that decide how far a constraint can be hardened with confidence
 - [error messages that teach are a constraining technique](../error-messages-that-teach-are-a-constraining-technique.md) — extends: a technique that blocks wrong outputs while demonstrating correct ones
 - [selecting an LLM output fixes a result, not its interpretation](../selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — contrasts: result selection fixes which result exists without narrowing its interpretation

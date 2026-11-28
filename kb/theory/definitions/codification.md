@@ -87,7 +87,7 @@ Relevant Notes:
 - [spec mining as codification](../spec-mining-as-codification.md) — mechanism: observe behavior, extract patterns, write deterministic code
 - [oracle strength spectrum](../oracle-strength-spectrum.md) — extends: how the available checks limit codification
 - [codification and relaxing navigate the bitter-lesson boundary](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: when to reverse a codification
-- [fixed artifacts split into exact specs and proxy theories](../exact-implementation-does-not-validate-a-requirement.md) — extends: when a codified check stands in for its requirement
+- [Exact implementation does not validate a requirement against its objective](../exact-implementation-does-not-validate-a-requirement.md) — grounds: local conformance and fitness for purpose need different checks.
 - [the verifiability gradient](../verifiability-gradient.md) — extends: the checks that decide how far constraining can go with confidence
 - [Copeland, The Church-Turing thesis](../../sources/church-turing-thesis-sep.ingest.md) — evidenced-by: the clerk that explains why a formal semantics can be derived from a mechanically checkable reference; secondary scholarship, so it bounds the criterion rather than corroborating it
 - [Plotkin, The origins of structural operational semantics](../../sources/plotkin-origins-of-sos.ingest.md) — see-also: the programming-language sense of operational semantics, no longer used here

@@ -20,9 +20,9 @@ This is codification as compilation: the system mines stochastic regularities an
 
 The same pattern appears at the methodology level: the [maturation trajectory from instruction to script](./methodology-enforcement-is-constraining.md) is spec mining applied to methodology rather than system behavior. The codification trigger ("a pattern has emerged from repeated execution") is the same observation step.
 
-## Why this matters for exact specs
+## What a mined rule lets us test
 
-The [fixed-artifact distinction](./exact-implementation-does-not-validate-a-requirement.md) says exact-spec artifacts are safest when the spec *is* the problem. Spec mining manufactures new exact-spec artifacts by discovering specs that were implicit in behavior. Each mined spec converts a piece of the blurry zone into a harder verification target.
+Mining a recurring pattern gives a verifier a specific property to check. It does not show that the pattern caused earlier successes or should be required next time: [meeting a requirement does not establish that it serves the objective](./exact-implementation-does-not-validate-a-requirement.md).
 
 This connects to the [oracle strength spectrum](./oracle-strength-spectrum.md): spec mining moves components from soft/delayed oracle toward hard oracle. A pattern that was only checkable by "does the output look right?" becomes checkable by "does this match the extracted rule?" Each mined spec is also a new oracle that [error correction can amplify through decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the progression is: mine a spec (create an oracle with TPR > FPR), then amplify through decorrelated repetition. This design philosophy — out-evaluate, not out-implement — is what the [cybernetics thread](https://x.com/odysseus0z/status/2030416758138634583) calls "externalizing system-specific judgment."
 
@@ -39,8 +39,8 @@ The Codex team's report on runtime engineering ([Lopopolo, 2026](https://openai.
 
 ## Risks
 
-- Mining specs from observed behavior can encode biases or accidents as rules. The mined spec might be a proxy theory rather than an exact spec.
-- Mitigation: mined specs should be falsifiable. If they break under distribution shift or metamorphic testing, they're candidates for [relaxing](./operational-signals-that-a-component-is-a-relaxing-candidate.md), not permanent codification. The relaxing-signals note identifies the specific indicators (paraphrase sensitivity, distribution-shift brittleness) that reveal a mined spec was an accidental proxy theory, not an exact spec.
+- A recurring behavior can be incidental to success. A check that reproduces it faithfully can therefore reject useful alternatives.
+- Test the rule on cases where matching the pattern and achieving the objective can come apart. [Brittleness under changed inputs](./operational-signals-that-a-component-is-a-relaxing-candidate.md) is a reason to investigate, not proof that the rule should be removed.
 
 ## Open questions
 
@@ -55,7 +55,7 @@ Sources:
 Relevant Notes:
 
 - [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — foundation: codification says knowledge hardens into repo artifacts; spec mining is the mechanism that produces those artifacts from observed behavior
-- [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — motivation: spec mining manufactures exact-spec artifacts by converting implicit behavior into harder verification targets
+- [Exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md) — grounds: local conformance and fitness for purpose need different checks.
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — mechanism: spec mining moves components from soft/delayed oracle toward hard oracle; each mined spec is a new verification target
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — amplification: mined specs create oracles with TPR > FPR that error correction can then boost through decorrelated repetition
 - [evaluation-automation-is-phase-gated-by-comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — exemplifies: evaluation tuning requires manual failure analysis and judge calibration before optimization loops can safely amplify
