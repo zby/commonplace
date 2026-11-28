@@ -16,7 +16,7 @@ Applied the [triage prompt](./triage-prompt.md) at `0fe7d4a9e`. One note split, 
 
 ### `kb/notes/backlinks.md` → `kb/reference/proposals/backlink-surfacing.md`
 
-- **Execution:** Clarified the proposed web display and which links the builder would index. The separate current-state refresh recommended below remains open; no feature was implemented.
+- **Execution:** Clarified the proposed web display and which links the builder would index. Refreshed the baseline on 2026-11-28: filename search finds candidates, review resolves citing passages, and only the proposed site feature would display the return links. Scoped the ADR 025 precedent to complete generated indexes. No feature was implemented.
 - **Lineage:** The second file created by `ffc7c00fa` is still the [proposal](../../reference/proposals/backlink-surfacing.md); `c11699844` clarified reciprocal links. Same historical inventory row, different judgment.
 - **Verdict:** `targeted-update` (normal).
 - **KB role & goal fit:** Gives a site maintainer a choice between rendering incoming citations beside a page and looking them up when needed. An unadopted interface belongs in proposals, not Theory.
@@ -41,6 +41,7 @@ Applied the [triage prompt](./triage-prompt.md) at `0fe7d4a9e`. One note split, 
 
 - **Lineage:** `2566f6964` shortened the filename; `9c7563bf7` relocated it; `f698aa90d` updated contract references, not the [argument](../../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md).
 - **Verdict:** `rebuild-in-place` (high).
+- **Execution:** Rewritten in place as *An assumption worth disputing is worth stating*. A checklist example shows when a writer should state an assumption or narrow the conclusion. The note uses ordinary prose and points to the type contract for cases where separate sections help; it retains the readability observation. Filename relocation and dependent citation repairs have not been carried out.
 - **KB role & goal fit:** A reviewer needs to distinguish “the observation is wrong” from “the observation is right but does not support this claim.” That distinction remains useful outside Commonplace. Choosing a document type is a separate, already documented decision.
 - **Relevance to current gaps:** Faithful local judgment: the first criticism calls for checking the evidence; the second calls for testing the inference. Mandatory sections also impose the very prose cost the bloat question asks us to justify.
 - **Evidence & reasoning:** The pinned [Purdue source](../../sources/purdue-owl-toulmin-argument.ingest.md) distinguishes grounds from the warrant connecting them to a claim (snapshot lines 17–19; hash matches the ingest). It does not prescribe Markdown headings or establish better outcomes from them. The [type contract](../../theory/types/structured-claim.md) already owns Evidence, Reasoning and optional Caveats; the note itself reports demotions when the scaffold harmed flow.

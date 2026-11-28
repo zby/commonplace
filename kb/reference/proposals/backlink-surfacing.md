@@ -6,24 +6,23 @@ tags: [links]
 
 # Backlink surfacing
 
-How Commonplace could deliver the inbound-link view to its readers. Requirements — the reader needs this design must serve and the orientation/maintenance boundary it must respect — rest on [inbound and outbound links serve asymmetric reader needs](../../theory/inbound-and-outbound-links-serve-asymmetric-reader-needs.md); this proposal holds only the option space and the system-specific constraints.
+A reader viewing a policy may want to know which checklists cite it. The proposed change is to show those checklists on the published policy page, without adding links to the policy’s source file.
 
-## Current state (as of 2026-06-12)
+## Current state (as of 2026-11-28)
 
-- Outbound links are authored: inline prose links plus labelled "Relevant Notes" footers. No inbound visibility exists in the repo; inversion is possible on demand via `rg '<note-slug>' --glob '*.md'`, but agents must think to run it.
-- Nothing generated is committed at any size ([ADR 025](../adr/025-complete-generated-indexes-are-build-time-only.md), refined by ADR 026). Generated listings are materialized only at ProperDocs build time for the web view; curated tag READMEs receive no generated links.
-- Agents discover via curated heads plus scoped `rg`; ADR 025 deliberately added no query command, deferring codification until a recurring failure justifies it.
-- Self-dual link labels (`contradicts`, `contrasts`) may be authored from either or both endpoints when each direction helps its readers. They do not require dual authoring, so a one-sided tension still needs inversion to appear from the other endpoint.
+- **Repository search:** `rg -n -F 'policy.md' kb/ -g '*.md'` finds candidate citations to a file named `policy.md`. Inspect the matches: a filename mention is not necessarily a link, and files in different directories can share a name.
+- **Review:** The [role report](../review-architecture.md) already receives citing passages. Its collector resolves local links to the target file, excludes workshop and report directories, and bounds the passages supplied. This is input to a review, not a navigation panel for someone reading the page.
+- **Publication:** [ADR 025](../adr/025-complete-generated-indexes-are-build-time-only.md) keeps complete generated indexes out of committed Markdown and builds them for the site. That supplies a precedent for a generated list of citations; it does not itself adopt one.
 
 ## Design space, split by consumer
 
 - **Human web readers** — at build time, index authored links by destination. On each rendered destination page, show a **Referenced by** list linking back to the source pages. These are outgoing navigation links on the displayed page, not citations in its Markdown. Exclude the generated lists from the index input. As with the complete indexes in ADR 025, the build does not write these links into the committed notes.
-- **Agents in the repo** — keep the inbound view a query: a documented scoped `rg` inversion recipe, optionally codified later as a `commonplace-*` command. Consistent with ADR 025's no-new-command default and the linear context cost of stored sections.
-- **Curated semantics** — where the relationship type matters (tension), the authored symmetric labels remain the mechanism; no generated machinery can infer edge semantics.
+- **Repository readers** — keep lookup on demand. A dedicated command would be worth considering if filename searches repeatedly miss citations or produce costly false matches; the proposed web display does not require a command.
+- **Meaning of a citation** — show which page links here without implying that it endorses the target. Where the distinction matters, let the reader inspect the authored passage.
 
 ## Foreclosed options
 
-- **Committed generated footers** ("Referenced by:" sections written into notes by a sync script) — violates nothing-generated-is-committed; the family precedent (`sync_topic_links.py` Topics footers) was itself retired.
+- **Committed generated footers** ("Referenced by:" sections written into notes by a sync script) — would put a complete generated list into the source notes, contrary to the build-time approach in ADR 025.
 - **Mandatory manual bidirectionality** (agents author a backlink for every outbound link) — fan-out makes upstream maintenance scale with a note's popularity. This does not foreclose a reciprocal link that independently serves readers at the other endpoint.
 
 ## Open questions
