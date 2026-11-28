@@ -45,6 +45,7 @@ Close when the watch has produced a justified disposition: a supported extractio
 - [External review, 2026-11-01](./external-review-2026-11-01.md) — operator-supplied ChatGPT literature review, retained verbatim with a verification table and a candidate sharper formulation held for the review point.
 - [Preliminary experimental framing](./initial-experimental-framing.md) — initial search-focusing design sketch, not a current execution plan.
 - [Revised experimental proposals](./experimental-proposals.md) — optional later tests if observations justify them; none authorized or run here.
+- [Pi-harness experiment design](./pi-harness-experiment.md) — operator-requested design (2026-11-28) for one runnable priority-versus-relation study outside the Commonplace checkout; not authorized or run.
 - [Provenance and limitations](./provenance.md) — research origin, repository baseline, and validation limits.
 
 ## Existing owners and boundaries
