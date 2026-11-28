@@ -1,5 +1,6 @@
 # All headless workflows use these names. Add a model here once, without flags.
 profiles:
+  fable: {harness: claude-code, launch-model: fable, effort: medium}
   opus: {harness: claude-code, launch-model: opus, effort: medium}
   sonnet: {harness: claude-code, launch-model: sonnet, effort: medium}
   haiku: {harness: claude-code, launch-model: haiku, effort: medium}
