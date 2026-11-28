@@ -7,6 +7,8 @@ type: types/note.md
 
 Use "worker" only in the delegation sense. For the ordinary sense write "actor" or the specific noun.
 
+A sub-worker is a headless worker an agent calls through `commonplace-sub-worker`. A sub-agent is provided by the calling harness itself.
+
 ## Senses
 
 Delegation: an agent that receives a packet and works inside a parent's authority (`AGENTS.md` Delegation, `kb/types/instruction.md`, skills). Ordinary: any resource-bounded person or agent doing work.

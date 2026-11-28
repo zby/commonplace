@@ -72,6 +72,10 @@ Run note-editing and revision workflows (`--full`, `--quick`, `--pass`, `--findi
 
 ## Tasks and analyses
 
+### commonplace-sub-worker
+
+Checkout trial: `commonplace-sub-worker run --profile NAME --brief PATH` asks one read-mode worker. The [verify skill](../instructions/verify/SKILL.md) defines when to use it and how to handle the result. Run records may become public. A successful call returns its answer as JSON. If the command detects a checkout change it returns a nonzero status and the affected paths instead, even if the worker failed. It cannot attribute the change and never reverts it.
+
 ### commonplace-task
 
 Run one runbook from `kb/tasks/` unattended in the current checkout and verify its resulting commit (`run`).

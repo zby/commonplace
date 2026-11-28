@@ -481,8 +481,8 @@ def _git(root: Path, *args: str) -> str:
                           encoding="utf-8").stdout
 
 
-def checkout_state(root: Path) -> dict[str, str]:
-    """HEAD, and each path `git status` lists outside the review state, with its status and content digest."""
+def checkout_state(root: Path, *, exclude: Path = STATE) -> dict[str, str]:
+    """HEAD and each status-listed path outside the excluded run state, with status and content digest."""
     entries = _git(root, "status", "--porcelain", "-z", "--untracked-files=all").split("\0")
     state = {"HEAD": _git(root, "rev-parse", "HEAD").strip()}
     index = 0
@@ -494,7 +494,7 @@ def checkout_state(root: Path) -> dict[str, str]:
         code, path = entry[:2], entry[3:]
         if "R" in code or "C" in code:
             index += 1                                  # -z lists a rename's source after it
-        if path.startswith(f"{STATE.as_posix()}/"):
+        if path.startswith(f"{exclude.as_posix()}/"):
             continue
         target = root / path
         digest = hashlib.sha256(target.read_bytes()).hexdigest() if target.is_file() else "-"
