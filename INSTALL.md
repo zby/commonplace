@@ -1,74 +1,8 @@
 # Installing Commonplace into a project
 
-Two installs, by what you want from it:
+Use this guide to run your own knowledge base with Commonplace. To read the research or ask an agent to consult it, use the [rendered KB](https://zby.github.io/commonplace/) or the [consultation guide](https://zby.github.io/commonplace/consult.html). No installation is needed for that.
 
-- **Reader install** — vendor the Commonplace knowledge base inside an existing project as a read-only reference: your agents consult the research when they face context, memory, or learning design decisions. A vendored copy (submodule, clone, or plain download) and one routing paragraph; no Python — the KB is plain markdown, so it works in a project written in any language. See [Reader install](#reader-install-the-kb-as-a-vendored-reference).
-- **Full install** — run your own knowledge base with the Commonplace type system, skills, and commands. The package carries the Commonplace library — notes, reference docs, instructions, global types, review gates, and skills — but not this repo's external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or source corpus. Projects read the library in place from the installed package; it is not copied into them. The numbered steps below: check prerequisites, install the package so `commonplace-*` commands run, set up the project with `commonplace-init`, set up the control-plane files, check the skills for every agent that will work on the project, and start the runtime. Most steps end with a check you can run before moving on.
-
-## Reader install: the KB as a vendored reference
-
-Vendor this repository **inside** your project root — placement is load-bearing, not cosmetic: agent harnesses scope file access to the project root, so a sibling directory costs a permission prompt in every session, while a subdirectory is readable with none.
-
-As a submodule (pins a commit; every teammate and CI gets the same version, and updates are deliberate, reviewable bumps):
-
-```bash
-git submodule add https://github.com/zby/commonplace commonplace
-```
-
-Or as a gitignored clone (zero ceremony; each machine clones its own):
-
-```bash
-git clone https://github.com/zby/commonplace
-echo '/commonplace/' >> .gitignore
-```
-
-Git itself is optional — the KB is plain files, so [downloading the repo as an archive](https://github.com/zby/commonplace/archive/refs/heads/main.zip) and extracting it into `commonplace/` works too; you just update by re-downloading.
-
-Then add a routing block to your project's `CLAUDE.md` or `AGENTS.md`. The vendored repo ships it as `AGENTS.md.reader-fragment`, so appending is one command (creates the file if the project has none):
-
-```bash
-cat commonplace/AGENTS.md.reader-fragment >> CLAUDE.md    # or >> AGENTS.md
-```
-
-Or paste it directly:
-
-```markdown
-## Knowledge base (vendored, read-only)
-
-`commonplace/kb/` is a vendored knowledge base on agent context engineering,
-memory, and continual learning. For design decisions in those areas, consult
-it before deciding: start at `commonplace/kb/tags/README.md`. Paths named
-inside it are relative to `commonplace/`. It is read-only in this project — to
-contest a claim, open an issue at https://github.com/zby/commonplace/issues.
-```
-
-Either way, if you vendored under a directory name other than `commonplace/`, adjust the paths in the block to match.
-
-That's the whole install. Reading needs no Python, no venv, and no skills — the `commonplace-*` commands and `cp-skill-*` skills exist to maintain a KB, not to consume one. The one tool the KB's navigation leans on is ripgrep (`rg`), which most agent runtimes bundle. The routing block above declares the read-only boundary in the consuming project.
-
-### Check the reader install
-
-```bash
-rg "^description:" commonplace/kb/theory/ --glob "*.md" | head
-```
-
-Then ask your agent a design question in the KB's domain — "should our agent memory get vector retrieval, or navigation structure first?" — and check the answer cites notes from `commonplace/kb/`.
-
-### Updating the vendored KB
-
-```bash
-git -C commonplace pull                        # gitignored clone
-git submodule update --remote commonplace      # submodule
-```
-
-### Keeping it small (optional)
-
-If repository weight matters, a blobless, kb-only checkout works — root files such as `AGENTS.md` remain present:
-
-```bash
-git clone --filter=blob:none --sparse https://github.com/zby/commonplace
-git -C commonplace sparse-checkout set kb
-```
+The installed package supplies the commands and the library: theory, reference docs, instructions, global types, review gates, and skills. Projects read the library in place rather than copying it. The package does not include this repository’s external-system reviews or source corpus.
 
 ## 1. Prerequisites
 
