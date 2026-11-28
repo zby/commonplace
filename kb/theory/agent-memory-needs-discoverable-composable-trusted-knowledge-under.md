@@ -7,7 +7,7 @@ tags: [agent-memory, context-engineering, learning-theory, failure-modes]
 
 # Agent memory needs discoverable, loadable, composable, trusted knowledge under bounded context
 
-Agent memory improves future work only when remembered knowledge can change what an agent does within bounded context—the limited working material available for a task. Merely storing or retrieving a durable fact, claim, preference, procedure, rationale, example, or learned constraint does not meet that standard. The knowledge must improve [contextual competence](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md): the agent's ability to answer, classify, plan, communicate, edit, and choose behavior appropriately.
+Agent memory improves future work only when remembered knowledge can change what an agent does within bounded context—the limited working material available for a task. Merely storing or retrieving a durable fact, claim, preference, procedure, rationale, example, or learned constraint does not meet that standard. The knowledge must improve contextual competence: the agent's ability to answer, classify, plan, communicate, edit, and choose behavior appropriately.
 
 Remembered knowledge can still fail after storage. It may remain undiscovered when relevant. It may be found but cost too much to bring into context at useful fidelity. It may enter context without enough structure to guide reasoning or action. Or it may provide no basis for deciding how strongly to rely on it. These failure modes yield four necessary use-time tests: remembered knowledge must be discoverable, loadable, composable, and trusted. The tests evaluate the path from retained material to use in a particular consumption setting, not the whole memory system.
 
@@ -33,7 +33,6 @@ The tests describe remembered material relative to a consuming task and system, 
 
 Relevant Notes:
 
-- [Claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — grounds: contextual competence is the success criterion for learned material, not retrieval accuracy
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: context scarcity makes loadability a separate requirement rather than part of discoverability
 - [Raw accumulation does not create usable memory](./raw-accumulation-does-not-create-usable-memory.md) — extends: explains how ingress work creates discoverability, composability, and trust instead of merely retaining material
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: stored memory has not helped unless it reaches the right context strongly enough to affect behavior

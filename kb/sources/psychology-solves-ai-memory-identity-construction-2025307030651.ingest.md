@@ -40,7 +40,7 @@ No source quotes have been retained yet.
 
 **Memory-as-construction cluster:**
 - [knowledge-storage-does-not-imply-contextual-activation](../theory/knowledge-storage-does-not-imply-contextual-activation.md) — **grounds**: Conway's "working self" that filters memory accessibility based on current goals provides a psychological account of what the KB note calls "cue match" and "priority arbitration."
-- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — **grounds**: Both converge on "memory as construction/action" vs "memory as storage/retrieval" from independent directions (psychology vs knowledge system design).
+- [requirements for usable agent memory](../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — **grounds**: Both converge on "memory as construction/action" vs "memory as storage/retrieval" from independent directions (psychology vs knowledge system design).
 
 **Framework connections:**
 - [information-value-is-observer-relative](../theory/information-value-is-observer-relative.md) — **exemplifies**: Goal-relevant filtering is a concrete psychological mechanism for observer-relative value.

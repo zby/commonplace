@@ -48,7 +48,7 @@ The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling m
 
 - [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../theory/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) (exemplifies) — Concrete system with no three-space separation, a candidate for observing predicted failure modes (search pollution, identity scatter) as data volume grows.
 
-- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) (exemplifies) — Optimizes for retrieval accuracy (SearchType enum: GRAPH_COMPLETION, CHUNKS, GRAPH_SUMMARY_COMPLETION) rather than contextual competence. Does not capture preferences, procedures, judgment precedents, or voice.
+- [requirements for usable agent memory](../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) (exemplifies) — Optimizes for retrieval accuracy (SearchType enum: GRAPH_COMPLETION, CHUNKS, GRAPH_SUMMARY_COMPLETION) rather than contextual competence. Does not capture preferences, procedures, judgment precedents, or voice.
 
 - [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) (contrasts) — Knowledge is discoverable (search types, embeddings) but not composable in the KB sense (no link semantics, no claim structure, no resolution-switching) and only structurally trustworthy (schema-validated but not epistemically grounded).
 

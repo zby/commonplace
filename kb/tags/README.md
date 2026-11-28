@@ -52,5 +52,4 @@ Recurring theoretical questions in [kb/theory/questions/](../theory/questions/RE
 
 ## Gaps
 
-- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — learning must improve action capacity, not just retrieval
 - [brainstorming-how-to-enrich-web-search](../theory/brainstorming-how-to-enrich-web-search.md) — enriching web search by temporarily expanding the corpus and applying connection methodology

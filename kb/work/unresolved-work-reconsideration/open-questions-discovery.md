@@ -64,7 +64,7 @@ rg -ni '^#{1,6}[[:space:]]+.*open questions' kb/theory --glob '*.md' | sort
 - [theory/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md](../../theory/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — line 49: `## Open Questions`
 - [theory/claim-modality-is-the-inference-form-of-the-refuter.md](../../theory/claim-modality-is-the-inference-form-of-the-refuter.md) — line 24: `## Open Questions`
 - [theory/claim-routed-reading-may-beat-reading-first-for-synthesis-notes.md](../../theory/claim-routed-reading-may-beat-reading-first-for-synthesis-notes.md) — line 34: `## Open questions`
-- [theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md](../../theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — line 34: `## Open Questions`
+- [theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md](https://github.com/zby/commonplace/blob/a63c0f601f681a1516d0b8f664d8ddd485156d62/kb/theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — line 34: `## Open Questions`
 - [theory/commitment-not-derivation-creates-new-ground-truth.md](../../theory/commitment-not-derivation-creates-new-ground-truth.md) — line 76: `## Open Questions`
 - [theory/compiling-coordination-preserves-primitive-not-aggregate-authority.md](../../theory/compiling-coordination-preserves-primitive-not-aggregate-authority.md) — line 47: `## Open Questions`
 - [theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md](../../theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md) — line 144: `## Open Questions`

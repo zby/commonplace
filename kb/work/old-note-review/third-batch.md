@@ -61,10 +61,10 @@ Applied the [triage prompt](./triage-prompt.md) at `0fe7d4a9e`. One note split, 
 - **Live dependents affected:** None for this text-only fix. The library skill, index-maintenance instruction, Theory and Reference landings, and site/command docs rely on topic browsing, not that particular gloss. Preserve the route specified by ADR 089. Archived proposals are historical records.
 - **Not checked:** No site build or navigation usability test; no claim that every entry from the historical index deserves reinstatement.
 
-### `kb/notes/claw-learning-is-broader-than-retrieval.md` → `kb/theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md`
+### `kb/notes/claw-learning-is-broader-than-retrieval.md` → retired after triage
 
-- **Lineage:** `d1d69393d` created the revised successor; `d75d9de1d` removed the leftover old path; `9c7563bf7` relocated the [successor](../../theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md). `b8a0db382` refreshed its system comparisons, and `ca891bfa1` retargeted its learning-loop link.
-- **Verdict:** `merge-or-retire-duplicate + dependent-repairs` (high; supersedes the suggested compression after checking the narrower attribution claim). Recommendation only, not a completed retirement.
+- **Lineage:** `d1d69393d` created the revised successor; `d75d9de1d` removed the leftover old path; `9c7563bf7` relocated the [successor](https://github.com/zby/commonplace/blob/a63c0f601f681a1516d0b8f664d8ddd485156d62/kb/theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md). `b8a0db382` refreshed its system comparisons, and `ca891bfa1` retargeted its learning-loop link.
+- **Verdict:** `merge-or-retire-duplicate + dependent-repairs` (high; supersedes the suggested compression after checking the narrower attribution claim). Retired with operator approval. Live citations now route by reader need; the former published URLs redirect to the memory-use criteria.
 - **KB role & goal fit:** Helps someone evaluating an agent’s memory decide whether a failed task implicates retrieval, the retained advice, or something else such as permissions. Finding a procedure and acting on it are different events.
 - **Relevance to current gaps:** Directly addresses credit assignment and whole-loop payoff. It identifies what a useful test must distinguish; it does not already supply a general causal test.
 - **Evidence & reasoning:** The opening restricts the claim to agents that retain context for later tasks. The [behavioral study’s retained quotes](../../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md) distinguish supplying condensed experience from sensitivity to changing its content. The [neighbor on discoverability and trust](../../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) asks what makes an item usable, not whether changing it affected an action. The Personal Brain example is identified as one self-report, not proof of benefit.
@@ -80,5 +80,5 @@ kb/notes/backlinks.md	traced-and-triaged	kb/theory/inbound-and-outbound-links-se
 kb/notes/bitter-lesson-boundary.md	traced-and-triaged	kb/theory/exact-implementation-does-not-validate-a-requirement.md
 kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md	traced-and-triaged	kb/theory/an-assumption-worth-disputing-is-worth-stating.md
 kb/notes/claw-design.md	traced-and-triaged	kb/tags/README.md
-kb/notes/claw-learning-is-broader-than-retrieval.md	traced-and-triaged	kb/theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md
+kb/notes/claw-learning-is-broader-than-retrieval.md	retired-after-triage	kb/theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md
 ```

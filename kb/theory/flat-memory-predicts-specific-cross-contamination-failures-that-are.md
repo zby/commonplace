@@ -62,4 +62,4 @@ Relevant Notes:
 
 - [the verifiability gradient](./verifiability-gradient.md) — motivates durable knowledge in the first place
 - [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — grounds: promotion can select an artifact for the knowledge-graph path without making its content unambiguous; authority must be assigned separately
-- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — argues these failure modes are symptoms of forcing action-oriented knowledge (preferences, procedures, precedents) into a retrieval-oriented structure
+- [Storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — contrasts: retrieved advice can go unused. To attribute that failure to flat storage, compare layouts on the same tasks rather than inferring the cause from non-use alone.

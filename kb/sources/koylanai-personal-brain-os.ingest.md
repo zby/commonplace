@@ -48,7 +48,7 @@ The `/connect` discovery run found 9 new connections beyond the 5 already establ
 
 **Already established (5 connections linked from existing KB notes):**
 - [files defer schema commitment until invariants stabilize](../theory/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) -- exemplifies the file-substrate choice at 80+ file scale with format-function rationale; the note dropped its inline Koylanai reference in the 2026-08-21 reframe, so this now points one way only
-- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) -- exemplifies all four action-oriented knowledge types without theoretical framing
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](https://github.com/zby/commonplace/blob/a63c0f601f681a1516d0b8f664d8ddd485156d62/kb/theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) -- exemplifies all four action-oriented knowledge types without theoretical framing
 - [learning from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) -- exemplifies graduated artifact loading across the verifiability gradient
 - [constraining](../theory/definitions/constraining.md) -- exemplifies learning through versioned artifact accumulation
 - [inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) -- exemplifies Git-versioned files as inspectable substrate
