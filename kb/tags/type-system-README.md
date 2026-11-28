@@ -32,7 +32,7 @@ Two arguments for why structured document types improve what gets written, plus 
 
 ## Type Definitions
 
-- [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](../theory/an-assumption-worth-disputing-is-worth-stating.md) — the `structured-claim` type: Toulmin-derived Evidence/Reasoning/Caveats sections
+- [An assumption worth disputing is worth stating](../theory/an-assumption-worth-disputing-is-worth-stating.md) — when to state the step from evidence to conclusion. For required sections, see the [structured-claim type](../theory/types/structured-claim.md).
 - [wikiwiki-principle-lowest-friction-capture-then-progressive-refinement](../theory/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — the type ladder: zero-friction capture, then progressive refinement as thoughts earn structure
 
 ## Related Tags

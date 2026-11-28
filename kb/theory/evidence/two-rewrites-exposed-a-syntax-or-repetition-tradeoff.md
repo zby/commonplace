@@ -55,5 +55,5 @@ Operationalized into:
 Relevant Notes:
 
 - [Frontloading spares execution context](../frontloading-spares-execution-context.md) — evidenced-by: the retained second-pass artifact whose rewrite the experiment compares with its tracked baseline
-- [Claim notes should use Toulmin-derived sections for structured argument](../an-assumption-worth-disputing-is-worth-stating.md) — evidenced-by: independently records that added structure can make mature arguments stiff enough to undo
+- [An assumption worth disputing is worth stating](../an-assumption-worth-disputing-is-worth-stating.md) — reports a related editing decision at section scale: some notes returned to ordinary prose so readers could see evidence beside the reasoning it supported.
 - [Short composable notes maximize combinatorial discovery](../short-composable-notes-maximize-combinatorial-discovery.md) — grounds: added words reduce the number of notes that can be co-loaded under bounded context

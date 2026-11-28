@@ -29,11 +29,11 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The `/connect` report identified that this source is already well-integrated into the KB — 5 existing inbound links from the most important notes and indexes. The primary synthesis has already been done by [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](../theory/an-assumption-worth-disputing-is-worth-stating.md), which synthesized three independent threads of convergence on Toulmin and established the `structured-claim` type.
+The `/connect` report identified that this source is already well-integrated into the KB — 5 existing inbound links from the most important notes and indexes. The primary synthesis has already been done by [earlier note on Toulmin-derived sections](https://github.com/zby/commonplace/blob/a8203ab20e1be7fa02ebebcf4a449476752bf67a/kb/theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md), which synthesized three independent threads of convergence on Toulmin and established the `structured-claim` type.
 
 **Existing connections (already linked):**
 
-- [claim-notes-should-use-toulmin-derived-sections](../theory/an-assumption-worth-disputing-is-worth-stating.md) — **source**: the canonical framework this note adapts
+- [An assumption worth disputing is worth stating](../theory/an-assumption-worth-disputing-is-worth-stating.md) — uses Purdue’s definition of a warrant to show why a reader can accept the evidence and reject the conclusion.
 - [title-as-claim-enables-traversal-as-reasoning](../theory/title-as-claim-enables-traversal-as-reasoning.md) — **grounds**: Toulmin's model is the theory behind claim titles and "since"/"because" link semantics
 - [links](../tags/links-README.md) — **reference material**: formal argumentation theory behind link semantics
 - [tags](../tags/README.md) — **reference material**: formal argumentation model grounding claim-title conventions
@@ -44,7 +44,7 @@ The `/connect` report identified that this source is already well-integrated int
 1. [human-writing-structures-transfer-to-llms](../theory/human-writing-structures-transfer-to-llms-because-failure-modes.md) — **exemplifies**: uses Toulmin as its primary running example but doesn't link the source
 2. [structured-output-is-easier-for-humans-to-review](../theory/structured-output-is-easier-for-humans-to-review.md) — **grounds**: argues for Evidence/Reasoning separation without citing Toulmin as the theoretical basis
 3. [writing-styles-are-strategies-for-managing-underspecification](../theory/writing-styles-are-strategies-for-managing-underspecification.md) — **grounds**: uses "warrant" terminology from Toulmin without linking
-4. [skills-derive-from-methodology-through-distillation](../theory/skills-derive-from-methodology.md) — **exemplifies**: references Toulmin as methodology source
+4. [Skills derive from methodology](../theory/skills-derive-from-methodology.md) — compares explaining a proposed link with stating a warrant; the comparison does not establish where the skill came from
 5. [text-testing-framework](../theory/text-testing-framework.md) — **grounds**: operationalizes Toulmin's grounds/warrant separation in truthfulness contracts
 7. [wikiwiki-principle](../theory/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — **enables**: references structured-claim/Toulmin sections as the top of the refinement ladder
 
@@ -76,4 +76,4 @@ This is a pedagogical summary, not an original contribution, which limits what c
 
 ## Recommended Next Action
 
-File as reference — the primary synthesis work is already done. The [claim-notes-should-use-toulmin-derived-sections](../theory/an-assumption-worth-disputing-is-worth-stating.md) note already captured the key insight and established the `structured-claim` type. The 7 "last mile" connections identified by `/connect` could be added (linking notes that use Toulmin vocabulary back to this source), but these are navigational improvements, not new knowledge. If pursued, this is a maintenance sweep — add source links from the 7 notes to this snapshot — estimated effort: 15 minutes.
+File as reference — the primary synthesis work is already done. The [earlier note on Toulmin-derived sections](https://github.com/zby/commonplace/blob/a8203ab20e1be7fa02ebebcf4a449476752bf67a/kb/theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) already captured the key insight and established the `structured-claim` type. The 7 "last mile" connections identified by `/connect` could be added (linking notes that use Toulmin vocabulary back to this source), but these are navigational improvements, not new knowledge. If pursued, this is a maintenance sweep — add source links from the 7 notes to this snapshot — estimated effort: 15 minutes.

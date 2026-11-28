@@ -18,7 +18,7 @@ The KB type hierarchy is a refinement ladder for thoughts. Its design principle 
    - **`note`** — add valid frontmatter with `description` and
      `type: types/note.md`, then develop the title and connections. Now
      findable.
-   - **`structured-claim`** — add Evidence/Reasoning/Caveats sections. Now [verifiable](./an-assumption-worth-disputing-is-worth-stating.md).
+   - **[`structured-claim`](./types/structured-claim.md)** — separate Evidence from Reasoning when readers benefit from inspecting them separately. Add Caveats where needed.
 
    Each step adds structure only when the thought has earned it. The same
    logical artifact grows structure in its current collection; conversion may
@@ -29,7 +29,7 @@ The KB type hierarchy is a refinement ladder for thoughts. Its design principle 
 
 ## Reasoning
 
-A half-formed intuition doesn't need Toulmin sections — it needs to exist before it's forgotten. A mature argument that other notes depend on as a premise does need sections — it's load-bearing and must be trustworthy. The wiki principle says: don't force mature structure at capture time, because friction prevents capture. Don't leave mature arguments unstructured, because you can't verify them.
+A half-formed intuition needs to be saved before it is forgotten. When another note starts relying on it, check whether a reader can see how its evidence supports its conclusion. Sometimes [one sentence stating an assumption](./an-assumption-worth-disputing-is-worth-stating.md) is enough. Choose sections when they make that reasoning easier to inspect, not as a mark of maturity.
 
 The key property is **refinement in place**. A `text` file becomes a `note` by
 adding valid note frontmatter. A `note` becomes a `structured-claim` by adopting
@@ -52,9 +52,7 @@ Refining a document's natural-language argument is not by itself [codification](
 Relevant Notes:
 
 - [collections and types](../reference/collections-and-types.md) — the artifact-contract model that supports the text → note → structured-claim ladder
-- [claim notes should use Toulmin-derived sections](./an-assumption-worth-disputing-is-worth-stating.md) — the structured-claim type that sits at the top of the refinement ladder
 - [codification](./definitions/codification.md) — contrasts: refinement can preserve natural-language form; validator-consumed fields or checks can separately cross into symbolic form
 - [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost
-- [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the note→structured-claim transition: a claim title is the first refinement step, Toulmin sections are the second
+- [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — a claim title lets readers see the point of a note without requiring a change of type.
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)
-- [Toulmin Argument (Purdue OWL)](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — enables: Toulmin's argumentation model provides the Evidence/Reasoning/Caveats sections that define the top rung of the refinement ladder

@@ -17,13 +17,13 @@ Empirical evidence supports this overlap. [Lampinen et al. (2024)](https://acade
 
 Chain-of-thought prompting reduces content bias by improving performance on abstract/unfamiliar conditions without degrading familiar ones — suggesting that structured prompting pushes toward content-independent reasoning. This is directly relevant: the structured templates in this KB (Toulmin sections, Evidence/Reasoning/Caveats) may work by a similar mechanism, forcing the model past content-biased defaults.
 
-The methodology applies beyond Toulmin: any human writing convention proposed for LLM use should be evaluated by asking "what specific failure does this prevent, and does the LLM exhibit that failure?" The Lampinen results show this must be done per-convention — syllogisms and NLI show shared failure modes (convention transfers), while the Wason task shows divergence (convention may not transfer).
+For each convention, ask two questions: does the model make the error the convention addresses, and does using the convention reduce that error? The reasoning tasks supply evidence about the first question. They did not compare drafts written with and without Evidence and Reasoning headings.
 
 ---
 
 Relevant Notes:
 
-- [claim notes should use Toulmin-derived sections](./an-assumption-worth-disputing-is-worth-stating.md) — foundation: the specific Toulmin structure this note argues transfers to LLMs
+- [An assumption worth disputing is worth stating](./an-assumption-worth-disputing-is-worth-stating.md) — gives writers a test for a missing warrant without requiring separate headings.
 - [Programming practices for prompts need evidence matched to the question](./programming-practices-for-prompts-need-question-specific-evidence.md) — extends: adds a new category of transfer — not just programming practices but writing genre conventions
 - [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — contrasts: distribution selection remains unverified, so this note supplies an independent failure-mode rationale for structure
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — complementary: a third independent argument (readability, not LLM-specific at all)

@@ -159,8 +159,8 @@ more space.
    lemma, on the grounds that extraction "would submerge the interesting results
    in a sea of lemmas." That is a live counter-consideration to the KB's default
    of splitting into separate artifacts, and it supplies the nesting rule the flat
-   Toulmin section model in
-   [claim notes](../theory/an-assumption-worth-disputing-is-worth-stating.md)
+   section template for
+   [structured claims](../theory/types/structured-claim.md)
    lacks. [deep-dive]
 
 6. **Learning the formal form to write the informal one better.** Lamport prices

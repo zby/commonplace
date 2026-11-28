@@ -24,9 +24,9 @@ When the title carries the argument, the pointer itself becomes the hint — eve
 
 ### Links as argument structure
 
-[Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — when titles are claims, following links reads as a reasoning chain. "since [structure enables navigation]" composes grammatically; "since [navigation notes]" doesn't. The note graph becomes scannable arguments. Link semantics ("since", "because", "but") encode relationship types — Toulmin warrants connecting grounds to claims.
+[Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — when titles are claims, following links reads as a reasoning chain. "since [structure enables navigation]" composes grammatically; "since [navigation notes]" doesn't. The note graph becomes scannable arguments.
 
-[Claim notes should use Toulmin-derived sections for structured argument](./an-assumption-worth-disputing-is-worth-stating.md) — title-as-claim is the Toulmin claim; "since"/"because" link semantics encode warrants. Not all claim-titled notes need the full Toulmin scaffold, but the scaffold reveals what claim titles are doing implicitly.
+“Because” tells the reader that the linked observation counts as a reason. It need not say *why* it counts. “Retire the checklist because no note links to it” leaves out the assumption that readers only reach checklists through other notes. [State that assumption](./an-assumption-worth-disputing-is-worth-stating.md) if a reader could accept the observation and still dispute the conclusion.
 
 [Link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — an inline "since [X]" that uses a note as a premise carries more weight than a footer entry. Position and prose encode commitment level, creating a weighted graph orthogonal to relationship type.
 

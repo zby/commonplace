@@ -32,7 +32,7 @@ Fact accumulation is real and valuable — [AgeMem's](./memory-management-policy
 
 Capacity has a second cluster of dimensions that tend to move together: **reliability** (how consistently it works), **speed** (how fast), and **cost** (how cheaply). These form a compound because they often improve simultaneously — [codification](./definitions/codification.md) is the clearest example, where moving from LLM to deterministic code improves all three at once. But the compound isn't exclusive to codification: conventions improve reliability, caching improves speed, derived skills reduce cost.
 
-The generality trade-off is the primary dynamic: [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md). By this note's analogy, learning can occupy either rough region: codifying one check into a script resembles single-loop change, while deciding that [claim notes should use Toulmin-derived sections](./an-assumption-worth-disputing-is-worth-stating.md) resembles double-loop change.
+The generality trade-off is the primary dynamic: [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md). By this note's analogy, learning can occupy either rough region: codifying one check into a script resembles single-loop change, while changing what authors are expected to justify, as in the [earlier decision to distinguish evidence from reasoning in claim notes](https://github.com/zby/commonplace/blob/a8203ab20e1be7fa02ebebcf4a449476752bf67a/kb/theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md), resembles double-loop change.
 
 ## Other dimensions
 
