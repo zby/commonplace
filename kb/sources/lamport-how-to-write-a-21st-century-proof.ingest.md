@@ -160,7 +160,7 @@ more space.
    in a sea of lemmas." That is a live counter-consideration to the KB's default
    of splitting into separate artifacts, and it supplies the nesting rule the flat
    Toulmin section model in
-   [claim notes](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md)
+   [claim notes](../theory/an-assumption-worth-disputing-is-worth-stating.md)
    lacks. [deep-dive]
 
 6. **Learning the formal form to write the informal one better.** Lamport prices

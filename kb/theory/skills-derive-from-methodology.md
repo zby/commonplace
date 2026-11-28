@@ -7,7 +7,7 @@ tags: [method-guided-action, artifact-analysis, learning-theory]
 
 # Skills derive from methodology
 
-Skills in a knowledge base are worked out from the methodology KB. The `/connect` skill encodes procedures — scan descriptions, run the articulation test, check agent traversal value — that were reasoned out across a constellation of methodology notes: the [Toulmin argument structure](./claim-notes-should-use-toulmin-derived-sections-for-structured.md), the [Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) review, the [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) convention, the [link relationship semantics](../reference/adr/009-link-relationship-semantics.md). The skill works because it encodes the right procedures. But it can't explain why those procedures are right, or help adapt them when they don't fit.
+Skills in a knowledge base are worked out from the methodology KB. The `/connect` skill encodes procedures — scan descriptions, run the articulation test, check agent traversal value — that were reasoned out across a constellation of methodology notes: the [Toulmin argument structure](./an-assumption-worth-disputing-is-worth-stating.md), the [Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) review, the [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md) convention, the [link relationship semantics](../reference/adr/009-link-relationship-semantics.md). The skill works because it encodes the right procedures. But it can't explain why those procedures are right, or help adapt them when they don't fit.
 
 What is this relationship? The project has two terms for related phenomena — codification and constraining — and neither is quite right. Getting the relationship right matters because it determines how we think about maintaining, improving, and extending skills.
 
@@ -76,7 +76,7 @@ Relevant Notes:
 - [codification](./definitions/codification.md) — contrasts: codification changes form under a consumption path, by rewriting or adoption; skill derivation alone does neither
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — enables: the loading hierarchy is the architectural consequence of the skill tier being worked out from the methodology tier
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example source: one of several methodology notes the /connect skill was worked out from
-- [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md) — example source: the Toulmin structure became the skill's articulation test
+- [claim notes should use Toulmin-derived sections](./an-assumption-worth-disputing-is-worth-stating.md) — example source: the Toulmin structure became the skill's articulation test
 - [Toulmin Argument (Purdue OWL)](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — source: the formal argumentation framework referenced as methodology input to the /connect skill
 - [Skill Synthesis (Cramer)](https://x.com/zeeg/status/2032179291031806408) — counterexample: skills produced directly from domain artifacts (commit history, patches) without an intermediate theory layer — abstracted lineage, not derivation from a retained generator
 

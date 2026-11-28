@@ -23,7 +23,7 @@ The methodology applies beyond Toulmin: any human writing convention proposed fo
 
 Relevant Notes:
 
-- [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md) — foundation: the specific Toulmin structure this note argues transfers to LLMs
+- [claim notes should use Toulmin-derived sections](./an-assumption-worth-disputing-is-worth-stating.md) — foundation: the specific Toulmin structure this note argues transfers to LLMs
 - [Programming practices for prompts need evidence matched to the question](./programming-practices-for-prompts-need-question-specific-evidence.md) — extends: adds a new category of transfer — not just programming practices but writing genre conventions
 - [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — contrasts: distribution selection remains unverified, so this note supplies an independent failure-mode rationale for structure
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — complementary: a third independent argument (readability, not LLM-specific at all)

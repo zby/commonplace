@@ -29,11 +29,11 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The `/connect` report identified that this source is already well-integrated into the KB — 5 existing inbound links from the most important notes and indexes. The primary synthesis has already been done by [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md), which synthesized three independent threads of convergence on Toulmin and established the `structured-claim` type.
+The `/connect` report identified that this source is already well-integrated into the KB — 5 existing inbound links from the most important notes and indexes. The primary synthesis has already been done by [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](../theory/an-assumption-worth-disputing-is-worth-stating.md), which synthesized three independent threads of convergence on Toulmin and established the `structured-claim` type.
 
 **Existing connections (already linked):**
 
-- [claim-notes-should-use-toulmin-derived-sections](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — **source**: the canonical framework this note adapts
+- [claim-notes-should-use-toulmin-derived-sections](../theory/an-assumption-worth-disputing-is-worth-stating.md) — **source**: the canonical framework this note adapts
 - [title-as-claim-enables-traversal-as-reasoning](../theory/title-as-claim-enables-traversal-as-reasoning.md) — **grounds**: Toulmin's model is the theory behind claim titles and "since"/"because" link semantics
 - [links](../tags/links-README.md) — **reference material**: formal argumentation theory behind link semantics
 - [tags](../tags/README.md) — **reference material**: formal argumentation model grounding claim-title conventions
@@ -76,4 +76,4 @@ This is a pedagogical summary, not an original contribution, which limits what c
 
 ## Recommended Next Action
 
-File as reference — the primary synthesis work is already done. The [claim-notes-should-use-toulmin-derived-sections](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) note already captured the key insight and established the `structured-claim` type. The 7 "last mile" connections identified by `/connect` could be added (linking notes that use Toulmin vocabulary back to this source), but these are navigational improvements, not new knowledge. If pursued, this is a maintenance sweep — add source links from the 7 notes to this snapshot — estimated effort: 15 minutes.
+File as reference — the primary synthesis work is already done. The [claim-notes-should-use-toulmin-derived-sections](../theory/an-assumption-worth-disputing-is-worth-stating.md) note already captured the key insight and established the `structured-claim` type. The 7 "last mile" connections identified by `/connect` could be added (linking notes that use Toulmin vocabulary back to this source), but these are navigational improvements, not new knowledge. If pursued, this is a maintenance sweep — add source links from the 7 notes to this snapshot — estimated effort: 15 minutes.

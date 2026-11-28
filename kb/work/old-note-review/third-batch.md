@@ -39,7 +39,7 @@ Applied the [triage prompt](./triage-prompt.md) at `0fe7d4a9e`. One note split, 
 
 ### `kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md` → `kb/theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md`
 
-- **Lineage:** `2566f6964` shortened the filename; `9c7563bf7` relocated it; `f698aa90d` updated contract references, not the [argument](../../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md).
+- **Lineage:** `2566f6964` shortened the filename; `9c7563bf7` relocated it; `f698aa90d` updated contract references, not the [argument](../../theory/an-assumption-worth-disputing-is-worth-stating.md).
 - **Verdict:** `rebuild-in-place` (high).
 - **Execution:** Rewritten in place as *An assumption worth disputing is worth stating*. A checklist example shows when a writer should state an assumption or narrow the conclusion. The note uses ordinary prose and points to the type contract for cases where separate sections help; it retains the readability observation. Filename relocation and dependent citation repairs have not been carried out.
 - **KB role & goal fit:** A reviewer needs to distinguish “the observation is wrong” from “the observation is right but does not support this claim.” That distinction remains useful outside Commonplace. Choosing a document type is a separate, already documented decision.

@@ -31,7 +31,7 @@ Thalo's `opinion` has:
 - `related?`: link[]
 - Sections: **Claim** (required), **Reasoning** (required), **Caveats** (optional)
 
-Our equivalent: [`structured-claim`](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) with Evidence/Reasoning/Caveats sections. This was adopted after the original comparison flagged the gap — three independent threads (Thalo's opinion entity, claim titles, the affordance table) converged on the same Toulmin-derived shape. The `confidence` field and `supersedes` link remain interesting features we haven't adopted — confidence as metadata would let us query for low-confidence claims that need evidence, and `supersedes` explicitly tracks opinion evolution.
+Our equivalent: [`structured-claim`](../theory/an-assumption-worth-disputing-is-worth-stating.md) with Evidence/Reasoning/Caveats sections. This was adopted after the original comparison flagged the gap — three independent threads (Thalo's opinion entity, claim titles, the affordance table) converged on the same Toulmin-derived shape. The `confidence` field and `supersedes` link remain interesting features we haven't adopted — confidence as metadata would let us query for low-confidence claims that need evidence, and `supersedes` explicitly tracks opinion evolution.
 
 **Already borrowed:** Claim / Reasoning / Caveats sections — now the `structured-claim` base type. **Still borrowable:** `supersedes` link for tracking when one note replaces another. `confidence` field.
 
@@ -78,7 +78,7 @@ Self-reference entity. Not applicable to our project-focused KB.
 
 ## What this comparison reveals
 
-1. **Structured argument sections converged.** Thalo's opinion entity (Claim/Reasoning/Caveats) flagged a gap we've since filled with the [`structured-claim` type](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md). The convergence — both systems arriving at Toulmin-derived sections independently — validates the choice. Our `structured-claim` adds an `## Evidence` section that Thalo's opinion lacks, separating checkable facts from reasoning.
+1. **Structured argument sections converged.** Thalo's opinion entity (Claim/Reasoning/Caveats) flagged a gap we've since filled with the [`structured-claim` type](../theory/an-assumption-worth-disputing-is-worth-stating.md). The convergence — both systems arriving at Toulmin-derived sections independently — validates the choice. Our `structured-claim` adds an `## Evidence` section that Thalo's opinion lacks, separating checkable facts from reasoning.
 
 2. **We're missing status tracking for sources.** Their `unread | read | processed` pipeline status is useful. Our `/ingest` pipeline does this operationally but doesn't persist the status as queryable metadata.
 
@@ -158,7 +158,7 @@ Relevant Notes:
 
 - [collections and types](../reference/collections-and-types.md) — Commonplace's current type system being compared
 - [document-types-should-be-verifiable](../theory/document-types-should-be-verifiable.md) — the design principle both systems share
-- [claim-notes-should-use-toulmin-derived-sections](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — resolves the gap this comparison originally flagged: `structured-claim` with Evidence/Reasoning/Caveats sections
+- [claim-notes-should-use-toulmin-derived-sections](../theory/an-assumption-worth-disputing-is-worth-stating.md) — resolves the gap this comparison originally flagged: `structured-claim` with Evidence/Reasoning/Caveats sections
 - [codification](../theory/definitions/codification.md) — the validation split (script vs skill) is codification applied to the validation process itself
 - [oracle-strength-spectrum](../theory/oracle-strength-spectrum.md) — determines which checks can be deterministic (hard oracle) vs must stay LLM-judged (soft oracle)
 - [quality-signals-for-kb-evaluation](../theory/quality-signals-for-kb-evaluation.md) — the broader quality framework these validation rules feed into

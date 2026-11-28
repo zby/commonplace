@@ -18,7 +18,7 @@ The KB type hierarchy is a refinement ladder for thoughts. Its design principle 
    - **`note`** — add valid frontmatter with `description` and
      `type: types/note.md`, then develop the title and connections. Now
      findable.
-   - **`structured-claim`** — add Evidence/Reasoning/Caveats sections. Now [verifiable](./claim-notes-should-use-toulmin-derived-sections-for-structured.md).
+   - **`structured-claim`** — add Evidence/Reasoning/Caveats sections. Now [verifiable](./an-assumption-worth-disputing-is-worth-stating.md).
 
    Each step adds structure only when the thought has earned it. The same
    logical artifact grows structure in its current collection; conversion may
@@ -52,7 +52,7 @@ Refining a document's natural-language argument is not by itself [codification](
 Relevant Notes:
 
 - [collections and types](../reference/collections-and-types.md) — the artifact-contract model that supports the text → note → structured-claim ladder
-- [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md) — the structured-claim type that sits at the top of the refinement ladder
+- [claim notes should use Toulmin-derived sections](./an-assumption-worth-disputing-is-worth-stating.md) — the structured-claim type that sits at the top of the refinement ladder
 - [codification](./definitions/codification.md) — contrasts: refinement can preserve natural-language form; validator-consumed fields or checks can separately cross into symbolic form
 - [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the note→structured-claim transition: a claim title is the first refinement step, Toulmin sections are the second
