@@ -534,6 +534,15 @@ class Analysis:
     def analyse(self) -> bytes:
         metadata = self.opening()
         source = self.code_job("acquire", lambda: acquire_analysis(metadata, self.run_dir))
+        acquired = json.loads(source)
+        profile = self.run.profile
+        if acquired and profile.harness == "claude-code":
+            # Claude's file tools need the source as a working directory outside this worktree.
+            directories = profile.flags.get("add-dir", [])
+            if isinstance(directories, str):
+                directories = [part.strip() for part in directories.split(",")]
+            profile.flags["add-dir"] = list(dict.fromkeys([*directories, acquired["path"]]))
+            self.run.worker = self.run.harnesses[profile.harness].worker(profile)
         boundary = self.role_job(self.method.frozen, self.content_check(self.method.frozen))
         disposition = frontmatter(boundary).get("result-disposition")
         self.run.log(event="boundary", disposition=disposition)

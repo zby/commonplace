@@ -48,7 +48,7 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str, source:
     from workjig import hold
 
     from commonplace.lib.agentic_analysis.durable import save
-    from commonplace.lib.agentic_analysis.sources import github_checkout_path
+    from commonplace.lib.agentic_analysis.sources import github_checkout_name
 
     if allocation_key is not None and not re.fullmatch(r"[a-f0-9]{32}", allocation_key):
         raise ValueError("allocation key must be 32 lowercase hex characters")
@@ -62,7 +62,7 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str, source:
     if not identity:
         raise ValueError("source-identity normalizes to an empty identity")
     if source_revision is not None and (not run_ids.is_commit(source_revision)
-                                       or github_checkout_path(identity) is None):
+                                       or github_checkout_name(identity) is None):
         raise ValueError("source-revision requires a full 40-hex commit and GitHub repository identity")
     if run_command(["git", "rev-parse", "HEAD"], cwd=worktree) != preparation["commit"]:
         raise ValueError("worktree HEAD differs from its preparation commit")

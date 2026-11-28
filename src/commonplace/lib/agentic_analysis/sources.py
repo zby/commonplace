@@ -1,20 +1,4 @@
-"""Frozen external sources: identity, Git checkouts and their acquisition.
-
-A GitHub source is read from `related-systems/<owner>--<repo>/`, detached at
-one full commit with no local changes. Code acquires that checkout before any
-worker reads it, so no worker clones, fetches or checks out anything.
-
-A missing checkout is cloned into a temporary sibling and renamed into place
-only once it is detached at the commit, so an interrupted acquisition leaves
-no partial checkout behind. An existing clean checkout is moved to the
-commit; it is never cleaned: local changes, a foreign origin, or a commit the
-origin does not have stop the run for the operator.
-
-Acquisition keeps its own effect journal, separate from the run's records.
-It records intent before mutation and the source before the run records
-its output. A rerun never silently selects a new revision when a completed
-or uncertain acquisition may already have selected one.
-"""
+"""Acquire persistent, revision-pinned Git sources shared by analysis worktrees."""
 
 from __future__ import annotations
 
@@ -28,7 +12,11 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
-from commonplace.lib.agentic_analysis.effects import UncertainEffectError, write_json
+from commonplace.lib.agentic_analysis.effects import (
+    UncertainEffectError,
+    publication_lock,
+    write_json,
+)
 from commonplace.lib.source_identity import normalize_source_identity
 
 JOURNAL = "effects/acquire.json"
@@ -43,13 +31,12 @@ class CheckoutError(ValueError):
     """The requested source checkout cannot be acquired safely."""
 
 
-def github_checkout_path(identity: str) -> Path | None:
-    """The checkout of a GitHub repository identity, relative to the
-    repository root, or None when the identity names no GitHub repository."""
+def github_checkout_name(identity: str) -> str | None:
+    """The owner-qualified directory name for a GitHub repository identity."""
     match = GITHUB_REPOSITORY.fullmatch(normalize_source_identity(identity))
     if match is None:
         return None
-    return Path(CHECKOUT_ROOT) / f"{match[1]}--{match[2]}"
+    return f"{match[1]}--{match[2]}"
 
 
 def canonical_origin(url: str) -> str:
@@ -74,56 +61,26 @@ def output(path: Path, *args: str) -> str:
     return result.stdout.strip()
 
 
-def freeze_checkout(
-    repo_root: Path, checkout: Path, *, identity: str, origin: str,
-    revision: str | None = None,
-) -> dict[str, Any]:
-    """Freeze `checkout` (relative to `repo_root`) and return the boundary's
-    `source` record for it.
-
-    The commit is `revision`, or else the tip of `origin`'s default branch. A
-    missing checkout is cloned from `origin`; a clean existing one is fetched
-    when it lacks the commit. Either is detached at the commit, except that a
-    checkout already there is left as it is.
-    """
-    path = repo_root / checkout
-    if os.path.lexists(path):
-        commit = refreeze(path, origin=origin, revision=revision)
+def checkout_root(repo: Path) -> Path:
+    """Resolve the shared storage setting from this Git repository."""
+    setting = "commonplace.relatedSystemsDir"
+    config = git(repo, "config", "--local", "--get", setting)
+    worktrees = output(repo, "worktree", "list", "--porcelain", "-z")
+    main = Path(worktrees.split("\0", 1)[0].removeprefix("worktree "))
+    if config.returncode == 1:
+        root = main / CHECKOUT_ROOT
+    elif config.returncode == 0:
+        root = Path(config.stdout.rstrip("\n"))
     else:
-        commit = clone(repo_root, path, origin=origin, revision=revision)
-    if output(path, "rev-parse", "HEAD") != commit or output(path, "status", "--porcelain"):
-        raise CheckoutError(f"the checkout at {path} is not exactly the files of {commit}")
-    return {
-        "kind": "git",
-        "identity": normalize_source_identity(identity),
-        "revision": commit,
-        "path": path.as_posix(),
-        "sha256": None,
-    }
-
-
-def refreeze(path: Path, *, origin: str, revision: str | None) -> str:
-    top = git(path, "rev-parse", "--show-toplevel") if path.is_dir() else None
-    if top is None or top.returncode != 0 or Path(top.stdout.strip()) != path.resolve():
-        raise CheckoutError(f"{path} exists but is not a Git checkout; move it aside")
-    remote = git(path, "remote", "get-url", "origin")
-    if remote.returncode != 0 or canonical_origin(remote.stdout) != canonical_origin(origin):
-        raise CheckoutError(f"the checkout at {path} does not have the origin {origin}")
-    if output(path, "status", "--porcelain"):
-        raise CheckoutError(
-            f"the checkout at {path} has local changes or untracked files; "
-            "the operator must keep or discard them"
-        )
-    if revision is None:
-        output(path, "fetch", "--quiet", "origin", "HEAD")
-        commit = output(path, "rev-parse", "FETCH_HEAD")
-    else:
-        commit = revision
-        require_commit(path, commit, origin=origin)
-    # A checkout already at the commit keeps its branch.
-    if output(path, "rev-parse", "HEAD") != commit:
-        output(path, "checkout", "--quiet", "--detach", commit)
-    return commit
+        raise CheckoutError(f"cannot read {setting}: {config.stderr.strip()}")
+    if not root.is_absolute() or root != root.resolve():
+        raise CheckoutError(f"{setting} must be a canonical absolute path: {root}")
+    for tree in (main, repo):
+        if root.is_relative_to(tree):
+            relative = root.relative_to(tree)
+            if not relative.parts or git(tree, "check-ignore", "-q", "--", f"{relative}/").returncode:
+                raise CheckoutError(f"checkout directory {root} must be ignored by {tree}")
+    return root
 
 
 def require_commit(path: Path, commit: str, *, origin: str) -> None:
@@ -135,25 +92,23 @@ def require_commit(path: Path, commit: str, *, origin: str) -> None:
         raise CheckoutError(f"the requested commit {commit} is not available from {origin}")
 
 
-def clone(repo_root: Path, path: Path, *, origin: str, revision: str | None) -> str:
-    if git(repo_root, "check-ignore", "-q", f"{CHECKOUT_ROOT}/").returncode != 0:
-        raise CheckoutError(f"{CHECKOUT_ROOT}/ is not ignored by the repository at {repo_root}")
+def clone(path: Path, *, origin: str, revision: str, seed: Path | None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=f".{path.name}-", dir=path.parent))
     try:
         result = subprocess.run(
-            ["git", "clone", "--quiet", origin, str(staging)],
+            ["git", "clone", "--quiet", str(seed or origin), str(staging)],
             capture_output=True, text=True, check=False,
         )
         if result.returncode != 0:
             raise RuntimeError(f"git clone {origin} failed: {result.stderr.strip()}")
-        commit = revision or output(staging, "rev-parse", "HEAD")
-        require_commit(staging, commit, origin=origin)
-        output(staging, "checkout", "--quiet", "--detach", commit)
+        if seed:
+            output(staging, "remote", "set-url", "origin", output(seed, "remote", "get-url", "origin"))
+        require_commit(staging, revision, origin=origin)
+        output(staging, "checkout", "--quiet", "--detach", revision)
         staging.rename(path)
     finally:
         shutil.rmtree(staging, ignore_errors=True)
-    return commit
 
 
 class AcquisitionUncertainError(UncertainEffectError):
@@ -173,30 +128,25 @@ def _complete_journal(path: Path, record: dict, source: dict) -> None:
         ) from error
 
 
-def _load_journal(path: Path, inputs_digest: str) -> dict:
+def _load_journal(path: Path, binding: dict, revision: str | None) -> dict:
     try:
-        record = json.loads(path.read_text(encoding="utf-8"))
+        record = json.loads(path.read_bytes())
+        if (not isinstance(record, dict) or record.keys() != binding.keys() | {"state", "source", "revision"}
+                or any(record[key] != value for key, value in binding.items())
+                or not isinstance(record["revision"], str) or not re.fullmatch(r"[0-9a-f]{40}", record["revision"])
+                or (revision is not None and record["revision"] != revision)
+                or record["state"] not in ("started", "completed")
+                or (record["state"] == "started" and record["source"] is not None)):
+            raise ValueError("journal disagrees with acquisition inputs")
     except (OSError, ValueError) as error:
-        raise AcquisitionUncertainError(f"cannot read acquisition journal {path}; preserve it for inspection") from error
-    if (
-        not isinstance(record, dict)
-        or set(record) != {"version", "metadata-sha256", "state", "path-existed", "initial-head", "source"}
-        or type(record["version"]) is not int or record["version"] != 1
-        or record["metadata-sha256"] != inputs_digest
-        or record["state"] not in ("started", "completed")
-        or not isinstance(record["path-existed"], bool)
-        or (record["path-existed"] and not re.fullmatch(r"[0-9a-f]{40}", str(record["initial-head"])))
-        or (not record["path-existed"] and record["initial-head"] is not None)
-        or (record["state"] == "started" and record["source"] is not None)
-    ):
-        raise AcquisitionUncertainError(f"acquisition journal {path} is malformed or belongs to different inputs")
+        raise AcquisitionUncertainError(f"cannot verify acquisition journal {path}: {error}") from error
     return record
 
 
 def _checkout_head(path: Path, identity: str) -> str:
     """Inspect only; do not fetch, detach, clean or repair anything."""
     if path.resolve() != path or not path.is_dir():
-        raise ValueError(f"{path} is not a regular checkout at its declared path; move it aside")
+        raise CheckoutError(f"{path} is not a regular checkout at its declared path; move it aside")
     top = output(path, "rev-parse", "--show-toplevel")
     if Path(top).resolve() != path:
         raise ValueError(f"{path} is not the Git checkout root")
@@ -215,98 +165,66 @@ def _source(path: Path, identity: str, revision: str) -> dict:
     return {"kind": "git", "identity": identity, "revision": revision, "path": path.as_posix(), "sha256": None}
 
 
-def _recognize(record: dict, path: Path, identity: str, revision: str | None) -> dict | None:
-    """Return a verified source, None for a safe retry, or refuse uncertainty."""
-    if record["state"] == "completed":
-        source = record["source"]
-        if not isinstance(source, dict) or not re.fullmatch(r"[0-9a-f]{40}", str(source.get("revision"))):
-            raise AcquisitionUncertainError("the completed acquisition journal has no valid source record")
-        if source != _source(path, identity, source["revision"]) or (revision and source["revision"] != revision):
-            raise AcquisitionUncertainError("the completed acquisition journal disagrees with the frozen source inputs")
-        try:
-            if _checkout_head(path, identity) != source["revision"]:
-                raise ValueError("the completed checkout's revision changed")
-        except (ValueError, RuntimeError, OSError) as error:
-            raise AcquisitionUncertainError(f"cannot verify the completed acquisition: {error}") from error
-        return source
-    if not os.path.lexists(path):
-        if not record["path-existed"]:
-            return None  # No checkout was installed, so a new clone is safe.
-        raise AcquisitionUncertainError("the checkout present at acquisition start has disappeared")
-    try:
-        head = _checkout_head(path, identity)
-    except (ValueError, RuntimeError, OSError) as error:
-        raise AcquisitionUncertainError(f"cannot establish the interrupted acquisition's outcome: {error}") from error
-    if revision:
-        if head == revision:
-            return _source(path, identity, head)
-        if record["path-existed"] and head == record["initial-head"]:
-            return None  # The requested deterministic checkout has not happened.
-        raise AcquisitionUncertainError("the interrupted checkout is neither its original nor its requested revision")
-    if not record["path-existed"] and git(path, "symbolic-ref", "-q", "HEAD").returncode == 1:
-        # The clone primitive publishes only a clean, detached checkout by
-        # atomic rename. Observe that installed result, not the remote tip now.
-        return _source(path, identity, head)
-    raise AcquisitionUncertainError(
-        "cannot establish which default-branch snapshot the interrupted acquisition selected; "
-        "preserve the journal and checkout for operator inspection, or start a separate run"
-    )
-
-
 def acquire(repo: Path, run_dir: Path, *, identity: str, revision: str | None, inputs_digest: str) -> bytes:
-    """Return the frozen Git source JSON, or JSON null for a non-Git identity.
-
-    ``identity`` is normalized and ``revision``, when given, a full commit.
-    ``inputs_digest`` binds the journal to the inputs that chose them. The
-    effect journal is recognition evidence, never a new analytical input. It
-    is retained on ordinary failure, uncertainty and interrupted attempts.
-    """
-    relative = github_checkout_path(identity)
+    """Pin the selected commit before installing its checkout. Retries use the journaled pin."""
+    name = github_checkout_name(identity)
     journal = run_dir / JOURNAL
-    if journal.is_symlink() or journal.parent.is_symlink():
+    if journal.resolve() != journal:
         raise AcquisitionUncertainError("the acquisition journal must not redirect outside this run")
-    if relative is None:
+    if name is None:
         if revision is not None:
             raise ValueError("source-revision requires a GitHub repository identity")
         if os.path.lexists(journal):
             raise AcquisitionUncertainError("a non-Git acquisition has an unexpected existing effect journal")
-        return b"null\n"  # Explicitly not a frozen source; a worker must establish one.
-    path = repo / relative
-    if path.resolve() != path:
-        error = AcquisitionUncertainError if os.path.lexists(journal) else ValueError
-        raise error("the acquisition checkout must not redirect outside its declared path")
-    if git(repo, "check-ignore", "-q", f"{CHECKOUT_ROOT}/").returncode != 0:
-        raise ValueError(f"{CHECKOUT_ROOT}/ must be ignored before acquisition")
-    if os.path.lexists(journal):
-        record = _load_journal(journal, inputs_digest)
-        source = _recognize(record, path, identity, revision)
-        if source is not None:
-            if record["state"] != "completed":
-                _complete_journal(journal, record, source)
-            return (json.dumps(source, sort_keys=True) + "\n").encode("utf-8")
-    else:
-        existed = os.path.lexists(path)
-        initial = _checkout_head(path, identity) if existed else None
-        record = {"version": 1, "metadata-sha256": inputs_digest, "state": "started",
-                  "path-existed": existed, "initial-head": initial, "source": None}
-        _write_journal(journal, record)
-    try:
-        source = freeze_checkout(repo, relative, identity=identity, origin=identity, revision=revision)
-        if not isinstance(source, dict) or not re.fullmatch(r"[0-9a-f]{40}", str(source.get("revision"))):
-            raise AcquisitionUncertainError("acquisition returned no valid frozen source record")
-        source_revision = source["revision"]
-        if (source != _source(path, identity, source_revision) or (revision and source_revision != revision)
-                or _checkout_head(path, identity) != source_revision):
-            raise AcquisitionUncertainError("acquisition returned a source that does not match the installed checkout")
-    except AcquisitionUncertainError:
-        raise
-    except Exception:  # Classify the external effect before any retry.
-        source = _recognize(record, path, identity, revision)
-        if source is None:
-            raise
-        # The operation raised after installing a recognizable final result.
-    _complete_journal(journal, record, source)
-    return (json.dumps(source, sort_keys=True) + "\n").encode("utf-8")
+        return b"null\n"
+
+    root = checkout_root(repo)
+    primary = root / name
+    with publication_lock(root / ".locks" / name):
+        existing = journal.exists()
+        binding = {"version": 2, "metadata-sha256": inputs_digest, "root": str(root), "identity": identity}
+        if existing:
+            record = _load_journal(journal, binding, revision)
+            commit = record["revision"]
+        else:
+            commit = revision or output(repo, "ls-remote", "--exit-code", identity, "HEAD").split("\t")[0]
+            if not re.fullmatch(r"[0-9a-f]{40}", commit):
+                raise CheckoutError("source revision must be a full 40-hex commit")
+            record = {**binding, "revision": commit, "state": "started", "source": None}
+
+        secondary = root / ".revisions" / name / commit
+        if existing and record["state"] == "completed":
+            source = record.get("source")
+            if source not in (_source(primary, identity, commit), _source(secondary, identity, commit)):
+                raise AcquisitionUncertainError("completed acquisition journal has an invalid source")
+            path = Path(source["path"])
+            try:
+                if _checkout_head(path, identity) != commit:
+                    raise ValueError("checkout revision changed")
+            except (OSError, ValueError, RuntimeError) as error:
+                raise AcquisitionUncertainError(f"cannot verify the completed acquisition: {error}") from error
+        else:
+            head = _checkout_head(primary, identity) if os.path.lexists(primary) else None
+            path = primary if head in (None, commit) else secondary
+            if path.resolve() != path:
+                raise CheckoutError(f"checkout must not redirect outside its declared path: {path}")
+            if path == secondary and os.path.lexists(path) and _checkout_head(path, identity) != commit:
+                raise CheckoutError(f"checkout at {path} has changed revision")
+            if not existing:
+                _write_journal(journal, record)
+            if not path.exists():
+                try:
+                    clone(path, origin=identity, revision=commit, seed=primary if path == secondary else None)
+                except Exception as error:
+                    if not os.path.lexists(path):
+                        raise
+                    if _checkout_head(path, identity) != commit:
+                        raise AcquisitionUncertainError(f"cannot verify interrupted clone at {path}") from error
+            if _checkout_head(path, identity) != commit:
+                raise CheckoutError(f"checkout at {path} differs from the pinned commit")
+            source = _source(path, identity, commit)
+            _complete_journal(journal, record, source)
+        return (json.dumps(source, sort_keys=True) + "\n").encode("utf-8")
 
 
 def frozen_source_refusals(source: dict[str, Any]) -> list[str]:

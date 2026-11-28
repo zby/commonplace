@@ -187,6 +187,8 @@ def acquisition(request, monkeypatch, tmp_path) -> Path:
         args = list(args)
         if args[:3] == ["git", "clone", "--quiet"] and args[3] == IDENTITY:
             args[3] = str(upstream)
+        if args[-4:] == ["ls-remote", "--exit-code", IDENTITY, "HEAD"]:
+            args[-2] = str(upstream)
         # Every fetch origin is a local directory established by that clone.
         # Refuse network addresses instead of accidentally exercising the web.
         if args and args[0] == "git":

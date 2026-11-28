@@ -6,6 +6,7 @@ No workers, network sources, target execution, installations or publication.
 from __future__ import annotations
 
 import json
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -46,7 +47,7 @@ class Acquiring:
 
     @property
     def checkout(self) -> Path:
-        return self.repo / sources.github_checkout_path(IDENTITY)
+        return sources.checkout_root(self.repo) / sources.github_checkout_name(IDENTITY)
 
     @property
     def journal(self) -> Path:
@@ -69,21 +70,21 @@ def acquiring(request, tmp_path, monkeypatch) -> Acquiring:
     run_dir = tmp_path / "run"
     run_dir.mkdir()
     a = Acquiring(prepared.repo, run_dir, upstream)
-    original = sources.freeze_checkout
+    original = sources.clone
 
     def counted(*args, **kwargs):
         a.freezes.append(kwargs)
         return original(*args, **kwargs)
 
-    monkeypatch.setattr(sources, "freeze_checkout", counted)
+    monkeypatch.setattr(sources, "clone", counted)
     return a
 
 
 def test_checkout_refusal_is_a_domain_value_error_without_side_effects(tmp_path):
     path = tmp_path / "not-a-checkout"
     path.write_bytes(b"keep this file")
-    with pytest.raises(CheckoutError, match="not a Git checkout") as raised:
-        sources.refreeze(path, origin="https://example.invalid/source", revision="a" * 40)
+    with pytest.raises(CheckoutError, match="not a regular checkout") as raised:
+        sources._checkout_head(path, IDENTITY)
     assert isinstance(raised.value, ValueError)
     assert path.read_bytes() == b"keep this file"
 
@@ -100,7 +101,7 @@ def test_clone_freezes_the_local_default_tip_and_records_the_effect(acquiring):
     assert git(a.checkout, "status", "--porcelain") == ""
     record = json.loads(a.journal.read_text())
     assert record["state"] == "completed" and record["source"] == source
-    assert record["path-existed"] is False and record["initial-head"] is None
+    assert record["revision"] == revision
     assert len(a.freezes) == 1
     # A completed journal is recognized, not replayed, even when the upstream moved on.
     git(a.upstream, "commit", "--quiet", "--allow-empty", "-m", "Advance again")
@@ -124,7 +125,8 @@ def test_existing_checkout_fetches_and_freezes_the_new_default_tip(acquiring):
     initial = git(a.checkout, "rev-parse", "HEAD")
     revision = advance_upstream(a.upstream)
     assert a.acquire()["revision"] == revision != initial
-    assert json.loads(a.journal.read_text())["initial-head"] == initial
+    assert git(a.checkout, "rev-parse", "HEAD") == initial
+    assert git(Path(a.acquire()["path"]), "rev-parse", "HEAD") == revision
 
 
 @pytest.mark.slow
@@ -132,7 +134,7 @@ def test_existing_checkout_fetches_and_freezes_the_new_default_tip(acquiring):
     ("dirty", "local changes or untracked files"),
     ("foreign", "does not have the origin"),
     ("not-git", "not the Git checkout root"),
-    ("symlink", "must not redirect"),
+    ("symlink", "not a regular checkout"),
 ])
 def test_preflight_failure_changes_no_source_and_records_no_effect(acquiring, condition, reason):
     a = acquiring
@@ -195,10 +197,10 @@ def test_interrupted_installation_is_recognized_without_refetching(acquiring, mo
 
 
 @pytest.mark.slow
-def test_interrupted_existing_default_snapshot_is_uncertain(acquiring, monkeypatch):
+def test_interrupted_existing_checkout_keeps_its_journaled_default_revision(acquiring, monkeypatch):
     a = acquiring
     a.clone()
-    advance_upstream(a.upstream)
+    pinned = advance_upstream(a.upstream)
     original = sources._write_journal
 
     def interrupt(path, record):
@@ -209,13 +211,10 @@ def test_interrupted_existing_default_snapshot_is_uncertain(acquiring, monkeypat
     monkeypatch.setattr(sources, "_write_journal", interrupt)
     with pytest.raises(KeyboardInterrupt):
         a.acquire()
-    before = a.journal.read_bytes(), a.checkout.joinpath(".git/HEAD").read_bytes()
+    git(a.upstream, "commit", "--quiet", "--allow-empty", "-m", "Advance again")
     monkeypatch.setattr(sources, "_write_journal", original)
-    for _ in range(2):
-        with pytest.raises(AcquisitionUncertainError, match="which default-branch snapshot"):
-            a.acquire()
+    assert a.acquire()["revision"] == pinned
     assert len(a.freezes) == 1
-    assert (a.journal.read_bytes(), a.checkout.joinpath(".git/HEAD").read_bytes()) == before
 
 
 @pytest.mark.slow
@@ -244,7 +243,7 @@ def test_explicit_revision_failure_before_mutation_can_retry_the_original_checko
     revision = advance_upstream(a.upstream)
     a.clone()
     git(a.checkout, "checkout", "--quiet", "--detach", initial)
-    counted = sources.freeze_checkout
+    counted = sources.clone
 
     def fail_once(*args, **kwargs):
         if not a.freezes:
@@ -252,7 +251,7 @@ def test_explicit_revision_failure_before_mutation_can_retry_the_original_checko
             raise RuntimeError("temporary local fixture condition")
         return counted(*args, **kwargs)
 
-    monkeypatch.setattr(sources, "freeze_checkout", fail_once)
+    monkeypatch.setattr(sources, "clone", fail_once)
     with pytest.raises(RuntimeError, match="temporary local fixture condition"):
         a.acquire(revision)
     assert git(a.checkout, "rev-parse", "HEAD") == initial
@@ -264,13 +263,13 @@ def test_explicit_revision_failure_before_mutation_can_retry_the_original_checko
 def test_an_exception_after_atomic_installation_is_recognized_not_repeated(acquiring, monkeypatch):
     a = acquiring
     revision = git(a.upstream, "rev-parse", "HEAD")
-    counted = sources.freeze_checkout
+    counted = sources.clone
 
     def install_then_fail(*args, **kwargs):
         counted(*args, **kwargs)
         raise RuntimeError("scripted failure after installation")
 
-    monkeypatch.setattr(sources, "freeze_checkout", install_then_fail)
+    monkeypatch.setattr(sources, "clone", install_then_fail)
     assert a.acquire()["revision"] == revision
     assert json.loads(a.journal.read_text())["state"] == "completed"
 
@@ -301,3 +300,45 @@ def test_recovery_preserves_unverifiable_completed_effects(acquiring, damage):
         a.acquire()
     assert len(a.freezes) == 1
     assert (a.journal.read_bytes(), a.journal.stat().st_mtime_ns) == before
+
+
+@pytest.mark.slow
+@pytest.mark.parametrize("external", [False, True])
+def test_linked_worktrees_share_persistent_revision_checkouts(acquiring, tmp_path, external):
+    a = acquiring
+    linked = tmp_path / "linked"
+    root = a.repo / "related-systems"
+    if external:
+        root = tmp_path / "external disk" / "sources"
+        git(a.repo, "config", "--local", "commonplace.relatedSystemsDir", str(root))
+    git(a.repo, "worktree", "add", "--detach", str(linked))
+
+    def run(tree, name, revision=None):
+        return json.loads(sources.acquire(tree, tree / name, identity=IDENTITY,
+                                          revision=revision, inputs_digest=DIGEST))
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        linked_run = pool.submit(run, linked, "first")
+        main_run = pool.submit(run, a.repo, "same")
+        first = linked_run.result()
+        assert main_run.result() == first
+    assert Path(first["path"]).parent == root
+    assert len(a.freezes) == 1
+    updated = advance_upstream(a.upstream)
+    second = run(a.repo, "next")
+    assert second["revision"] == updated
+    assert Path(second["path"]).is_relative_to(root)
+    assert run(linked, "first") == first
+    assert run(linked, "second", updated) == second
+    assert len(a.freezes) == 2
+    git(a.repo, "worktree", "remove", "--force", str(linked))
+    for source in (first, second):
+        assert sources.frozen_source_refusals(source) == []
+
+
+@pytest.mark.slow
+def test_relative_storage_configuration_is_rejected(acquiring):
+    git(acquiring.repo, "config", "--local", "commonplace.relatedSystemsDir", "../relative")
+    with pytest.raises(CheckoutError, match="absolute path"):
+        acquiring.acquire()
+    assert not acquiring.journal.exists()

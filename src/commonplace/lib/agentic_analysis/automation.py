@@ -34,7 +34,7 @@ from commonplace.lib.agentic_analysis.preparation import (
     select_method,
 )
 from commonplace.lib.agentic_analysis.run_ids import is_commit
-from commonplace.lib.agentic_analysis.sources import github_checkout_path
+from commonplace.lib.agentic_analysis.sources import github_checkout_name
 from commonplace.lib.source_identity import normalize_source_identity
 
 SCHEMA = "commonplace.analysis-controller.v2"
@@ -85,7 +85,7 @@ def target(data: dict) -> dict:
     if not identity or not system.strip():
         raise ValueError("source identity and system must not be empty")
     revision = data.get("source-revision")
-    if revision is not None and (not is_commit(revision) or github_checkout_path(identity) is None):
+    if revision is not None and (not is_commit(revision) or github_checkout_name(identity) is None):
         raise ValueError("source-revision requires a full 40-hex commit and GitHub repository identity")
     return {"source": source, "source-kind": kind, "source-identity": identity,
             "system": system, **({"source-revision": revision} if revision is not None else {})}

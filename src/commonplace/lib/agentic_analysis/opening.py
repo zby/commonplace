@@ -33,7 +33,7 @@ from commonplace.lib.agentic_analysis.preparation import (
     require_running_package_unchanged,
     run_command,
 )
-from commonplace.lib.agentic_analysis.sources import acquire, github_checkout_path
+from commonplace.lib.agentic_analysis.sources import acquire, github_checkout_name
 from commonplace.lib.source_identity import normalize_source_identity
 
 
@@ -72,7 +72,7 @@ def open_analysis(
     if revision is not None:
         if not run_ids.is_commit(revision):
             raise ValueError("source-revision must be a full 40-hex Git commit")
-        if github_checkout_path(identity) is None:
+        if github_checkout_name(identity) is None:
             raise ValueError("source-revision requires a GitHub repository identity")
 
     repo = run_checkout(run_dir, library, job="opening")

@@ -253,6 +253,22 @@ uv uses the normal `.venv`, or `UV_PROJECT_ENVIRONMENT` when explicitly set. If 
 
 The test environment has its own dependencies and does not repair the old one. For other project Python invocations, pass `--python $systemPython` explicitly to uv and invoke tools as Python modules where supported.
 
+### Analysis source checkouts
+
+Analysis worktrees share the main checkout’s `related-systems/` directory.
+Run the following command in the Commonplace repository to use another disk.
+
+```bash
+git config --local commonplace.relatedSystemsDir /mnt/bigdisk/related-systems
+```
+
+Runs reuse a clean checkout of the requested commit. When the primary
+`<owner>--<repo>/` checkout holds a different commit, the analysis uses
+`.revisions/<owner>--<repo>/<commit>/` in the same directory. Both survive
+analysis worktree cleanup. Finish active runs before moving the directory because
+their records contain absolute paths. Changing the setting selects the location
+for new acquisitions. Move existing clones separately to reuse them there.
+
 ## 3. Set up the project with commonplace-init
 
 The KB is kept under Git (step 1), and Git history is the record of how the KB changed. `commonplace-init` does not create the repository; do it first. From the project root:
