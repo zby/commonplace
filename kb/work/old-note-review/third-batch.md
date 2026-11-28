@@ -37,11 +37,11 @@ Applied the [triage prompt](./triage-prompt.md) at `0fe7d4a9e`. One note split, 
 - **Live dependents affected:** No change required by this verdict, but some citations still import the *previous* claim. Prioritize *Oracle strength spectrum*, *Operational signals that a component is a relaxing candidate*, *Spec mining as codification*, *The boundary of automation is the boundary of verification*, and *Theory and methodology form a two-layer execution system*: do not divide artifacts into two kinds or equate checkability with objective fit. *A proximate target is checked for achievement* should not present composition failure alone as diagnostic. The current Bitter Lesson comparison, codification definition and code/LLM decision heuristics already distinguish the relations in their body text.
 - **Not checked:** Did not reproduce the vision history or benchmark results. Those examples do not supply the logical warrant for the claim.
 
-### `kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md` → `kb/theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md`
+### `kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md` → `kb/theory/an-assumption-worth-disputing-is-worth-stating.md`
 
 - **Lineage:** `2566f6964` shortened the filename; `9c7563bf7` relocated it; `f698aa90d` updated contract references, not the [argument](../../theory/an-assumption-worth-disputing-is-worth-stating.md).
 - **Verdict:** `rebuild-in-place` (high).
-- **Execution:** Rewritten in place as *An assumption worth disputing is worth stating*. A checklist example shows when a writer should state an assumption or narrow the conclusion. The note uses ordinary prose and points to the type contract for cases where separate sections help; it retains the readability observation. Filename relocation and dependent citation repairs have not been carried out.
+- **Execution:** Rewritten in place as *An assumption worth disputing is worth stating*. A checklist example shows when a writer should state an assumption or narrow the conclusion. The note uses ordinary prose and points to the type contract for cases where separate sections help; it retains the readability observation. Renamed in `bf040316a`; link destinations and published redirects were updated. Dependent arguments that still prescribe sections remain to be repaired.
 - **KB role & goal fit:** A reviewer needs to distinguish “the observation is wrong” from “the observation is right but does not support this claim.” That distinction remains useful outside Commonplace. Choosing a document type is a separate, already documented decision.
 - **Relevance to current gaps:** Faithful local judgment: the first criticism calls for checking the evidence; the second calls for testing the inference. Mandatory sections also impose the very prose cost the bloat question asks us to justify.
 - **Evidence & reasoning:** The pinned [Purdue source](../../sources/purdue-owl-toulmin-argument.ingest.md) distinguishes grounds from the warrant connecting them to a claim (snapshot lines 17–19; hash matches the ingest). It does not prescribe Markdown headings or establish better outcomes from them. The [type contract](../../theory/types/structured-claim.md) already owns Evidence, Reasoning and optional Caveats; the note itself reports demotions when the scaffold harmed flow.
@@ -77,7 +77,7 @@ Applied the [triage prompt](./triage-prompt.md) at `0fe7d4a9e`. One note split, 
 historical_path	coverage	located_path_or_successor
 kb/notes/backlinks.md	traced-and-triaged	kb/theory/inbound-and-outbound-links-serve-asymmetric-reader-needs.md;kb/reference/proposals/backlink-surfacing.md
 kb/notes/bitter-lesson-boundary.md	traced-and-triaged	kb/theory/exact-implementation-does-not-validate-a-requirement.md
-kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md	traced-and-triaged	kb/theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md
+kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured-argument.md	traced-and-triaged	kb/theory/an-assumption-worth-disputing-is-worth-stating.md
 kb/notes/claw-design.md	traced-and-triaged	kb/tags/README.md
 kb/notes/claw-learning-is-broader-than-retrieval.md	traced-and-triaged	kb/theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md
 ```
