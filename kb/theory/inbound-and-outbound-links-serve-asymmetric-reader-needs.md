@@ -1,5 +1,5 @@
 ---
-description: "Outbound links are authored reader aids; their on-demand inverse serves distinct standing, grounding, impact, and tension needs without forbidding independently useful reciprocal links"
+description: "A “Referenced by” list turns citations into clickable return paths. Those paths show who cited a note, not whom the note’s author chose to cite."
 type: types/note.md
 traits: [title-as-claim]
 tags: [links]
@@ -7,37 +7,23 @@ tags: [links]
 
 # Inbound and outbound links serve asymmetric reader needs
 
-A note's outbound links are authored prose: they show why a reader here might go elsewhere. Its inbound view shows which other artifacts send readers here. The two directions answer different reader questions, and treating "linking" as one symmetric concern hides that the inbound direction has its own needs, its own cost structure, and its own consumers. The note cannot author that inverse view directly, but it may author a reciprocal outbound link when the return journey has its own reader need; that is a second reader aid, not a manually maintained backlink.
+Here *inbound* and *outbound* are relative to **one note**, not the whole website. Suppose a release checklist links to an approval policy. That single link is outbound from the checklist and inbound to the policy. Both pages are inside the same site.
 
-## Four orientation needs only the inbound view serves
+## How an incoming citation becomes a link you can follow back
 
-1. **Standing** — is this note foundational or peripheral? Outbound links show what informed it; nothing in the note shows whether ten notes build on it or none do. Seeing "3 extend this, 1 contradicts it" changes how carefully a reader reads and whether editing is risky. Matters most during cold-start orientation in an unfamiliar area.
-2. **Grounding** — what evidence has accumulated for this claim? Source captures link *to* theory notes, but the theory note doesn't know practitioner evidence points at it. The inbound view shows how well-grounded a claim is — and flags synthesis opportunities when enough sources converge.
-3. **Impact** — what breaks if this changes? Before editing a claim, a reader needs what depends on it. Typed inbound links show this at a glance: notes that build on the claim are affected; notes that merely exemplify it are safe.
-4. **Tension** — who disagrees? A `contradicts` edge is visible only from the side that authored it, unless an inverse view or independently useful reciprocal link surfaces it from the other endpoint. Self-dual semantics permit either or both endpoints to use the same label; they do not require dual authoring.
+Suppose you are reading the policy and want to know which checklists use it. A site builder can scan the links in the source notes, group them by destination, and display **Referenced by: Release checklist** on the rendered policy page. You can now click from the policy back to the checklist.
 
-All four are **read-time orientation** needs: they change what the reader does with the note currently open.
+That return link **is outbound from the displayed page**. It is not a citation written by the policy’s author. The checklist author chose the policy because it tells someone how to approve a release. The generated link answers a different question: *where is this policy cited?* If the checklist drops its citation, the return link disappears on the next build. The builder must count authored links, not its own generated return links, or it will report citations nobody wrote.
 
-## Orientation is not maintenance
+The policy author can also choose to link to the checklist as a worked example. That is a second editorial decision, worth making if the example helps readers understand the policy. It is not necessary merely to give them a way back.
 
-Orphan detection consumes the same inverted-link data but is a different need: its threshold is zero-vs-high inbound count, its purpose is batch cleanup, and it runs as a periodic sweep, not at read time. The boundary claim: read-time surfacing machinery is justified only by orientation needs; maintenance needs are served by sweeps over inverted link data. Conflating the two over-builds the read surface to serve a batch job.
+## What a “Referenced by” list tells you
 
-Also out of scope: finding notes to link *to* when writing — that is search and discovery, not inbound visibility.
+When revising a note, use the list to find passages worth reading:
 
-## The inbound view is derived from authored links
+- **Standing:** Is the note a premise of another argument or merely listed as further reading?
+- **Grounding:** Do the citing sources offer independent evidence, or repeat the same assertion?
+- **Impact:** Would a narrower claim invalidate a recommendation or exclude a cited example?
+- **Tension:** Does another note dispute this claim, and if so, on what point?
 
-The inbound view is obtained by inverting all authored outbound edges; a complete reverse list should not be maintained by hand. Two reasons. **Fan-out:** a foundational note accumulates inbound edges from every later note that builds on it — maintaining the reverse list scales with the note's popularity, exactly when it is least affordable. **Register:** an inbound list is metadata, not prose — a footer of twelve "referenced by" entries does not read as argument, so it competes with the principle that links are inline prose carrying commitment.
-
-This does not prohibit an independently useful reciprocal link. That link is authored prose for readers at the other endpoint, with its own articulation and perhaps a different label; it is not an obligation to duplicate every edge. Derive complete inbound listings while permitting curated two-way navigation.
-
-## The needs bind per consumer
-
-Who is reading determines how the derived view should reach them. A human in a rendered view skims and searches sublinearly, so a future build-time inbound list could be cheap to consume. An agent reading repo files pays linear context cost for every byte, so the current inbound view stays a query answered on demand rather than a stored section, since [the first-time human wins except where access cost dominates](./design-for-the-first-time-human-except-on-access-cost.md). The four needs are constant across consumers; the delivery mechanism is the variable.
-
----
-
-Relevant Notes:
-
-- [Linking theory](./linking-theory.md) — extends: the decision-cost model for outbound links, extrapolated here to inbound visibility
-- [ADR 020 — theoretical-default additions (contrasts, mechanism)](../reference/adr/020-theoretical-default-contrasts-mechanism.md) — evidenced-by: the directional-asymmetry decision rests on forward edges being canonical and the inverse view computed
-- [Backlink surfacing](../reference/proposals/backlink-surfacing.md) — see-also: the Commonplace design space for delivering the inbound view, which takes this note's needs as its requirements
+The list locates those passages; their text answers the questions. The same information can be delivered in two ways: generate clickable return links when publishing a page, or search the source files for citations when a reader asks. Neither requires authors to maintain a reverse list. A maintenance sweep can also use the same data to find uncited notes without displaying a list on any page.

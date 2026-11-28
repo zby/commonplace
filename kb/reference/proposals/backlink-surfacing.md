@@ -17,7 +17,7 @@ How Commonplace could deliver the inbound-link view to its readers. Requirements
 
 ## Design space, split by consumer
 
-- **Human web readers** — render an inbound-links section per page at ProperDocs build time: a second materialization of the authored outbound edges, one source of truth, nothing committed. This is the ADR 025 pattern applied to backlinks; browser scroll and find keep long inbound lists cheap to skim.
+- **Human web readers** — at build time, index authored links by destination. On each rendered destination page, show a **Referenced by** list linking back to the source pages. These are outgoing navigation links on the displayed page, not citations in its Markdown. Exclude the generated lists from the index input. As with the complete indexes in ADR 025, the build does not write these links into the committed notes.
 - **Agents in the repo** — keep the inbound view a query: a documented scoped `rg` inversion recipe, optionally codified later as a `commonplace-*` command. Consistent with ADR 025's no-new-command default and the linear context cost of stored sections.
 - **Curated semantics** — where the relationship type matters (tension), the authored symmetric labels remain the mechanism; no generated machinery can infer edge semantics.
 
