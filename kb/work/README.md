@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Closing the learning-loop gaps](./closing-learning-loop-gaps/README.md) — posed 2026-11-28: empirical probes and lightweight instrumentation targeting the unsettled gaps in `what-gaps-remain-in-our-learning-loop.md` beyond weak-oracle amplification (single-call `TPR − FPR` and 3-arm inquiry, routing-check criterion revision, orthogonal/metamorphic checks, active-slice withholding sweeps, and decision-attribution logging).
+
 - [Which old notes still earn their place?](./old-note-review/README.md) — posed 2026-11-27: trace the oldest notes, check their present use and placement, and distinguish material worth moving from material worth retiring.
 
 - [Cross-harness project handoffs](./project-message-board/README.md) — posed 2026-11-27: test how tasks find pending decisions and reconsider blocked actions without assuming a shared board.
