@@ -891,6 +891,7 @@ plugins:
         'reference/proposals/atomic-step-grounding-bounds-unquoted-sources-per-note.md': 'reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md'
         'reference/proposals/code-scheduled-workflows.md': 'reference/proposals/archive/code-scheduled-workflows.md'
         'reference/proposals/coded-engine-stops.md': 'reference/proposals/archive/coded-engine-stops.md'
+        'reference/proposals/cross-harness-sub-worker-command-with-verification-as-first-use.md': 'reference/proposals/write-mode-for-cross-harness-sub-workers.md'
         'reference/proposals/directory-types-declare-their-layout.md': 'reference/proposals/archive/directory-types-declare-their-layout.md'
         'reference/proposals/exceeding-a-review-budget-splits-the-task.md': 'reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md'
         'reference/proposals/external-articles-collection.md': 'reference/proposals/archive/external-articles-collection.md'
