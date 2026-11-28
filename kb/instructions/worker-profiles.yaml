@@ -38,7 +38,8 @@ workflows:
     harnesses:
       claude-code:
         tools: "Read,Grep,Glob,Write"
-        allowed-tools: "Read,Grep,Glob,Write(kb/workflow-state/data/current/sub-worker/**)"
-        disallowed-tools: "Bash,Edit,NotebookEdit,Agent,Task"
+        # Write uses Edit path rules. Workjig expands the placeholders to absolute paths.
+        allowed-tools: "Read,Grep,Glob,Edit(/{output_dir}/answer.md),Edit(/{problem_file})"
+        disallowed-tools: "Bash,NotebookEdit,Agent,Task"
       codex: {sandbox: workspace-write}
       pi: {tools: "read,grep,find,ls,write"}

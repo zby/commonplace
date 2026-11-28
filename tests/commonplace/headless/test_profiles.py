@@ -21,7 +21,12 @@ def test_one_identity_addition_is_visible_to_every_granted_workflow():
     for mode in ("review", "sub-worker"):
         assert "Bash" in profiles[mode].flags["disallowed-tools"]
         assert "git commit" not in profiles[mode].flags["allowed-tools"]
-        assert f"current/{mode}/" in profiles[mode].flags["allowed-tools"]
+    assert "current/review/" in profiles["review"].flags["allowed-tools"]
+    grant = profiles["sub-worker"].flags
+    assert set(grant["tools"].split(",")) == {"Read", "Grep", "Glob", "Write"}
+    assert "Edit" not in grant["disallowed-tools"].split(",")
+    assert set(grant["allowed-tools"].split(",")) == {
+        "Read", "Grep", "Glob", "Edit(/{output_dir}/answer.md)", "Edit(/{problem_file})"}
 
 
 def test_missing_grant_refuses_and_identity_cannot_supply_flags():
